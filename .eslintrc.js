@@ -6,17 +6,28 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
-    'standard-with-typescript'
+    'plugin:jsx-a11y/recommended',
+    'plugin:react-hooks/recommended',
+    'standard-with-typescript',
+    'next/core-web-vitals'
   ],
   overrides: [
   ],
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    project: ['./tsconfig.json']
   },
   plugins: [
-    'react'
+    'react',
+    '@typescript-eslint',
+    'jsx-a11y',
+    'react-hooks'
   ],
   rules: {
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
+
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off'
   }
 }
