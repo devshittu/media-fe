@@ -8,7 +8,6 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:react-hooks/recommended',
-    'standard-with-typescript',
     'next/core-web-vitals',
     'prettier',
   ],
