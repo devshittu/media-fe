@@ -6,5 +6,5 @@ type AppProviderProps = {
 };
 
 export const AppProvider = ({ children, theme }: AppProviderProps) => {
-  return { children };
+  return <>{children}</>;
 };
