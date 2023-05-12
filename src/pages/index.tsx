@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import styles from '@/styles/Home.module.css';
 import { Seo } from '@/components/seo';
+import { Button } from '@/components/button';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,6 +14,9 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <h1>Hello Media</h1>
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <Button type="success" link="https://www.google.com">
+          Hello world!
+        </Button>
       </main>
     </>
   );
