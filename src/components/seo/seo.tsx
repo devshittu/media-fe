@@ -4,7 +4,7 @@ export type SeoProps = {
   title: string;
 };
 
-const Seo = ({ title }: SeoProps) => {
+export const Seo = ({ title }: SeoProps) => {
   return (
     <Head>
       <title>{title}</title>
@@ -14,5 +14,3 @@ const Seo = ({ title }: SeoProps) => {
     </Head>
   );
 };
-
-export default Seo;
