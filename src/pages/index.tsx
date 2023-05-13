@@ -14,6 +14,9 @@ export default function Home() {
       <main>
         <h1>Hello Media</h1>
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <Button type="warning" size="small" outlined badge="New">
+          Newon
+        </Button>
         <Button type="primary" outlined>
           Hello world!
         </Button>

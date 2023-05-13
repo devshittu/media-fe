@@ -157,8 +157,11 @@ export const Button = ({
         : 'px-2 py-1 text-sm'
     }
     ${expand ? 'w-full' : ''}
-    ${className}
-  `;
+    ${className ?? ''}
+  `
+    .trim()
+    .replace(/[\n\t]/g, '')
+    .replace(/\s+/g, ' '); // to remove extra spaces.
 
   const buttonContent = (
     <>
