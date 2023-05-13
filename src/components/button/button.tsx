@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { MouseEventHandler, ReactNode } from 'react';
 
 export type ButtonProps = {
   rounded?: boolean;
@@ -7,7 +7,7 @@ export type ButtonProps = {
   loading?: boolean;
   nativeType?: 'button' | 'submit' | 'reset';
   type?: 'info' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
-  icon?: ReactNode;
+  icon?: JSX.Element;
   iconPosition?: 'left' | 'right';
   size?: 'small' | 'medium' | 'large';
   expand?: boolean;
@@ -22,7 +22,7 @@ export type ButtonProps = {
   link?: string;
   children: ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 export const Button = ({
