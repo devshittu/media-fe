@@ -5,6 +5,7 @@ export type ButtonProps = {
   outlined?: boolean;
   disabled?: boolean;
   loading?: boolean;
+  nativeType?: 'button' | 'submit' | 'reset';
   type?: 'info' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
   icon?: ReactNode;
   iconPosition?: 'left' | 'right';
@@ -29,6 +30,7 @@ export const Button = ({
   rounded = false,
   disabled = false,
   loading = false,
+  nativeType = 'button',
   type = 'primary',
   icon,
   iconPosition = 'left',
@@ -221,7 +223,12 @@ export const Button = ({
     </>
   );
   return (
-    <button className={buttonClasses} disabled={disabled} onClick={onClick}>
+    <button
+      type={nativeType}
+      className={buttonClasses}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {loading ? (
         <>
           <span className="mx-3">
