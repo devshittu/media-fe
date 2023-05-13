@@ -11,6 +11,13 @@ export type ButtonProps = {
   size?: 'small' | 'medium' | 'large';
   expand?: boolean;
   badge?: string;
+  badgeType?:
+    | 'info'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning';
   badgeColor?: string;
   link?: string;
   children: ReactNode;
@@ -29,6 +36,7 @@ export const Button = ({
   size = 'medium',
   expand = false,
   badge,
+  badgeType = 'success',
   badgeColor = 'gray',
   link,
   children,
@@ -144,7 +152,39 @@ export const Button = ({
 
   const buttonTypeClasses = getButtonTypeClasses();
 
-  const buttonClasses = `
+  const getBadgeTypeClasses = (): string => {
+    let classes = ``;
+    switch (badgeType) {
+      case 'info':
+        classes += `bg-sky-500 text-sky-900`;
+        break;
+      case 'secondary':
+        classes += ` bg-slate-500 text-slate-900`;
+        break;
+      case 'success':
+        classes += ` bg-emerald-500 text-emerald-900`;
+        break;
+      case 'danger':
+        classes += ` bg-rose-500 text-rose-900`;
+        break;
+      case 'warning':
+        classes += ` bg-amber-500 text-amber-900`;
+        break;
+      case 'primary':
+      default:
+        classes += ` bg-neutral-900 text-neutral-950 text-white`;
+    }
+    return `${classes} `;
+    // ` ${
+    //             size == 'large'
+    //               ? 'border-4'
+    //               : size == 'medium'
+    //               ? 'border-2'
+    //               : 'border'
+    //     }`
+  };
+  const badgeTypeClasses = getBadgeTypeClasses();
+  const buttonClasses = `relative inline-flex items-center
     ${buttonTypeClasses} 
     ${rounded ? 'rounded-full' : ''}
     ${disabled ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}
@@ -163,6 +203,13 @@ export const Button = ({
     .replace(/[\n\t]/g, '')
     .replace(/\s+/g, ' '); // to remove extra spaces.
 
+  const iconClasses = `${
+    size === 'large' ? ' h-8 w-8' : size === 'medium' ? ' h-5 w-5' : ' h-4 w-4'
+  }`
+    .trim()
+    .replace(/[\n\t]/g, '')
+    .replace(/\s+/g, ' ');
+
   const buttonContent = (
     <>
       {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
@@ -172,64 +219,55 @@ export const Button = ({
   );
 
   const buttonWithBadge = (
-    <div className="relative inline-flex items-center">
-      <span className={buttonClasses}>{buttonContent}</span>
+    <>
+      {buttonContent}
       {badge && (
         <span
-          className={`absolute -top-1 -right-1 px-2 py-1 bg-success-200 bg-${badgeColor}-200 text-${badgeColor}-800 rounded-full`}
+          className={`absolute -top-2 -right-2 px-2 py-1 text-xs ${badgeTypeClasses} rounded-full`}
         >
           {badge}
         </span>
       )}
-    </div>
+    </>
   );
 
-  if (link) {
-    return (
-      <a href={link} className={buttonClasses}>
-        {badge ? buttonWithBadge : buttonContent}
-      </a>
-    );
-  }
+  //   if (link) {
+  //     return (
+  //       <a href={link} className={buttonClasses}>
+  //         {badge ? buttonWithBadge : buttonContent}
+  //       </a>
+  //     );
+  //   }
 
   return (
     <button className={buttonClasses} disabled={disabled} onClick={onClick}>
       {loading ? (
-        <svg
-          className="animate-spin h-5 w-5 mr-2 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 0012 20v-4a3.998 3.998 0 01-2.494-7.34L8 7.1V2H4v4c0 4.411 3.589 8 8 8v-2.086l-2.586-2.587z"
-          ></path>
-        </svg>
-      ) : (
         <>
-          {icon && iconPosition === 'left' && (
-            <span className="mr-2">{icon}</span>
-          )}
-          {children}
-          {icon && iconPosition === 'right' && (
-            <span className="ml-2">{icon}</span>
-          )}
+          <span className="mx-3">
+            <svg
+              className={`animate-spin -ml-1 ${iconClasses}`}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          </span>
         </>
-      )}
-      {badge && (
-        <span className="ml-2 px-2 py-1 bg-gray-200 text-gray-800 rounded-full">
-          {badge}
-        </span>
+      ) : (
+        <>{buttonWithBadge}</>
       )}
     </button>
   );
