@@ -37,14 +37,19 @@ export const Button = ({
 }: ButtonProps) => {
   const getButtonTypeClasses = (): string => {
     let classes = ``;
-
     switch (type) {
       case 'info':
         classes += ` 
         ${
           !outlined
             ? `bg-sky-500 hover:bg-sky-600 text-white`
-            : `border border-sky-500 hover:bg-sky-500 hover:text-white`
+            : `border border-sky-500 hover:bg-sky-500 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
         }
         `;
         break;
@@ -53,7 +58,13 @@ export const Button = ({
         ${
           !outlined
             ? `bg-neutral-900 hover:bg-neutral-950 text-white`
-            : `border border-neutral-900 hover:bg-neutral-900 hover:text-white`
+            : `border border-neutral-900 hover:bg-neutral-900 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
         }
         `;
         break;
@@ -62,7 +73,13 @@ export const Button = ({
         ${
           !outlined
             ? `bg-slate-500 hover:bg-slate-600 text-white`
-            : `border border-slate-500 hover:bg-slate-500 hover:text-white`
+            : `border border-slate-500 hover:bg-slate-500 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
         }
         `;
         break;
@@ -71,7 +88,13 @@ export const Button = ({
         ${
           !outlined
             ? `bg-emerald-500 hover:bg-emerald-600 text-white`
-            : `border border-emerald-500 hover:bg-emerald-500 hover:text-white`
+            : `border border-emerald-500 hover:bg-emerald-500 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
         }`;
         break;
       case 'danger':
@@ -79,7 +102,13 @@ export const Button = ({
         ${
           !outlined
             ? `bg-rose-500 hover:bg-rose-600 text-white`
-            : `border border-rose-500 hover:bg-rose-500 hover:text-white`
+            : `border border-rose-500 hover:bg-rose-500 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
         }`;
         break;
       case 'warning':
@@ -87,7 +116,13 @@ export const Button = ({
         ${
           !outlined
             ? `bg-amber-500 hover:bg-amber-600 text-white`
-            : `border border-amber-500 hover:bg-amber-500 hover:text-white`
+            : `border border-amber-500 hover:bg-amber-500 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
         }`;
         break;
       default:
@@ -95,7 +130,13 @@ export const Button = ({
         ${
           !outlined
             ? `bg-neutral-500 hover:bg-neutral-600 text-white`
-            : `border border-neutral-500 hover:bg-neutral-500 hover:text-white`
+            : `border border-neutral-500 hover:bg-neutral-500 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
         }`;
     }
     return classes;

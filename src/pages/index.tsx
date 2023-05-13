@@ -14,9 +14,11 @@ export default function Home() {
       <main>
         <h1>Hello Media</h1>
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        <Button type="primary">Hello world!</Button>
-        <Button type="warning" loading size="large" badge="New">
-          New
+        <Button type="primary" outlined>
+          Hello world!
+        </Button>
+        <Button type="warning" size="large" outlined badge="New">
+          Newon
         </Button>
         <h1 className="text-3xl font-bold underline bg-secondary">
           Hello world!
