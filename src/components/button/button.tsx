@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 
 export type ButtonProps = {
-  solid?: boolean;
   rounded?: boolean;
+  outlined?: boolean;
   disabled?: boolean;
   loading?: boolean;
   type?: 'info' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
@@ -14,11 +14,13 @@ export type ButtonProps = {
   badgeColor?: string;
   link?: string;
   children: ReactNode;
+  className?: string;
+  onClick?: () => void;
 };
 
 export const Button = ({
-  solid = true,
-  rounded = true,
+  outlined = false,
+  rounded = false,
   disabled = false,
   loading = false,
   type = 'primary',
@@ -30,14 +32,80 @@ export const Button = ({
   badgeColor = 'gray',
   link,
   children,
+  className,
+  onClick,
 }: ButtonProps) => {
-  const buttonClasses = `
-    ${
-      solid
-        ? `bg-${type}-500 hover:bg-${type}-600 text-white`
-        : `border border-${type}-500 hover:bg-${type}-500 hover:text-white`
+  const getButtonTypeClasses = (): string => {
+    let classes = ``;
+
+    switch (type) {
+      case 'info':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-sky-500 hover:bg-sky-600 text-white`
+            : `border border-sky-500 hover:bg-sky-500 hover:text-white`
+        }
+        `;
+        break;
+      case 'primary':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-neutral-900 hover:bg-neutral-950 text-white`
+            : `border border-neutral-900 hover:bg-neutral-900 hover:text-white`
+        }
+        `;
+        break;
+      case 'secondary':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-slate-500 hover:bg-slate-600 text-white`
+            : `border border-slate-500 hover:bg-slate-500 hover:text-white`
+        }
+        `;
+        break;
+      case 'success':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-emerald-500 hover:bg-emerald-600 text-white`
+            : `border border-emerald-500 hover:bg-emerald-500 hover:text-white`
+        }`;
+        break;
+      case 'danger':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-rose-500 hover:bg-rose-600 text-white`
+            : `border border-rose-500 hover:bg-rose-500 hover:text-white`
+        }`;
+        break;
+      case 'warning':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-amber-500 hover:bg-amber-600 text-white`
+            : `border border-amber-500 hover:bg-amber-500 hover:text-white`
+        }`;
+        break;
+      default:
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-neutral-500 hover:bg-neutral-600 text-white`
+            : `border border-neutral-500 hover:bg-neutral-500 hover:text-white`
+        }`;
     }
-    ${rounded ? 'rounded-full' : 'rounded'}
+    return classes;
+  };
+
+  const buttonTypeClasses = getButtonTypeClasses();
+
+  const buttonClasses = `
+    ${buttonTypeClasses} 
+    ${rounded ? 'rounded-full' : ''}
     ${disabled ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}
     ${loading ? 'pointer-events-none' : ''}
     ${
@@ -48,6 +116,7 @@ export const Button = ({
         : 'px-2 py-1 text-sm'
     }
     ${expand ? 'w-full' : ''}
+    ${className}
   `;
 
   const buttonContent = (
@@ -63,7 +132,7 @@ export const Button = ({
       <span className={buttonClasses}>{buttonContent}</span>
       {badge && (
         <span
-          className={`absolute -top-1 -right-1 px-2 py-1 bg-${badgeColor}-200 text-${badgeColor}-800 rounded-full`}
+          className={`absolute -top-1 -right-1 px-2 py-1 bg-success-200 bg-${badgeColor}-200 text-${badgeColor}-800 rounded-full`}
         >
           {badge}
         </span>
@@ -80,7 +149,7 @@ export const Button = ({
   }
 
   return (
-    <button className={buttonClasses} disabled={disabled}>
+    <button className={buttonClasses} disabled={disabled} onClick={onClick}>
       {loading ? (
         <svg
           className="animate-spin h-5 w-5 mr-2 text-white"
