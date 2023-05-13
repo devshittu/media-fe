@@ -18,7 +18,6 @@ export type ButtonProps = {
     | 'success'
     | 'danger'
     | 'warning';
-  badgeColor?: string;
   link?: string;
   children: ReactNode;
   className?: string;
@@ -37,8 +36,6 @@ export const Button = ({
   expand = false,
   badge,
   badgeType = 'success',
-  badgeColor = 'gray',
-  link,
   children,
   className,
   onClick,
@@ -175,13 +172,6 @@ export const Button = ({
         classes += ` bg-neutral-900 text-neutral-950 text-white`;
     }
     return `${classes} `;
-    // ` ${
-    //             size == 'large'
-    //               ? 'border-4'
-    //               : size == 'medium'
-    //               ? 'border-2'
-    //               : 'border'
-    //     }`
   };
   const badgeTypeClasses = getBadgeTypeClasses();
   const buttonClasses = `relative inline-flex items-center
@@ -230,15 +220,6 @@ export const Button = ({
       )}
     </>
   );
-
-  //   if (link) {
-  //     return (
-  //       <a href={link} className={buttonClasses}>
-  //         {badge ? buttonWithBadge : buttonContent}
-  //       </a>
-  //     );
-  //   }
-
   return (
     <button className={buttonClasses} disabled={disabled} onClick={onClick}>
       {loading ? (

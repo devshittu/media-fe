@@ -45,7 +45,13 @@ export default function Home() {
         <Button type="success" outlined badge="New">
           Newon
         </Button>
-        <Button type="warning" size="large" outlined badge="New">
+        <Button
+          type="warning"
+          size="large"
+          outlined
+          badge="New"
+          badgeType="danger"
+        >
           Newon
         </Button>
         <Button type="primary" outlined icon={mailIcon}>
