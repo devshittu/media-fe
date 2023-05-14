@@ -46,23 +46,18 @@ export const InputField = ({
   //     ${disabled ? 'bg-slate-100 opacity-50 cursor-not-allowed' : ''}
   //     ${className ?? ''}
 
-  // "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-  // focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-  // dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-
   const inputClasses = `
   block  w-full rounded-none font-bold
-    bg-slate-50 text-slate-900
-    border border-slate-900 border-slate-300
+    bg-slate-50 text-slate-900 border border-slate-900
     text-base
-    focus:outline-none focus:ring-4 focus:ring-inset focus:ring-slate-500 focus:border-slate-500
+    focus:outline-none focus:ring-4 focus:ring-inset focus:ring-slate-700 focus:border-slate-700
     dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
     ${
       size === 'large'
-        ? 'p-4 md:text-xl'
+        ? 'p-4 md:text-xl focus:ring-4 '
         : size === 'base'
-        ? 'p-2.5 md:text-base'
-        : 'p-1.5 sm:text-sm'
+        ? 'p-2.5 md:text-base focus:ring-2'
+        : 'p-1.5 sm:text-sm focus:ring-1'
     }
     `
     .trim()
