@@ -6,6 +6,7 @@ import { Seo } from '@/components/seo';
 import { Button } from '@/components/button';
 import { FieldError, InputField } from '@/components/form';
 import { useState } from 'react';
+import Link from 'next/link';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -125,6 +126,176 @@ export default function Home() {
         <h1 className="text-3xl font-bold underline bg-secondary">
           Hello world!
         </h1>
+        <div className="max-w-2xl mx-auto bg-white p-16">
+          <form>
+            <div className="grid gap-6 mb-6 lg:grid-cols-2">
+              <InputField
+                type="email"
+                name="EmailField"
+                placeholder="Enter your email"
+                value={email}
+                onChange={handleEmailChange}
+                error={emailError}
+              />
+              <InputField
+                type="email"
+                name="Small Field"
+                placeholder="Enter your email"
+                value={email}
+                onChange={handleEmailChange}
+                error={emailError}
+                size="small"
+              />
+
+              <InputField
+                type="email"
+                name="Base Field"
+                placeholder="Enter your email"
+                value={email}
+                onChange={handleEmailChange}
+                error={emailError}
+              />
+            </div>
+
+            <div className="mb-6"></div>
+            <InputField
+              type="email"
+              name="EmailField"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              error={emailError}
+              size="large"
+            />
+            <InputField
+              type="email"
+              name="Small Field"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              error={emailError}
+              size="small"
+            />
+
+            <InputField
+              type="email"
+              name="Base Field"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              error={emailError}
+            />
+            <InputField
+              type="password"
+              name="Password"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              error={emailError}
+            />
+            <InputField
+              type="password"
+              name="Confirm Password"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              error={emailError}
+            />
+            <div className="flex items-start mb-6">
+              <div className="flex items-center h-5">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  value=""
+                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                  required
+                />
+              </div>
+              <label
+                htmlFor="remember"
+                className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+              >
+                I agree with the{' '}
+                <Link
+                  href="/"
+                  className="text-blue-600 hover:underline dark:text-blue-500"
+                >
+                  terms and conditions
+                </Link>
+                .
+              </label>
+            </div>
+            <button
+              type="submit"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Submit
+            </button>
+          </form>
+
+          <p className="mt-5">
+            These input field components is part of a larger, open-source
+            library of Tailwind CSS components. Learn more by going to the
+            official{' '}
+            <a
+              className="text-blue-600 hover:underline"
+              href="https://flowbite.com/docs/getting-started/introduction/"
+              target="_blank"
+            >
+              Flowbite Documentation
+            </a>
+            .
+          </p>
+        </div>
+
+        <button
+          type="button"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Default
+        </button>
+        <button
+          type="button"
+          className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        >
+          Alternative
+        </button>
+        <button
+          type="button"
+          className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        >
+          Dark
+        </button>
+        <button
+          type="button"
+          className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        >
+          Light
+        </button>
+        <button
+          type="button"
+          className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >
+          Green
+        </button>
+        <button
+          type="button"
+          className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+        >
+          Red
+        </button>
+        <button
+          type="button"
+          className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900"
+        >
+          Yellow
+        </button>
+        <button
+          type="button"
+          className="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+        >
+          Purple
+        </button>
       </main>
     </>
   );
