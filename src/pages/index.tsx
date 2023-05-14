@@ -4,10 +4,36 @@ import Head from 'next/head';
 // import styles from '@/styles/Home.module.css';
 import { Seo } from '@/components/seo';
 import { Button } from '@/components/button';
+import { FieldError, InputField } from '@/components/form';
+import { useState } from 'react';
 
 // const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState<FieldError | null>(null);
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+
+    // Example validation
+    if (value.trim() === '') {
+      setEmailError({ message: 'Email is required' });
+    } else {
+      setEmailError(null);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Example form submission
+    if (!emailError && email.trim() !== '') {
+      // Perform further actions, such as API requests or form submission
+      console.log('Form submitted');
+    }
+  };
+
   const mailIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -79,6 +105,18 @@ export default function Home() {
           </span>
           Loading...
         </Button>
+        <form onSubmit={handleSubmit}>
+          <InputField name="Email" placeholder="@example.com" />
+          <InputField
+            type="email"
+            name="EmailField"
+            placeholder="Enter your email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+
+          <Button nativeType="submit">Submit</Button>
+        </form>
         <h1 className="text-3xl font-bold underline bg-secondary">
           Hello world!
         </h1>
