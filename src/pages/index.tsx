@@ -106,13 +106,18 @@ export default function Home() {
           Loading...
         </Button>
         <form onSubmit={handleSubmit}>
-          <InputField name="Email" placeholder="@example.com" />
+          <InputField
+            name="Email"
+            error={emailError}
+            placeholder="@example.com"
+          />
           <InputField
             type="email"
             name="EmailField"
             placeholder="Enter your email"
             value={email}
             onChange={handleEmailChange}
+            error={emailError}
           />
 
           <Button nativeType="submit">Submit</Button>

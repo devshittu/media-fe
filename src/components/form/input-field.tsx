@@ -8,7 +8,7 @@ export type InputFieldPropTypes = {
   //   label?: LabelHTMLAttributes<HTMLLabelElement>;
   showLabel?: boolean;
   name: string;
-  error?: FieldError;
+  error?: FieldError | null;
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
@@ -38,26 +38,23 @@ export const InputField = ({
       onChange(e.target.value);
     }
   };
-  // bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+  //   ${outlined ? 'ring-blue-500 border-blue-500 ' : ''}
+  //     ${rounded ? 'rounded-lg ' : ''}
+  //     ${error ? 'ring-red-500 border-red-500' : 'ring-slate-300 border-slate-300'}
+  //     ${disabled ? 'bg-slate-100 opacity-50 cursor-not-allowed' : ''}
+  //     ${className ?? ''}
   const inputClasses = `
-    bg-gray-50 
-    border border-gray-300 text-gray-900 
+    bg-slate-50
+    border border-slate-900 ring-blue-500 text-slate-900 
     text-sm 
     
     focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-    dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-  
-    ${outlined ? 'ring-blue-500 border-blue-500 ' : ''}
-    ${rounded ? 'rounded-lg ' : ''}
-    ${error ? 'ring-red-500 border-red-500' : 'ring-gray-300 border-gray-300'}
-    ${disabled ? 'bg-gray-100 opacity-50 cursor-not-allowed' : ''}
-    ${className ?? ''}
-    
+    dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
     `
     .trim()
     .replace(/\s+/g, ' ');
   const labelClasses =
-    `block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300`
+    `block mb-2  uppercase tracking-wide text-slate-900 text-sm font-bold dark:text-slate-300`
       .trim()
       .replace(/\s+/g, ' ');
 
