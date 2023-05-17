@@ -1,27 +1,9 @@
-.draft_container{
-     position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    display: grid;
-    max-width: 1536px;
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-    @apply relative container grid grid-cols-10 max-w-7xl
+.draft_container {
+  @apply relative container grid grid-cols-10 max-w-7xl mx-auto;
 }
-.draft_sidenav{
-    position: sticky;
-    top: 0px;
-    left: 0px;
-    flex-direction: column;
-    border-right-width: 1px;
-    display: flex;
-    height: 100vh;
-    min-height: 0px;
-    grid-column: span 2 / span 2;
-    border-left-width: 1px;
-    @apply sticky top-0 left-0 flex-col border-r flex h-screen min-h-0 border-l col-span-2;
+.draft_sidenav {
+  @apply sticky top-0 left-0 flex-col border-r flex h-screen min-h-0 border-l col-span-2;
 }
-.draft_main{
-    grid-column: span 8 / span 8;
-    border-right-width: 1px;
-    @apply col-span-8 border-r
+.draft_main {
+  @apply col-span-8 border-r;
 }
