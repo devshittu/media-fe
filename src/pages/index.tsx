@@ -58,30 +58,17 @@ export default function Home() {
       <main>
         <h1>Hello Media</h1>
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        <Button
-          type="info"
-          size="small"
-          outlined
-          badge="New"
-          icon={mailIcon}
-          loading
-        >
+        <Button type="info" size="small" badge="New" icon={mailIcon}>
           Newon
         </Button>
 
-        <Button type="success" outlined badge="New">
+        <Button type="success" badge="New">
           Newon
         </Button>
-        <Button
-          type="warning"
-          size="large"
-          outlined
-          badge="New"
-          badgeType="danger"
-        >
+        <Button type="warning" size="large" badge="New" badgeType="danger">
           Newon
         </Button>
-        <Button type="primary" outlined icon={mailIcon}>
+        <Button type="primary" icon={mailIcon}>
           Hello world!
         </Button>
         <Button
@@ -89,17 +76,11 @@ export default function Home() {
           size="large"
           icon={mailIcon}
           iconPosition="right"
-          outlined
           className=" text-2xl "
         >
           Newon
         </Button>
-        <Button
-          type="info"
-          size="large"
-          loading
-          className=" text-2xl inline-flex"
-        >
+        <Button type="info" size="large" className=" text-2xl inline-flex">
           <span className="relative flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>

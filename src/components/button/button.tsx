@@ -57,23 +57,7 @@ export const Button = ({
                   ? 'border-2'
                   : 'border'
               }`
-        }
-        `;
-        break;
-      case 'primary':
-        classes += ` 
-        ${
-          !outlined
-            ? `bg-neutral-900 hover:bg-neutral-950 text-white`
-            : `border border-neutral-900 hover:bg-neutral-900 hover:text-white ${
-                size == 'large'
-                  ? 'border-4'
-                  : size == 'medium'
-                  ? 'border-2'
-                  : 'border'
-              }`
-        }
-        `;
+        } focus:ring-sky-300 `;
         break;
       case 'secondary':
         classes += ` 
@@ -87,8 +71,7 @@ export const Button = ({
                   ? 'border-2'
                   : 'border'
               }`
-        }
-        `;
+        } focus:ring-slate-300 `;
         break;
       case 'success':
         classes += ` 
@@ -102,7 +85,7 @@ export const Button = ({
                   ? 'border-2'
                   : 'border'
               }`
-        }`;
+        } focus:ring-emerald-300 `;
         break;
       case 'danger':
         classes += ` 
@@ -116,7 +99,7 @@ export const Button = ({
                   ? 'border-2'
                   : 'border'
               }`
-        }`;
+        } focus:ring-rose-300 `;
         break;
       case 'warning':
         classes += ` 
@@ -130,21 +113,22 @@ export const Button = ({
                   ? 'border-2'
                   : 'border'
               }`
-        }`;
+        } focus:ring-amber-300 `;
         break;
+      case 'primary':
       default:
         classes += ` 
         ${
           !outlined
-            ? `bg-neutral-500 hover:bg-neutral-600 text-white`
-            : `border border-neutral-500 hover:bg-neutral-500 hover:text-white ${
+            ? `bg-neutral-900 hover:bg-neutral-950 text-white`
+            : `border border-neutral-900 hover:bg-neutral-900 hover:text-white ${
                 size == 'large'
                   ? 'border-4'
                   : size == 'medium'
                   ? 'border-2'
                   : 'border'
               }`
-        }`;
+        } focus:ring-neutral-300 `;
     }
     return classes;
   };
@@ -177,7 +161,7 @@ export const Button = ({
   };
   const badgeTypeClasses = getBadgeTypeClasses();
   const buttonClasses = `relative inline-flex items-center
-    ${buttonTypeClasses} 
+    ${buttonTypeClasses} focus:z-10 focus:ring-4 
     ${rounded ? 'rounded-full' : ''}
     ${disabled ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}
     ${loading ? 'pointer-events-none' : ''}
