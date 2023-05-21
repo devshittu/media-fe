@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '@/styles/draft.module.css';
 import Link from 'next/link';
-import {MainNav} from '@/components/widgets/main-nav';
+import {MainNav} from '@/components/blocks/main-nav';
 
 const New = () => {
   return (

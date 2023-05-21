@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from '@/styles/draft.module.css';
 import feedsStyles from '@/styles/feeds.module.css';
-import { MainNav } from '@/components/widgets/main-nav';
-import { StoryItem, StoryItem2 } from '@/components/widgets/stories';
-import { SidePanel } from '@/components/widgets/side-panel';
+import { MainNav } from '@/components/blocks/main-nav';
+import { StoryItem, StoryItem2 } from '@/components/blocks/stories';
+import { SidePanel } from '@/components/blocks/side-panel';
 
 const Feeds = () => {
   return (

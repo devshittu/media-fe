@@ -8,6 +8,5 @@
     @apply relative flex p-0 z-0 min-w-0 min-h-0 box-border my-0 ml-0 flex-shrink-0 basis-auto flex-col border-0 items-stretch
 }
 .feeds_stream{
-/* max-width: 600px; */
-    @apply flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-xl box-border;
+    @apply flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-[640px] box-border;
 }
