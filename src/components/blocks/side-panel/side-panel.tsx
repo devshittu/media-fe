@@ -3,38 +3,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { InputField } from '@/components/form';
 import { Button } from '@/components/button';
+import { useScrollBehavior } from '@/hooks';
 
 export const SidePanel = () => {
-  const [isScrolledUp, setIsScrolledUp] = useState(false);
-
-  const [y, setY] = useState<number>(
-    typeof window !== 'undefined' ? window.scrollY : 0,
-  );
-
-  const handleNavigation = useCallback(
-    (e: Event) => {
-      const windowScrollY = (e.currentTarget as Window).scrollY;
-      if (y > windowScrollY) {
-        console.log('scrolling up');
-        setIsScrolledUp(true);
-      } else if (y < windowScrollY) {
-        setIsScrolledUp(false);
-        console.log('scrolling down');
-      }
-      setY(windowScrollY);
-    },
-    [y],
-  );
-  // ${!isScrolledUp ? 'sticky top-12' : 'relative'}
-
-  useEffect(() => {
-    setY(typeof window !== 'undefined' ? window.scrollY : 0);
-    window.addEventListener('scroll', handleNavigation);
-
-    return () => {
-      window.removeEventListener('scroll', handleNavigation);
-    };
-  }, [handleNavigation]);
+  const { isScrolledUp } = useScrollBehavior();
   return (
     <div className="flex-1 py-4 space-y-4 hidden lg:block">
       {/* <div className={`sticky top-0 pb-2 `}> */}

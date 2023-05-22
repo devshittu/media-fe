@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
-import { type } from 'os';
+
 // antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900
 type NavMainProps = {
   active?: boolean;
