@@ -1,17 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
+import { type } from 'os';
 // antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900
-
-export const NavMain = () => {
+type NavMainProps = {
+  active?: boolean;
+};
+export const NavMain = ({ active = false }: NavMainProps) => {
   return (
-    // <aside className={styles.draft_sidenav}>
     <aside
-      className={`hidden lg:flex sticky top-0 left-0 flex-col  h-screen min-h-0 col-span-2 `}
+      className={` ${
+        active ? ' left-0 transition-all duration-0 lg:flex ' : '-left-[350px]'
+      } hidden lg:flex sticky top-0 left-0 flex-col  h-screen min-h-0 col-span-2 `}
     >
       <div className="h-full px-3 py-4 overflow-y-auto">
         <nav className="">
-          <ul className="space-y-2 font-mediumx font-bold text-lg">
+          <ul className="space-y-2 font-bold text-lg">
             <li>
               <Link
                 href="/stories"
