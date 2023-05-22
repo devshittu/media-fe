@@ -29,7 +29,7 @@ export const InputField = ({
   outlined = true,
   disabled = false,
   rounded = false,
-  showLabel = true,
+  showLabel = false,
   className,
 }: InputFieldPropTypes) => {
   const handleChange = (
@@ -79,7 +79,7 @@ export const InputField = ({
 
   return (
     <>
-      <div>
+      <div className={className}>
         {showLabel && (
           <label
             htmlFor={name.toLowerCase() + '-input'}

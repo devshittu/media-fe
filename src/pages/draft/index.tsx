@@ -1,13 +1,13 @@
 import React from 'react';
 // import styles from '@/styles/draft.module.css';
 import Link from 'next/link';
-import {NavMain} from '@/components/blocks/nav-main';
+import { NavMain } from '@/components/blocks/nav-main';
 
 const Index = () => {
   return (
     <div className={`relative container grid grid-cols-10 max-w-7xl mx-auto`}>
       <NavMain />
-      
+
       {/* <article className={styles.draft_main}> */}
       <article className={`col-span-8 border-r`}>
         <div className="p-4 sm:ml-64x">
