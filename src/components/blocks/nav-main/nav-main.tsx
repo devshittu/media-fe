@@ -9,7 +9,7 @@ export const NavMain = () => {
     <aside
       className={`sticky top-0 left-0 flex-col flex h-screen min-h-0 col-span-2`}
     >
-      <div className="h-full px-3 py-4 overflow-y-auto bg-slate-50 dark:bg-slate-800">
+      <div className="h-full px-3 py-4 overflow-y-auto">
         <nav className="">
           <ul className="space-y-2 font-mediumx font-bold text-lg">
             <li>
