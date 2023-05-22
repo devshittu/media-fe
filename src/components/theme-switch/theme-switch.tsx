@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { THEME_DARK, THEME_LIGHT } from '@/config/constant';
 import Head from 'next/head';
+type ThemeSwitchProps = {
+  showLabel?: boolean;
+};
 
-const ThemeSwitch = () => {
+const ThemeSwitch = ({ showLabel = false }: ThemeSwitchProps) => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, systemTheme, forcedTheme } = useTheme();
 
@@ -34,7 +37,11 @@ const ThemeSwitch = () => {
         }`}
         disabled={disabled}
       >
-        <span className="md:mr-2 inline-block  animate-swirl-in-fwd">
+        <span
+          className={`${
+            showLabel ? 'md:mr-2' : ''
+          } inline-block  animate-swirl-in-fwd`}
+        >
           {currentTheme === THEME_DARK ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,9 +76,11 @@ const ThemeSwitch = () => {
             </svg>
           )}
         </span>
-        <span className="capitalize italic text-slate-600 dark:text-slate-100 hidden md:block">
-          {currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK}
-        </span>
+        {showLabel && (
+          <span className="capitalize italic text-slate-600 dark:text-slate-100 hidden md:block">
+            {currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK}
+          </span>
+        )}
       </button>
     </>
   );
