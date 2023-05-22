@@ -1,20 +1,28 @@
-import { StoryItem, StoryItem2 } from '@/components/blocks/stories';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { NavMain } from '@/components/blocks/nav-main';
+import { SidePanel } from '@/components/blocks/side-panel';
+import { StoryItem, StoryItem2 } from '@/components/blocks/stories'
+// import feedsStyles from '@/styles/feeds.module.css';
 
 const Index = () => {
   return (
-    <div>
-      <section className="text-gray-600 body-font overflow-hidden">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-wrap -m-12x">
-            <div className="md:w-1/2 "><StoryItem/></div>
-            <div className="md:w-1/2"><StoryItem2/></div>
-            
+    <div className={ `relative container grid grid-cols-10 max-w-7xl mx-auto`}>
+      <NavMain />
+      <main className={`col-span-8 border-r`}>
+        <div className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}>
+          {/* <div className={feedsStyles.feeds_stream}> */}
+          <div className={`flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-[640px] box-border;`}>
+            <StoryItem />
+            <StoryItem />
+            <StoryItem />
+            <StoryItem />
+            <StoryItem />
+            {/* <StoryItem2 /> */}
+          </div>
+          <div className={`relative flex p-0 z-0 min-w-0 min-h-0 box-border my-0 ml-0 flex-shrink-0 basis-auto flex-col border-0 w-[350px] items-stretch`}>
+            <SidePanel />
           </div>
         </div>
-      </section>
+      </main>
     </div>
   );
 };

@@ -1,15 +1,17 @@
 import React from 'react'
 import Link from 'next/link';
-import styles from '@/styles/draft.module.css';
+// antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900
 
-export const MainNav = () => {
+export const NavMain = () => {
   return (
-      <aside className={styles.draft_sidenav}>
+      // <aside className={styles.draft_sidenav}>
+      <aside className={`sticky top-0 left-0 flex-col border-r flex h-screen min-h-0 border-l col-span-2`}>
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <ul className="space-y-2 font-medium">
+          <nav className=''>
+          <ul className="space-y-2 font-mediumx font-bold text-lg">
             <li>
               <Link
-                href="/stories/feeds"
+                href="/stories"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -22,12 +24,12 @@ export const MainNav = () => {
                   <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
-                <span className="ml-3">Main feeds</span>
+                <span className="ml-3">Stories</span>
               </Link>
             </li>
             <li>
               <Link
-                href="/stories/"
+                href="/draft/"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -40,12 +42,12 @@ export const MainNav = () => {
                   <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
-                <span className="ml-3">Stories samples</span>
+                <span className="ml-3">New Post</span>
               </Link>
             </li>
             <li>
               <Link
-                href="/draft/new"
+                href="/draft/"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -169,6 +171,7 @@ export const MainNav = () => {
               </Link>
             </li>
           </ul>
+          </nav>
           <div
             id="dropdown-cta"
             className="p-4 mt-6 rounded-lg bg-blue-50 dark:bg-blue-900"

@@ -1,14 +1,15 @@
 import React from 'react';
-import styles from '@/styles/draft.module.css';
+// import styles from '@/styles/draft.module.css';
 import Link from 'next/link';
-import {MainNav} from '@/components/blocks/main-nav';
+import {NavMain} from '@/components/blocks/nav-main';
 
-const New = () => {
+const Index = () => {
   return (
-    <div className={styles.draft_container}>
-      <MainNav />
+    <div className={`relative container grid grid-cols-10 max-w-7xl mx-auto`}>
+      <NavMain />
       
-      <article className={styles.draft_main}>
+      {/* <article className={styles.draft_main}> */}
+      <article className={`col-span-8 border-r`}>
         <div className="p-4 sm:ml-64x">
           <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
             <div className="grid grid-cols-3 gap-4 mb-4">
@@ -63,4 +64,4 @@ const New = () => {
   );
 };
 
-export default New;
+export default Index;

@@ -1,9 +1,0 @@
-.draft_container {
-  @apply relative container grid grid-cols-10 max-w-7xl mx-auto;
-}
-.draft_sidenav {
-  @apply sticky top-0 left-0 flex-col border-r flex h-screen min-h-0 border-l col-span-2;
-}
-.draft_main {
-  @apply col-span-8 border-r;
-}
