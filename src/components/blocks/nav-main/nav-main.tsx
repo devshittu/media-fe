@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import ThemeSwitch from '@/components/theme-switch/theme-switch';
 // antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900
 
 export const NavMain = () => {
@@ -48,6 +49,7 @@ export const NavMain = () => {
               </Link>
             </li>
             <li>
+              <ThemeSwitch />
               <Link
                 href="/draft/"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"

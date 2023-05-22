@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { ThemeProvider } from 'next-themes';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -6,5 +7,9 @@ type AppProviderProps = {
 };
 
 export const AppProvider = ({ children, theme }: AppProviderProps) => {
-  return <>{children}</>;
+  return (
+    <ThemeProvider attribute="class" forcedTheme={theme || undefined}>
+      {children}
+    </ThemeProvider>
+  );
 };
