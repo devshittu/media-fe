@@ -40,20 +40,20 @@ export const SidePanel = () => {
       {/* <div className={`sticky top-0 pb-2 `}> */}
       <div className={`sticky top-0 pb-2 `}>
         <InputField name="Search" placeholder="Search app" className="mb-11" />
-        {/* <input
-                  type="text"
-                  className="block text-black border dark:border-slate-700 bg-slate-200 dark:bg-slate-800 w-full py-2 pl-3 rounded-3xl z-30"
-                  name="fullname"
-                  placeholder="Search App"
-                /> */}
       </div>
-      <div className={`${isScrolledUp ? 'sticky top-12 mt-16' : ''}`}>
-        <div className="block bg-slate-50 py-2  px-2 rounded-2xl shadow-sm">
+      <div
+        className={` bg-slate-50 dark:bg-slate-800 ${
+          isScrolledUp ? 'sticky top-12 mt-16' : ''
+        }`}
+      >
+        <div className="block py-2  px-2 rounded-2xl shadow-sm">
           <p className={`font-extrabold text-lg `}>Trends for you</p>
         </div>
       </div>
       <div
-        className={`block bg-slate-50 dark:bg-slate-800 py-2  sticky top-12 px-2 rounded-2xl shadow-sm`}
+        className={`block bg-slate-50 dark:bg-slate-800 py-2  ${
+          isScrolledUp ? 'sticky top-80 ' : 'sticky top-12'
+        }  transition-all duration-300 px-2 rounded-2xl shadow-sm`}
       >
         <div className="border-b py-2">
           <h1 className="font-extrabold text-lg">Who to follow</h1>
