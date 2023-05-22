@@ -7,7 +7,7 @@ const Index = () => {
   return (
     <div className={`relative container grid grid-cols-10 max-w-7xl mx-auto`}>
       <NavMain />
-      <main className={`col-span-8`}>
+      <main className={`w-full lg:col-span-8`}>
         <div
           className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}
         >
@@ -66,7 +66,7 @@ const Index = () => {
             {/* <StoryItem2 /> */}
           </div>
           <div
-            className={`relative flex p-0 z-0 min-w-0 min-h-0 box-border my-0 ml-0 flex-shrink-0 basis-auto flex-col border-0 w-[350px] items-stretch`}
+            className={`relative hidden lg:flex p-0 z-0 min-w-0 min-h-0 box-border my-0 ml-0 flex-shrink-0 basis-auto flex-col border-0 w-[350px] items-stretch`}
           >
             <SidePanel />
           </div>

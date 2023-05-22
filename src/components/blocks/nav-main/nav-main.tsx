@@ -7,7 +7,7 @@ export const NavMain = () => {
   return (
     // <aside className={styles.draft_sidenav}>
     <aside
-      className={`sticky top-0 left-0 flex-col flex h-screen min-h-0 col-span-2`}
+      className={`hidden lg:flex sticky top-0 left-0 flex-col  h-screen min-h-0 col-span-2 `}
     >
       <div className="h-full px-3 py-4 overflow-y-auto">
         <nav className="">

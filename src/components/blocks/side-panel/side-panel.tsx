@@ -36,7 +36,7 @@ export const SidePanel = () => {
     };
   }, [handleNavigation]);
   return (
-    <div className="flex-1 py-4 space-y-4 hidden md:block">
+    <div className="flex-1 py-4 space-y-4 hidden lg:block">
       {/* <div className={`sticky top-0 pb-2 `}> */}
       <div className={`sticky top-0 pb-2 `}>
         <InputField name="Search" placeholder="Search app" className="mb-11" />
