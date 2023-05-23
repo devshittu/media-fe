@@ -1,7 +1,7 @@
 import React from 'react';
 // import styles from '@/styles/draft.module.css';
 import Link from 'next/link';
-import { NavMain } from '@/components/blocks/nav-main';
+import { NavMain } from '@/components/blocks/nav';
 
 const Index = () => {
   return (
