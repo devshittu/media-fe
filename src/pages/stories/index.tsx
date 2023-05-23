@@ -20,7 +20,7 @@ const Index = () => {
             className={`flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-full lg:max-w-[640px] box-border border-slate-100 dark:border-slate-800`}
           >
             <header
-              className={`sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 `}
+              className={`sticky top-0 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 `}
             >
               <div className="flex items-center p-4 lg:hidden">
                 <NavDrawerLeft />

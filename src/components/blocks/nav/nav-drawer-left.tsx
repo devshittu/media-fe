@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
+import { NavDrawerProps } from './types';
 
-type NavDrawerProps = {
-  active?: boolean;
-  children?: React.ReactNode;
-};
 export const NavDrawerLeft = ({}: NavDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,7 +38,7 @@ export const NavDrawerLeft = ({}: NavDrawerProps) => {
         onClick={toggleSidebar}
       ></div>
 
-      <div
+      <section
         id="drawer-disable-body-scrolling"
         className={`fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-slate-800 ${
           isOpen ? 'transform-none' : '-translate-x-full '
@@ -141,7 +138,7 @@ export const NavDrawerLeft = ({}: NavDrawerProps) => {
             </li>
           </ul>
         </nav>
-      </div>
+      </section>
     </>
   );
 };
