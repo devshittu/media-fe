@@ -83,7 +83,11 @@ export const StoryItem2 = () => {
         </div>
       </section>
       <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 mt-auto w-full">
-        <Link href="/" className="text-blue-500 inline-flex items-center">
+        <Link
+          href="/"
+          title="Goto source"
+          className="text-blue-500 inline-flex items-center"
+        >
           Learn More
           <svg
             className="w-4 h-4 ml-2"

@@ -29,7 +29,7 @@ export const NavDrawerLeft = ({}: NavDrawerProps) => {
         </svg>
       </button>
       <div
-        className={`fixed inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 w-full h-screen overflow-y-hidden ${
+        className={`fixedx inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 w-full h-screen overflow-y-hidden ${
           isOpen ? 'fixed' : 'hidden '
         }`}
         id="headlessui-dialog-overlay-:r4:"

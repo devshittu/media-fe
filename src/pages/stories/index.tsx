@@ -22,7 +22,10 @@ const Index = () => {
             <header
               className={`sticky top-0 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 `}
             >
-              <div className="flex items-center p-4 lg:hidden">
+              {/* ${
+                  !isScrolledUp ? 'absolute hidden ' : 'lg:flex  relative'
+                } */}
+              <div className={`flex items-center p-4 lg:hidden `}>
                 <NavDrawerLeft />
                 <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
                   <li className="font-semibold text-slate-900 truncate dark:text-slate-200">
