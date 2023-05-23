@@ -1,11 +1,13 @@
 import { NavMain } from '@/components/blocks/nav-main';
 import { SidePanel } from '@/components/blocks/side-panel';
 import { StoryItem, StoryItem2 } from '@/components/blocks/stories';
+import { useScrollBehavior } from '@/hooks';
 import { useState } from 'react';
 // import feedsStyles from '@/styles/feeds.module.css';
 
 const Index = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isScrolledUp } = useScrollBehavior();
 
   const toggleSidebar = () => {
     console.log('toggle sidebar clicked');
@@ -24,7 +26,9 @@ const Index = () => {
           <div
             className={`flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-full lg:max-w-[640px] box-border border-slate-100 dark:border-slate-800`}
           >
-            <header className="sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 ">
+            <header
+              className={`sticky top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 `}
+            >
               <div className="flex items-center p-4 border-bx border-slate-900/10x lg:hidden dark:border-slate-50/[0.06]x">
                 <button
                   type="button"
@@ -65,12 +69,16 @@ const Index = () => {
                   </li>
                 </ol>
               </div>
-              <div className="hidden lg:flex">
+              <div
+                className={`hidden  transition-all duration-500 ${
+                  !isScrolledUp ? 'relative  -top-400' : 'lg:flex'
+                }`}
+              >
                 <h1 className="mb-4x text-4xlx text-xl p-4 pl-8 font-extrabold leading-none tracking-tight text-slate-900 md:text-5xlx lg:text-6xlx dark:text-white">
                   Home
                 </h1>
               </div>
-              <div className="relative">
+              <div className={`${isScrolledUp ? 'relative' : 'sticky top-0'}`}>
                 <ul
                   className="flex justify-around -mb-px text-sm font-medium text-center"
                   id="myTab"
