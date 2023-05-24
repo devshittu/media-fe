@@ -29,8 +29,10 @@ export const NavDrawerLeft = ({}: NavDrawerProps) => {
         </svg>
       </button>
       <div
-        className={`fixedx inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 w-full h-screen overflow-y-hidden ${
-          isOpen ? 'fixed' : 'hidden '
+        className={`fixedx inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 z-[51] w-full h-screen overflow-y-hidden ${
+          isOpen
+            ? 'fixed top-0 bottom-0 left-0 right-0 overflow-y-hidden'
+            : 'hidden '
         }`}
         id="headlessui-dialog-overlay-:r4:"
         aria-hidden="true"
@@ -40,7 +42,7 @@ export const NavDrawerLeft = ({}: NavDrawerProps) => {
 
       <section
         id="drawer-disable-body-scrolling"
-        className={`fixed top-0 left-0 z-50 h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-slate-800 ${
+        className={`fixed top-0 left-0 z-[1001] h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-slate-800 ${
           isOpen ? 'transform-none' : '-translate-x-full '
         }`}
         tabIndex={-1}
