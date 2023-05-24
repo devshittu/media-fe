@@ -8,7 +8,7 @@ export const useBodyClass = (bodyClass?: string) => {
 export const useBodyStyle = (isNavOpen: boolean) => {
   useEffect(() => {
     isNavOpen
-      ? (document.body.style.overflowY = 'hidden')
-      : document.body.style.removeProperty('overflow-y');
+      ? (document.body.style.overflow = 'hidden')
+      : document.body.style.removeProperty('overflow');
   }, [isNavOpen]);
 };
