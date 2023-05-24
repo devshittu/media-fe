@@ -5,7 +5,7 @@ import { useScrollBehavior } from '@/hooks';
 import { useState } from 'react';
 
 const Index = () => {
-  const { isScrolledUp } = useScrollBehavior();
+  const { isScrolledUp, yPosition } = useScrollBehavior();
 
   return (
     <div
@@ -23,7 +23,7 @@ const Index = () => {
             <header
               className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-350 ease-out  lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
                 ${
-                  isScrolledUp
+                  isScrolledUp || yPosition === 0
                     ? 'transform translate-x-0 translate-z-0 translate-y-0 '
                     : 'transform translate-x-0 translate-z-0 translate-y-[-53px]'
                 }
@@ -80,11 +80,13 @@ const Index = () => {
             </header>
             {/* mobile */}
             <header
-              className={`lg:hidden fixed left-0 top-[-1.5px] w-full backdrop-blur flex-none transition-all duration-350 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 ${
-                isScrolledUp
-                  ? 'transform translate-x-0 translate-z-0 translate-y-0 '
-                  : 'transform translate-x-0 translate-z-0 translate-y-[-53px]'
-              } `}
+              className={`lg:hidden fixed left-0 top-[-1.5px] w-full backdrop-blur flex-none transition-all duration-350 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
+              transform translate-x-0 translate-z-0 
+              ${
+                isScrolledUp || yPosition === 0
+                  ? 'translate-y-0 '
+                  : 'translate-y-[-53px]'
+              }`}
             >
               <div className={`flex items-center p-4 lg:hidden `}>
                 <NavDrawerLeft />
@@ -93,15 +95,6 @@ const Index = () => {
                     Home
                   </li>
                 </ol>
-              </div>
-              <div
-                className={`hidden  transition-all duration-500 ${
-                  !isScrolledUp ? 'relative  -top-400' : 'lg:flex'
-                }`}
-              >
-                <h1 className="mb-4x text-4xlx text-xl p-4 pl-8 font-extrabold leading-none tracking-tight text-slate-900 md:text-5xlx lg:text-6xlx dark:text-white">
-                  Home
-                </h1>
               </div>
               <div>
                 <ul
@@ -139,12 +132,16 @@ const Index = () => {
                 </ul>
               </div>
             </header>
-            <StoryItem />
-            {/* <StoryItem2 /> */}
-            <StoryItem />
-            <StoryItem />
-            <StoryItem />
-            <StoryItem />
+            <section>
+              <div className={`mt-28 lg:mt-0`}>
+                <StoryItem />
+                {/* <StoryItem2 /> */}
+                <StoryItem />
+                <StoryItem />
+                <StoryItem />
+                <StoryItem />
+              </div>
+            </section>
           </div>
           <div
             className={`relative hidden lg:flex p-0 z-0 min-w-0 min-h-0 box-border my-0 ml-0 flex-shrink-0 basis-auto flex-col border-0 w-[350px] items-stretch`}

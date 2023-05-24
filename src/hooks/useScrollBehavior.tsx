@@ -29,5 +29,5 @@ export const useScrollBehavior = () => {
       window.removeEventListener('scroll', handleNavigation);
     };
   }, [handleNavigation]);
-  return { isScrolledUp };
+  return { isScrolledUp, yPosition: y };
 };
