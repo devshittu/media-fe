@@ -1,4 +1,9 @@
-import { NavDrawerLeft, NavMain } from '@/components/blocks/nav';
+import {
+  NavDrawerLeft,
+  NavDrawerTop,
+  NavDrawerRight,
+  NavMain,
+} from '@/components/blocks/nav';
 import { SidePanel } from '@/components/blocks/side-panel';
 import { StoryItem, StoryItem2 } from '@/components/blocks/stories';
 import { useScrollBehavior } from '@/hooks';
@@ -90,6 +95,8 @@ const Index = () => {
             >
               <div className={`flex items-center p-4 lg:hidden `}>
                 <NavDrawerLeft />
+                <NavDrawerRight />
+                <NavDrawerTop />
                 <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
                   <li className="font-semibold text-slate-900 truncate dark:text-slate-200">
                     Home
