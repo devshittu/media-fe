@@ -21,7 +21,7 @@ export type NavProviderProps = {
   children?: React.ReactNode;
 };
 
-export const NavProvider: React.FC = ({ children }: NavProviderProps) => {
+export const NavProvider = ({ children }: NavProviderProps) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [value, setValue] = useState('');
   const [bodyClass, setBodyClass] = useState('');
