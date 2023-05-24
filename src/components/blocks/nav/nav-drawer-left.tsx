@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
-import { NavDrawerProps } from './types';
+import { NavContext, NavDrawerProps } from './index';
 
 export const NavDrawerLeft = ({}: NavDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const { setIsNavOpen } = useContext(NavContext);
+
   const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+    const openStatus = !isOpen;
+    setIsOpen(openStatus);
+    setIsNavOpen(openStatus);
   };
 
   return (
