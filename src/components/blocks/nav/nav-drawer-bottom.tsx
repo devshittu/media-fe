@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import Link from 'next/link';
 import { NavContext, NavDrawerProps } from './index';
 
-export const NavDrawerBottom = ({ children }: NavDrawerProps) => {
+export const NavDrawerBottom = ({ title, children }: NavDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { setIsNavOpen } = useContext(NavContext);
@@ -67,7 +66,7 @@ export const NavDrawerBottom = ({ children }: NavDrawerProps) => {
                 clipRule="evenodd"
               ></path>
             </svg>
-            Bottom drawer
+            {title ? title : 'Undefined Title'}
           </h5>
           <button
             type="button"
@@ -92,78 +91,8 @@ export const NavDrawerBottom = ({ children }: NavDrawerProps) => {
             <span className="sr-only">Close menu</span>
           </button>
         </header>
-
         <section className="max-w-lg mb-6 text-sm text-slate-500 dark:text-slate-400">
-          {children ? (
-            children
-          ) : (
-            <>
-              <ul className="space-y-2 font-bold text-lg">
-                <li>
-                  <Link
-                    href="/stories"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                      <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
-                    <span className="ml-3">Stories</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/draft/"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                      <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
-                    <span className="ml-3">New Post</span>
-                  </Link>
-                </li>
-              </ul>
-
-              <Link
-                href="#"
-                className="px-4 py-2 mr-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              >
-                Learn more
-              </Link>
-              <Link
-                href="#"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              >
-                Get access{' '}
-                <svg
-                  className="w-4 h-4 ml-2"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </Link>
-            </>
-          )}
+          {children ? children : <p>Drawer body undefined</p>}
         </section>
         <footer></footer>
       </section>

@@ -1,4 +1,5 @@
 export type NavDrawerProps = {
   active?: boolean;
-  children?: React.ReactNode;
+  title?: string;
+  children: React.ReactNode;
 };
