@@ -27,12 +27,14 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <title>Media App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <style jsx global>{`
+        <style jsx global>
+          {`
         :root {
-  --inter-font: ${inter.style.fontFamily};
-  --roboto-mono-font: ${roboto_mono.style.fontFamily};
+            --inter-font: ${inter.style.fontFamily};
+            --roboto-mono-font: ${roboto_mono.style.fontFamily};
 
-`}</style>
+          `}
+        </style>
       </Head>
       <AppProvider>{pageContent}</AppProvider>
     </>
