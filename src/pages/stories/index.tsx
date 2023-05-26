@@ -89,7 +89,8 @@ const Index = () => {
             </header>
             {/* mobile */}
             <header
-              className={`lg:hidden fixed left-0 top-[-1.5px] w-full backdrop-blur flex-none transition-all duration-350 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
+              className={`lg:hidden fixed left-0 top-[-1.5px] z-30
+               w-full backdrop-blur flex-none transition-all duration-350 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
               transform translate-x-0 translate-z-0 
               ${
                 isScrolledUp || yPosition === 0

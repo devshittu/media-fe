@@ -24,7 +24,7 @@ const ThemeSwitch = ({ showLabel = false }: ThemeSwitchProps) => {
       <Head>
         <meta
           name="theme-color"
-          content={theme === THEME_DARK ? '#0C3251' : '#D5EFFF'}
+          content={theme === THEME_DARK ? '#0f172a' : '#FAFBFC'}
         />
       </Head>
       <button
