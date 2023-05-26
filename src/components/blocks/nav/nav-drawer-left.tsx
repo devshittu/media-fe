@@ -1,23 +1,31 @@
 import React, { useContext, useState } from 'react';
 import { NavContext, NavDrawerProps } from './index';
 
-export const NavDrawerLeft = ({ title, children }: NavDrawerProps) => {
+export const NavDrawerLeft = ({ id, title, children }: NavDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { setIsNavOpen } = useContext(NavContext);
 
-  const toggleSidebar = () => {
-    const openStatus = !isOpen;
-    setIsOpen(openStatus);
-    setIsNavOpen(openStatus);
+  const openModal = () => {
+    setIsOpen(true);
+    document.documentElement.style.overflow = 'hidden';
+    // setIsNavOpen(isOpen);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    document.documentElement.style.overflow = '';
+    // setIsNavOpen(isOpen);
   };
 
   return (
     <>
       <button
+        data-drawer-target={id}
+        data-drawer-toggle={id}
         type="button"
         className="text-slate-500 hover:text-slate-600 dark:text-slate-400 dark:hover:text-slate-300"
-        onClick={toggleSidebar}
+        onClick={openModal}
       >
         <span className="sr-only">Navigation</span>
         <svg width="24" height="24">
@@ -30,25 +38,27 @@ export const NavDrawerLeft = ({ title, children }: NavDrawerProps) => {
           ></path>
         </svg>
       </button>
+      {/* Overlay background */}
       <div
-        className={`fixedx inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 z-[51] w-full h-screen overflow-y-hidden ${
+        className={`inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 z-30 w-full h-screen overflow-y-hidden ${
           isOpen
             ? 'fixed top-0 bottom-0 left-0 right-0 overflow-y-hidden'
             : 'hidden '
         }`}
-        id="headlessui-dialog-overlay-:r4:"
+        id={`${id}-drawer-overlay`}
         aria-hidden="true"
-        data-headlessui-state="open"
-        onClick={toggleSidebar}
+        data-drawer-state={`${isOpen ? 'open' : 'close'}`}
+        onClick={closeModal}
       ></div>
 
+      {/* Modal content */}
       <section
-        id="drawer-disable-body-scrolling"
-        className={`fixed top-0 left-0 z-[1001] h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-slate-800 ${
+        id={id}
+        className={`fixed top-0 left-0 z-30 h-screen p-4 overflow-y-auto transition-transform bg-white w-80 dark:bg-slate-800 ${
           isOpen ? 'transform-none' : '-translate-x-full '
         }`}
         tabIndex={-1}
-        aria-labelledby="drawer-disable-body-scrolling-label"
+        aria-labelledby={`${id}-label`}
       >
         <h5
           id="drawer-disable-body-scrolling-label"
@@ -58,10 +68,10 @@ export const NavDrawerLeft = ({ title, children }: NavDrawerProps) => {
         </h5>
         <button
           type="button"
-          data-drawer-hide="drawer-disable-body-scrolling"
-          aria-controls="drawer-disable-body-scrolling"
+          data-drawer-hide={id}
+          aria-controls={id}
           className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-          onClick={toggleSidebar}
+          onClick={closeModal}
         >
           <svg
             aria-hidden="true"
@@ -79,9 +89,7 @@ export const NavDrawerLeft = ({ title, children }: NavDrawerProps) => {
           <span className="sr-only">Close menu</span>
         </button>
         {/* The drawer body */}
-        <section className="py-4 overflow-y-auto">
-          {children ? children : <p>Drawer body undefined </p>}
-        </section>
+        <section className="py-4 overflow-y-auto">{children}</section>
       </section>
     </>
   );

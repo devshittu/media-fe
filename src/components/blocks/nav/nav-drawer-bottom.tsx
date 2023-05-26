@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { NavContext, NavDrawerProps } from './index';
 
-export const NavDrawerBottom = ({ title, children }: NavDrawerProps) => {
+export const NavDrawerBottom = ({ id, title, children }: NavDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { setIsNavOpen } = useContext(NavContext);

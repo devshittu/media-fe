@@ -32,7 +32,7 @@ export const NavDrawerRight = ({ title, children }: NavDrawerProps) => {
       </button>
       {/* Overlay background */}
       <div
-        className={`fixedx inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 z-[51] w-full h-screen overflow-y-hidden ${
+        className={`fixedx inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 z-50 w-full h-screen overflow-y-hidden ${
           isOpen
             ? 'fixed top-0 bottom-0 left-0 right-0 overflow-y-hidden'
             : 'hidden '

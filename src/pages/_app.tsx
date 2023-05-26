@@ -1,5 +1,6 @@
 import { AppProvider } from '@/providers/app';
 import '@/styles/globals.css';
+import { inter, roboto_mono } from '@/utils/fonts';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -26,6 +27,12 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <title>Media App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <style jsx global>{`
+        :root {
+  --inter-font: ${inter.style.fontFamily};
+  --roboto-mono-font: ${roboto_mono.style.fontFamily};
+
+`}</style>
       </Head>
       <AppProvider>{pageContent}</AppProvider>
     </>
