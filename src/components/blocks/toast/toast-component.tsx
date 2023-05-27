@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ToastProps } from './types';
+import { useKeyPress } from '@/hooks';
 
 export const ToastComponent = ({
   id,
@@ -10,17 +11,6 @@ export const ToastComponent = ({
   onClose,
 }: ToastProps) => {
   const [isOpen, setIsOpen] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-      if (onClose) {
-        onClose();
-      }
-    }, duration);
-
-    return () => clearTimeout(timer);
-  }, [duration, onClose]);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -80,6 +70,16 @@ export const ToastComponent = ({
     return className;
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+      if (onClose) {
+        onClose();
+      }
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [duration, onClose]);
   return (
     <div
       id={id}
