@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import { Toast } from '@/components/blocks/toast';
+import { Button } from '@/components/button';
 
 const Index = () => {
   const { isScrolledUp, yPosition } = useScrollBehavior();
@@ -20,7 +21,7 @@ const Index = () => {
   const ShowToast = () => {
     const notify = new Toast({
       message: 'Hello, world!',
-      position: 'bottom-right',
+      position: 'bottom-center',
       type: 'success',
       onClose: () => {
         // Handle close event
@@ -30,6 +31,10 @@ const Index = () => {
     });
 
     notify.open();
+  };
+
+  const loadLatest = () => {
+    console.log('Loading latest');
   };
   return (
     <div
@@ -169,14 +174,20 @@ const Index = () => {
             </header>
             <section>
               <div className={`mt-28 lg:mt-0`}>
-                <button onClick={ShowToast}>Show Toast</button>
-
-                <StoryItem />
-                {/* <StoryItem2 /> */}
-                <StoryItem />
-                <StoryItem />
-                <StoryItem />
-                <StoryItem />
+                <div
+                  className={`flex align-middle items-center justify-centerx justify-around min-h-[56px]`}
+                >
+                  <Button onClick={loadLatest}>Load new feeds</Button>
+                  <Button onClick={ShowToast}>Show Toast</Button>
+                </div>
+                <article>
+                  <StoryItem />
+                  {/* <StoryItem2 /> */}
+                  <StoryItem />
+                  <StoryItem />
+                  <StoryItem />
+                  <StoryItem />
+                </article>
               </div>
             </section>
           </div>

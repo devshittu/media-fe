@@ -5,7 +5,7 @@ export const ToastComponent = ({
   id,
   type = 'success',
   message,
-  position = 'bottom-right',
+  position = 'bottom-center',
   duration = 3000,
   onClose,
 }: ToastProps) => {
@@ -31,7 +31,7 @@ export const ToastComponent = ({
 
   const getToastClassName = () => {
     let className =
-      'fixed flex items-center justify-between w-full max-w-xs p-4 mb-4 text-slate-500 bg-white shadow rounded-lg dark:text-slate-400 dark:bg-slate-800 ';
+      'fixed flex items-center justify-between w-full max-w-xs lg:max-w-lg z-30 p-4 mb-4 text-slate-500 bg-white shadow rounded-lgx dark:text-slate-400 dark:bg-slate-800 ';
 
     if (type === 'success') {
       className += ' bg-green-50';
@@ -61,18 +61,29 @@ export const ToastComponent = ({
     return className;
   };
 
+  const getPositionClassName = () => {
+    let className = '';
+    if (position === 'top-left') {
+      className += ' top-5 left-5';
+    } else if (position === 'top-center') {
+      className += ' top-5 left-[50%] transform translate-x-[-50%]';
+    } else if (position === 'top-right') {
+      className += ' top-5 right-5';
+    } else if (position === 'bottom-left') {
+      className += ' bottom-5 left-5';
+    } else if (position === 'bottom-center') {
+      className += ' bottom-5  left-[50%] transform translate-x-[-50%]';
+    } else if (position === 'bottom-right') {
+      className += ' bottom-5 right-5';
+    }
+
+    return className;
+  };
+
   return (
     <div
       id={id}
-      className={`${getToastClassName()} ${
-        position === 'top-left'
-          ? 'top-5 left-5'
-          : position === 'top-right'
-          ? 'top-5 right-5'
-          : position === 'bottom-right'
-          ? 'bottom-5 right-5'
-          : 'bottom-5 left-5'
-      } dark:text-slate-400 dark:divide-slate-700 space-x-4 divide-x divide-slate-200 dark:bg-slate-800  ${
+      className={`${getToastClassName()} ${getPositionClassName()} dark:text-slate-400 dark:divide-slate-700 space-x-4 divide-x divide-slate-200 dark:bg-slate-800  ${
         isOpen ? '' : 'hidden'
       }`}
       role="alert"

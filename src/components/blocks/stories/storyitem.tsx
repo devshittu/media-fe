@@ -8,10 +8,10 @@ import { Modal } from '@/components/blocks/modal';
 export const StoryItem = () => {
   return (
     <article className="p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ">
-      <div className={`flex items-center justify-space`}>
-        <span className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest">
+      <div className={`flex align-middle items-center justify-between w-full`}>
+        <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest">
           CATEGORY
-        </span>
+        </div>
 
         <Modal id="modal-1" title="Share">
           <div className="p-6 space-y-6 ">
@@ -360,7 +360,7 @@ export const StoryItem = () => {
       <h2 className="sm:text-3xl text-2xl title-font mt-4 mb-4  font-extrabold text-slate-900 tracking-tight dark:text-slate-200">
         Roof party normcore before they sold out, cornhole vape
       </h2>
-      <p className="leading-relaxed mb-8 text-justify">
+      <p className="leading-relaxed mb-8 text-justify text-lgx lg:text-xlx">
         {`Live-edge letterpress cliche, salvia fanny pack humblebrag
                 narwhal portland. VHS man braid palo santo hoodie brunch trust
                 fund. Bitters hashtag waistcoat fashion axe chia unicorn. Plaid
