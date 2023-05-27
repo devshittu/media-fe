@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useKeyPress } from '@/hooks';
+import React, { useEffect, useState } from 'react';
 
 type ModalProps = {
   id: string;
@@ -15,6 +16,7 @@ export const Modal = ({
 }: ModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const escapePressed = useKeyPress('Escape');
   const sizeClassName = {
     small: 'max-w-md',
     default: 'max-w-lg',
@@ -30,6 +32,13 @@ export const Modal = ({
     setIsOpen(false);
     document.documentElement.style.overflow = '';
   };
+
+  useEffect(() => {
+    if (escapePressed) {
+      closeModal();
+    }
+  }, [escapePressed]);
+
   return (
     <>
       <button
