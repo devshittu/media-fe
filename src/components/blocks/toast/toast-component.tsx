@@ -1,26 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { ToastProps } from './types';
 
-type ToastProps = {
-  id: string;
-  type: 'success' | 'danger' | 'warning';
-  position?:
-    | 'top-left'
-    | 'top-center'
-    | 'top-right'
-    | 'bottom-right'
-    | 'bottom-center'
-    | 'bottom-left';
-  message: string;
-  duration?: number;
-  onClose?: () => void;
-};
-
-export const Toast = ({
+export const ToastComponent = ({
   id,
   type = 'success',
   message,
   position = 'bottom-right',
-  duration = 30000,
+  duration = 3000,
   onClose,
 }: ToastProps) => {
   const [isOpen, setIsOpen] = useState(true);
