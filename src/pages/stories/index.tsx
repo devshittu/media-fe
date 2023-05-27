@@ -10,10 +10,13 @@ import { useScrollBehavior } from '@/hooks';
 import { useState } from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
+import { Toast } from '@/components/blocks/toast';
 
 const Index = () => {
   const { isScrolledUp, yPosition } = useScrollBehavior();
-
+  const handleToastClose = () => {
+    console.log('Toast closed');
+  };
   return (
     <div
       className={`relative container lg:grid lg:grid-cols-10 lg:max-w-7xl mx-auto`}
@@ -152,6 +155,26 @@ const Index = () => {
             </header>
             <section>
               <div className={`mt-28 lg:mt-0`}>
+                <Toast
+                  id="toast-success"
+                  position="top-center"
+                  type="success"
+                  message="Item moved successfully. Live-edge letterpress cliche, salvia fanny pack humblebrag narwhal portland."
+                  onClose={handleToastClose}
+                />
+                <Toast
+                  id="toast-danger"
+                  type="danger"
+                  message="Item has been deleted."
+                  onClose={handleToastClose}
+                />
+                <Toast
+                  id="toast-warning"
+                  type="warning"
+                  message="Improve password difficulty. "
+                  onClose={handleToastClose}
+                />
+
                 <StoryItem />
                 {/* <StoryItem2 /> */}
                 <StoryItem />
