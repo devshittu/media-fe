@@ -6,29 +6,33 @@ import { Button } from '@/components/button';
 import { useScrollBehavior } from '@/hooks';
 
 export const SidePanel = () => {
-  const { isScrolledUp } = useScrollBehavior();
+  const { isScrolledUp, yPosition, screenHeight } = useScrollBehavior();
+
+  console.log('screenHeight', screenHeight);
   return (
-    <div className="flex-1 py-4 space-y-4 hidden lg:block">
+    <div className="flex-1 pb-16 space-y-4 hidden lg:block">
       {/* <div className={`sticky top-0 pb-2 `}> */}
-      <div className={`sticky top-0 pb-2 `}>
-        <InputField name="Search" placeholder="Search app" className="mb-11" />
+      <div className={`sticky top-0 z-10 pb-2 bg-white dark:bg-slate-900`}>
+        <div className="py-4">
+          <InputField name="Search" placeholder="Search app" className="mb-4" />
+        </div>
       </div>
-      <div
-        className={` bg-slate-50 dark:bg-slate-800 ${
+      {/* ${
           isScrolledUp ? 'sticky top-12 mt-16' : ''
-        }`}
-      >
+        } */}
+      <div className={` bg-slate-50 dark:bg-slate-800 `}>
         <div className="block py-2  px-2 rounded-2xl shadow-sm">
           <p className={`font-extrabold text-lg `}>Trends for you</p>
         </div>
       </div>
+      {/*  ${
+          isScrolledUp ? ' top-80 ' : ' top-24'
+        }  */}
       <div
-        className={`block bg-slate-50 dark:bg-slate-800 py-2  ${
-          isScrolledUp ? 'sticky top-80 ' : 'sticky top-12'
-        }  transition-all duration-300 px-2 rounded-2xl shadow-sm`}
+        className={`stickyx block bg-slate-50 dark:bg-slate-800 py-2 ease-in transition-all duration-300 px-2x rounded-2xlx shadow-sm`}
       >
-        <div className="border-b py-2">
-          <h1 className="font-extrabold text-lg">Who to follow</h1>
+        <div className="border-b py-2 border-slate-200 dark:border-slate-700 ">
+          <h1 className="font-extrabold text-xl">Who to follow</h1>
         </div>
         <div className=" border-b border-slate-200 dark:border-slate-700 items-center justify-between flex py-4 px-2">
           <div className="flex space-x-4">
