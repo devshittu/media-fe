@@ -3,11 +3,16 @@ import React, { useCallback, useEffect, useState } from 'react';
 export const useScrollBehavior = () => {
   const [isScrolledUp, setIsScrolledUp] = useState(false);
   const [y, setY] = useState<number>(
-    typeof window !== 'undefined' ? window.scrollY : 0,
+    typeof window !== 'undefined'
+      ? window.scrollY ||
+          window.pageYOffset ||
+          document.documentElement.scrollTop
+      : 0,
   );
   const [screenHeight, setScreenHeight] = useState<number>(
     typeof window !== 'undefined' ? window.innerHeight : 0,
   );
+  const [initialScrollPosition, setInitialScrollPosition] = useState<number>(0);
 
   const handleNavigation = useCallback(
     (e: Event) => {
@@ -34,5 +39,11 @@ export const useScrollBehavior = () => {
     };
   }, [handleNavigation]);
 
-  return { isScrolledUp, yPosition: y, screenHeight };
+  useEffect(() => {
+    if (!isScrolledUp) {
+      setInitialScrollPosition(y);
+    }
+  }, [y, isScrolledUp]);
+
+  return { isScrolledUp, yPosition: y, screenHeight, initialScrollPosition };
 };

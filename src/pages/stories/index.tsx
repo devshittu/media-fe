@@ -11,13 +11,90 @@ import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import { Toast } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import PublicLayout from '@/layouts/public-layout';
 import MainMenu from '@/components/menus/main-menu';
 
 const Index = () => {
-  const { isScrolledUp, yPosition } = useScrollBehavior();
+  const { isScrolledUp, yPosition, initialScrollPosition } =
+    useScrollBehavior();
+  const headerRef = useRef<HTMLElement>(null);
+  // Utility function to calculate the translation value based on scroll position
+  // const calculateTranslation = (
+  //   yPosition: number,
+  //   initialScrollPosition: number,
+  //   maxElementHeight: number,
+  // ) => {
+  //   const scrollDifference = yPosition - initialScrollPosition;
+  //   const maxTranslation = -maxElementHeight;
+  //   const minTranslation = 0;
 
+  //   // Calculate the translation value within the desired range
+  //   let translation = Math.max(
+  //     maxTranslation,
+  //     Math.min(minTranslation, scrollDifference),
+  //   );
+
+  //   // Adjust the translation for scrolling down
+  //   if (scrollDifference > 0) {
+  //     translation = Math.min(0, translation);
+  //   }
+
+  //   return translation;
+  // };
+
+  // const maxElementHeight = 53; // Height of #concealable element
+
+  // // Calculate the translation value
+  // const translation = calculateTranslation(
+  //   yPosition,
+  //   initialScrollPosition,
+  //   maxElementHeight,
+  // );
+
+  // console.log('translation', translation);
+
+  // useEffect(() => {
+  //   if (headerRef.current) {
+  //     // Access the element and modify the style attribute
+  //     headerRef.current.style.transform = `translateY(${translation}px)`;
+  //   }
+  // }, [translation]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Calculate the negative value based on scroll position
+      // let negativeValue = -Math.floor(currentScroll / 10);
+      let negativeValue = -Math.floor(yPosition / 10);
+      // console.log('currentScroll', currentScroll);
+      console.log('yPosition', yPosition);
+
+      // Reverse the negative value if scrolling up
+      if (isScrolledUp) {
+        negativeValue = -negativeValue;
+      } else {
+        negativeValue = negativeValue;
+      }
+
+      // Ensure the negative value does not exceed -53 or go below 0
+      negativeValue = Math.max(-53, Math.min(0, negativeValue));
+
+      // Apply the transformation to the header element
+      if (headerRef.current) {
+        headerRef.current.style.transform = `translateY(${negativeValue}px)`;
+      }
+
+      console.log('negativeValue:', negativeValue);
+    };
+
+    // Attach the event listener to the scroll event
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      // Detach the event listener on component unmount
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [yPosition, isScrolledUp]);
   const handleToastClose = () => {
     console.log('Toast closed');
   };
@@ -47,29 +124,22 @@ const Index = () => {
         className={`flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-full lg:max-w-[640px] box-border border-slate-100 dark:border-slate-800`}
       >
         {/* Desktop */}
-        <header
-          className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-350 ease-out  lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
-                ${
+        {/* ${
                   isScrolledUp || yPosition < 100
-                    ? 'transform translate-x-0 translate-z-0 translate-y-0 '
-                    : 'transform translate-x-0 translate-z-0 translate-y-[-53px]'
-                }
-              `}
+                    ? ' translate-y-0 '
+                    : ` translate-y-[${-53}px]`
+                } 
+        */}
+        <header
+          ref={headerRef}
+          className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-350x ease-out transform translate-x-0 translate-z-0  lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
         >
-          <div className={`flex items-center p-4 lg:hidden `}>
-            {/* <NavDrawerLeft /> */}
-            <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
-              <li className="font-semibold text-slate-900 truncate dark:text-slate-200">
-                Home
-              </li>
-            </ol>
-          </div>
           <div className={`transition-all duration-350 ease-out`}>
             <h1 className="mb-4x text-4xlx text-xl p-4 pl-8 font-extrabold leading-none tracking-tight text-slate-900 md:text-5xlx lg:text-6xlx dark:text-white">
               Home
             </h1>
           </div>
-          <div className={`${isScrolledUp ? 'relative' : 'sticky top-0'}`}>
+          <div>
             <ul
               className="flex justify-around -mb-px text-sm font-medium text-center"
               id="myTab"
