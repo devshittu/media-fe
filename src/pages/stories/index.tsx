@@ -19,74 +19,102 @@ const Index = () => {
   const { isScrolledUp, yPosition, initialScrollPosition } =
     useScrollBehavior();
   const headerRef = useRef<HTMLElement>(null);
-  // Utility function to calculate the translation value based on scroll position
-  // const calculateTranslation = (
-  //   yPosition: number,
-  //   initialScrollPosition: number,
-  //   maxElementHeight: number,
-  // ) => {
-  //   const scrollDifference = yPosition - initialScrollPosition;
-  //   const maxTranslation = -maxElementHeight;
-  //   const minTranslation = 0;
+  const [x, setX] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  function growInternalVariable(y: number) {
+    let internalVariable = 0; // Initial value of the internal variable
 
-  //   // Calculate the translation value within the desired range
-  //   let translation = Math.max(
-  //     maxTranslation,
-  //     Math.min(minTranslation, scrollDifference),
-  //   );
+    // Check if y is within the allowed range
+    if (Number.isInteger(y)) {
+      // Calculate the potential new value of the internal variable
+      const potentialValue = internalVariable + y;
 
-  //   // Adjust the translation for scrolling down
-  //   if (scrollDifference > 0) {
-  //     translation = Math.min(0, translation);
-  //   }
+      // Determine the new value based on the potential value and the constraints
+      if (potentialValue <= 50 && potentialValue >= 0) {
+        internalVariable = potentialValue;
+      } else if (potentialValue > 50) {
+        internalVariable = 50;
+      } else {
+        internalVariable = 0;
+      }
+    } else {
+      console.log('Invalid value for y. y should be an integer.');
+    }
 
-  //   return translation;
-  // };
+    return internalVariable;
+  }
 
-  // const maxElementHeight = 53; // Height of #concealable element
+  function calculateX(x:number, y:number, scrollDirection: string) {
+    const minX = -50;
+    const minY = 0;
+    let keepX = 0;
 
-  // // Calculate the translation value
-  // const translation = calculateTranslation(
-  //   yPosition,
-  //   initialScrollPosition,
-  //   maxElementHeight,
-  // );
+    // If y changes positively and x is at the lowest range, x remains at the lowest range
+    if (scrollDirection === 'down' && y > minY && x === minX) {
+      return minX;
+    }
 
-  // console.log('translation', translation);
+    // If y increases, update x accordingly
+    if (scrollDirection === 'down' && y > x + minY) {
+      console.log('y increasing and x is at, ', keepX, ' moving x is ', x);
+      const difference = y - x - minY;
+      const increments = Math.ceil(difference / 20);
+      const newX = Math.max(minX, x - increments);
+      keepX = newX;
+      return newX;
+    }
 
-  // useEffect(() => {
-  //   if (headerRef.current) {
-  //     // Access the element and modify the style attribute
-  //     headerRef.current.style.transform = `translateY(${translation}px)`;
-  //   }
-  // }, [translation]);
+    // If y decreases, update x accordingly
+    // if (scrollDirection === 'up' && y < x + minY) {
+    if (scrollDirection === 'up') {
+      console.log('y decreasing and x is at, ', keepX, ' moving x is ', x);
+      const difference = x + minY - y;
+      const increments = Math.ceil(difference / 20);
+      const newX = Math.min(0, x + increments);
+      return newX;
+    }
+
+    // If none of the conditions match, return the current value of x
+    return x;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
-      // Calculate the negative value based on scroll position
-      // let negativeValue = -Math.floor(currentScroll / 10);
-      let negativeValue = -Math.floor(yPosition / 10);
-      // console.log('currentScroll', currentScroll);
-      console.log('yPosition', yPosition);
+      let prevScroll = 0;
+      const currentScroll =
+        window.pageYOffset || document.documentElement.scrollTop;
+      let scrollDirection = '';
 
-      // Reverse the negative value if scrolling up
-      if (isScrolledUp) {
-        negativeValue = -negativeValue;
+      if (currentScroll > prevScroll) {
+        // Scrolling down
+        scrollDirection = 'down';
       } else {
-        negativeValue = negativeValue;
+        // Scrolling up
+        scrollDirection = 'up';
       }
 
-      // Ensure the negative value does not exceed -53 or go below 0
-      negativeValue = Math.max(-53, Math.min(0, negativeValue));
+      prevScroll = currentScroll;
 
+      const x = calculateX(0, currentScroll, scrollDirection);
       // Apply the transformation to the header element
       if (headerRef.current) {
-        headerRef.current.style.transform = `translateY(${negativeValue}px)`;
+        console.log(
+          'headerRef.current.style.transform: ',
+          headerRef.current.style.transform,
+        );
+        // Calculate the value of x using the calculateX function
+        // const x = calculateX(headerRef.current.style.transform, currentScroll, scrollDirection);
+
+        setX(x);
+        console.log('x', x);
+        // headerRef.current.style.transform = `translateY(${x}px)`;
       }
 
-      console.log('negativeValue:', negativeValue);
+       const headerHeightValue = growInternalVariable(yPosition-initialScrollPosition);
+        setHeaderHeight(headerHeightValue);
+        console.log('headerHeightValue: ', headerHeightValue);
+      // console.log(x);
     };
-
     // Attach the event listener to the scroll event
     window.addEventListener('scroll', handleScroll);
 
@@ -94,7 +122,7 @@ const Index = () => {
       // Detach the event listener on component unmount
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [yPosition, isScrolledUp]);
+  }, [yPosition, isScrolledUp, initialScrollPosition]);
   const handleToastClose = () => {
     console.log('Toast closed');
   };
@@ -133,6 +161,7 @@ const Index = () => {
         <header
           ref={headerRef}
           className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-350x ease-out transform translate-x-0 translate-z-0  lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
+          style={{ transform: `translateY(${isScrolledUp ? '0' : ` ${x}`}px)` }}
         >
           <div className={`transition-all duration-350 ease-out`}>
             <h1 className="mb-4x text-4xlx text-xl p-4 pl-8 font-extrabold leading-none tracking-tight text-slate-900 md:text-5xlx lg:text-6xlx dark:text-white">
