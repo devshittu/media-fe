@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 // import styles from '@/styles/draft.module.css';
 import Link from 'next/link';
 import { NavMain } from '@/components/blocks/nav';
+import PublicLayout from '@/layouts/public-layout';
 
 const Index = () => {
   return (
     <div className={`relative container grid grid-cols-10 max-w-7xl mx-auto`}>
-      <NavMain />
-
       {/* <article className={styles.draft_main}> */}
-      <article className={`col-span-8 border-r`}>
+      <article className={`col-span-8 border-rx`}>
         <div className="p-4 sm:ml-64x">
           <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
             <div className="grid grid-cols-3 gap-4 mb-4">
@@ -64,4 +63,7 @@ const Index = () => {
   );
 };
 
+Index.getLayout = function getLayout(page: ReactElement) {
+  return <PublicLayout>{page}</PublicLayout>;
+};
 export default Index;
