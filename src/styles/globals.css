@@ -8,12 +8,15 @@
   }
 
 body{
-  @apply font-inter;
+  /* @apply font-inter; */
+  @apply font-source-serif-pro lg:text-xl lg:leading-8 tracking-tight;
 }
 h1,h2,h3,h4,h5,h6{
-  @apply font-roboto-mono font-medium;
+  @apply font-inter font-medium;
 }
-
+input, button, textarea, select {
+  @apply font-inter;
+}
 }
 
 @tailwind components;
