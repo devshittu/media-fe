@@ -2,13 +2,11 @@ import {
   NavDrawerLeft,
   NavDrawerTop,
   NavDrawerRight,
-  NavMain,
 } from '@/components/blocks/nav';
 import { SidePanel } from '@/components/blocks/side-panel';
 import { StoryItem } from '@/components/blocks/stories';
 import { useScrollBehavior } from '@/hooks';
-import Link from 'next/link';
-import ThemeSwitch from '@/components/theme-switch/theme-switch';
+import Link from 'next/link'; 
 import { Toast } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
 import { ReactElement, useEffect, useRef, useState } from 'react';
@@ -44,7 +42,7 @@ const Index = () => {
     return internalVariable;
   }
 
-  function calculateX(x:number, y:number, scrollDirection: string) {
+  function calculateX(x: number, y: number, scrollDirection: string) {
     const minX = -50;
     const minY = 0;
     let keepX = 0;
@@ -110,9 +108,11 @@ const Index = () => {
         // headerRef.current.style.transform = `translateY(${x}px)`;
       }
 
-       const headerHeightValue = growInternalVariable(yPosition-initialScrollPosition);
-        setHeaderHeight(headerHeightValue);
-        console.log('headerHeightValue: ', headerHeightValue);
+      const headerHeightValue = growInternalVariable(
+        yPosition - initialScrollPosition,
+      );
+      setHeaderHeight(headerHeightValue);
+      console.log('headerHeightValue: ', headerHeightValue);
       // console.log(x);
     };
     // Attach the event listener to the scroll event
