@@ -31,3 +31,4 @@ const CheckboxGroup = ({ options, onChange }: CheckboxGroupProps) => {
 };
 
 export default CheckboxGroup;
+//Path: src/components/form/checkbox-group.tsx:
