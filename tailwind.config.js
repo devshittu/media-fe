@@ -8,6 +8,7 @@ module.exports = {
       fontFamily: {
         inter: ['Inter', ...fontFamily.sans],
         'roboto-mono': ['Roboto Mono', ...fontFamily.mono],
+        'source-serif-pro': ['Source Serif Pro', ...fontFamily.serif],
       },
     },
   },
