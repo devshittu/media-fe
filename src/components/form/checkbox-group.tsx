@@ -5,14 +5,15 @@ import { CheckboxGroupProps, CheckboxOption } from './types';
 const CheckboxGroup = ({ options, onChange }: CheckboxGroupProps) => {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [selectedOption, setSelectedOption] = useState<string[]>([]);
-  
 
   const handleCheckboxChange = (option: CheckboxOption) => {
     const newCheckedItems = { ...checkedItems };
     newCheckedItems[option.value] = !newCheckedItems[option.value];
     setCheckedItems(newCheckedItems);
     console.log('newCheckedItems', newCheckedItems);
-    setSelectedOption(Object.keys(newCheckedItems).filter((key) => newCheckedItems[key]));
+    setSelectedOption(
+      Object.keys(newCheckedItems).filter((key) => newCheckedItems[key]),
+    );
 
     if (onChange) {
       onChange(newCheckedItems);
