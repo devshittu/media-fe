@@ -4,9 +4,7 @@ import { Button } from '@/components/button';
 import { ChangeEvent, ReactElement, useRef, useState } from 'react';
 import PublicLayout from '@/layouts/public-layout';
 import MainMenu from '@/components/menus/main-menu';
-import Checkbox from '@/components/form/checkbox';
 import CheckboxGroup from '@/components/form/checkbox-group';
-import Radio from '@/components/form/radio';
 import RadioGroup from '@/components/form/radio-group';
 
 const Index = () => {
@@ -129,6 +127,7 @@ const Index = () => {
             <div className={`flexx flex-colx`}>
               <CheckboxGroup
                 options={options}
+                defaultValues={['option1', 'option2']}
                 onChange={handleCheckboxGroupChange}
               />
               <RadioGroup
