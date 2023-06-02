@@ -1,11 +1,13 @@
 import { NavDrawerLeft } from '@/components/blocks/nav';
 import Link from 'next/link';
 import { Button } from '@/components/button';
-import { ReactElement, useRef } from 'react';
+import { ChangeEvent, ReactElement, useRef, useState } from 'react';
 import PublicLayout from '@/layouts/public-layout';
 import MainMenu from '@/components/menus/main-menu';
 import Checkbox from '@/components/form/checkbox';
 import CheckboxGroup from '@/components/form/checkbox-group';
+import Radio from '@/components/form/radio';
+import RadioGroup from '@/components/form/radio-group';
 
 const Index = () => {
   const headerRef = useRef<HTMLElement>(null);
@@ -24,7 +26,22 @@ const Index = () => {
     console.log('Checked items:', checkedItems);
     // Perform any other actions based on the checked items
   };
+  const handleGroupChange = (value: string) => {
+    console.log('Selected option:', value);
+  };
 
+  const radioOptions = [
+    { id: 'Regular', name: 'myGroup', value: 'Regular', label: 'Regular' },
+    { id: 'Medium', name: 'myGroup', value: 'Medium', label: 'Medium' },
+    {
+      id: 'Large',
+      name: 'myGroup',
+      value: 'Large',
+      label: 'Large',
+      disabled: false,
+    },
+    { id: 'XLarge', name: 'myGroup', value: 'XLarge', label: 'XLarge' },
+  ];
   return (
     <div
       className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}
@@ -114,6 +131,12 @@ const Index = () => {
                 options={options}
                 onChange={handleCheckboxGroupChange}
               />
+              <RadioGroup
+                name="myGroup"
+                defaultValue="Regular"
+                options={radioOptions}
+              />
+
               <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
                 <div className="grid gap-8 row-gap-5 md:grid-cols-2">
                   <div className="relative p-px overflow-hidden transition duration-300 transform border rounded shadow-sm hover:scale-105 group hover:shadow-xl">

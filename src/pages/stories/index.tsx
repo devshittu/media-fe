@@ -6,7 +6,7 @@ import {
 import { SidePanel } from '@/components/blocks/side-panel';
 import { StoryItem } from '@/components/blocks/stories';
 import { useScrollBehavior } from '@/hooks';
-import Link from 'next/link'; 
+import Link from 'next/link';
 import { Toast } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
 import { ReactElement, useEffect, useRef, useState } from 'react';
