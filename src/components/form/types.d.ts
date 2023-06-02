@@ -13,6 +13,7 @@ export type CheckboxProps = {
 
 export type CheckboxGroupProps = {
   options: Option[];
+  defaultValues?: Option[];
   onChange?: (checkedItems: { [key: string]: boolean }) => void;
 };
 
