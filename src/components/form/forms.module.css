@@ -1,0 +1,135 @@
+
+
+.formControl{
+    @apply 
+    text-[1.8rem] md:text-[1.8rem] lg:text-[2rem] leading-[1.1] font-bold 
+    grid  grid-cols-[1em,auto] gap-2 
+    align-middle
+    ;
+}
+
+.formItemLabel{
+  @apply 
+  text-lg md:text-xl lg:text-xl;
+}
+
+.customCheckboxInput{
+    @apply appearance-none bg-transparent dark:bg-slate-900 m-0
+    font-[inherit] text-[currentColor] 
+    w-[0.750em] h-[0.750em] border-[0.09375em] 
+    md:w-[0.8750em] md:h-[0.8750em] md:border-[0.11em] 
+    lg:w-[1.15em] lg:h-[1.15em] lg:border-[0.15em] 
+    /* w-[1.15em] h-[1.15em] border-[0.15em] */
+    border-solid border-[currentColor] 
+    rounded-none
+    translate-y-[-0.075em]
+    grid place-content-center
+    ;
+}
+
+.customCheckboxInput::before{
+    @apply content-[""] 
+    w-[0.4em] h-[0.4em]
+    md:w-[0.525em] md:h-[0.525em]
+    lg:w-[0.65em] lg:h-[0.65em] 
+    transition-transform duration-[120ms] ease-in-out 
+    scale-[0.001]
+    shadow-[inset_1em_1em_#06b6d4]
+    
+/* Windows High Contrast Mode */
+   bg-[CanvasText] 
+   origin-bottom-left
+  ;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+   
+
+}
+.customCheckboxInput:focus {
+    /* @apply outline-2 outline-offset-2 outline-[currentColor];; */
+  outline: max(2px, 0.15em) solid currentColor;
+  outline-offset: max(2px, 0.15em);
+  @apply outline-cyan-300
+}
+
+.customCheckboxInput:checked::before {
+    @apply scale-100;
+}
+.formControlDisabled{
+    
+  @apply cursor-not-allowed text-slate-500;
+  
+}
+.customCheckboxInput:disabled {
+  @apply cursor-not-allowed text-slate-500;
+}
+.formControl + .formControl {
+    @apply mt-4;
+}
+
+
+
+
+
+
+
+
+.formControl:focus-within {
+  color: var(--form-control-color);
+}
+
+.customRadioInput {
+
+    @apply appearance-none bg-transparent dark:bg-slate-900 m-0
+    font-[inherit] text-[currentColor] 
+    w-[0.750em] h-[0.750em] border-[0.09375em] 
+    md:w-[0.8750em] md:h-[0.8750em] md:border-[0.11em] 
+    lg:w-[1.15em] lg:h-[1.15em] lg:border-[0.15em] 
+    /* w-[1.15em] h-[1.15em] border-[0.15em]  */
+    border-solid border-[currentColor] 
+    rounded-full
+    translate-y-[-0.075em]
+    grid place-content-center
+    ;
+}
+
+.customRadioInput::before {
+
+    @apply content-[""] 
+    w-[0.4em] h-[0.4em]
+    md:w-[0.525em] md:h-[0.525em]
+    lg:w-[0.65em] lg:h-[0.65em] 
+    transition-transform duration-[120ms] ease-in-out 
+    scale-[0.001]
+    shadow-[inset_1em_1em_#06b6d4] rounded-full
+    
+/* Windows High Contrast Mode */
+   bg-[CanvasText] 
+   origin-center;
+}
+
+.customRadioInput:checked::before {
+  @apply scale-100
+}
+
+.customRadioInput:focus {
+  outline: max(2px, 0.15em) solid currentColor;
+  outline-offset: max(2px, 0.15em);
+  @apply outline-cyan-300;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
