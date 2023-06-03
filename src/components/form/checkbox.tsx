@@ -1,15 +1,15 @@
 import { useState } from 'react';
-
-type CheckboxProps = {
-  label: string;
-  checked?: boolean;
-  onChange?: (checked: boolean) => void;
-  className?: string;
-};
+import formStyles from './forms.module.css';
+import { CheckboxProps } from './types';
 
 const Checkbox = ({
+  id,
+  name,
   label,
+  showLabel = false,
   checked = false,
+  disabled = false,
+  useAs = 'labelled',
   onChange,
   className = '',
 }: CheckboxProps) => {
@@ -22,17 +22,46 @@ const Checkbox = ({
       onChange(newChecked);
     }
   };
-
+  if (useAs === 'bare') {
+    return (
+      <>
+        <div
+          className={`${formStyles.formControl}  ${
+            disabled ? formStyles.formControlDisabled : ''
+          }`}
+        >
+          <input
+            id={id}
+            name={name}
+            type="checkbox"
+            checked={isChecked}
+            onChange={handleChange}
+            className={formStyles.customCheckboxInput}
+          />
+        </div>
+      </>
+    );
+  }
   return (
-    <label className={`flex items-center ${className}`}>
-      <input
-        type="checkbox"
-        checked={isChecked}
-        onChange={handleChange}
-        className="form-checkbox h-5 w-5 text-indigo-600 transition duration-150 ease-in-out"
-      />
-      <span className="ml-2 text-sm">{label}</span>
-    </label>
+    <>
+      <label
+        className={`${formStyles.formControl}  ${
+          disabled ? formStyles.formControlDisabled : ''
+        }
+          ${className ? className : ''}`}
+      >
+        <input
+          id={id}
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleChange}
+          className={formStyles.customCheckboxInput}
+        />
+        {showLabel && (
+          <span className={`${formStyles.formItemLabel}`}>{label}</span>
+        )}
+      </label>
+    </>
   );
 };
 
