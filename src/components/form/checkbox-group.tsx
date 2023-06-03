@@ -43,8 +43,10 @@ const CheckboxGroup = ({
     <div>
       {options.map((option) => (
         <Checkbox
+          id={option.value}
           key={option.value}
           label={option.label}
+          showLabel
           checked={checkedItems[option.value] || false}
           onChange={() => handleCheckboxChange(option)}
         />
