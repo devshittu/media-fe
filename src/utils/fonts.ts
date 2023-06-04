@@ -17,4 +17,4 @@ export const source_serif_pro = Source_Serif_Pro({
   style: ['normal', 'italic'],
 });
 
-// Path: src/fonts/fonts.ts
+// Path: src/utils/fonts.ts
