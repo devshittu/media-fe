@@ -51,10 +51,11 @@ export const InputField = ({
   //focus:ring-inset
   const inputClasses = `
   block  w-full font-bold
-    bg-slate-50 text-slate-700 border border-slate-700 placeholder-slate-400
+    bg-slate-50 text-slate-700 border-2 border-slate-700  dark:border-slate-300 placeholder-slate-400
     text-base
-    focus:outline-none focus:ring-slate-700 focus:border-slate-700
-    dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+    
+    focus:outline-none focus:ring-slate-700x focus:border-slate-700x focus:ring-cyan-600 focus:border-cyan-600
+    dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-cyan-300 dark:focus:border-cyan-300
     ${
       size === 'large'
         ? 'p-4 md:text-xl focus:ring-4 '
@@ -90,7 +91,7 @@ export const InputField = ({
         )}
         {type === 'textarea' ? (
           <textarea
-            className={inputClasses}
+            className={`${inputClasses}`}
             id={computedId}
             name={name}
             placeholder={placeholder}
