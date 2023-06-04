@@ -3,7 +3,7 @@ import { NavDrawerLeft, NavDrawerRight, NavDrawerTop } from '../nav';
 import MainMenu from '@/components/menus/main-menu';
 import { TopDrawerMenu } from '@/components/menus';
 import { useScrollBehavior } from '@/hooks';
-import { rangeLimit } from '@/utils/helper';
+import { rangeLimit } from '@/utils/helpers';
 
 export const StoriesPageHeader = () => {
   const headerRef = useRef<HTMLElement>(null);
