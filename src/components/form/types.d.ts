@@ -4,15 +4,20 @@ export type CheckboxOption = {
 };
 
 export type CheckboxProps = {
+  id: string;
   label: string;
+  name?: string;
+  showLabel?: boolean;
   checked?: boolean;
+  disabled?: boolean;
+  useAs?: 'bare' | 'button' | 'labelled';
   onChange?: (checked: boolean) => void;
   className?: string;
-  children?: React.ReactNode;
 };
 
 export type CheckboxGroupProps = {
   options: Option[];
+  defaultValues?: Option[];
   onChange?: (checkedItems: { [key: string]: boolean }) => void;
 };
 

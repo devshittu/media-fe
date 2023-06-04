@@ -1,5 +1,6 @@
 import React from 'react';
 import { RadioProps } from './types';
+import formStyles from './forms.module.css';
 
 const getRadioClasses = (checked: boolean, disabled: boolean) => {
   let classes = 'w-4 h-4 border-slate-300 focus:ring-2 focus:ring-blue-300';
@@ -57,7 +58,12 @@ const Radio = ({
   };
 
   return (
-    <div className="flex items-center mb-1">
+    <label
+      className={`${formStyles.formControl} ${
+        disabled ? formStyles.formControlDisabled : ''
+      }`}
+      htmlFor={id}
+    >
       <input
         id={id}
         type="radio"
@@ -65,13 +71,11 @@ const Radio = ({
         value={value}
         checked={value === selectedValue}
         disabled={disabled}
-        className={radioClasses}
+        className={formStyles.customRadioInput}
         onChange={handleChange}
       />
-      <label htmlFor={id} className={labelClasses}>
-        {value}
-      </label>
-    </div>
+      <span className={`${formStyles.formItemLabel}`}>{value}</span>
+    </label>
   );
 };
 

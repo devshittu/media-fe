@@ -1,18 +1,44 @@
-import Head from 'next/head';
-// import Image from 'next/image'
-// import { Inter } from 'next/font/google';
-// import styles from '@/styles/Home.module.css';
 import { Seo } from '@/components/seo';
 import { Button } from '@/components/button';
 import { FieldError, InputField } from '@/components/form';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import Link from 'next/link';
+import CheckboxGroup from '@/components/form/checkbox-group';
+import RadioGroup from '@/components/form/radio-group';
+import PublicLayout from '@/layouts/public-layout';
 
 // const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<FieldError | null>(null);
+
+  const options = [
+    { label: 'Option 1', value: 'option1' },
+    { label: 'Option 2', value: 'option2' },
+    { label: 'Option 3', value: 'option3' },
+  ];
+
+  const radioOptions = [
+    { id: 'Regular', name: 'myGroup', value: 'Regular', label: 'Regular' },
+    { id: 'Medium', name: 'myGroup', value: 'Medium', label: 'Medium' },
+    {
+      id: 'Large',
+      name: 'myGroup',
+      value: 'Large',
+      label: 'Large',
+      disabled: false,
+    },
+    { id: 'XLarge', name: 'myGroup', value: 'XLarge', label: 'XLarge' },
+  ];
+
+  const handleCheckboxGroupChange = (checkedItems: any) => {
+    console.log('Checked items:', checkedItems);
+    // Perform any other actions based on the checked items
+  };
+  const handleGroupChange = (value: string) => {
+    console.log('Selected option:', value);
+  };
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
@@ -87,13 +113,27 @@ export default function Home() {
           </span>
           Loading...
         </Button>
+
+        <CheckboxGroup
+          options={options}
+          defaultValues={['option1', 'option2']}
+          onChange={handleCheckboxGroupChange}
+        />
+        <RadioGroup
+          name="myGroup"
+          defaultValue="Regular"
+          options={radioOptions}
+        />
+
         <form onSubmit={handleSubmit}>
           <InputField
+            id="1"
             name="Email"
             error={emailError}
             placeholder="@example.com"
           />
           <InputField
+            id="2"
             type="email"
             name="EmailField"
             placeholder="Enter your email"
@@ -111,6 +151,7 @@ export default function Home() {
           <form>
             <div className="grid gap-6 mb-6 lg:grid-cols-2">
               <InputField
+                id="3"
                 type="email"
                 name="EmailField"
                 placeholder="Enter your email"
@@ -119,6 +160,7 @@ export default function Home() {
                 error={emailError}
               />
               <InputField
+                id="4"
                 type="email"
                 name="Small Field"
                 placeholder="Enter your email"
@@ -129,6 +171,7 @@ export default function Home() {
               />
 
               <InputField
+                id="5"
                 type="email"
                 name="Base Field"
                 placeholder="Enter your email"
@@ -140,6 +183,7 @@ export default function Home() {
 
             <div className="mb-6"></div>
             <InputField
+              id="6"
               type="email"
               name="EmailField"
               placeholder="Enter your email"
@@ -149,6 +193,7 @@ export default function Home() {
               size="large"
             />
             <InputField
+              id="7"
               type="email"
               name="Small Field"
               placeholder="Enter your email"
@@ -159,6 +204,7 @@ export default function Home() {
             />
 
             <InputField
+              id="8"
               type="email"
               name="Base Field"
               placeholder="Enter your email"
@@ -167,6 +213,7 @@ export default function Home() {
               error={emailError}
             />
             <InputField
+              id="9"
               type="password"
               name="Password"
               placeholder="Enter your email"
@@ -175,6 +222,7 @@ export default function Home() {
               error={emailError}
             />
             <InputField
+              id="10"
               type="password"
               name="Confirm Password"
               placeholder="Enter your email"
@@ -281,3 +329,7 @@ export default function Home() {
     </>
   );
 }
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <PublicLayout>{page}</PublicLayout>;
+};

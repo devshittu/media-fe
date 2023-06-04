@@ -6,6 +6,7 @@ export type FieldError = {
 export type InputFieldPropTypes = {
   type?: 'text' | 'email' | 'password' | 'textarea';
   size?: 'small' | 'base' | 'large';
+  id?: string;
   showLabel?: boolean;
   name: string;
   error?: FieldError | null;
@@ -19,6 +20,7 @@ export type InputFieldPropTypes = {
 };
 
 export const InputField = ({
+  id,
   type = 'text',
   size = 'base',
   name,
@@ -49,10 +51,11 @@ export const InputField = ({
   //focus:ring-inset
   const inputClasses = `
   block  w-full font-bold
-    bg-slate-50 text-slate-700 border border-slate-700 placeholder-slate-400
+    bg-slate-50 text-slate-700 border-2 border-slate-700  dark:border-slate-300 placeholder-slate-400
     text-base
-    focus:outline-none focus:ring-slate-700 focus:border-slate-700
-    dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+    
+    focus:outline-none focus:ring-slate-700x focus:border-slate-700x focus:ring-cyan-600 focus:border-cyan-600
+    dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-cyan-300 dark:focus:border-cyan-300
     ${
       size === 'large'
         ? 'p-4 md:text-xl focus:ring-4 '
@@ -60,7 +63,7 @@ export const InputField = ({
         ? 'p-2.5 md:text-base focus:ring-2'
         : 'p-1.5 sm:text-sm focus:ring-1'
     }
-    ${rounded ? 'rounded-lg ' : ''}
+    ${rounded ? 'rounded-lg ' : 'rounded-none'}
     `
     .trim()
     .replace(/\s+/g, ' ');
@@ -76,22 +79,20 @@ export const InputField = ({
     }`
       .trim()
       .replace(/\s+/g, ' ');
+  const computedId = id ? id : name.toLowerCase() + '-input';
 
   return (
     <>
       <div className={className}>
         {showLabel && (
-          <label
-            htmlFor={name.toLowerCase() + '-input'}
-            className={labelClasses}
-          >
+          <label htmlFor={computedId} className={labelClasses}>
             {name}
           </label>
         )}
         {type === 'textarea' ? (
           <textarea
-            className={inputClasses}
-            id={name.toLowerCase() + '-input'}
+            className={`${inputClasses}`}
+            id={computedId}
             name={name}
             placeholder={placeholder}
             value={value}
@@ -102,7 +103,7 @@ export const InputField = ({
           <input
             className={inputClasses}
             type={type}
-            id={name.toLowerCase() + '-input'}
+            id={computedId}
             name={name}
             placeholder={placeholder}
             value={value}
