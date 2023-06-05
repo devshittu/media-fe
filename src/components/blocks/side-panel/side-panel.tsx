@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { InputField } from '@/components/form';
-import { Button } from '@/components/button';
 import { useScrollBehavior } from '@/hooks';
 import { AccountList } from '../account/list';
 import { SidePanelSection } from './side-panel-section';
@@ -29,10 +28,7 @@ export const SidePanel = () => {
         </div>
       </div>
       {/* className=" space-y-16 min-h-screen sticky top-40" */}
-      <div
-        className=" space-y-16 min-h-screen sticky"
-        ref={sidePanelRef}
-      >
+      <div className=" space-y-16 min-h-screen sticky" ref={sidePanelRef}>
         {/* ${
           isScrolledUp ? 'sticky top-12 mt-16' : ''
         } */}
