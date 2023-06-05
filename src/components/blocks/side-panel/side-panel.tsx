@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { InputField } from '@/components/form';
 import { Button } from '@/components/button';
 import { useScrollBehavior } from '@/hooks';
@@ -30,8 +28,9 @@ export const SidePanel = () => {
           <InputField name="Search" placeholder="Search app" className="mb-4" />
         </div>
       </div>
+      {/* className=" space-y-16 min-h-screen sticky top-40" */}
       <div
-        className=" space-y-16 min-h-screen sticky top-40"
+        className=" space-y-16 min-h-screen sticky"
         ref={sidePanelRef}
       >
         {/* ${
