@@ -62,7 +62,7 @@ Index.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
-  const stories = await getAllStories().catch((err) => [] as StoryItem[]);
+  const stories = await getAllStories().catch(() => [] as StoryItem[]);
   return {
     props: {
       stories,
