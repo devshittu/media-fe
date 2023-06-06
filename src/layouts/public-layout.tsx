@@ -1,7 +1,13 @@
-import React from 'react';
-import { NavMain } from '@/components/blocks/nav';
+import React, { ReactNode, useContext, useRef } from 'react';
+import { NavContext, NavMain } from '@/components/blocks/nav';
 import MainMenu from '@/components/menus/main-menu';
-const PublicLayout = ({ children }: any) => {
+
+type PublicLayoutProps = {
+  children: ReactNode;
+  leftMenu?: ReactNode;
+};
+
+const PublicLayout = ({ children }: PublicLayoutProps) => {
   return (
     <div
       className={`relative container lg:grid lg:grid-cols-10 lg:max-w-7xl mx-auto`}
