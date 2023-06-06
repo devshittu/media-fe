@@ -1,14 +1,18 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
 import { StoryItem, StoryListProps } from './types';
 import { getMoreStories } from '@/testing/test-data';
+// import { NavContext } from '../nav';
 
 export const StoryList = ({ data = [] }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
-  const scrollContainerRef = useRef<HTMLDivElement>(null); // Ref for the scroll container
+
+  // const { scrollContainerRef } = useContext(NavContext); // Access the scrollContainerRef from the layout context
+  const scrollContainerRef = useRef<HTMLDivElement>(null); // Access the scrollContainerRef from the layout context
+
   const handleToastClose = () => {
     console.log('Toast closed');
   };
@@ -54,11 +58,14 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
       newItemsHeight += item.offsetHeight;
     });
     console.log('newItemsHeight = ', newItemsHeight);
-
-    // Adjust the scroll position to keep it on the same postItem
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTop += newItemsHeight;
-    }
+    // Adjust the scroll position to keep it on the same StoryListItem
+    // if (scrollContainerRef?.current) {
+    //   scrollContainerRef.current.scrollTop += newItemsHeight;
+    // }
+    // Adjust the scroll position to keep it on the same StoryListItem
+    const { scrollTop } = document.documentElement || document.body;
+    document.documentElement.scrollTop = scrollTop + newItemsHeight;
+    // document.body.scrollTop = scrollTop + newItemsHeight; // For older browser compatibility
   }, [newItems]);
 
   return (
@@ -69,10 +76,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
         <Button onClick={loadLatest}>Load new feeds</Button>
         <Button onClick={ShowToast}>Show Toast</Button>
       </div>
-      <div
-        ref={scrollContainerRef}
-        // style={{ maxHeight: '100vh', overflowY: 'auto' }}
-      >
+      <div>
         {existingItems.map((item, index) => (
           <StoryListItem
             key={item.id + index}

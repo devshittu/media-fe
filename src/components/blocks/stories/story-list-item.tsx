@@ -5,8 +5,21 @@ import Image from 'next/image';
 import { NavDrawerBottom } from '../nav/nav-drawer-bottom';
 import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
+import { Carousel, CarouselItem } from '@/components/blocks/carousel';
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
+  const carouselItems: CarouselItem[] = [
+    {
+      media:
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1399&q=20',
+      caption: story?.title,
+    },
+    {
+      media:
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=20',
+      caption: story?.title,
+    },
+  ];
   return (
     <article
       className={`p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
@@ -362,63 +375,14 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
 
       <Link href={`/stories/${story?.id}`}>
         <h2 className="sm:text-3xl text-2xl title-font mt-4 mb-4  font-extrabold text-slate-900 tracking-tight dark:text-slate-200">
-          {`${story?.title}`}
+          {`${story?.id}. ${story?.title}`}
         </h2>
       </Link>
       <p className="leading-relaxed mb-8 text-justify text-lgx lg:text-xlx">
         {`${story?.body}`}
       </p>
 
-      <div className="text-slate-400 font-medium text-sm mb-8 mt-6x mx-3x px-2x">
-        <div className="grid grid-cols-6 col-span-2   gap-2  ">
-          <div className=" overflow-hidden rounded-xl col-span-3 max-h-[14rem]">
-            <Image
-              width="500"
-              height="00"
-              className="h-full w-full object-cover "
-              src="https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=735&amp;q=80"
-              alt=""
-            />
-          </div>
-          <div className=" overflow-hidden rounded-xl col-span-3 max-h-[14rem]">
-            <Image
-              width="500"
-              height="00"
-              className="h-full w-full object-cover  "
-              src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1399&amp;q=80"
-              alt=""
-            />
-          </div>
-          <div className=" overflow-hidden rounded-xl col-span-2 max-h-[10rem]">
-            <Image
-              width="500"
-              height="00"
-              className="h-full w-full object-cover "
-              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80"
-              alt=""
-            />
-          </div>
-          <div className=" overflow-hidden rounded-xl col-span-2 max-h-[10rem]">
-            <Image
-              width="500"
-              height="00"
-              className="h-full w-full object-cover "
-              src="https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
-              alt=""
-            />
-          </div>
-          <div className="relative overflow-hidden rounded-xl col-span-2 max-h-[10rem]">
-            <Image
-              width="500"
-              height="00"
-              className="h-full w-full object-cover "
-              src="https://images.unsplash.com/photo-1560393464-5c69a73c5770?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=765&amp;q=80"
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
-
+      <Carousel items={carouselItems} />
       <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
         <Link href="/" className="text-blue-500 inline-flex items-center">
           Learn More

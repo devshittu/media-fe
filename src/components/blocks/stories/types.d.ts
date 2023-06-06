@@ -2,6 +2,7 @@ export type StoryItem = {
   id: string;
   title: string;
   body: string;
+  categoryId: string;
   createdAt: number;
   updatedAt: number;
 };
