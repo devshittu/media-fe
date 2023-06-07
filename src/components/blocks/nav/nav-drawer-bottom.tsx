@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { NavContext, NavDrawerProps } from './index';
+import { Icon, MoreVerticalIcon } from '../icons';
 
 export const NavDrawerBottom = ({ id, title, children }: NavDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,15 +21,7 @@ export const NavDrawerBottom = ({ id, title, children }: NavDrawerProps) => {
         onClick={toggleSidebar}
       >
         <span className="sr-only">Navigation</span>
-        <svg width="24" height="24">
-          <path
-            d="M5 6h14M5 12h14M5 18h14"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          ></path>
-        </svg>
+        <Icon icon={<MoreVerticalIcon />} useBackground size={32} />
       </button>
       {/* Overlay background */}
       <div
