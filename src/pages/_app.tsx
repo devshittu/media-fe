@@ -29,10 +29,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <link rel="icon" href="/favicon.ico" />
         <style jsx global>
           {`
-        :root {
-            --inter-font: ${inter.style.fontFamily};
-            --roboto-mono-font: ${roboto_mono.style.fontFamily};
-
+            :root {
+              --inter-font: ${inter.style.fontFamily};
+              --roboto-mono-font: ${roboto_mono.style.fontFamily};
+            }
           `}
         </style>
       </Head>
