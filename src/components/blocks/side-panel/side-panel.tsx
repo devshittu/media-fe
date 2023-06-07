@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, use } from 'react';
 import { InputField } from '@/components/form';
 import { useScrollBehavior } from '@/hooks';
 import { AccountList } from '../account/list';
@@ -13,32 +13,21 @@ export const SidePanel = () => {
 
   const [sidebarTop, setSidebarTop] = useState(0); // Initial top position of the sidebar
 
-  // useEffect(() => {
-  //   // if (sidePanelRef.current) {
-  //   //   setSidePanelHeight(sidePanelRef.current.clientHeight);
-  //   // }
-  //   const handleScroll = () => {
-  //     const scrollOffset = window.scrollY;
-  //     const minTop = -200; // Minimum top position (-200px)
-  //     const maxTop = 0; // Maximum top position (0px)
-
-  //     const newTop = rangeLimit(-scrollOffset - 200, minTop, maxTop); // Calculate the new top position using clamp function
-  //     setSidebarTop(newTop);
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
   useEffect(() => {
     function handleScroll() {
+      // console.log('screenHeight', screenHeight);
+      if (sidePanelRef.current) {
+        setSidePanelHeight(sidePanelRef.current.clientHeight);
+        // console.log('sidePanelHeight', sidePanelHeight);
+        // console.log(
+        //   `screenHeight (${screenHeight}) - sidePanelHeight(${sidePanelHeight}) = `,
+        //   screenHeight - sidePanelHeight,
+        // );
+      }
       // Increase or decrease the position of the header based on the scroll direction
-
       setSidebarTop((prevTopPosition) => {
         const newTop = rangeLimit(
-          (isScrolledUp ? prevTopPosition + 1 : prevTopPosition - 1) * 1,
+          (isScrolledUp ? prevTopPosition + 1 : prevTopPosition - 1) * 10,
           -200,
           0,
         ); // 1 is the speed
@@ -54,30 +43,23 @@ export const SidePanel = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isScrolledUp]);
-  // console.log('screenHeight', screenHeight);
-  // console.log('sidePanelHeight', sidePanelHeight);
-  // console.log('screenHeight', screenHeight);
   return (
     <div
-      className="flex-1 pb-0 hidden lg:block lg:sticky top-0"
+      className="flex-1 pb-0 hidden lg:block lg:sticky top-0 min-h-screen"
       // style={{ top: `${sidebarTop}px` }}
     >
       {/* <div className={`sticky top-0 pb-16 `}> */}
-      <div className={`sticky top-0 z-10 pb-2 bg-white dark:bg-slate-900`}>
+      <div className={`sticky top-0 z-10 bg-white dark:bg-slate-900`}>
         <div className="py-4">
           <InputField name="Search" placeholder="Search app" className="mb-4" />
         </div>
       </div>
-      {/* className=" space-y-16 min-h-screen sticky top-40" */}
       <div
-        className=" space-y-16 min-h-screen sticky top-6"
+        className=" space-y-16 min-h-screen sticky top-24 overflow-hidden pb-60"
         ref={sidePanelRef}
         style={{ transform: `translateY(${sidebarTop}px)` }}
+        // style={{ top: `${sidebarTop}px` }}
       >
-        {/* ${
-          isScrolledUp ? 'sticky top-12 mt-16' : ''
-        } */}
-
         <SidePanelSection id="trendsForYou" title="Trending">
           <HashtagList />
         </SidePanelSection>
