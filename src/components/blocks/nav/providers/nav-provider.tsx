@@ -1,4 +1,3 @@
-import exp from 'constants';
 import React, { createContext, useState } from 'react';
 
 type NavContextProps = {
@@ -7,6 +6,7 @@ type NavContextProps = {
   value?: string;
   bodyClass?: string;
   setBodyClass: (bodyClass: string) => void;
+  scrollContainerRef?: React.RefObject<HTMLBodyElement>; // Pass the scrollContainerRef as a prop
 };
 
 export const NavContext = createContext<NavContextProps>({
@@ -28,7 +28,13 @@ export const NavProvider = ({ children }: NavProviderProps) => {
 
   return (
     <NavContext.Provider
-      value={{ isNavOpen, setIsNavOpen, value, bodyClass, setBodyClass }}
+      value={{
+        isNavOpen,
+        setIsNavOpen,
+        value,
+        bodyClass,
+        setBodyClass,
+      }}
     >
       {children}
     </NavContext.Provider>

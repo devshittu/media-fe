@@ -1,12 +1,18 @@
 import { SidePanel } from '@/components/blocks/side-panel';
-import { StoryItem } from '@/components/blocks/stories';
+import { StoryItem, StoryListItem } from '@/components/blocks/stories';
 import { Toast } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
 import { ReactElement } from 'react';
 import PublicLayout from '@/layouts/public-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
+import { StoryList } from '@/components/blocks/stories/';
 
-const Index = () => {
+import { getAllStories } from '@/testing/test-data';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+type PublicStoriesPageProps = InferGetServerSidePropsType<
+  typeof getServerSideProps
+>;
+const Index = ({ stories }: PublicStoriesPageProps) => {
   const handleToastClose = () => {
     console.log('Toast closed');
   };
@@ -37,21 +43,7 @@ const Index = () => {
       >
         <StoriesPageHeader />
         <section>
-          <div className={`mt-28 lg:mt-0`}>
-            <div
-              className={`flex align-middle items-center justify-centerx justify-around min-h-[56px]`}
-            >
-              <Button onClick={loadLatest}>Load new feeds</Button>
-              <Button onClick={ShowToast}>Show Toast</Button>
-            </div>
-            <article>
-              <StoryItem />
-              <StoryItem />
-              <StoryItem />
-              <StoryItem />
-              <StoryItem />
-            </article>
-          </div>
+          <StoryList data={stories} />
         </section>
       </div>
       <div
@@ -65,6 +57,17 @@ const Index = () => {
 
 Index.getLayout = function getLayout(page: ReactElement) {
   return <PublicLayout>{page}</PublicLayout>;
+};
+
+export const getServerSideProps = async ({
+  params,
+}: GetServerSidePropsContext) => {
+  const stories = await getAllStories().catch(() => [] as StoryItem[]);
+  return {
+    props: {
+      stories,
+    },
+  };
 };
 
 export default Index;

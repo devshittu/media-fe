@@ -1,6 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import ThemeSwitch from '@/components/theme-switch/theme-switch';
 
 type NavMainProps = {
   children?: React.ReactNode;

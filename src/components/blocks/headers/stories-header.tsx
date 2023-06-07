@@ -12,11 +12,13 @@ export const StoriesPageHeader = () => {
 
   useEffect(() => {
     function handleScroll() {
-      // Increase or decrease the position of the header based on the scroll direction
       setTopPosition((prevTopPosition) => {
-        const newTop = isScrolledUp
-          ? rangeLimit(prevTopPosition + 1 * 1, -53, 0)
-          : rangeLimit(prevTopPosition - 1 * 1, -53, 0); // 1 is the speed
+        const minTop = -53; // Initial top position of the header
+        const newTop = rangeLimit(
+          prevTopPosition + (isScrolledUp ? 1 : -1) * 4, // Adjust the scroll speed (4x) as desired
+          minTop,
+          0,
+        );
         return newTop;
       });
     }
@@ -35,7 +37,7 @@ export const StoriesPageHeader = () => {
       {/* Desktop */}
       <header
         ref={headerRef}
-        className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-150 ease-out transform translate-x-0 translate-z-0  lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
+        className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-75 ease-out transform translate-x-0 translate-z-0  lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
         style={{ transform: `translateY(${topPosition}px)` }}
       >
         <div className={`transition-all duration-350 ease-out`}>
