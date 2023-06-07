@@ -28,9 +28,8 @@ const Carousel = ({ items }: CarouselProps) => {
           {/* <!-- Carousel wrapper --> */}
           <div className="relative h-40 overflow-hidden rounded-lg md:h-56">
             {items.map((item, index) => (
-              <>
+              <React.Fragment key={index}>
                 <div
-                  key={index + item.media}
                   id={index + item.media}
                   className={`hiddenx duration-200 ease-linear ${
                     index === activeIndex ? 'translate-x-0' : 'translate-x-full'
@@ -49,7 +48,7 @@ const Carousel = ({ items }: CarouselProps) => {
                   ) : (
                     <Image
                       width="500"
-                      height="00"
+                      height="300"
                       className="h-full w-full object-cover "
                       src={item.media}
                       alt=""
@@ -59,12 +58,12 @@ const Carousel = ({ items }: CarouselProps) => {
                 <div className="absolute bottom-0 left-0 w-full p-4 bg-black/30 backdrop-blur-md bg-opacity-50 text-white">
                   <p className="text-lg font-medium">{item.caption}</p>
                 </div>
-              </>
+              </React.Fragment>
             ))}
             {/* <!-- Slider controls --> */}
             <button
               type="button"
-              className="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              className="absolute top-0 left-0 z-20 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
               data-carousel-prev
               onClick={handlePrev}
             >
@@ -89,7 +88,7 @@ const Carousel = ({ items }: CarouselProps) => {
             </button>
             <button
               type="button"
-              className="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+              className="absolute top-0 right-0 z-20 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
               data-carousel-next
               onClick={handleNext}
             >
