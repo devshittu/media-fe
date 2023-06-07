@@ -54,7 +54,8 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
       '.new-item',
     ) as NodeListOf<HTMLDivElement>; // Add a CSS class 'new-item' to each postItem element
 
-    newItemsElements.forEach((item) => {
+    console.log('newItemsElements = ', newItemsElements);
+    newItemsElements?.forEach((item) => {
       newItemsHeight += item.offsetHeight;
     });
     console.log('newItemsHeight = ', newItemsHeight);
