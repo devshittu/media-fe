@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 // import styles from '@/styles/draft.module.css';
 import Link from 'next/link';
 import { NavMain } from '@/components/blocks/nav';
-import PublicLayout from '@/layouts/public-layout';
+import UserLayout from '@/layouts/user-layout';
 
 const Index = () => {
   return (
@@ -64,6 +64,6 @@ const Index = () => {
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <PublicLayout>{page}</PublicLayout>;
+  return <UserLayout>{page}</UserLayout>;
 };
 export default Index;
