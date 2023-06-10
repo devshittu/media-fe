@@ -69,6 +69,9 @@ const MainMenu = () => {
               <span className="flex-1 ml-3 whitespace-nowrap">Home</span>
             </Link>
           </li>
+          <li>
+            <ThemeSwitch />
+          </li>
         </ul>
       </nav>
       <div

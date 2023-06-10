@@ -81,11 +81,11 @@ export const Modal = ({
         <div
           className={`relative w-full mx-auto ${sizeClassName[size]} max-h-full`}
         >
-          <div className="relative bg-white rounded-lg shadow dark:bg-slate-700">
+          <div className="relative border-2 md:border-4 border-slate-700 dark:border-slate-300 shadow-xl shadow-slate-400 dark:shadow-slate-800 bg-slate-100 dark:bg-slate-700">
             <div
               className={`flex items-center justify-between  p-5 border-b rounded-t dark:border-slate-600`}
             >
-              <h3 className="text-xl font-medium text-slate-900 dark:text-white">
+              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
                 {title}
               </h3>
               <button

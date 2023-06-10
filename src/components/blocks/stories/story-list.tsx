@@ -25,7 +25,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
         // Handle close event
         handleToastClose();
       },
-      duration: 5000,
+      duration: 10000,
     });
 
     notify.open();
