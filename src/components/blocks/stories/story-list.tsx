@@ -4,14 +4,10 @@ import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
 import { StoryItem, StoryListProps } from './types';
 import { getMoreStories } from '@/testing/test-data';
-// import { NavContext } from '../nav';
 
 export const StoryList = ({ data = [] }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
-
-  // const { scrollContainerRef } = useContext(NavContext); // Access the scrollContainerRef from the layout context
-  const scrollContainerRef = useRef<HTMLDivElement>(null); // Access the scrollContainerRef from the layout context
 
   const handleToastClose = () => {
     console.log('Toast closed');
@@ -32,13 +28,10 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
   };
 
   const loadLatest = () => {
-    console.log('Loading latest');
     getMoreStories().then((res) => {
       console.log('res', res);
       setNewItems(res);
     });
-
-    console.log('Finished Loading latest');
   };
 
   useEffect(() => {
@@ -60,11 +53,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
     });
     console.log('newItemsHeight = ', newItemsHeight);
     // Adjust the scroll position to keep it on the same StoryListItem
-    // if (scrollContainerRef?.current) {
-    //   scrollContainerRef.current.scrollTop += newItemsHeight;
-    // }
-    // Adjust the scroll position to keep it on the same StoryListItem
-    const { scrollTop } = document.documentElement || document.body;
+   const { scrollTop } = document.documentElement || document.body;
     document.documentElement.scrollTop = scrollTop + newItemsHeight;
     // document.body.scrollTop = scrollTop + newItemsHeight; // For older browser compatibility
   }, [newItems]);
