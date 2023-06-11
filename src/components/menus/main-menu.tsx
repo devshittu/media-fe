@@ -1,7 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
-import { ArchiveIcon, EditIcon, HomeIcon, Icon } from '@/components/blocks/icons';
+import {
+  ArchiveIcon,
+  EditIcon,
+  HomeIcon,
+  Icon,
+} from '@/components/blocks/icons';
 import Settings from '../blocks/icons/svg-icons/Settings';
 
 const MainMenu = () => {
@@ -80,7 +85,9 @@ const MainMenu = () => {
                 rounded="half"
                 size={40}
               />
-              <span className="flex-1 ml-3 whitespace-nowrap text-ellipsis truncate">UI/UX Components</span>
+              <span className="flex-1 ml-3 whitespace-nowrap text-ellipsis truncate">
+                UI/UX Components
+              </span>
             </Link>
           </li>
           <li>
