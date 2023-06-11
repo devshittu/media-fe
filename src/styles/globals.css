@@ -25,4 +25,7 @@ input, button, textarea, select {
    .paused {
      animation-play-state: paused;
    }
+   .reverse {
+     animation-direction: reverse;
+   }
 }
