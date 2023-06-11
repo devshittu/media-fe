@@ -1,23 +1,5 @@
 import React, { useState } from 'react';
-export type MarqueeItem = {
-  id: string;
-  title: string;
-  description?: string;
-  media?: string;
-  children?: React.ReactNode;
-};
-
-export type MarqueeProps = {
-  items?: MarqueeItem[];
-  play?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-  hoverToPause?: boolean;
-  loop?: boolean;
-  speed?: 'slow' | 'normal' | 'fast';
-  scaleItems?: boolean;
-  reverse?: boolean;
-};
+import { MarqueeProps } from './types';
 
 const Marquee = ({
   children,
@@ -46,7 +28,7 @@ const Marquee = ({
         {[...Array(2)].map((_, index) => (
           <div
             key={index}
-            aria-hidden="true"
+            aria-hidden={index === 1 ? 'true' : undefined}
             className={`${
               hoverToPause ? ` group-hover:paused ` : ''
             } motion-reduce:paused shrink-0 flex justify-around items-center gap-4 min-h-fit my-10 min-w-full  ${
