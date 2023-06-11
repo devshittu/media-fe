@@ -3,8 +3,8 @@ export type MarqueeItem = {
   id: string;
   title: string;
   description?: string;
-  // media: string;
-  // children?: React.ReactNode;
+  media?: string;
+  children?: React.ReactNode;
 };
 
 export type MarqueeProps = {
