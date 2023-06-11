@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Feature = () => {
   return (
@@ -90,7 +90,7 @@ const Feature = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Feature
+export default Feature;
