@@ -1,9 +1,19 @@
 import { Seo } from '@/components/seo';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import PublicLayout from '@/layouts/public-layout';
-import Feature from '@/components/labs/LandingPage/Feature';
-import Marquee from '@/components/labs/LandingPage/Marquee';
+import {
+  Feature,
+  Hero,
+  Marquee,
+  Footer,
+  Nav,
+} from '@/components/labs/LandingPage/';
+// import Marquee from '@/components/labs/LandingPage/marquee';
 import Image from 'next/image';
+// import Nav from '@/components/labs/LandingPage/nav';
+// import Hero from '@/components/labs/LandingPage/hero';
+import Link from 'next/link';
+// import Footer from '@/components/labs/LandingPage/footer';
 export default function Home() {
   const marqueeItems = [
     {
@@ -124,24 +134,58 @@ export default function Home() {
   return (
     <>
       <Seo title="New App" />
+      <Nav />
+      <Hero />
       <Feature />
-      <Marquee play speed="slow">
-        {carouselItems.map((item, index) => (
-          <div
-            key={index}
-            className={`flex-[0_0_auto] bg-slate-800 px-8 py-4 text-center transition duration-700 transform dark:bg-slate-900 rounded shadow-sm hover:scale-125 md:shadow-md hover:shadow-md`}
-          >
-            <Image
-              src={item.media}
-              alt={item.caption}
-              width={500}
-              height={500}
-            />
-            {item.caption}
-          </div>
+      <Marquee play speed="slow" hoverToPause>
+        {[...Array(2)].map((_, index) => (
+          <React.Fragment key={index}>
+            {carouselItems.map((item, index) => (
+              <Link key={index} href="/" aria-label="View Item">
+                <div className="relative overflow-hidden transition duration-75 transform rounded shadow-lg hover:-translate-y-2 hover:scale-105 hover:shadow-2xl">
+                  <Image
+                    src={item.media}
+                    alt={item.caption}
+                    width={500}
+                    height={500}
+                    className="object-cover w-full h-56 md:h-64 xl:h-80"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 px-6 py-4 bg-black bg-opacity-75">
+                    <p className="text-sm font-medium tracking-wide text-white">
+                      {item.caption}{' '}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </React.Fragment>
         ))}
       </Marquee>
-      <Marquee items={marqueeItems} hoverToPause reverse play speed="slow" />
+      <Marquee items={marqueeItems} hoverToPause reverse play speed="slow">
+        {[...Array(2)].map((_, index) => (
+          <React.Fragment key={index}>
+            {carouselItems.map((item, index) => (
+              <Link key={index} href="/" aria-label="View Item">
+                <div className="relative overflow-hidden transition duration-75 transform rounded shadow-lg hover:-translate-y-2 hover:scale-105 hover:shadow-2xl">
+                  <Image
+                    src={item.media}
+                    alt={item.caption}
+                    width={500}
+                    height={500}
+                    className="object-cover w-full h-56 md:h-64 xl:h-80"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 px-6 py-4 bg-black bg-opacity-75">
+                    <p className="text-sm font-medium tracking-wide text-white">
+                      {item.caption}{' '}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </React.Fragment>
+        ))}
+      </Marquee>
+      <Footer />
     </>
   );
 }
