@@ -63,7 +63,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/"
-                    className=' transition-colors duration-300 hover:text-cyan-400'
+                    className=" transition-colors duration-300 hover:text-cyan-400"
                   >
                     F.A.Q
                   </Link>
@@ -71,7 +71,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/privacy"
-                    className=' transition-colors duration-300 hover:text-cyan-400'
+                    className=" transition-colors duration-300 hover:text-cyan-400"
                   >
                     Privacy Policy
                   </Link>
@@ -79,7 +79,7 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/terms"
-                    className=' transition-colors duration-300 hover:text-cyan-400'
+                    className=" transition-colors duration-300 hover:text-cyan-400"
                   >
                     Terms &amp; Conditions
                   </Link>
