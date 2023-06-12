@@ -7,8 +7,8 @@ export const Nav = () => {
 
   return (
     <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-      <div className="relative flexx grid items-center grid-cols-2 lg:grid-cols-3">
-        <ul className="flex items-center hiddenx space-x-8 lg:flex">
+      <div className="relative grid items-center grid-cols-2 lg:grid-cols-3">
+        <ul className="flex items-center space-x-8 lg:flex">
           <li>
             <Link
               href="/stories"
@@ -65,7 +65,7 @@ export const Nav = () => {
             Company
           </span>
         </Link>
-        <ul className="flex items-center hidden ml-auto space-x-8 lg:flex">
+        <ul className="flex items-center ml-auto space-x-8 lg:flex">
           <li>
             <Link
               href="/"
