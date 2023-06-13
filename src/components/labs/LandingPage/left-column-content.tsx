@@ -1,13 +1,20 @@
 import { HomeIcon, Icon, TwitterIcon } from '@/components/blocks/icons';
 import { Button } from '@/components/button';
 import { InputField } from '@/components/form';
-import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LinedBackgroundText } from '../typography';
-import Marquee from './Marquee';
+import Marquee from './marquee';
+import { CategoryItem, getCategories } from '@/testing';
 
-const LeftColumn = () => {
+const LeftColumnContent = () => {
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  useEffect(() => {
+    getCategories().then((res) => {
+      console.log('res', res);
+      setCategories(res);
+    });
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="flex flex-col items-center justify-between flex-grow w-full mx-12">
@@ -51,6 +58,7 @@ const LeftColumn = () => {
         </div>
 
         {/* Body */}
+
         <div className="w-full max-w-[500px]">
           <form className="flex flex-col justify-center overflow-hidden w-full relative">
             <div className="w-full p-6">
@@ -95,7 +103,7 @@ const LeftColumn = () => {
                 <Link
                   className="p-0 mx-2 button button--white button--icon button--disabled"
                   title="Facebook"
-                  href="//tt.teamtailor.com/auth/facebook_connect?company=komi&amp;connect=1"
+                  href="#"
                 >
                   <span className="flex items-center justify-center w-full h-full px-4 py-3">
                     <Icon icon={<TwitterIcon />} />
@@ -120,9 +128,11 @@ const LeftColumn = () => {
         <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
           Already registered? <Link href="/en-GB/auth/login">Sign in</Link>.
         </p>
-        <Marquee />
+
+        {/* <Marquee items={categories} hoverToPause speed="slow" />
+        <Marquee items={categories} hoverToPause speed="normal" reverse /> */}
       </div>
     </div>
   );
 };
-export default LeftColumn;
+export default LeftColumnContent;
