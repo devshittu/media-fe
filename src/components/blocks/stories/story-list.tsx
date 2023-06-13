@@ -50,7 +50,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
         window.innerHeight + document.documentElement.scrollTop ===
         document.documentElement.offsetHeight
       ) {
-        loadMore()
+        loadMore();
       }
     };
 
