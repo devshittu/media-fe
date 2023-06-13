@@ -29,7 +29,8 @@ class Toast {
     this.duration = duration;
     this.onClose = onClose;
     this.container = document.createElement('div');
-    document.body.appendChild(this.container);
+    // document.body.appendChild(this.container);
+    document.body.append(this.container);
     this.root = createRoot(this.container);
     this.isOpen = false;
   }

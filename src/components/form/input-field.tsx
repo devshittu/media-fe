@@ -9,6 +9,7 @@ export type InputFieldPropTypes = {
   id?: string;
   showLabel?: boolean;
   name: string;
+  required?: boolean | null;
   error?: FieldError | null;
   placeholder?: string;
   value?: string;

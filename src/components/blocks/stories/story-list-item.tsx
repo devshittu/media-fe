@@ -5,22 +5,50 @@ import Image from 'next/image';
 import { NavDrawerBottom } from '../nav/nav-drawer-bottom';
 import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
-import { Carousel, CarouselItem } from '@/components/blocks/carousel';
+import {
+  Carousel,
+  CarouselItem,
+  CarouselOptions,
+} from '@/components/blocks/carousel';
 import { HomeIcon, Icon, TwitterIcon } from '../icons';
+import CarouselModule from '../carousel/carousel';
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   const carouselItems: CarouselItem[] = [
     {
-      media:
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1399&q=20',
-      caption: story?.title,
-    },
-    {
+      id: '1',
       media:
         'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=20',
-      caption: story?.title,
+      caption: '1 ' + story?.title,
+    },
+    {
+      id: '2',
+      media:
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1399&q=20',
+      caption: '2 ' + story?.title,
     },
   ];
+
+  const carouselOptions: CarouselOptions = {
+    // autoplay: true,
+    // autoplaySpeed: 3000,
+    onNext: () => {
+      console.log('Next slide');
+    },
+    onPrev: () => {
+      console.log('Previous slide');
+    },
+    // onSlide: () => {
+    //   console.log('Slide changed');
+    // },
+    // onChange: () => {
+    //   console.log('Active slide changed');
+    // },
+  };
+  // const carousel = CarouselComponent({ carouselItems, carouselOptions });
+  // carousel.next(); // Invoke next slide
+  // carousel.prev(); // Invoke previous slide
+
   return (
     <article
       className={`p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
@@ -115,7 +143,11 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         {`${story?.body}`}
       </p>
 
-      <Carousel items={carouselItems} />
+      <CarouselModule.Carousel
+        items={carouselItems}
+        options={carouselOptions}
+      />
+      {/* <Carousel items={carouselItems} /> */}
       <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
         <Link href="/" className="text-blue-500 inline-flex items-center">
           Learn More

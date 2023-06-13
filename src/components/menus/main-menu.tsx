@@ -1,7 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
-import { Edit2Icon, EditIcon, HomeIcon, Icon } from '@/components/blocks/icons';
+import {
+  ArchiveIcon,
+  EditIcon,
+  HomeIcon,
+  Icon,
+} from '@/components/blocks/icons';
 import Settings from '../blocks/icons/svg-icons/Settings';
 
 const MainMenu = () => {
@@ -9,6 +14,20 @@ const MainMenu = () => {
     <>
       <nav className="">
         <ul className="space-y-2 font-bold text-lg lg:text-xl font-inter">
+          <li>
+            <Link
+              href="/"
+              className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
+            >
+              <Icon
+                icon={<HomeIcon />}
+                useBackground
+                rounded="half"
+                size={40}
+              />
+              <span className="flex-1 ml-3 whitespace-nowrap">Home</span>
+            </Link>
+          </li>
           <li>
             <Link
               href="/stories"
@@ -57,17 +76,22 @@ const MainMenu = () => {
           </li>
           <li>
             <Link
-              href="/"
+              href="/ui-components/"
               className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
             >
               <Icon
-                icon={<HomeIcon />}
+                icon={<ArchiveIcon />}
                 useBackground
                 rounded="half"
                 size={40}
               />
-              <span className="flex-1 ml-3 whitespace-nowrap">Home</span>
+              <span className="flex-1 ml-3 whitespace-nowrap text-ellipsis truncate">
+                UI/UX Components
+              </span>
             </Link>
+          </li>
+          <li>
+            <ThemeSwitch />
           </li>
         </ul>
       </nav>

@@ -2,7 +2,7 @@ import { NavDrawerLeft } from '@/components/blocks/nav';
 import Link from 'next/link';
 import { Button } from '@/components/button';
 import { ReactElement, useRef, useState } from 'react';
-import PublicLayout from '@/layouts/public-layout';
+import UserLayout from '@/layouts/user-layout';
 import MainMenu from '@/components/menus/main-menu';
 import CheckboxGroup from '@/components/form/checkbox-group';
 import RadioGroup from '@/components/form/radio-group';
@@ -160,7 +160,7 @@ const Index = () => {
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <PublicLayout>{page}</PublicLayout>;
+  return <UserLayout>{page}</UserLayout>;
 };
 
 export default Index;

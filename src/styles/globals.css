@@ -21,3 +21,11 @@ input, button, textarea, select {
 
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+   .paused {
+     animation-play-state: paused;
+   }
+   .reverse {
+     animation-direction: reverse;
+   }
+}

@@ -1,17 +1,17 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
 import { StoryItem, StoryListProps } from './types';
 import { getMoreStories } from '@/testing/test-data';
-// import { NavContext } from '../nav';
+import useDebounce from '@/hooks/useDebounce';
 
 export const StoryList = ({ data = [] }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
+  const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
-  // const { scrollContainerRef } = useContext(NavContext); // Access the scrollContainerRef from the layout context
-  const scrollContainerRef = useRef<HTMLDivElement>(null); // Access the scrollContainerRef from the layout context
+  const [hasMoreItems, setHasMoreItems] = useState<boolean>(false);
 
   const handleToastClose = () => {
     console.log('Toast closed');
@@ -25,21 +25,48 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
         // Handle close event
         handleToastClose();
       },
-      duration: 5000,
+      duration: 10000,
     });
 
     notify.open();
   };
 
   const loadLatest = () => {
-    console.log('Loading latest');
     getMoreStories().then((res) => {
       console.log('res', res);
       setNewItems(res);
     });
-
-    console.log('Finished Loading latest');
   };
+  const loadMore = () => {
+    getMoreStories().then((res) => {
+      console.log('loadMore res', res);
+      setMoreItems(res);
+    });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        loadMore();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Append moreItems to existingItems when moreItems state changes
+    const combinedItems = [...existingItems, ...moreItems];
+    setExistingItems(combinedItems);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moreItems]);
 
   useEffect(() => {
     // Prepend newItems to existingItems when newItems state changes
@@ -47,6 +74,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
     setExistingItems(combinedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newItems]);
+
   useEffect(() => {
     // Calculate the height of the new items
     let newItemsHeight = 0;
@@ -54,15 +82,9 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
       '.new-item',
     ) as NodeListOf<HTMLDivElement>; // Add a CSS class 'new-item' to each postItem element
 
-    console.log('newItemsElements = ', newItemsElements);
     newItemsElements?.forEach((item) => {
       newItemsHeight += item.offsetHeight;
     });
-    console.log('newItemsHeight = ', newItemsHeight);
-    // Adjust the scroll position to keep it on the same StoryListItem
-    // if (scrollContainerRef?.current) {
-    //   scrollContainerRef.current.scrollTop += newItemsHeight;
-    // }
     // Adjust the scroll position to keep it on the same StoryListItem
     const { scrollTop } = document.documentElement || document.body;
     document.documentElement.scrollTop = scrollTop + newItemsHeight;

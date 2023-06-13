@@ -1,31 +1,148 @@
 import Image from 'next/image';
-import React, { useCallback, useEffect, useState } from 'react';
-import { CarouselProps } from './types';
+import React, { useEffect, useState } from 'react';
+import { CarouselItem, CarouselOptions, CarouselProps } from './types';
 
-const Carousel = ({ items, options = {} }: CarouselProps) => {
+// class Carousel {
+//   constructor(items: CarouselItem, options: CarouselOptions) {
+//     this.items = items;
+//     this.options = options;
+//     this.activeIndex = 0;
+//     this.timer = null;
+//     this.isPaused = false;
+//   }
+
+//   handlePrev = () => {
+//     const { items } = this;
+//     const { onPrev } = this.options;
+//     this.activeIndex = this.activeIndex === 0 ? items.length - 1 : this.activeIndex - 1;
+//     this.showActiveItem();
+//     if (onPrev) {
+//       onPrev();
+//     }
+//   };
+
+//   handleNext = () => {
+//     const { items } = this;
+//     const { onNext } = this.options;
+//     this.activeIndex = this.activeIndex === items.length - 1 ? 0 : this.activeIndex + 1;
+//     this.showActiveItem();
+//     if (onNext) {
+//       onNext();
+//     }
+//   };
+
+//   handleIndicatorClick = (index) => {
+//     const { items } = this;
+//     this.activeIndex = index;
+//     this.showActiveItem();
+//   };
+
+//   showActiveItem = () => {
+//     const { items, options } = this;
+//     const { onChange } = options;
+//     items.forEach((item, index) => {
+//       const { el } = item;
+//       if (el) {
+//         if (index === this.activeIndex) {
+//           el.style.display = 'block';
+//         } else {
+//           el.style.display = 'none';
+//         }
+//       }
+//     });
+//     if (onChange) {
+//       onChange();
+//     }
+//   };
+
+//   startAutoPlay = () => {
+//     const { interval } = this.options;
+//     this.timer = setInterval(() => {
+//       if (!this.isPaused) {
+//         this.handleNext();
+//       }
+//     }, interval || 3000);
+//   };
+
+//   pauseAutoPlay = () => {
+//     this.isPaused = true;
+//   };
+
+//   resumeAutoPlay = () => {
+//     this.isPaused = false;
+//   };
+
+//   init = () => {
+//     const { items, options } = this;
+//     const { indicators } = options;
+//     items.forEach((item) => {
+//       const { el } = item;
+//       if (el) {
+//         el.style.display = 'none';
+//       }
+//     });
+//     this.showActiveItem();
+//     if (indicators) {
+//       const { items: indicatorItems, activeClasses, inactiveClasses } = indicators;
+//       if (indicatorItems) {
+//         indicatorItems.forEach((indicator, index) => {
+//           const { el, position } = indicator;
+//           if (el) {
+//             el.addEventListener('click', () => {
+//               this.handleIndicatorClick(position);
+//             });
+//             if (position === this.activeIndex) {
+//               el.classList.add(activeClasses);
+//             } else {
+//               el.classList.add(inactiveClasses);
+//             }
+//           }
+//         });
+//       }
+//     }
+//     this.startAutoPlay();
+//   };
+// }
+
+// const [carousel, setCarousel] = useState(null);
+
+// useEffect(() => {
+//   const carouselInstance = new Carousel(items, options);
+//   setCarousel(carouselInstance);
+//   carouselInstance.init();
+//   return () => {
+//     clearInterval(carouselInstance.timer);
+//   };
+// }, []);
+
+class Carousel implements CarouselProps {
+  items: CarouselItem[];
+  options?: CarouselOptions;
+
+  constructor(items: CarouselItem[], options?: CarouselOptions) {
+    this.items = items;
+    this.options = options;
+  }
+
+  render(): JSX.Element {
+    return <CarouselComponent items={this.items} options={this.options} />;
+  }
+}
+
+const CarouselComponent = ({ items }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const prev = () => {
+  const handlePrev = () => {
     setActiveIndex((prevIndex) =>
       prevIndex === 0 ? items.length - 1 : prevIndex - 1,
     );
   };
 
-  const next = useCallback(() => {
+  const handleNext = () => {
     setActiveIndex((prevIndex) =>
       prevIndex === items.length - 1 ? 0 : prevIndex + 1,
     );
-  }, [items.length]);
-
-  useEffect(() => {
-    if (options.autoplay) {
-      const interval = setInterval(next, options.autoplaySpeed || 3000);
-
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [options.autoplay, options.autoplaySpeed, next]);
+  };
 
   return (
     <div
@@ -77,7 +194,7 @@ const Carousel = ({ items, options = {} }: CarouselProps) => {
           type="button"
           className="absolute top-0 left-0 z-[6] flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
           data-carousel-prev
-          onClick={prev}
+          onClick={handlePrev}
         >
           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-slate-800/30 group-hover:bg-white/50 dark:group-hover:bg-slate-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-slate-800/70 group-focus:outline-none">
             <svg
@@ -102,7 +219,7 @@ const Carousel = ({ items, options = {} }: CarouselProps) => {
           type="button"
           className="absolute top-0 right-0 z-[6] flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
           data-carousel-next
-          onClick={next}
+          onClick={handleNext}
         >
           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-slate-800/30 group-hover:bg-white/50 dark:group-hover:bg-slate-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-slate-800/70 group-focus:outline-none">
             <svg
@@ -128,8 +245,4 @@ const Carousel = ({ items, options = {} }: CarouselProps) => {
   );
 };
 
-const CarouselModule = {
-  Carousel,
-};
-
-export default CarouselModule;
+export default { CarouselComponent, Carousel };

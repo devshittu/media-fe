@@ -3,7 +3,7 @@ import { StoryItem, StoryListItem } from '@/components/blocks/stories';
 import { Toast } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
 import { ReactElement } from 'react';
-import PublicLayout from '@/layouts/public-layout';
+import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { StoryList } from '@/components/blocks/stories/';
 
@@ -56,7 +56,7 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
 };
 
 Index.getLayout = function getLayout(page: ReactElement) {
-  return <PublicLayout>{page}</PublicLayout>;
+  return <UserLayout>{page}</UserLayout>;
 };
 
 export const getServerSideProps = async ({
