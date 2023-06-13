@@ -7,8 +7,6 @@ const Footer = () => {
     <>
       <footer className="fixed bottom-0 left-0 z-50 w-full h-16 lg:h-48 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
         <div className="flex h-full  mx-auto font-medium">
-          {/* <button type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-slate-50 dark:hover:bg-slate-800 group"> </button>*/}
-
           <div className="px-4 pt-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
             <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4 justify-between">
               <div className="sm:col-span-2">
@@ -31,7 +29,7 @@ const Footer = () => {
               <div></div>
               <div>
                 <div className="flex items-center mt-1 space-x-3">
-                  <ul className="flex items-center hidden ml-auto space-x-8 lg:flex">
+                  <ul className="flex items-center md:hidden ml-auto space-x-8 lg:flex">
                     <li>
                       <Link
                         href="/"
@@ -87,7 +85,6 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-          {/* <button type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-slate-50 dark:hover:bg-slate-800 group"> </button>*/}
         </div>
       </footer>
     </>
