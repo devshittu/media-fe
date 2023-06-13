@@ -5,7 +5,6 @@ import React, { ReactNode, useContext, useRef } from 'react';
 
 type PublicLayoutProps = {
   children: ReactNode;
-  leftMenu?: ReactNode;
 };
 
 const PublicLayout = ({ children }: PublicLayoutProps) => {
