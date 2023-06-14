@@ -1118,7 +1118,7 @@ export const getStories = delayedFn(
   300,
 );
 
-export const getAllStories = delayedFn(() => testData.stories.slice(0, 4), 300);
+export const getAllStories = delayedFn(() => testData.stories.slice(0,4), 300);
 export const getMoreStories = delayedFn(() => testData.stories.slice(-2), 300); // get last item and -2 for the last two items
 
 export const getStory = delayedFn(
