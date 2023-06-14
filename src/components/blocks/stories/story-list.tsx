@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, ReactEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
@@ -6,12 +6,43 @@ import { StoryItem, StoryListProps } from './types';
 import { getMoreStories } from '@/testing/test-data';
 import useDebounce from '@/hooks/useDebounce';
 
+const pageLimit = 10;
 export const StoryList = ({ data = [] }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
+
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  // const { loading, error, list } = useFetch(query, page);
+  const loader = useRef(null);
   const [hasMoreItems, setHasMoreItems] = useState<boolean>(false);
+
+  // const [page, setPage] = useState(1);
+  // const loader = useRef(null);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleObserver = useCallback((entries: any) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      setPage((prev) => prev + 1);
+      loadMore();
+    }
+  }, []);
+
+  useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 0
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loader.current) observer.observe(loader.current);
+  }, [handleObserver]);
 
   const handleToastClose = () => {
     console.log('Toast closed');
@@ -43,24 +74,6 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
       setMoreItems(res);
     });
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
-      ) {
-        loadMore();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   useEffect(() => {
     // Append moreItems to existingItems when moreItems state changes
     const combinedItems = [...existingItems, ...moreItems];
@@ -107,6 +120,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
             className={index < newItems.length ? 'new-item' : ''}
           /> // Add 'new-item' class to newly added items
         ))}
+        <div ref={loader}></div>
       </div>
     </div>
   );
