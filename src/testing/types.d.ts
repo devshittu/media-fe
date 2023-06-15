@@ -1,6 +1,6 @@
 export type StoriesResponse = {
-  stories: StoryItem[],
-  total: number,
+  stories: StoryItem[];
+  total: number;
 };
 
 export type StoryItem = {
