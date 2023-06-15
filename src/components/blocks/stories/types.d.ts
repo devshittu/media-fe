@@ -7,7 +7,7 @@ export type StoryItem = {
   updatedAt: number;
 };
 export type StoryListItemProps = {
-  story?: StoryItem;
+  story: StoryItem;
   className?: string;
 };
 export type StoryListProps = {
