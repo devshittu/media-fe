@@ -1,4 +1,11 @@
-import { ChangeEvent, ReactEventHandler, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
@@ -12,8 +19,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
-
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   // const { loading, error, list } = useFetch(query, page);
   const loader = useRef(null);
@@ -22,7 +28,9 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
   // const [page, setPage] = useState(1);
   // const loader = useRef(null);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setQuery(e.target.value);
   };
 
@@ -37,8 +45,8 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: "20px",
-      threshold: 0
+      rootMargin: '20px',
+      threshold: 0,
     };
     const observer = new IntersectionObserver(handleObserver, option);
     if (loader.current) observer.observe(loader.current);
