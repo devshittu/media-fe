@@ -6,6 +6,7 @@ export type StoriesResponse = {
 export type StoryItem = {
   id: string;
   title: string;
+  slug: string;
   body: string;
   categoryId: string;
   createdAt: number;
