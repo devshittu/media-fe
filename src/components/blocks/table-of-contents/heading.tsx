@@ -13,7 +13,7 @@ interface HeadingProps {
 }
 
 const Heading: React.FC<HeadingProps> = ({ heading, activeId }) => (
-  <li className={heading.id === activeId ? 'active' : ''}>
+  <li className={`group text-base ${heading.id === activeId ? 'active text-slate-950 dark:text-slate-50' : ''}`}>
     <Link
       href={`#${heading.id}`}
       onClick={(e) => {
