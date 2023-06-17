@@ -5,11 +5,7 @@ import Image from 'next/image';
 import { NavDrawerBottom } from '../nav/nav-drawer-bottom';
 import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
-import {
-  Carousel,
-  CarouselItem,
-  CarouselOptions,
-} from '@/components/blocks/carousel';
+import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
 import { HomeIcon, Icon, TwitterIcon } from '../icons';
 import CarouselModule from '../carousel/carousel';
 import { slug } from '@/utils';
@@ -135,9 +131,9 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         </NavDrawerBottom>
       </div>
 
-      <Link href={`/stories/${story?.id}`}>
+      <Link href={`/stories/${story?.slug}`}>
         <h2
-          id={slug(story?.title)}
+          id={story?.slug}
           className="story-header sm:text-3xl text-2xl title-font mt-4 mb-4  font-extrabold text-slate-900 tracking-tight dark:text-slate-200"
         >
           {`${story?.id}. ${story?.title}`}
