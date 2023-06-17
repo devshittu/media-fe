@@ -11,6 +11,8 @@ export type StoryItem = {
   categoryId: string;
   createdAt: number;
   updatedAt: number;
+  parent_stories: string[];
+  children_stories: string[];
 };
 
 export type CategoryItem = {
