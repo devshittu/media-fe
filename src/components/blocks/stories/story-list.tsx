@@ -9,48 +9,46 @@ import {
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
-import { StoryItem, StoryListProps } from './types';
-import { getMoreStories } from '@/testing/test-data';
-import useDebounce from '@/hooks/useDebounce';
+import { StoryListProps } from './types';
+import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
+import { StoryItem } from '@/testing';
 
-const pageLimit = 10;
-export const StoryList = ({ data = [] }: StoryListProps) => {
+export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
-  // const { loading, error, list } = useFetch(query, page);
-  const loader = useRef(null);
-  const [hasMoreItems, setHasMoreItems] = useState<boolean>(false);
-
-  // const [page, setPage] = useState(1);
-  // const loader = useRef(null);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setQuery(e.target.value);
-  };
-
-  const handleObserver = useCallback((entries: any) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      setPage((prev) => prev + 1);
-      loadMore();
-    }
-  }, []);
+  const pageSize = 5;
+  const page = useRef(1);
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: '20px',
-      threshold: 0,
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting) {
+          page.current++;
+          getAllStories(page.current, pageSize).then((res) => {
+            console.log('res', res);
+            setMoreItems(res);
+          });
+        }
+      },
+      { threshold: 0.1, root: null, rootMargin: '20px' },
+    );
+
+    const currentLoaderRef = loaderRef.current; // Store the current value in a variable
+
+    if (currentLoaderRef) {
+      observer.observe(currentLoaderRef);
+    }
+
+    return () => {
+      if (currentLoaderRef) {
+        observer.unobserve(currentLoaderRef);
+      }
     };
-    const observer = new IntersectionObserver(handleObserver, option);
-    if (loader.current) observer.observe(loader.current);
-  }, [handleObserver]);
+  }, []);
 
   const handleToastClose = () => {
     console.log('Toast closed');
@@ -74,12 +72,6 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
     getMoreStories().then((res) => {
       console.log('res', res);
       setNewItems(res);
-    });
-  };
-  const loadMore = () => {
-    getMoreStories().then((res) => {
-      console.log('loadMore res', res);
-      setMoreItems(res);
     });
   };
   useEffect(() => {
@@ -119,6 +111,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
       >
         <Button onClick={loadLatest}>Load new feeds</Button>
         <Button onClick={ShowToast}>Show Toast</Button>
+        <span>Current Page: {page.current}</span>
       </div>
       <div>
         {existingItems.map((item, index) => (
@@ -128,7 +121,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
             className={index < newItems.length ? 'new-item' : ''}
           /> // Add 'new-item' class to newly added items
         ))}
-        <div ref={loader}></div>
+        <div ref={loaderRef}></div>
       </div>
     </div>
   );
