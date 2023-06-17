@@ -23,7 +23,7 @@ const LeftColumnContent = () => {
           <Link
             title="Go to career site"
             className="w-35 text-company-secondary-bg hover:opacity-75"
-            href="/en-GB"
+            href="/stories"
           >
             <Icon icon={<HomeIcon />} />
           </Link>
