@@ -1,15 +1,57 @@
-import { StoryItem } from '@/components/blocks/stories';
-import { ReactElement } from 'react';
+'use client';
+import { ReactElement, use, useEffect, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import { StoryList } from '@/components/blocks/stories/';
-import { getAllStories } from '@/testing/test-data';
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { StoryList, StoryListItem } from '@/components/blocks/stories/';
+import {
+  useChildrenStories,
+  useParentStories,
+  useStory,
+} from '@/testing/test-data';
 import { TableOfContents } from '@/components/blocks/table-of-contents/';
-type PublicStoriesPageProps = InferGetServerSidePropsType<
-  typeof getServerSideProps
->;
-const Index = ({ stories }: PublicStoriesPageProps) => {
+import { useRouter } from 'next/router';
+import { StoryItem } from '@/testing';
+import { Loading } from '@/components/loading';
+import { NotFound } from '@/components/not-found';
+
+const Index = () => {
+  const [stories, setStories] = useState<StoryItem[]>([]);
+
+  const router = useRouter();
+  const storyId = router.query.storyId as string;
+  const story = useStory(storyId);
+  const parentStories = useParentStories(storyId);
+  const childrenStories = useChildrenStories(storyId);
+
+  if (story.isLoading) {
+    return <Loading />;
+  }
+
+  if (!story.data) {
+    return <NotFound />;
+  }
+  // setStories([story.data]);
+  // useEffect(() => {
+  //   if (story.data !== null) {
+  //     console.log('story.data', story.data);
+  //     setStories([story.data]);
+  //   }
+  // }, [story.data]);
+
+  // useEffect(() => {
+  //   if (
+  //     parentStories.data !== null &&
+  //     story !== null &&
+  //     childrenStories.data !== null
+  //   ) {
+  //     setStories([
+  //       ...parentStories.data,
+  //       story,
+  //       ...childrenStories.data,
+  //     ]);
+  //   }
+  // }, [parentStories.data, story, childrenStories.data]);
+
   return (
     <div
       className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}
@@ -19,7 +61,14 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
       >
         <StoriesPageHeader />
         <section>
-          <StoryList data={stories} />
+          {/* <StoryListItem story={story.data} /> */}
+          <StoryList
+            data={[
+              ...(parentStories.data || []),
+              story.data,
+              ...(childrenStories.data || []),
+            ]}
+          />
         </section>
       </div>
       <div
@@ -34,17 +83,6 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
 
 Index.getLayout = function getLayout(page: ReactElement) {
   return <UserLayout>{page}</UserLayout>;
-};
-
-export const getServerSideProps = async ({
-  params,
-}: GetServerSidePropsContext) => {
-  const stories = await getAllStories().catch(() => [] as StoryItem[]);
-  return {
-    props: {
-      stories,
-    },
-  };
 };
 
 export default Index;
