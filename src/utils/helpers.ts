@@ -8,5 +8,28 @@ export const formatDate = (date: number | string) => {
     day: 'numeric',
   });
 };
+export const slug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[-]+/g, '-')
+    .replace(/[^\w-]+/g, '');
+
+// export const slug = (str: string): string => {
+//   str = str.trim().toLowerCase();
+
+//   const from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆĞÍÌÎÏİŇÑÓÖÒÔÕØŘŔŠŞŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇğíìîïıňñóöòôõøðřŕšşťúůüùûýÿžþÞĐđßÆa·/_,:;";
+//   const to = "AAAAAACCCDEEEEEEEEGIIIIINNOOOOOORRSSTUUUUUYYZaaaaaacccdeeeeeeeegiiiiinnooooooorrsstuuuuuyyzbBDdBAa------";
+
+//   for (let i = 0, l = from.length; i < l; i++) {
+//     str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+//   }
+
+//   str = str.replace(/[^a-z0-9 -]/g, '')
+//     .replace(/\s+/g, '-')
+//     .replace(/-+/g, '-');
+
+//   return str;
+// };
 
 // Path: src/utils/helper.ts

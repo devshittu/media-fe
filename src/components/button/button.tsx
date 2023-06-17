@@ -12,6 +12,7 @@ export type ButtonProps = {
   size?: 'small' | 'medium' | 'large';
   expand?: boolean;
   badge?: string;
+  title?: string;
   badgeType?:
     | 'info'
     | 'primary'
@@ -27,6 +28,7 @@ export type ButtonProps = {
 
 export const Button = ({
   outlined = false,
+  title = '',
   rounded = false,
   disabled = false,
   loading = false,
@@ -212,6 +214,7 @@ export const Button = ({
       className={buttonClasses}
       disabled={disabled}
       onClick={onClick}
+      title={title}
     >
       {loading ? (
         <>

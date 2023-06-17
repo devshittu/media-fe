@@ -1,17 +1,54 @@
-import { useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  ReactEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
-import { StoryItem, StoryListProps } from './types';
-import { getMoreStories } from '@/testing/test-data';
-import useDebounce from '@/hooks/useDebounce';
+import { StoryListProps } from './types';
+import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
+import { StoryItem } from '@/testing';
 
-export const StoryList = ({ data = [] }: StoryListProps) => {
+export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
-  const [hasMoreItems, setHasMoreItems] = useState<boolean>(false);
+  const pageSize = 5;
+  const page = useRef(1);
+  const loaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting) {
+          page.current++;
+          getAllStories(page.current, pageSize).then((res) => {
+            console.log('res', res);
+            setMoreItems(res);
+          });
+        }
+      },
+      { threshold: 0.1, root: null, rootMargin: '20px' },
+    );
+
+    const currentLoaderRef = loaderRef.current; // Store the current value in a variable
+
+    if (currentLoaderRef) {
+      observer.observe(currentLoaderRef);
+    }
+
+    return () => {
+      if (currentLoaderRef) {
+        observer.unobserve(currentLoaderRef);
+      }
+    };
+  }, []);
 
   const handleToastClose = () => {
     console.log('Toast closed');
@@ -37,30 +74,6 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
       setNewItems(res);
     });
   };
-  const loadMore = () => {
-    getMoreStories().then((res) => {
-      console.log('loadMore res', res);
-      setMoreItems(res);
-    });
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
-      ) {
-        loadMore();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   useEffect(() => {
     // Append moreItems to existingItems when moreItems state changes
     const combinedItems = [...existingItems, ...moreItems];
@@ -98,6 +111,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
       >
         <Button onClick={loadLatest}>Load new feeds</Button>
         <Button onClick={ShowToast}>Show Toast</Button>
+        <span>Current Page: {page.current}</span>
       </div>
       <div>
         {existingItems.map((item, index) => (
@@ -107,6 +121,7 @@ export const StoryList = ({ data = [] }: StoryListProps) => {
             className={index < newItems.length ? 'new-item' : ''}
           /> // Add 'new-item' class to newly added items
         ))}
+        <div ref={loaderRef}></div>
       </div>
     </div>
   );

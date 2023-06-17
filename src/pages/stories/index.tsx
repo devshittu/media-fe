@@ -1,14 +1,15 @@
 import { SidePanel } from '@/components/blocks/side-panel';
-import { StoryItem, StoryListItem } from '@/components/blocks/stories';
+import { StoryListItem } from '@/components/blocks/stories';
 import { Toast } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
-import { ReactElement } from 'react';
+import { ReactElement, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { StoryList } from '@/components/blocks/stories/';
 
 import { getAllStories } from '@/testing/test-data';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { StoryItem } from '@/testing';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
@@ -31,9 +32,6 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
     notify.open();
   };
 
-  const loadLatest = () => {
-    console.log('Loading latest');
-  };
   return (
     <div
       className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}
