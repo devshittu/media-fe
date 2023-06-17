@@ -1,11 +1,5 @@
-export type StoryItem = {
-  id: string;
-  title: string;
-  body: string;
-  categoryId: string;
-  createdAt: number;
-  updatedAt: number;
-};
+import { StoryItem } from '@/testing';
+
 export type StoryListItemProps = {
   story: StoryItem;
   className?: string;
