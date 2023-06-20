@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
@@ -84,7 +80,7 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
   return (
     <div className={`mt-28 lg:mt-0`}>
       <div
-        className={`flex align-middle items-center justify-centerx justify-around min-h-[56px]`}
+        className={`flex align-middle items-center justify-around min-h-[56px]`}
       >
         <Button onClick={loadLatest}>Load new feeds</Button>
         <Button onClick={ShowToast}>Show Toast</Button>
@@ -102,3 +98,5 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
     </div>
   );
 };
+
+// Path: src/components/blocks/stories/story-list.tsx
