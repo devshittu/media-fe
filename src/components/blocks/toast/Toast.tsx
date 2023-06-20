@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot, Root } from 'react-dom/client';
 import { ToastComponent } from './toast-component';
 import { ToastProps } from './types';
@@ -14,6 +13,7 @@ class Toast {
   private container: HTMLElement;
   private root: Root;
   private isOpen: boolean;
+  private elementContainer: HTMLElement | null = null;
 
   constructor({
     message,
@@ -29,7 +29,7 @@ class Toast {
     this.duration = duration;
     this.onClose = onClose;
     this.container = document.createElement('div');
-    // document.body.appendChild(this.container);
+    this.container.id = 'toast-container';
     document.body.append(this.container);
     this.root = createRoot(this.container);
     this.isOpen = false;
@@ -43,9 +43,9 @@ class Toast {
   };
 
   private renderToast = () => {
-    const closeToast = () => {
-      this.close();
-    };
+    this.isOpen = true;
+    this.elementContainer = document.createElement('div');
+    this.container.appendChild(this.elementContainer);
 
     this.root.render(
       <ToastComponent
@@ -54,7 +54,7 @@ class Toast {
         message={this.message}
         position={this.position}
         duration={this.duration}
-        onClose={this.onClose || closeToast}
+        onClose={this.close}
       />,
     );
   };
@@ -81,3 +81,5 @@ class Toast {
 }
 
 export default Toast;
+
+// Path: src/components/blocks/toast/Toast.tsx

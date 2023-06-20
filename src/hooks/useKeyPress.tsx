@@ -34,3 +34,5 @@ export function useKeyPress(targetKey: string): boolean {
   return keyPressed;
 }
 export default useKeyPress;
+
+//Path: @hooks/useKeyPress.tsx

@@ -163,3 +163,5 @@ export const ToastComponent = ({
     </div>
   );
 };
+
+// Path: src/components/blocks/toast/toast-component.tsx
