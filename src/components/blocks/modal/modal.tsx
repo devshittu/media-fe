@@ -1,11 +1,11 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { ModalComponent } from './modal-component';
-import { ModalProps } from './types';
+import { ModalClassProps, ModalProps } from './types';
 
 class Modal {
   private id: string;
-//   private type: ModalProps['type'];
+  //   private type: ModalProps['type'];
   private size: ModalProps['size'];
   private title: ModalProps['title'];
   private noOverlay: ModalProps['noOverlay'];
@@ -17,23 +17,20 @@ class Modal {
   private elementContainer: HTMLElement | null = null;
 
   constructor({
-  id,
-  size = 'default',
-  noOverlay = false,
-  title,
-  children,
-  onClose
-  }: ModalProps) {
-    this.id = `modal-${Date.now().toString()}`;
-    // this.type = type;
-    // this.message = message;
+    id,
+    size = 'default',
+    noOverlay = false,
+    title,
+    children,
+    onClose,
+  }: ModalClassProps) {
+    this.id = id ? id : `modal-${Date.now().toString()}`;
     this.size = size;
     this.title = title;
     this.children = children;
+    this.noOverlay = noOverlay;
     this.onClose = onClose;
     this.container = document.createElement('div');
-    this.container.id = 'modal-container';
-    document.body.append(this.container);
     this.root = createRoot(this.container);
     this.isOpen = false;
   }
@@ -41,11 +38,11 @@ class Modal {
   public open = () => {
     if (!this.isOpen) {
       this.isOpen = true;
-      this.render();
+      this.renderModal();
     }
   };
 
-  private render = () => {
+  private renderModal = () => {
     this.isOpen = true;
     this.elementContainer = document.createElement('div');
     this.container.appendChild(this.elementContainer);
@@ -53,20 +50,29 @@ class Modal {
     this.root.render(
       <ModalComponent
         id={this.id}
+        isActive={this.isOpen}
         size={this.size}
         title={this.title}
         onClose={this.close}
-      >{this.children}</ModalComponent>
+        noOverlay={this.noOverlay}
+      >
+        {this.children}
+      </ModalComponent>,
     );
   };
 
   public close = () => {
     if (this.isOpen) {
       this.isOpen = false;
-      const toastElement = document.getElementById(this.id);
-      if (toastElement) {
-        this.root.unmount();
-        toastElement.remove();
+      const modalElement = document.getElementById(this.id);
+      const modalElementOverlay = document.getElementById(
+        `${this.id}-dialog-overlay`,
+      );
+      const modalElementParent = modalElement?.parentNode as HTMLElement;
+      if (modalElement) {
+        modalElement.remove();
+        modalElementOverlay?.remove();
+        modalElementParent?.remove();
       }
 
       if (this.onClose) {
@@ -79,7 +85,6 @@ class Modal {
       }
     }
   };
-
 }
 
 export default Modal;
