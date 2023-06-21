@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { ToastComponent } from './toast-component';
-import { ToastProps } from './types';
+import { ToastClassProps, ToastProps } from './types';
 
 class Toast {
   private id: string;
@@ -21,7 +21,7 @@ class Toast {
     type,
     onClose,
     duration = 3000,
-  }: ToastProps) {
+  }: ToastClassProps) {
     this.id = `toast-${Date.now().toString()}`;
     this.type = type;
     this.position = position;
@@ -29,8 +29,6 @@ class Toast {
     this.duration = duration;
     this.onClose = onClose;
     this.container = document.createElement('div');
-    this.container.id = 'toast-container';
-    document.body.append(this.container);
     this.root = createRoot(this.container);
     this.isOpen = false;
   }
@@ -50,6 +48,7 @@ class Toast {
     this.root.render(
       <ToastComponent
         id={this.id}
+        isActive={this.isOpen}
         type={this.type}
         message={this.message}
         position={this.position}
@@ -63,9 +62,12 @@ class Toast {
     if (this.isOpen) {
       this.isOpen = false;
       const toastElement = document.getElementById(this.id);
+      const toastElementParent = toastElement?.parentNode as HTMLElement;
+
       if (toastElement) {
-        this.root.unmount();
+        // this.root.unmount();
         toastElement.remove();
+        toastElementParent?.remove();
       }
 
       if (this.onClose) {
