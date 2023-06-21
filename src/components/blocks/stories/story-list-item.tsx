@@ -9,6 +9,8 @@ import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
 import { HomeIcon, Icon, TwitterIcon } from '../icons';
 import CarouselModule from '../carousel/carousel';
 import { slug } from '@/utils';
+import { Toast } from '../toast';
+import { Button } from '@/components/button';
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   const carouselItems: CarouselItem[] = [
@@ -52,20 +54,39 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
     const modal = new Modal({
       title: 'Hello, world!',
       id: 'first-modal',
-      children: (<div>Hello world</div>),
+      size: 'full',
+      children: (
+        <div>
+          Hello <Button onClick={ShowToast}>Show Toast</Button>
+        </div>
+      ),
       // type: 'success',
       onClose: () => {
         // Handle close event
         handleModalClose();
       },
-      // duration: 3000,
     });
 
     modal.open();
-  }
+  };
   const handleModalClose = () => {
-      console.log('handleModalClose');
-    }
+    console.log('handleModalClose');
+  };
+
+  const ShowToast = () => {
+    const notify = new Toast({
+      message: 'Hello, world!',
+      position: 'bottom-center',
+      type: 'success',
+      onClose: () => {
+        // Handle close event
+        console.log('toast closed');
+      },
+      duration: 3000,
+    });
+
+    notify.open();
+  };
 
   return (
     <article
@@ -76,13 +97,13 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           {`CATEGORY`}
         </div>
 
-<button
-        className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="button"
-        onClick={openModal}
-      >
-        Modal
-      </button> 
+        <button
+          className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          type="button"
+          onClick={openModal}
+        >
+          Modal
+        </button>
 
         {/* <ModalComponent id="modal-1" title="Share">
           <div className="p-6 space-y-6 ">
