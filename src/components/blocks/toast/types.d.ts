@@ -1,5 +1,6 @@
 export type ToastProps = {
   id?: string;
+  isActive: boolean;
   type: 'success' | 'danger' | 'warning';
   position?:
     | 'top-left'
@@ -11,4 +12,8 @@ export type ToastProps = {
   message: string;
   duration?: number;
   onClose?: () => void;
+};
+
+export type ToastClassProps = Omit<ToastProps, 'isActive'> & {
+  isActive?: boolean;
 };

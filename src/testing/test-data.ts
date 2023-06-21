@@ -88,7 +88,7 @@ export const testData = {
       createdAt: 1678963534000,
       updatedAt: 1678963534000,
       parent_stories: ['5'],
-      children_stories: [],
+      children_stories: ['8'],
     },
     {
       id: '7',
@@ -98,7 +98,7 @@ export const testData = {
       categoryId: '3',
       createdAt: 1678964834000,
       updatedAt: 1678964834000,
-      parent_stories: [],
+      parent_stories: ['6'],
       children_stories: ['8', '9'],
     },
     {
@@ -727,7 +727,7 @@ const findRelatedStories = (
           const relatedStory = stories.find((s) => s.id === relatedId);
           if (relatedStory) {
             relatedStories.push(relatedStory);
-            findStories(relatedStory.id);
+            findStories(relatedStory.slug);
           }
         });
       }
@@ -735,16 +735,51 @@ const findRelatedStories = (
   };
 
   findStories(storyId);
+  relatedStories.sort((a, b) => a.createdAt - b.createdAt); // Sort related stories by createdAt in ascending order
   return relatedStories;
 };
 
-const getParentStories = delayedFn((storyId: string): StoryItem[] => {
+export const getParentStories = delayedFn((storyId: string): StoryItem[] => {
   return findRelatedStories(testData.stories, storyId, 'parent_stories');
 }, 300);
 
-const getChildrenStories = delayedFn((storyId: string): StoryItem[] => {
+export const getChildrenStories = delayedFn((storyId: string): StoryItem[] => {
   return findRelatedStories(testData.stories, storyId, 'children_stories');
 }, 300);
+
+const getRelatedStories = delayedFn((storyId: string): StoryItem[] => {
+  let relatedStories: StoryItem[] = [];
+  const parentStories = findRelatedStories(
+    testData.stories,
+    storyId,
+    'parent_stories',
+  );
+  console.log('parentStories', parentStories);
+  const childrenStories = findRelatedStories(
+    testData.stories,
+    storyId,
+    'children_stories',
+  );
+  console.log('childrenStories', childrenStories);
+  const theStory =
+    testData.stories.find((j: StoryItem) => j.slug === storyId) || null;
+  relatedStories = [
+    ...parentStories,
+    theStory,
+    ...childrenStories,
+  ] as StoryItem[];
+  return relatedStories;
+}, 300);
+
+const paginateStories = (
+  stories: StoryItem[],
+  page: number,
+  storiesPerPage: number,
+): StoryItem[] => {
+  const startIndex = (page - 1) * storiesPerPage;
+  const endIndex = startIndex + storiesPerPage;
+  return stories.slice(startIndex, endIndex);
+};
 
 const useTestData = <T>(promise: Promise<T>) => {
   const [testData, setTestData] = useState<T | null>(null);
@@ -773,3 +808,5 @@ export const useParentStories = (id: string) =>
   useTestData(getParentStories(id));
 export const useChildrenStories = (id: string) =>
   useTestData(getChildrenStories(id));
+export const useRelatedStories = (id: string) =>
+  useTestData(getRelatedStories(id));

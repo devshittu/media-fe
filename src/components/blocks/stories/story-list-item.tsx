@@ -3,12 +3,14 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { NavDrawerBottom } from '../nav/nav-drawer-bottom';
-import { Modal } from '@/components/blocks/modal';
+import { Modal, ModalComponent } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
 import { HomeIcon, Icon, TwitterIcon } from '../icons';
 import CarouselModule from '../carousel/carousel';
 import { slug } from '@/utils';
+import { Toast } from '../toast';
+import { Button } from '@/components/button';
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   const carouselItems: CarouselItem[] = [
@@ -46,6 +48,46 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   // carousel.next(); // Invoke next slide
   // carousel.prev(); // Invoke previous slide
 
+  const openModal = () => {
+    console.log('openModal');
+
+    const modal = new Modal({
+      title: 'Hello, world!',
+      id: 'first-modal',
+      size: 'full',
+      children: (
+        <div>
+          Hello <Button onClick={ShowToast}>Show Toast</Button>
+        </div>
+      ),
+      // type: 'success',
+      onClose: () => {
+        // Handle close event
+        handleModalClose();
+      },
+    });
+
+    modal.open();
+  };
+  const handleModalClose = () => {
+    console.log('handleModalClose');
+  };
+
+  const ShowToast = () => {
+    const notify = new Toast({
+      message: 'Hello, world!',
+      position: 'bottom-center',
+      type: 'success',
+      onClose: () => {
+        // Handle close event
+        console.log('toast closed');
+      },
+      duration: 3000,
+    });
+
+    notify.open();
+  };
+
   return (
     <article
       className={`p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
@@ -55,7 +97,15 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           {`CATEGORY`}
         </div>
 
-        <Modal id="modal-1" title="Share">
+        <button
+          className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          type="button"
+          onClick={openModal}
+        >
+          Modal
+        </button>
+
+        {/* <ModalComponent id="modal-1" title="Share">
           <div className="p-6 space-y-6 ">
             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
               With less than a month to go before the European Union enacts new
@@ -70,7 +120,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
               could personally affect them.
             </p>
           </div>
-        </Modal>
+        </ModalComponent> */}
         <NavDrawerBottom title="Share" id="share">
           <div className="p-6">
             <p className="text-sm font-normal text-gray-500 dark:text-gray-400">

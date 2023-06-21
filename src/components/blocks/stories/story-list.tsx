@@ -1,17 +1,11 @@
-import {
-  ChangeEvent,
-  ReactEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
 import { StoryListProps } from './types';
 import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
 import { StoryItem } from '@/testing';
+import { InfiniteScroll } from '@/components/inifinite-scroll';
 
 export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
@@ -19,36 +13,16 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
   const pageSize = 5;
-  const page = useRef(1);
-  const loaderRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const target = entries[0];
-        if (target.isIntersecting) {
-          page.current++;
-          getAllStories(page.current, pageSize).then((res) => {
-            console.log('res', res);
-            setMoreItems(res);
-          });
-        }
-      },
-      { threshold: 0.1, root: null, rootMargin: '20px' },
-    );
-
-    const currentLoaderRef = loaderRef.current; // Store the current value in a variable
-
-    if (currentLoaderRef) {
-      observer.observe(currentLoaderRef);
-    }
-
-    return () => {
-      if (currentLoaderRef) {
-        observer.unobserve(currentLoaderRef);
-      }
-    };
+  const fetchMoreStories = useCallback((page: number, pageSize: number) => {
+    getAllStories(page, pageSize).then((res) => {
+      console.log('res', res);
+      setMoreItems(res);
+    });
   }, []);
+  const handleFetchMore = (page: number, pageSize: number) => {
+    fetchMoreStories(page, pageSize);
+  };
 
   const handleToastClose = () => {
     console.log('Toast closed');
@@ -62,7 +36,7 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
         // Handle close event
         handleToastClose();
       },
-      duration: 10000,
+      duration: 3000,
     });
 
     notify.open();
@@ -103,15 +77,13 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
     document.documentElement.scrollTop = scrollTop + newItemsHeight;
     // document.body.scrollTop = scrollTop + newItemsHeight; // For older browser compatibility
   }, [newItems]);
-
   return (
     <div className={`mt-28 lg:mt-0`}>
       <div
-        className={`flex align-middle items-center justify-centerx justify-around min-h-[56px]`}
+        className={`flex align-middle items-center justify-around min-h-[56px]`}
       >
         <Button onClick={loadLatest}>Load new feeds</Button>
         <Button onClick={ShowToast}>Show Toast</Button>
-        <span>Current Page: {page.current}</span>
       </div>
       <div>
         {existingItems.map((item, index) => (
@@ -121,8 +93,10 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
             className={index < newItems.length ? 'new-item' : ''}
           /> // Add 'new-item' class to newly added items
         ))}
-        <div ref={loaderRef}></div>
+        <InfiniteScroll pageSize={pageSize} onFetchMore={handleFetchMore} />
       </div>
     </div>
   );
 };
+
+// Path: src/components/blocks/stories/story-list.tsx
