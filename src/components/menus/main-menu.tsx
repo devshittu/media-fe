@@ -5,9 +5,9 @@ import {
   ArchiveIcon,
   EditIcon,
   HomeIcon,
+  SettingsIcon,
   Icon,
-} from '@/components/blocks/icons';
-import Settings from '../blocks/icons/svg-icons/Settings';
+} from '@/components/illustrations';
 
 const MainMenu = () => {
   return (
@@ -63,7 +63,7 @@ const MainMenu = () => {
               className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
             >
               <Icon
-                icon={<Settings />}
+                icon={<SettingsIcon />}
                 useBackground
                 rounded="half"
                 size={40}
