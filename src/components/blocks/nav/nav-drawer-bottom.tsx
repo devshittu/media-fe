@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { NavContext, NavDrawerProps } from './index';
-import { Icon, MoreVerticalIcon } from '../icons';
+import { Icon, MoreVerticalIcon } from '../../illustrations';
 
 export const NavDrawerBottom = ({ id, title, children }: NavDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);

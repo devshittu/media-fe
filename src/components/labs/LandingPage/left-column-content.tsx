@@ -1,4 +1,4 @@
-import { HomeIcon, Icon, TwitterIcon } from '@/components/blocks/icons';
+import { HomeIcon, Icon, TwitterIcon } from '@/components/illustrations';
 import { Button } from '@/components/button';
 import { InputField } from '@/components/form';
 import Link from 'next/link';

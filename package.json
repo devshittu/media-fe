@@ -12,7 +12,8 @@
     "format:check": "npm run prettier -- --check",
     "format:fix": "npm run prettier -- --write",
     "types:check": "tsc --noEmit --pretty",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "icons:create": "npx @svgr/cli --typescript --no-dimensions --out-dir ./src/components/illustrations/icons  ./src/components/illustrations/source/feather --config-file ./src/components/illustrations/svgr-config.json --template ./src/components/illustrations/svg-template.ts  --index-template ./src/components/illustrations/index-template.ts"
   },
   "dependencies": {
     "@types/node": "20.1.1",
@@ -27,6 +28,7 @@
     "typescript": "*"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.0.1",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "autoprefixer": "^10.4.14",
     "eslint-config-prettier": "^8.8.0",
