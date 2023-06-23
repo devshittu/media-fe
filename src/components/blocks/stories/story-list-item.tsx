@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { NavDrawerBottom } from '../nav/nav-drawer-bottom';
-import { Modal, ModalComponent } from '@/components/blocks/modal';
+import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
 import {
@@ -16,6 +16,7 @@ import CarouselModule from '../carousel/carousel';
 import { slug } from '@/utils';
 import { Toast } from '../toast';
 import { Button } from '@/components/button';
+import { WhatsAppIcon } from '@/components/illustrations/icons/social';
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   const carouselItems: CarouselItem[] = [
@@ -138,7 +139,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
                   href="#"
                   className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
                 >
-                  <Icon icon={<TwitterIcon />} />
+                  <Icon icon={<WhatsAppIcon />} />
                   <span className="flex-1 ml-3 whitespace-nowrap">
                     Whatsapp
                   </span>
