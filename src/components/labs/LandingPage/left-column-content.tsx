@@ -10,9 +10,33 @@ import {
   AppLogoIcon,
   GoogleIcon,
 } from '@/components/illustrations/icons/social';
+import TokenPinInputField, {
+  UserLoginStatus,
+} from '@/components/form/token-pin-digit';
+import { Modal } from '@/components/blocks/modal';
 
 const LeftColumnContent = () => {
   const [categories, setCategories] = useState<CategoryItem[]>([]);
+
+  const openModal = () => {
+    console.log('openModal');
+
+    const modal = new Modal({
+      title: 'Enter your Token',
+      id: 'pin-dialog',
+      size: 'small',
+      children: (
+        <TokenPinInputField setUserStatus={UserLoginStatus.LOGGING_IN} />
+      ),
+      // type: 'success',
+      onClose: () => {
+        // Handle close event
+        console.log('closed');
+      },
+    });
+
+    modal.open();
+  };
   useEffect(() => {
     getCategories().then((res) => {
       console.log('res', res);
@@ -52,8 +76,6 @@ const LeftColumnContent = () => {
         {/* Marquee */}
 
         <Marquee play speed="slowest" hoverToPause>
-          {/* {[...Array(2)].map((_, index) => (
-          <React.Fragment key={index}> */}
           {categories.map((item, index) => (
             <Link
               key={index}
@@ -64,8 +86,18 @@ const LeftColumnContent = () => {
               {item.title}
             </Link>
           ))}
-          {/* </React.Fragment>
-        ))} */}
+        </Marquee>
+        <Marquee play speed="slowest" hoverToPause reverse>
+          {categories.map((item, index) => (
+            <Link
+              key={index}
+              href="/"
+              aria-label="View Item"
+              className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
+            >
+              {item.title}
+            </Link>
+          ))}
         </Marquee>
 
         <div className="w-full max-w-[500px]">
@@ -84,8 +116,9 @@ const LeftColumnContent = () => {
 
               <Button
                 type="primary"
-                nativeType="submit"
+                nativeType="button"
                 className="justify-center font-semibold mt-4 w-full"
+                onClick={openModal}
               >
                 <span className="opacity-100 transition transition-opacity">
                   Connect

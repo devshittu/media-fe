@@ -11,8 +11,12 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { getCategories } from '@/testing/test-data';
-import { StoryItem } from '@/components/blocks/stories';
+import { StoryItem } from '@/testing';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+//Todo remove this import after sorting the Token InputField in this file and implemented in src/components/labs/LandingPage/left-column-content.tsx
+// import TokenPinInputField, {
+//   UserLoginStatus,
+// } from '@/components/form/token-pin-digit';
 
 type PublicHomePageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -36,6 +40,7 @@ export default function Home({ categories }: PublicHomePageProps) {
     <>
       <Seo title="New App" />
       <Nav />
+      {/* <TokenPinInputField setUserStatus={UserLoginStatus.LOGGING_IN} /> */}
       <Hero />
       <Feature />
       <Marquee play speed="slow" hoverToPause>
