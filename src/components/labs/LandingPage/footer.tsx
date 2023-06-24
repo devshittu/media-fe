@@ -5,10 +5,10 @@ import React from 'react';
 const Footer = () => {
   return (
     <>
-      <footer className="fixed bottom-0 left-0 z-50 w-full h-16 lg:h-48 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
+      <footer className="fixed bottom-0 left-0 z-50 w-full h-16x lg:h-48x bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
         <div className="flex h-full  mx-auto font-medium">
           <div className="px-4 pt-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-            <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4 justify-between">
+            <div className="grid gap-10 row-gap-6 mb-2 sm:grid-cols-2 lg:grid-cols-4 justify-between">
               <div className="sm:col-span-2">
                 <Link
                   href="/"
@@ -17,12 +17,12 @@ const Footer = () => {
                   className="inline-flex items-center"
                 >
                   <h1 className="text-xl font-bold tracking-wide text-slate-800 ">
-                    Don’t miss what’s happening
+                    Stay tuned and stay updated!
                   </h1>
                 </Link>
                 <div className="mt-1 lg:max-w-sm">
                   <p className="text-sm text-slate-800">
-                    People on Twitter are the first to know.
+                    {" Don't miss out on the latest updates!"}
                   </p>
                 </div>
               </div>
@@ -42,7 +42,7 @@ const Footer = () => {
                     </li>
                     <li>
                       <Button
-                        className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-whitex transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                        className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                         aria-label="Sign up"
                         outlined
                       >
@@ -53,7 +53,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
+            <div className="flex flex-col-reverse justify-between py-5 border-t lg:flex-row">
               <p className="text-sm">
                 © Copyright 2023 MEDIA FE Inc. All rights reserved.
               </p>
