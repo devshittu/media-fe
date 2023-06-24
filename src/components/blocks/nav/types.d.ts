@@ -5,8 +5,16 @@ export type NavDrawerProps = {
   children: React.ReactNode;
 };
 
+export enum DrawerSide{
+  BOTTOM = 'bottom',
+  RIGHT = 'right',
+  LEFT = 'left',
+  TOP = 'top',
+}
+
 export type DrawerProps = {
   id: string;
+  side: DrawerSide;
   isActive: boolean;
   title: string;
   titleIcon?: JSX.Element | React.ReactElement | null;
