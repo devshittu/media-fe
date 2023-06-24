@@ -1,10 +1,7 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CarouselProps } from './types';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@/components/illustrations';
+import { ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
 
 const Carousel = ({ items, options = {} }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
