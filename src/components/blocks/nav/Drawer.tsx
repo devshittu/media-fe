@@ -50,7 +50,6 @@ class Drawer {
       </DrawerComponent>,
     );
   };
-
   public close = () => {
     if (this.isOpen) {
       this.isOpen = false;
@@ -59,12 +58,15 @@ class Drawer {
         `${this.id}-drawer-overlay`,
       );
       const drawerElementParent = drawerElement?.parentNode as HTMLElement;
-      if (drawerElement) {
-        drawerElement.remove();
-        drawerElementOverlay?.remove();
-        drawerElementParent?.remove();
-      }
 
+      setTimeout(() => {
+        if (drawerElementOverlay && drawerElementOverlay.parentNode) {
+          drawerElementOverlay.parentNode.removeChild(drawerElementOverlay);
+        }
+        if (drawerElementParent) {
+          drawerElementParent.remove();
+        }
+      }, 300);
       if (this.onClose) {
         this.onClose();
       }
