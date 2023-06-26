@@ -7,22 +7,17 @@ type IconProps = {
   useBackground?: boolean;
   size?: number;
   rounded?: 'full' | 'half' | 'none';
+  className?: string;
+  strokeWidth?: number;
 };
 
 const Icon = ({
   icon,
-  // foregroundColor = 'black',
-  // backgroundColor = 'transparent',
   size = 24,
   rounded = 'none',
   useBackground = false,
+  ...props
 }: IconProps) => {
-  const iconStyle: CSSProperties = {
-    width: size || 'auto',
-    height: size || 'auto',
-    // fill: foregroundColor,
-    // background: backgroundColor,
-  };
   const roundedStyle = () => {
     if (rounded === 'full') return 'rounded-full';
     else if (rounded === 'half') return 'rounded-md';
@@ -30,16 +25,14 @@ const Icon = ({
   };
   return (
     <span
-      style={iconStyle}
+      // style={iconStyle}
       className={`flex justify-center items-center 
       ${roundedStyle()} 
       ${useBackground && 'bg-slate-200 dark:bg-slate-700'}
       `}
     >
       {React.cloneElement(icon, {
-        // style: { width: '100%', height: '100%' },
-        // style: { width: size, height: size },
-        // className: 'stroke-emerald-500',
+        ...props,
       })}
     </span>
   );

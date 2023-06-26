@@ -252,7 +252,7 @@ export { default as TriangleIcon } from './Triangle';
 export { default as TruckIcon } from './Truck';
 export { default as TvIcon } from './Tv';
 export { default as TwitchIcon } from './Twitch';
-// export { default as TwitterIcon } from './Twitter';
+export { default as TwitterIcon } from './Twitter';
 export { default as TypeIcon } from './Type';
 export { default as UmbrellaIcon } from './Umbrella';
 export { default as UnderlineIcon } from './Underline';

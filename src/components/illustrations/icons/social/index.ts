@@ -1,4 +1,4 @@
-export { default as TwitterIcon } from './Twitter';
-export { default as WhatsAppIcon } from './WhatsApp';
 export { default as AppLogoIcon } from './AppLogo';
-export { default as GoogleIcon } from './Google';
+export { default as GoogleColoredIcon } from './GoogleColored';
+export { default as TwitterColoredIcon } from './TwitterColored';
+export { default as WhatsappColoredIcon } from './WhatsappColored';
