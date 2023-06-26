@@ -13,7 +13,7 @@ export type MarqueeProps = {
   className?: string;
   hoverToPause?: boolean;
   loop?: boolean;
-  speed?: 'slow' | 'normal' | 'fast';
+  speed?: 'slowest' | 'slower' | 'slow' | 'normal' | 'fast';
   scaleItems?: boolean;
   reverse?: boolean;
 };

@@ -62,6 +62,7 @@ export const ModalComponent = ({
             aria-labelledby={`${id}-label`}
             aria-hidden="true"
             data-modal-state={`${isOpen ? 'open' : 'close'}`}
+            onClick={closeModal}
           ></div>
         )}
         {/* Modal content */}

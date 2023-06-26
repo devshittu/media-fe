@@ -11,6 +11,10 @@ const Marquee = ({
 }: MarqueeProps) => {
   const getSpeedClass = () => {
     switch (speed) {
+      case 'slowest':
+        return 'animate-[scroll_200s_linear_infinite]';
+      case 'slower':
+        return 'animate-[scroll_44s_linear_infinite]';
       case 'slow':
         return 'animate-[scroll_33s_linear_infinite]';
       case 'normal':
@@ -24,14 +28,14 @@ const Marquee = ({
 
   return (
     <section>
-      <div className="marquee flex gap-4 relative select-none overflow-hidden my-2 group">
+      <div className="marquee flex gap-4x relative select-none overflow-hidden my-2x group">
         {[...Array(2)].map((_, index) => (
           <div
             key={index}
             aria-hidden={index === 1 ? 'true' : undefined}
             className={`${
               hoverToPause ? ` group-hover:paused ` : ''
-            } motion-reduce:paused shrink-0 flex justify-around items-center gap-4 min-h-fit my-10 min-w-full  ${
+            } motion-reduce:paused shrink-0 flex justify-around items-center gap-4 min-h-fitx my-2 min-w-full  ${
               play ? ` ${getSpeedClass()} ${reverse ? `reverse ` : ''} ` : ''
             }`}
           >

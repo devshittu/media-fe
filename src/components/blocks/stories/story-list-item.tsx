@@ -2,20 +2,75 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NavDrawerBottom } from '../nav/nav-drawer-bottom';
-import { Modal, ModalComponent } from '@/components/blocks/modal';
+import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
 import {
+  ExternalLinkIcon,
+  EyeIcon,
   HelpCircleIcon,
-  HomeIcon,
   Icon,
+  MessageSquareIcon,
+  MoreHorizontalIcon,
+  ShareIcon,
   TwitterIcon,
 } from '@/components/illustrations';
 import CarouselModule from '../carousel/carousel';
-import { slug } from '@/utils';
 import { Toast } from '../toast';
 import { Button } from '@/components/button';
+import {
+  TwitterColoredIcon,
+  WhatsappColoredIcon,
+} from '@/components/illustrations/icons/social';
+import Drawer from '../nav/Drawer';
+import { DrawerSide } from '../nav';
+
+export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
+  return (
+    <div className="p-6">
+      <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
+        Connect and share with the people on your favorite social media
+        platforms.
+      </p>
+      <ul className="my-4 space-y-3">
+        <li>
+          <Link
+            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            href={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
+            data-action="share/whatsapp/share"
+            target="_blank"
+          >
+            <Icon icon={<WhatsappColoredIcon />} className="w-6" />
+            <span className="flex-1 ml-3 whitespace-nowrap">Whatsapp</span>
+            <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
+              New
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="https://twitter.com/intent/tweet"
+            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            data-action="share/twitter/share"
+            target="_blank"
+          >
+            <Icon icon={<TwitterColoredIcon />} className="w-6" />
+            <span className="flex-1 ml-3 whitespace-nowrap">Twitter</span>
+          </Link>
+        </li>
+      </ul>
+      <div>
+        <Link
+          href="#"
+          className="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400"
+        >
+          <HelpCircleIcon className="w-3 mr-2" strokeWidth={2.5} />
+          Why do I need to share?
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   const carouselItems: CarouselItem[] = [
@@ -52,6 +107,46 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   // const carousel = CarouselComponent({ carouselItems, carouselOptions });
   // carousel.next(); // Invoke next slide
   // carousel.prev(); // Invoke previous slide
+
+  const openContextMenu = () => {
+    const drawer = new Drawer({
+      title: 'Share!',
+      titleIcon: <ShareIcon />,
+      id: 'story-list-item-share',
+      side: DrawerSide.BOTTOM,
+      children: <StoryListItemContextMenu story={story} />,
+      // type: 'success',
+      onClose: () => {
+        // Handle close event
+        console.log('Drawer closed');
+      },
+    });
+
+    drawer.open();
+  };
+
+  const openDrawer = () => {
+    console.log('openDrawer');
+
+    const drawer = new Drawer({
+      title: 'Hello, world!',
+      titleIcon: <ShareIcon />,
+      id: 'first-drawer',
+      side: DrawerSide.TOP,
+      children: (
+        <div>
+          Hello <Button onClick={ShowToast}>Show Toast</Button>
+        </div>
+      ),
+      // type: 'success',
+      onClose: () => {
+        // Handle close event
+        console.log('Drawer closed');
+      },
+    });
+
+    drawer.open();
+  };
 
   const openModal = () => {
     console.log('openModal');
@@ -109,91 +204,25 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         >
           Modal
         </button>
+        <button
+          className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          type="button"
+          onClick={openDrawer}
+        >
+          Drawer
+        </button>
 
-        {/* <ModalComponent id="modal-1" title="Share">
-          <div className="p-6 space-y-6 ">
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              With less than a month to go before the European Union enacts new
-              consumer privacy laws for its citizens, companies around the world
-              are updating their terms of service agreements to comply.
-            </p>
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              The European Union’s General Data Protection Regulation (G.D.P.R.)
-              goes into effect on May 25 and is meant to ensure a common set of
-              data rights in the European Union. It requires organizations to
-              notify users as soon as possible of high-risk data breaches that
-              could personally affect them.
-            </p>
-          </div>
-        </ModalComponent> */}
-        <NavDrawerBottom title="Share" id="share">
-          <div className="p-6">
-            <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
-              Connect with one of our available wallet providers or create a new
-              one.
-            </p>
-            <ul className="my-4 space-y-3">
-              <li>
-                <Link
-                  href="#"
-                  className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-                >
-                  <Icon icon={<TwitterIcon />} />
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Whatsapp
-                  </span>
-                  <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
-                    New
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-                >
-                  <Icon icon={<TwitterIcon />} />
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Coinbase Wallet
-                  </span>
-                </Link>
-              </li>
-            </ul>
-            <div>
-              <Link
-                href="#"
-                className="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="w-3 h-3 mr-2"
-                  focusable="false"
-                  data-prefix="far"
-                  data-icon="question-circle"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 448c-110.532 0-200-89.431-200-200 0-110.495 89.472-200 200-200 110.491 0 200 89.471 200 200 0 110.53-89.431 200-200 200zm107.244-255.2c0 67.052-72.421 68.084-72.421 92.863V300c0 6.627-5.373 12-12 12h-45.647c-6.627 0-12-5.373-12-12v-8.659c0-35.745 27.1-50.034 47.579-61.516 17.561-9.845 28.324-16.541 28.324-29.579 0-17.246-21.999-28.693-39.784-28.693-23.189 0-33.894 10.977-48.942 29.969-4.057 5.12-11.46 6.071-16.666 2.124l-27.824-21.098c-5.107-3.872-6.251-11.066-2.644-16.363C184.846 131.491 214.94 112 261.794 112c49.071 0 101.45 38.304 101.45 88.8zM298 368c0 23.159-18.841 42-42 42s-42-18.841-42-42 18.841-42 42-42 42 18.841 42 42z"
-                  ></path>
-                </svg>
-                <HelpCircleIcon
-                  aria-hidden="true"
-                  className="w-3 mr-2"
-                  strokeWidth={2.5}
-                  focusable="false"
-                  data-prefix="far"
-                  data-icon="question-circle"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                />
-                Why do I need to connect with my wallet?
-              </Link>
-            </div>
-          </div>
-        </NavDrawerBottom>
+        {/* Context Menu Trigger */}
+
+        <Link
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            return openContextMenu();
+          }}
+        >
+          <Icon icon={<MoreHorizontalIcon />} className="w-6" />
+        </Link>
       </div>
 
       <Link href={`/stories/${story?.slug}`}>
@@ -213,48 +242,15 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
       {/* <Carousel items={carouselItems} /> */}
       <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
         <Link href="/" className="text-blue-500 inline-flex items-center">
-          Learn More
-          <svg
-            className="w-4 h-4 ml-2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 12h14"></path>
-            <path d="M12 5l7 7-7 7"></path>
-          </svg>
+          Learn more
+          <ExternalLinkIcon className="w-4 h-4 ml-2" />
         </Link>
         <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2  border-slate-200 dark:border-slate-700">
-          <svg
-            className="w-4 h-4 mr-1"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            viewBox="0 0 24 24"
-          >
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
+          <EyeIcon className="w-4 h-4 mr-1" />
           1.2K
         </span>
         <span className="text-slate-400 inline-flex items-center leading-none text-sm">
-          <svg
-            className="w-4 h-4 mr-1"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            viewBox="0 0 24 24"
-          >
-            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-          </svg>
-          6
+          <MessageSquareIcon className="w-4 h-4 mr-1" />6
         </span>
       </div>
       <Link href="/" className="inline-flex items-center">

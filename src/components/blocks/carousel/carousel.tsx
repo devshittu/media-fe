@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useState } from 'react';
 import { CarouselProps } from './types';
+import { ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
 
 const Carousel = ({ items, options = {} }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -80,21 +81,10 @@ const Carousel = ({ items, options = {} }: CarouselProps) => {
           onClick={prev}
         >
           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-slate-800/30 group-hover:bg-white/50 dark:group-hover:bg-slate-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-slate-800/70 group-focus:outline-none">
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-slate-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
+            <ChevronLeftIcon
+              strokeWidth={3}
+              className="w-6 h-6 text-white sm:w-6 sm:h-6 dark:text-slate-800"
+            />
             <span className="sr-only">Previous</span>
           </span>
         </button>
@@ -105,21 +95,10 @@ const Carousel = ({ items, options = {} }: CarouselProps) => {
           onClick={next}
         >
           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-slate-800/30 group-hover:bg-white/50 dark:group-hover:bg-slate-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-slate-800/70 group-focus:outline-none">
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-slate-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 5l7 7-7 7"
-              ></path>
-            </svg>
+            <ChevronRightIcon
+              strokeWidth={3}
+              className="w-6 h-6 text-white sm:w-6 sm:h-6 dark:text-slate-800"
+            />
             <span className="sr-only">Next</span>
           </span>
         </button>

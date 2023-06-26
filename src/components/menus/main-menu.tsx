@@ -7,94 +7,70 @@ import {
   HomeIcon,
   SettingsIcon,
   Icon,
+  FileTextIcon,
+  LayoutIcon,
+  BookmarkIcon,
+  HashIcon,
+  MusicIcon,
 } from '@/components/illustrations';
+import { MenuItem, MenuList } from './menu-list';
 
 const MainMenu = () => {
+  const mainMenuList: MenuItem[] = [
+    {
+      name: 'Home',
+      icon: <HomeIcon />,
+      url: '/',
+      id: 'home-page-link',
+    },
+    {
+      name: 'Stories',
+      icon: <FileTextIcon />,
+      url: '/stories',
+      id: 'stories-page',
+    },
+    {
+      name: 'New Story',
+      icon: <EditIcon />,
+      url: '/stories',
+      id: 'new-story-page',
+    },
+    {
+      name: 'Settings',
+      icon: <SettingsIcon />,
+      url: '/settings',
+      id: 'settings-page',
+      tag: 'New',
+    },
+    {
+      name: 'Bookmarks',
+      icon: <BookmarkIcon />,
+      url: '/bookmarks',
+      id: 'bookmarks-page',
+    },
+    {
+      name: 'Hashtags',
+      icon: <HashIcon />,
+      url: '/hashtags',
+      id: 'hashtags-page',
+    },
+    {
+      name: 'Music',
+      icon: <MusicIcon />,
+      url: '/music',
+      id: 'music-page',
+    },
+    {
+      name: 'UI/UX Components',
+      icon: <LayoutIcon />,
+      url: '/ui-components',
+      id: 'ui-components-page',
+    },
+  ];
   return (
     <>
-      <nav className="">
-        <ul className="space-y-2 font-bold text-lg lg:text-xl font-inter">
-          <li>
-            <Link
-              href="/"
-              className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
-            >
-              <Icon
-                icon={<HomeIcon />}
-                useBackground
-                rounded="half"
-                size={40}
-              />
-              <span className="flex-1 ml-3 whitespace-nowrap">Home</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/stories"
-              className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
-            >
-              <Icon
-                icon={<HomeIcon />}
-                useBackground
-                rounded="half"
-                size={40}
-              />
-              <span className="ml-3">Stories</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/draft/"
-              className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
-            >
-              <Icon
-                icon={<EditIcon />}
-                useBackground
-                rounded="half"
-                size={40}
-              />
-              <span className="ml-3">New Post</span>
-            </Link>
-          </li>
-          <li>
-            {/* <ThemeSwitch /> */}
-            <Link
-              href="/settings/"
-              className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
-            >
-              <Icon
-                icon={<SettingsIcon />}
-                useBackground
-                rounded="half"
-                size={40}
-              />
-              <span className="flex-1 ml-3 whitespace-nowrap">Settings</span>
-              <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-slate-800 bg-slate-200 rounded-full dark:bg-slate-700 dark:text-slate-300">
-                Pro
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/ui-components/"
-              className="flex items-center p-2 text-slate-900 rounded-lg dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700"
-            >
-              <Icon
-                icon={<ArchiveIcon />}
-                useBackground
-                rounded="half"
-                size={40}
-              />
-              <span className="flex-1 ml-3 whitespace-nowrap text-ellipsis truncate">
-                UI/UX Components
-              </span>
-            </Link>
-          </li>
-          <li>
-            <ThemeSwitch />
-          </li>
-        </ul>
-      </nav>
+      <MenuList menu={mainMenuList} />
+      <ThemeSwitch />
       <div
         id="dropdown-cta"
         className="p-4 mt-6 rounded-lg bg-blue-50 dark:bg-blue-900"

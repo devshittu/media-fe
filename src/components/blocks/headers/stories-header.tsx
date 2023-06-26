@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavDrawerLeft, NavDrawerRight, NavDrawerTop } from '../nav';
+import {
+  DrawerSide,
+} from '../nav';
 import MainMenu from '@/components/menus/main-menu';
-import { TopDrawerMenu } from '@/components/menus';
 import { useScrollBehavior } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
+import Link from 'next/link';
+import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
+import Drawer from '../nav/Drawer';
 
 export const StoriesPageHeader = () => {
   const headerRef = useRef<HTMLElement>(null);
@@ -32,6 +36,22 @@ export const StoriesPageHeader = () => {
     };
   }, [isScrolledUp]);
 
+  const openMainMenuDrawer = () => {
+    const drawer = new Drawer({
+      title: 'Media Inc.',
+      showAppLogo: true,
+      titleIcon: <AppLogoIcon />,
+      id: 'story-list-item-share',
+      side: DrawerSide.LEFT,
+      children: <MainMenu />,
+      onClose: () => {
+        // Handle close event
+        console.log('Drawer closed');
+      },
+    });
+
+    drawer.open();
+  };
   return (
     <>
       {/* Desktop */}
@@ -95,15 +115,17 @@ export const StoriesPageHeader = () => {
         style={{ transform: `translateY(${topPosition}px)` }}
       >
         <div className={`flex items-center p-4 lg:hidden `}>
-          <NavDrawerLeft id="right" title="Menu">
-            <MainMenu />
-          </NavDrawerLeft>
-          <NavDrawerRight id="right" title="Menu">
-            <MainMenu />
-          </NavDrawerRight>
-          <NavDrawerTop id="right" title="Menu">
-            <TopDrawerMenu />
-          </NavDrawerTop>
+          {/* Main Menu Trigger */}
+
+          <Link
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              return openMainMenuDrawer();
+            }}
+          >
+            <Icon icon={<MenuIcon />} className="w-6" />
+          </Link>
           <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
             <li className="font-semibold text-slate-900 truncate dark:text-slate-200">
               Home

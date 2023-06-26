@@ -1,4 +1,10 @@
-import { HomeIcon, Icon, TwitterIcon } from '@/components/illustrations';
+import {
+  HomeIcon,
+  Icon,
+  TwitterColoredIcon,
+  AppLogoIcon,
+  GoogleColoredIcon,
+} from '@/components/illustrations';
 import { Button } from '@/components/button';
 import { InputField } from '@/components/form';
 import Link from 'next/link';
@@ -6,9 +12,34 @@ import React, { useEffect, useState } from 'react';
 import { LinedBackgroundText } from '../typography';
 import Marquee from './marquee';
 import { CategoryItem, getCategories } from '@/testing';
+import {} from '@/components/illustrations/icons/social';
+import TokenPinInputField, {
+  UserLoginStatus,
+} from '@/components/form/token-pin-digit';
+import { Modal } from '@/components/blocks/modal';
 
 const LeftColumnContent = () => {
   const [categories, setCategories] = useState<CategoryItem[]>([]);
+
+  const openModal = () => {
+    console.log('openModal');
+
+    const modal = new Modal({
+      title: 'Enter your Token',
+      id: 'pin-dialog',
+      size: 'small',
+      children: (
+        <TokenPinInputField userLoginStatus={UserLoginStatus.LOGGING_IN} />
+      ),
+      // type: 'success',
+      onClose: () => {
+        // Handle close event
+        console.log('closed');
+      },
+    });
+
+    modal.open();
+  };
   useEffect(() => {
     getCategories().then((res) => {
       console.log('res', res);
@@ -25,7 +56,7 @@ const LeftColumnContent = () => {
             className="w-35 text-company-secondary-bg hover:opacity-75"
             href="/stories"
           >
-            <Icon icon={<HomeIcon />} />
+            <Icon icon={<HomeIcon />} className="w-6" strokeWidth={2.5} />
           </Link>
 
           <Link
@@ -34,22 +65,8 @@ const LeftColumnContent = () => {
             title="Company"
             className="inline-flex items-center lg:mx-auto"
           >
-            <svg
-              className="w-8 text-deep-purple-accent-400"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeMiterlimit="10"
-              stroke="currentColor"
-              fill="none"
-            >
-              <rect x="3" y="1" width="7" height="12" />
-              <rect x="3" y="17" width="7" height="6" />
-              <rect x="14" y="1" width="7" height="6" />
-              <rect x="14" y="11" width="7" height="12" />
-            </svg>
-            <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
+            <AppLogoIcon strokeWidth={2} />
+            <span className="ml-2 text-xl font-bold tracking-wide uppercase">
               Media Inc.
             </span>
           </Link>
@@ -59,15 +76,39 @@ const LeftColumnContent = () => {
 
         {/* Body */}
 
+        {/* Marquee */}
+
+        <Marquee play speed="slowest" hoverToPause>
+          {categories.map((item, index) => (
+            <Link
+              key={index}
+              href="/"
+              aria-label="View Item"
+              className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
+            >
+              {item.title}
+            </Link>
+          ))}
+        </Marquee>
+        <Marquee play speed="slowest" hoverToPause reverse>
+          {categories.map((item, index) => (
+            <Link
+              key={index}
+              href="/"
+              aria-label="View Item"
+              className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
+            >
+              {item.title}
+            </Link>
+          ))}
+        </Marquee>
+
         <div className="w-full max-w-[500px]">
           <form className="flex flex-col justify-center overflow-hidden w-full relative">
             <div className="w-full p-6">
               <h1 className="mb-6 text-3xl font-bold leading-tight text-center">
                 Connect with us
               </h1>
-              {/* 
-                    className="rounded highlight-error text-center py-4 px-8 text-md w-full placeholder-gray-400 border-none" */}
-
               <InputField
                 required
                 placeholder="Enter your email to continue..."
@@ -78,14 +119,13 @@ const LeftColumnContent = () => {
 
               <Button
                 type="primary"
-                nativeType="submit"
-                className="button button--fat relative button--company w-full"
+                nativeType="button"
+                className="justify-center font-semibold mt-4 w-full"
+                onClick={openModal}
               >
-                <span className="opacity-100 transition transition-opacity">
-                  Connect
-                </span>{' '}
+                <span className="opacity-100 transition-opacity">Connect</span>{' '}
                 <span
-                  className="absolute inset-0 flex items-center justify-center opacity-0 transition transition-opacity"
+                  className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity"
                   data-connect--form-target="submitLoader"
                 >
                   <svg
@@ -100,24 +140,18 @@ const LeftColumnContent = () => {
               </Button>
               <LinedBackgroundText>or continue with</LinedBackgroundText>
               <div className="flex justify-center -mx-2">
-                <Link
-                  className="p-0 mx-2 button button--white button--icon button--disabled"
-                  title="Facebook"
-                  href="#"
-                >
+                <Link className="p-0 mx-2 shadow" title="Facebook" href="#">
                   <span className="flex items-center justify-center w-full h-full px-4 py-3">
-                    <Icon icon={<TwitterIcon />} />
-                    Facebook
+                    <Icon
+                      icon={<GoogleColoredIcon className="w-6 h-6 mr-2" />}
+                    />
+                    Google
                   </span>
                 </Link>{' '}
-                <Link
-                  className="p-0 mx-2 button button--white button--icon button--disabled"
-                  title="LinkedIn"
-                  href="#"
-                >
+                <Link className="p-0 mx-2 shadow" title="LinkedIn" href="#">
                   <span className="flex items-center justify-center w-full h-full px-4 py-3">
-                    <Icon icon={<TwitterIcon />} />
-                    Google
+                    <TwitterColoredIcon className="w-6 h-6 mr-2" />
+                    Twitter
                     {/* <Image className="w-auto h-full" src="https://assets.teamtailor-cdn.com/assets/connect/social/linkedin-1827062cef96d04650b14cb68f91f5e83bd5888170b386ac28b3482e6bad136d.png"> */}
                   </span>
                 </Link>
@@ -128,9 +162,6 @@ const LeftColumnContent = () => {
         <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
           Already registered? <Link href="/en-GB/auth/login">Sign in</Link>.
         </p>
-
-        {/* <Marquee items={categories} hoverToPause speed="slow" />
-        <Marquee items={categories} hoverToPause speed="normal" reverse /> */}
       </div>
     </div>
   );
