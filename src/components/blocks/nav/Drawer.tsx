@@ -1,12 +1,14 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { DrawerComponent } from './nav-drawer-bottom-component';
+import { DrawerComponent } from './drawer-component';
 import { DrawerClassProps, DrawerProps } from './types';
 
 class Drawer {
   private id: string;
   private titleIcon: DrawerProps['titleIcon'];
   private title: DrawerProps['title'];
+  private side: DrawerProps['side'];
+  private showAppLogo: DrawerProps['showAppLogo'];
   //   private side: DrawerProps['side'];
   private children?: DrawerProps['children'];
   private onClose?: DrawerProps['onClose'];
@@ -15,10 +17,20 @@ class Drawer {
   private isOpen: boolean;
   private elementContainer: HTMLElement | null = null;
 
-  constructor({ id, titleIcon, title, children, onClose }: DrawerClassProps) {
+  constructor({
+    id,
+    titleIcon,
+    title,
+    side,
+    children,
+    showAppLogo,
+    onClose,
+  }: DrawerClassProps) {
     this.id = id ? id : `drawer-${Date.now().toString()}`;
     this.titleIcon = titleIcon;
+    this.showAppLogo = showAppLogo;
     this.title = title;
+    this.side = side;
     this.children = children;
     this.onClose = onClose;
     this.container = document.createElement('div');
@@ -41,8 +53,10 @@ class Drawer {
     this.root.render(
       <DrawerComponent
         id={this.id}
+        side={this.side}
         isActive={this.isOpen}
         titleIcon={this.titleIcon}
+        showAppLogo={this.showAppLogo}
         title={this.title}
         onClose={this.close}
       >
