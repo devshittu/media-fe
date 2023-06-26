@@ -2,26 +2,75 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { NavDrawerBottom } from '../nav/nav-drawer-bottom';
 import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
 import {
-  ArrowRightCircleIcon,
   ExternalLinkIcon,
   EyeIcon,
   HelpCircleIcon,
-  HomeIcon,
   Icon,
   MessageSquareIcon,
+  MoreHorizontalIcon,
+  ShareIcon,
   TwitterIcon,
 } from '@/components/illustrations';
 import CarouselModule from '../carousel/carousel';
-import { slug } from '@/utils';
 import { Toast } from '../toast';
 import { Button } from '@/components/button';
-import { WhatsAppIcon } from '@/components/illustrations/icons/social';
+import {
+  TwitterColoredIcon,
+  WhatsappColoredIcon,
+} from '@/components/illustrations/icons/social';
 import Drawer from '../nav/Drawer';
+import { DrawerSide } from '../nav';
+
+export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
+  return (
+    <div className="p-6">
+      <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
+        Connect and share with the people on your favorite social media
+        platforms.
+      </p>
+      <ul className="my-4 space-y-3">
+        <li>
+          <Link
+            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            href={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
+            data-action="share/whatsapp/share"
+            target="_blank"
+          >
+            <Icon icon={<WhatsappColoredIcon />} className="w-6" />
+            <span className="flex-1 ml-3 whitespace-nowrap">Whatsapp</span>
+            <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
+              New
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href="https://twitter.com/intent/tweet"
+            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            data-action="share/twitter/share"
+            target="_blank"
+          >
+            <Icon icon={<TwitterColoredIcon />} className="w-6" />
+            <span className="flex-1 ml-3 whitespace-nowrap">Twitter</span>
+          </Link>
+        </li>
+      </ul>
+      <div>
+        <Link
+          href="#"
+          className="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400"
+        >
+          <HelpCircleIcon className="w-3 mr-2" strokeWidth={2.5} />
+          Why do I need to share?
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   const carouselItems: CarouselItem[] = [
@@ -59,12 +108,31 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   // carousel.next(); // Invoke next slide
   // carousel.prev(); // Invoke previous slide
 
+  const openContextMenu = () => {
+    const drawer = new Drawer({
+      title: 'Share!',
+      titleIcon: <ShareIcon />,
+      id: 'story-list-item-share',
+      side: DrawerSide.BOTTOM,
+      children: <StoryListItemContextMenu story={story} />,
+      // type: 'success',
+      onClose: () => {
+        // Handle close event
+        console.log('Drawer closed');
+      },
+    });
+
+    drawer.open();
+  };
+
   const openDrawer = () => {
     console.log('openDrawer');
 
     const drawer = new Drawer({
       title: 'Hello, world!',
+      titleIcon: <ShareIcon />,
       id: 'first-drawer',
+      side: DrawerSide.TOP,
       children: (
         <div>
           Hello <Button onClick={ShowToast}>Show Toast</Button>
@@ -144,69 +212,17 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           Drawer
         </button>
 
-        {/* <ModalComponent id="modal-1" title="Share">
-          <div className="p-6 space-y-6 ">
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              With less than a month to go before the European Union enacts new
-              consumer privacy laws for its citizens, companies around the world
-              are updating their terms of service agreements to comply.
-            </p>
-            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              The European Union’s General Data Protection Regulation (G.D.P.R.)
-              goes into effect on May 25 and is meant to ensure a common set of
-              data rights in the European Union. It requires organizations to
-              notify users as soon as possible of high-risk data breaches that
-              could personally affect them.
-            </p>
-          </div>
-        </ModalComponent> */}
+        {/* Context Menu Trigger */}
 
-        <NavDrawerBottom title="Share" id="share">
-          <div className="p-6">
-            <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
-              Connect with one of our available wallet providers or create a new
-              one.
-            </p>
-            <ul className="my-4 space-y-3">
-              <li>
-                <Link
-                  className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-                  href="whatsapp://send?text=This is WhatsApp sharing example using link"
-                  data-action="share/whatsapp/share"
-                  target="_blank"
-                >
-                  <Icon icon={<WhatsAppIcon />} />
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Whatsapp
-                  </span>
-                  <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
-                    New
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://twitter.com/intent/tweet"
-                  className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-                  data-action="share/twitter/share"
-                  target="_blank"
-                >
-                  <Icon icon={<TwitterIcon />} />
-                  <span className="flex-1 ml-3 whitespace-nowrap">Twitter</span>
-                </Link>
-              </li>
-            </ul>
-            <div>
-              <Link
-                href="#"
-                className="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400"
-              >
-                <HelpCircleIcon className="w-3 mr-2" strokeWidth={2.5} />
-                Why do I need to share?
-              </Link>
-            </div>
-          </div>
-        </NavDrawerBottom>
+        <Link
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            return openContextMenu();
+          }}
+        >
+          <Icon icon={<MoreHorizontalIcon />} className="w-6" />
+        </Link>
       </div>
 
       <Link href={`/stories/${story?.slug}`}>
