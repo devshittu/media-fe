@@ -5,7 +5,7 @@ export type NavDrawerProps = {
   children: React.ReactNode;
 };
 
-export enum DrawerSide{
+export enum DrawerSide {
   BOTTOM = 'bottom',
   RIGHT = 'right',
   LEFT = 'left',
@@ -20,6 +20,7 @@ export type DrawerProps = {
   titleIcon?: JSX.Element | React.ReactElement | null;
   children?: React.ReactNode;
   onClose?: () => void;
+  showAppLogo?: boolean;
 };
 
 export type DrawerClassProps = Omit<DrawerProps, 'isActive'> & {
