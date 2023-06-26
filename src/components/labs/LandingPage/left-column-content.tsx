@@ -1,4 +1,10 @@
-import { HomeIcon, Icon, TwitterIcon } from '@/components/illustrations';
+import {
+  HomeIcon,
+  Icon,
+  TwitterColoredIcon,
+  AppLogoIcon,
+  GoogleColoredIcon,
+} from '@/components/illustrations';
 import { Button } from '@/components/button';
 import { InputField } from '@/components/form';
 import Link from 'next/link';
@@ -6,10 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { LinedBackgroundText } from '../typography';
 import Marquee from './marquee';
 import { CategoryItem, getCategories } from '@/testing';
-import {
-  AppLogoIcon,
-  GoogleIcon,
-} from '@/components/illustrations/icons/social';
+import {} from '@/components/illustrations/icons/social';
 import TokenPinInputField, {
   UserLoginStatus,
 } from '@/components/form/token-pin-digit';
@@ -26,7 +29,7 @@ const LeftColumnContent = () => {
       id: 'pin-dialog',
       size: 'small',
       children: (
-        <TokenPinInputField setUserStatus={UserLoginStatus.LOGGING_IN} />
+        <TokenPinInputField userLoginStatus={UserLoginStatus.LOGGING_IN} />
       ),
       // type: 'success',
       onClose: () => {
@@ -53,7 +56,7 @@ const LeftColumnContent = () => {
             className="w-35 text-company-secondary-bg hover:opacity-75"
             href="/stories"
           >
-            <Icon icon={<HomeIcon />} />
+            <Icon icon={<HomeIcon />} className="w-6" strokeWidth={2.5} />
           </Link>
 
           <Link
@@ -63,7 +66,7 @@ const LeftColumnContent = () => {
             className="inline-flex items-center lg:mx-auto"
           >
             <AppLogoIcon strokeWidth={2} />
-            <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
+            <span className="ml-2 text-xl font-bold tracking-wide uppercase">
               Media Inc.
             </span>
           </Link>
@@ -120,11 +123,9 @@ const LeftColumnContent = () => {
                 className="justify-center font-semibold mt-4 w-full"
                 onClick={openModal}
               >
-                <span className="opacity-100 transition transition-opacity">
-                  Connect
-                </span>{' '}
+                <span className="opacity-100 transition-opacity">Connect</span>{' '}
                 <span
-                  className="absolute inset-0 flex items-center justify-center opacity-0 transition transition-opacity"
+                  className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity"
                   data-connect--form-target="submitLoader"
                 >
                   <svg
@@ -141,13 +142,15 @@ const LeftColumnContent = () => {
               <div className="flex justify-center -mx-2">
                 <Link className="p-0 mx-2 shadow" title="Facebook" href="#">
                   <span className="flex items-center justify-center w-full h-full px-4 py-3">
-                    <Icon icon={<GoogleIcon className="w-6 h-6 mr-2" />} />
+                    <Icon
+                      icon={<GoogleColoredIcon className="w-6 h-6 mr-2" />}
+                    />
                     Google
                   </span>
                 </Link>{' '}
                 <Link className="p-0 mx-2 shadow" title="LinkedIn" href="#">
                   <span className="flex items-center justify-center w-full h-full px-4 py-3">
-                    <TwitterIcon className="w-6 h-6 mr-2" />
+                    <TwitterColoredIcon className="w-6 h-6 mr-2" />
                     Twitter
                     {/* <Image className="w-auto h-full" src="https://assets.teamtailor-cdn.com/assets/connect/social/linkedin-1827062cef96d04650b14cb68f91f5e83bd5888170b386ac28b3482e6bad136d.png"> */}
                   </span>
@@ -159,9 +162,6 @@ const LeftColumnContent = () => {
         <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
           Already registered? <Link href="/en-GB/auth/login">Sign in</Link>.
         </p>
-
-        {/* <Marquee items={categories} hoverToPause speed="slow" />
-        <Marquee items={categories} hoverToPause speed="normal" reverse /> */}
       </div>
     </div>
   );
