@@ -1,9 +1,6 @@
 import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { DrawerProps, DrawerSide, NavContext } from './index';
-import {
-  Icon,
-  XIcon,
-} from '@/components/illustrations';
+import { Icon, XIcon } from '@/components/illustrations';
 import { useKeyPress } from '@/hooks';
 import Portal from '@/hoc/Portal';
 

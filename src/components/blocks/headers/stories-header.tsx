@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  DrawerSide,
-} from '../nav';
+import { DrawerSide } from '../nav';
 import MainMenu from '@/components/menus/main-menu';
 import { useScrollBehavior } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
