@@ -7,7 +7,13 @@ import Link from 'next/link';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import Drawer from '../nav/Drawer';
 
-export const StoriesPageHeader = () => {
+export type StoriesPageHeaderProps = {
+  pageTitle: string;
+};
+
+export const StoriesPageHeader = ({
+  pageTitle = 'Home',
+}: StoriesPageHeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
   const [topPosition, setTopPosition] = useState(0);
   const { isScrolledUp } = useScrollBehavior();
@@ -60,7 +66,7 @@ export const StoriesPageHeader = () => {
       >
         <div className={`transition-all duration-350 ease-out`}>
           <h1 className="mb-4x text-4xlx text-xl p-4 pl-8 font-extrabold leading-none tracking-tight text-slate-900 md:text-5xlx lg:text-6xlx dark:text-white">
-            Home
+            {pageTitle}
           </h1>
         </div>
         <div>
@@ -126,7 +132,7 @@ export const StoriesPageHeader = () => {
           </Link>
           <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
             <li className="font-semibold text-slate-900 truncate dark:text-slate-200">
-              Home
+              {pageTitle}
             </li>
           </ol>
         </div>

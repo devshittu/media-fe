@@ -39,7 +39,7 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
       <div
         className={`flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-full lg:max-w-[640px] box-border border-slate-100 dark:border-slate-800`}
       >
-        <StoriesPageHeader />
+        <StoriesPageHeader pageTitle="Home" />
         <section>
           <StoryList data={stories} />
         </section>
