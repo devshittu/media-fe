@@ -3,9 +3,10 @@ import { EyeOffIcon, GlobeIcon, Icon } from '@/components/illustrations';
 import UserLayout from '@/layouts/user-layout';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import BookmarkMoment, { BookmarkMomentItem } from './bookmark-moment';
 import { SidePanel } from '@/components/blocks/side-panel';
+import { StoryItem, getAllStories, getMoreStories } from '@/testing';
 
 const Index = () => {
   const gender = Math.random() < 0.5 ? 'male' : 'female';
@@ -45,7 +46,79 @@ const Index = () => {
       time: 'November 30th, 2022',
     },
   ];
+  const [groupedItems, setGroupedItems] = useState<{
+    [key: string]: StoryItem[];
+  }>({});
 
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch the list of items from the REST API\
+
+      const response = await getAllStories();
+      //   const response = await fetch('https://api.example.com/items');
+      const data = await response;
+      console.log('bookmark data:// ', data);
+
+      // Group the items by date
+      //   const grouped = data.reduce((acc: { [key: string]: StoryItem[] }, item: StoryItem) => {
+      //     const date = new Date(item.createdAt).toLocaleDateString('en-US', {
+      //       day: 'numeric',
+      //       month: 'long',
+      //       year: 'numeric',
+      //     });
+
+      //     if (!acc[date]) {
+      //       acc[date] = [];
+      //     }
+
+      //     acc[date].push(item);
+
+      //     return acc;
+      //   }, {});
+
+      //   // Sort the grouped items by date in descending order
+      //   const sortedGrouped = Object.entries(grouped).sort(([a], [b]) => {
+      //     const dateA = new Date(a).getTime();
+      //     const dateB = new Date(b).getTime();
+
+      //     return dateB - dateA;
+      //   });
+
+      //   // Update the state with the grouped and sorted items
+      //   setGroupedItems(Object.fromEntries(sortedGrouped));
+      // };
+
+      // fetchData();
+
+      // Get all unique dates from the list
+      const uniqueDates = Array.from(
+        new Set(data.map((item: StoryItem) => item.createdAt)),
+      );
+
+      // Group the items by date
+      const grouped = uniqueDates.reduce(
+        (acc: { [key: string]: StoryItem[] }, date: number) => {
+          const formattedDate = new Date(date).toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          });
+
+          acc[formattedDate] = data.filter(
+            (item: StoryItem) => item.createdAt === date,
+          );
+
+          return acc;
+        },
+        {},
+      );
+
+      // Update the state with the grouped items
+      setGroupedItems(grouped);
+    };
+
+    fetchData();
+  }, []);
   return (
     <div
       className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}
@@ -55,6 +128,15 @@ const Index = () => {
       >
         <StoriesPageHeader pageTitle="Bookmarks" />
         <section className="space-y-8">
+          {Object.entries(groupedItems).map(([date, items]) => (
+            <div key={date}>
+              <h2>{date}</h2>
+
+              {items.map((item) => (
+                <div key={item.id}>{item.title}</div>
+              ))}
+            </div>
+          ))}
           <BookmarkMoment time="January 13th, 2022" momentData={bookmarkItem} />
           <BookmarkMoment time="January 13th, 2022" momentData={bookmarkItem} />
         </section>
