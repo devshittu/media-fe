@@ -22,6 +22,7 @@ export type ButtonProps = {
     | 'warning';
   link?: string;
   children: ReactNode;
+  as?: 'a' | 'button';
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 };
