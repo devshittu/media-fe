@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 // import styles from '@/styles/draft.module.css';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import { NavMain } from '@/components/blocks/nav';
 import UserLayout from '@/layouts/user-layout';
 
