@@ -22,7 +22,7 @@ import {
   TwitterColoredIcon,
   WhatsappColoredIcon,
 } from '@/components/illustrations/icons/social';
-import Drawer from '../nav/Drawer';
+import Drawer from '../nav/drawer';
 import { DrawerSide } from '../nav';
 
 export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {

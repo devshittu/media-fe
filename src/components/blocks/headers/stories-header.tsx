@@ -5,7 +5,7 @@ import { useScrollBehavior } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
 import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
-import Drawer from '../nav/Drawer';
+import Drawer from '../nav/drawer';
 
 export type StoriesPageHeaderProps = {
   pageTitle: string;
