@@ -44,7 +44,7 @@ export const Link = ({
   ...props
 }: LinkProps) => {
   const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (onClick) {
       onClick(event);
     }
