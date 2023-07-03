@@ -22,7 +22,6 @@ const useHeadingsData = () => {
         ),
       ) as HTMLElement[];
 
-      console.log('headingElements:// ', headingElements);
       const newNestedHeadings = getNestedHeadings(headingElements);
       setNestedHeadings(newNestedHeadings);
     }, 1000);
