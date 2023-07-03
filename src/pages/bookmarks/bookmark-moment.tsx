@@ -1,6 +1,7 @@
 import { GlobeIcon, Icon } from '@/components/illustrations';
+import { StoryItem } from '@/testing';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import React from 'react';
 
 export type BookmarkMomentItem = {
@@ -9,10 +10,12 @@ export type BookmarkMomentItem = {
   channelPhoto: string;
   id: string;
   time: string;
+  body: string; //Todo redesign this to bring the StoryItem. 
+  slug: string;
 };
 export type BookmarkMomentProps = {
   time: string;
-  momentData: BookmarkMomentItem[];
+  momentData: StoryItem[] | BookmarkMomentItem[];
 };
 
 const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
@@ -26,46 +29,20 @@ const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
           {momentData.map((moment) => (
             <li key={moment.id}>
               <Link
-                href="#"
+                href={`/stories/${moment.slug}`}
                 className=" block hover:bg-slate-100 dark:hover:bg-slate-700"
               >
-                <div className="mx-4 items-center block p-3 sm:flexx">
-                  {/*<Image
-                    className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
-                    src={moment?.channelPhoto}
-                    width={48}
-                    height={48}
-                    alt="Jese Leos image"
-                  />
+                <div className="mx-4 items-center block p-3">
+                  {/*
                    //Todo redesign this content display. */}
-                  {/* <div className="text-slate-600 dark:text-slate-400">
-                    <div className="text-base font-normal">
-                      <span className="font-medium text-slate-900 dark:text-white">
-                        Jese Leos
-                      </span>{' '}
-                      likes{' '}
-                      <span className="font-medium text-slate-900 dark:text-white">
-                        {"Bonnie Green's"}
-                      </span>{' '}
-                      post in{' '}
-                      <span className="font-medium text-slate-900 dark:text-white">
-                        {' '}
-                        How to start with Media FE library
-                      </span>
-                    </div>
-                    <div className="text-sm font-normal">
-                      {"I wanted to share a webinar zeroheight."}
-                    </div>
-                    <span className="inline-flex items-center text-xs font-normal text-slate-500 dark:text-slate-400">
-                      <Icon icon={<GlobeIcon />} className="w-3  mr-1" />
-                      Public
-                    </span>
-                  </div> */}
+                  
 
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Story Title
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                    {moment.title}
                   </h3>
-                  <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                  <p className="mb-4 text-base font-normal text-slate-500 dark:text-slate-400">
+                    {moment?.body}
+                    <br></br>
                     Story overview and analytics and possibly buttons for
                     sharing.
                   </p>
