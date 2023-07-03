@@ -1,5 +1,4 @@
-import { NavDrawerLeft } from '@/components/blocks/nav';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import { Button } from '@/components/button';
 import { ReactElement, useRef, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
@@ -9,12 +8,31 @@ import RadioGroup from '@/components/form/radio-group';
 import { SettingsField, SettingsFieldset } from '@/components/blocks/settings/';
 import { FieldError, InputField } from '@/components/form';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
+import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
+import Drawer from '@/components/blocks/nav/Drawer';
+import { DrawerSide } from '@/components/blocks/nav';
 
 const Index = () => {
   const headerRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<FieldError | null>(null);
 
+  const openMainMenuDrawer = () => {
+    const drawer = new Drawer({
+      title: 'Media Inc.',
+      showAppLogo: true,
+      titleIcon: <AppLogoIcon />,
+      id: 'story-list-item-share',
+      side: DrawerSide.LEFT,
+      children: <MainMenu />,
+      onClose: () => {
+        // Handle close event
+        console.log('Drawer closed');
+      },
+    });
+
+    drawer.open();
+  };
   const handleEmailChange = (value: string) => {
     setEmail(value);
 
@@ -62,9 +80,15 @@ const Index = () => {
              `}
         >
           <div className={`flex items-center p-4 lg:hidden `}>
-            <NavDrawerLeft id="right" title="Menu">
-              <MainMenu />
-            </NavDrawerLeft>
+            <Link
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                return openMainMenuDrawer();
+              }}
+            >
+              <Icon icon={<MenuIcon />} className="w-6" />
+            </Link>
             <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
               <li className="font-semibold text-slate-900 truncate dark:text-slate-200">
                 Home

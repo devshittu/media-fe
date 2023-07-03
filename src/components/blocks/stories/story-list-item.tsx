@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import Image from 'next/image';
 import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';

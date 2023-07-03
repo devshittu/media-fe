@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import {
   ArchiveIcon,
@@ -32,7 +32,7 @@ const MainMenu = () => {
     {
       name: 'New Story',
       icon: <EditIcon />,
-      url: '/stories',
+      url: '/draft',
       id: 'new-story-page',
     },
     {
@@ -103,7 +103,7 @@ const MainMenu = () => {
           </button>
         </div>
         <p className="mb-3 text-sm text-blue-800 dark:text-blue-400">
-          Preview the new Flowbite dashboard navigation! You can turn the new
+          Preview the new Media FE dashboard navigation! You can turn the new
           navigation off for a limited time in your profile.
         </p>
         <Link

@@ -14,14 +14,17 @@ const useHeadingsData = () => {
   const [nestedHeadings, setNestedHeadings] = useState<Heading[]>([]);
 
   useEffect(() => {
-    const headingElements = Array.from(
-      document.querySelectorAll(
-        'main article h2.story-header, main article h3.story-header',
-      ),
-    ) as HTMLElement[];
+    // Todo remove the setTimeout and find a better way to delay loading.
+    setTimeout(() => {
+      const headingElements = Array.from(
+        document.querySelectorAll(
+          'main article h2.story-header, main article h3.story-header',
+        ),
+      ) as HTMLElement[];
 
-    const newNestedHeadings = getNestedHeadings(headingElements);
-    setNestedHeadings(newNestedHeadings);
+      const newNestedHeadings = getNestedHeadings(headingElements);
+      setNestedHeadings(newNestedHeadings);
+    }, 1000);
   }, []);
 
   const getNestedHeadings = (headingElements: HTMLElement[]): Heading[] => {
