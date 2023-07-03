@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 
 export const TopDrawerMenu = () => {
   return (

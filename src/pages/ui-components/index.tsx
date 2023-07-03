@@ -2,7 +2,7 @@ import { Seo } from '@/components/seo';
 import { Button } from '@/components/button';
 import { FieldError, InputField } from '@/components/form';
 import { ReactElement, useState } from 'react';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import CheckboxGroup from '@/components/form/checkbox-group';
 import RadioGroup from '@/components/form/radio-group';
 import UserLayout from '@/layouts/user-layout';

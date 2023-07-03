@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import { Button } from '@/components/button';
 import { ReactElement, useRef, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';

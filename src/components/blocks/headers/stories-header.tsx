@@ -3,7 +3,7 @@ import { DrawerSide } from '../nav';
 import MainMenu from '@/components/menus/main-menu';
 import { useScrollBehavior } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import Drawer from '../nav/Drawer';
 
@@ -55,6 +55,9 @@ export const StoriesPageHeader = ({
     });
 
     drawer.open();
+  };
+  const handleOpenDrawer = () => {
+    openMainMenuDrawer();
   };
   return (
     <>
@@ -121,13 +124,7 @@ export const StoriesPageHeader = ({
         <div className={`flex items-center p-4 lg:hidden `}>
           {/* Main Menu Trigger */}
 
-          <Link
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              return openMainMenuDrawer();
-            }}
-          >
+          <Link href="/" onClick={handleOpenDrawer}>
             <Icon icon={<MenuIcon />} className="w-6" />
           </Link>
           <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">

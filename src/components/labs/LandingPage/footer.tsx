@@ -1,5 +1,5 @@
 import { Button } from '@/components/button';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import React from 'react';
 
 const Footer = () => {

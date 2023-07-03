@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashtagItemProps } from './types';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 
 export const HashtagListItem = ({
   hashtag,

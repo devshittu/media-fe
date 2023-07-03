@@ -9,7 +9,7 @@ import {
   Nav,
 } from '@/components/labs/LandingPage/';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import { getCategories } from '@/testing/test-data';
 import { StoryItem } from '@/testing';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';

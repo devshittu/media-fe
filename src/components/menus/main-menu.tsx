@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { Link } from '@/components/labs/typography';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import {
   ArchiveIcon,
