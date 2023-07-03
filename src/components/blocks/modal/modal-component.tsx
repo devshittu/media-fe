@@ -2,6 +2,7 @@ import { useKeyPress } from '@/hooks';
 import React, { useEffect, useState } from 'react';
 import { ModalProps } from './types';
 import Portal from '@/hoc/Portal';
+import Overlay from '../overlay/overlay';
 
 export const ModalComponent = ({
   id,
@@ -54,16 +55,12 @@ export const ModalComponent = ({
         {/* Overlay background */}
 
         {!noOverlay && (
-          <div
-            className={`inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 z-50 w-full h-screen overflow-y-hidden ${
-              isOpen ? 'fixed top-0 bottom-0 left-0 right-0' : 'hidden '
-            }`}
-            id={`${id}-dialog-overlay`}
-            aria-labelledby={`${id}-label`}
-            aria-hidden="true"
-            data-modal-state={`${isOpen ? 'open' : 'close'}`}
+          <Overlay
+            id={id}
+            isActive={isOpen}
+            closeOnClick
             onClick={closeModal}
-          ></div>
+          />
         )}
         {/* Modal content */}
         <div

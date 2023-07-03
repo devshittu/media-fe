@@ -9,7 +9,7 @@ import { SettingsField, SettingsFieldset } from '@/components/blocks/settings/';
 import { FieldError, InputField } from '@/components/form';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
-import Drawer from '@/components/blocks/nav/Drawer';
+import Drawer from '@/components/blocks/nav/drawer';
 import { DrawerSide } from '@/components/blocks/nav';
 
 const Index = () => {

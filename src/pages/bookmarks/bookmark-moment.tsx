@@ -10,7 +10,7 @@ export type BookmarkMomentItem = {
   channelPhoto: string;
   id: string;
   time: string;
-  body: string; //Todo redesign this to bring the StoryItem. 
+  body: string; //Todo redesign this to bring the StoryItem.
   slug: string;
 };
 export type BookmarkMomentProps = {
@@ -35,7 +35,6 @@ const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
                 <div className="mx-4 items-center block p-3">
                   {/*
                    //Todo redesign this content display. */}
-                  
 
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
                     {moment.title}
