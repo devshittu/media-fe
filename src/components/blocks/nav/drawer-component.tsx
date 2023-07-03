@@ -3,6 +3,7 @@ import { DrawerProps, DrawerSide, NavContext } from './index';
 import { Icon, XIcon } from '@/components/illustrations';
 import { useKeyPress } from '@/hooks';
 import Portal from '@/hoc/Portal';
+import Overlay from '../overlay/overlay';
 
 export const DrawerComponent = ({
   id,
@@ -96,23 +97,12 @@ export const DrawerComponent = ({
     <>
       <Portal wrapperId="drawer-wrapper">
         {/* Overlay background */}
-        <div
-          className={`fixed inset-0 z-30 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80 w-full h-screen overflow-y-hidden ${
-            isOpen ? 'block' : 'hidden '
-          } transition-opacity duration-100 ${
-            isOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          id={`${id}-drawer-overlay`}
-          aria-labelledby={`${id}-label`}
-          aria-hidden="true"
-          onClick={closeDrawer}
-          data-drawer-state={`${isOpen ? 'open' : 'close'}`}
-        ></div>
+        <Overlay id={id} isActive={isOpen} closeOnClick onClick={closeDrawer} />
 
         {/* The drawer body */}
 
         <section
-          id={id}
+          id={`${id}-body`}
           className={sideClasses()}
           tabIndex={-1}
           aria-labelledby={`drawer-${side}-label`}
@@ -138,8 +128,8 @@ export const DrawerComponent = ({
             <button
               type="button"
               data-drawer-hide="drawer-bottom-example"
-              aria-controls="drawer-bottom-example"
-              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              aria-controls={`${id}-body`}
+              className="text-slate-400 bg-transparent hover:bg-slate-200 hover:text-slate-900 text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-slate-600 dark:hover:text-white"
               onClick={closeDrawer}
             >
               <span className="sr-only">Close menu</span>
