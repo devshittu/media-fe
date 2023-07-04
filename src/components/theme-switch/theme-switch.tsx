@@ -68,7 +68,11 @@ const ThemeSwitch = ({ showLabel = false }: ThemeSwitchProps) => {
         <button
           title="Light"
           type="button"
-          className={`px-3 py-1.5 text-xs font-medium ${currentTheme === THEME_LIGHT ? ' text-white bg-slate-900 dark:bg-slate-300 dark:text-slate-900' : 'text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700'}`}
+          className={`px-3 py-1.5 text-xs font-medium ${
+            currentTheme === THEME_LIGHT
+              ? ' text-white bg-slate-900 dark:bg-slate-300 dark:text-slate-900'
+              : 'text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700'
+          }`}
           onClick={() => setTheme(THEME_LIGHT)}
           disabled={disabled}
           aria-label="Light Theme"
@@ -78,7 +82,11 @@ const ThemeSwitch = ({ showLabel = false }: ThemeSwitchProps) => {
         <button
           title="System"
           type="button"
-          className={`px-3 py-1.5 text-xs font-medium ${currentTheme === THEME_SYSTEM ? ' text-white bg-slate-900 dark:bg-slate-300 dark:text-slate-900' : 'text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700'}`}
+          className={`px-3 py-1.5 text-xs font-medium ${
+            currentTheme === THEME_SYSTEM
+              ? ' text-white bg-slate-900 dark:bg-slate-300 dark:text-slate-900'
+              : 'text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700'
+          }`}
           onClick={() => setTheme(THEME_SYSTEM)}
           disabled={disabled}
           aria-label="System Theme"
@@ -88,8 +96,12 @@ const ThemeSwitch = ({ showLabel = false }: ThemeSwitchProps) => {
         <button
           title="Dark"
           type="button"
-          className={`px-3 py-1.5 text-xs font-medium ${currentTheme === THEME_DARK ? ' text-white bg-slate-900 dark:bg-slate-300 dark:text-slate-900' : 'text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700'}`}
-          onClick={() => setTheme(THEME_DARK)} 
+          className={`px-3 py-1.5 text-xs font-medium ${
+            currentTheme === THEME_DARK
+              ? ' text-white bg-slate-900 dark:bg-slate-300 dark:text-slate-900'
+              : 'text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700'
+          }`}
+          onClick={() => setTheme(THEME_DARK)}
           disabled={disabled}
           aria-label="Dark Theme"
         >
