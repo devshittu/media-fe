@@ -18,11 +18,9 @@ export const useScrollBehavior = () => {
     (e: Event) => {
       const windowScrollY = (e.currentTarget as Window).scrollY;
       if (y > windowScrollY) {
-        console.log('scrolling up');
         setIsScrolledUp(true);
       } else if (y < windowScrollY) {
         setIsScrolledUp(false);
-        console.log('scrolling down');
       }
       setY(windowScrollY);
     },
