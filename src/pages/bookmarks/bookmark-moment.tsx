@@ -1,4 +1,11 @@
-import { GlobeIcon, Icon } from '@/components/illustrations';
+import {
+  BarChartIcon,
+  EyeIcon,
+  FlagIcon,
+  GlobeIcon,
+  Icon,
+  ShareIcon,
+} from '@/components/illustrations';
 import { StoryItem } from '@/testing';
 import Image from 'next/image';
 import { Link } from '@/components/labs/typography';
@@ -45,6 +52,40 @@ const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
                     Story overview and analytics and possibly buttons for
                     sharing.
                   </p>
+
+                  <div
+                    className="grid max-w-full grid-cols-4 gap-1 p-1 mx-auto my-2 bg-slate-100 rounded-lgx dark:bg-slate-600"
+                    role="group"
+                  >
+                    <div className="px-3 py-1.5 text-xs font-medium text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700 rounded-lg">
+                      <Icon
+                        icon={<BarChartIcon />}
+                        className="w-5"
+                        strokeWidth={2.5}
+                      />
+                    </div>
+                    <div className="px-3 py-1.5 text-xs font-medium text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700 rounded-lg">
+                      <Icon
+                        icon={<FlagIcon />}
+                        className="w-5"
+                        strokeWidth={2.5}
+                      />
+                    </div>
+                    <div className="px-3 py-1.5 text-xs font-medium text-white bg-slate-900 dark:bg-slate-300 dark:text-slate-900 rounded-lgx">
+                      <Icon
+                        icon={<EyeIcon />}
+                        className="w-5"
+                        strokeWidth={2.5}
+                      />
+                    </div>
+                    <div className="px-3 py-1.5 text-xs font-medium text-slate-900 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700 rounded-lg">
+                      <Icon
+                        icon={<ShareIcon />}
+                        className="w-5"
+                        strokeWidth={2.5}
+                      />
+                    </div>
+                  </div>
                 </div>
               </Link>
             </li>
