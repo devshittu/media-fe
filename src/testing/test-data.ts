@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StoryItem } from './types';
+import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 
 export const testData = {
   users: [
@@ -704,7 +705,10 @@ export const getStories = delayedFn(
 );
 
 export const getAllStories = delayedFn(
-  (page: number = 1, pageSize: number = 15): StoryItem[] => {
+  (
+    page: number = 1,
+    pageSize: number = PAGINATE_STORIES_LIMIT,
+  ): StoryItem[] => {
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
     return testData.stories.slice(start, end);
@@ -747,22 +751,25 @@ export const getChildrenStories = delayedFn((storyId: string): StoryItem[] => {
   return findRelatedStories(testData.stories, storyId, 'children_stories');
 }, 300);
 
-const getRelatedStories = delayedFn((storyId: string): StoryItem[] => {
+export const getRelatedStories = delayedFn((storyId: string): StoryItem[] => {
   let relatedStories: StoryItem[] = [];
+  console.log(storyId);
+  const theStory =
+    testData.stories.find((j: StoryItem) => j.slug === storyId) || null;
   const parentStories = findRelatedStories(
     testData.stories,
     storyId,
     'parent_stories',
   );
-  console.log('parentStories', parentStories);
+  // console.log('parentStories', parentStories);
   const childrenStories = findRelatedStories(
     testData.stories,
     storyId,
     'children_stories',
   );
-  console.log('childrenStories', childrenStories);
-  const theStory =
-    testData.stories.find((j: StoryItem) => j.slug === storyId) || null;
+  // console.log('childrenStories', childrenStories);
+  if (!theStory) return relatedStories;
+
   relatedStories = [
     ...parentStories,
     theStory,
