@@ -17,6 +17,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'source.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'xsgames.co',
         port: '',
         pathname: '/**',
