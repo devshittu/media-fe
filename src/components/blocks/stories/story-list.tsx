@@ -5,18 +5,21 @@ import { Toast } from '@/components/blocks/toast';
 import { StoryListProps } from './types';
 import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
 import { StoryItem } from '@/testing';
-import { InfiniteScroll } from '@/components/inifinite-scroll';
+import { InfiniteScroll } from '@/components/infinite-scroll';
+import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 
-export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
+export const StoryList = ({
+  data = [] as StoryItem[],
+  scrollInfinite = false,
+}: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
-  const pageSize = 5;
+  const pageSize = PAGINATE_STORIES_LIMIT;
 
   const fetchMoreStories = useCallback((page: number, pageSize: number) => {
     getAllStories(page, pageSize).then((res) => {
-      console.log('res', res);
       setMoreItems(res);
     });
   }, []);
@@ -24,9 +27,6 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
     fetchMoreStories(page, pageSize);
   };
 
-  const handleToastClose = () => {
-    console.log('Toast closed');
-  };
   const ShowToast = () => {
     const notify = new Toast({
       message: 'Hello, world!',
@@ -34,7 +34,8 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
       type: 'success',
       onClose: () => {
         // Handle close event
-        handleToastClose();
+        // handleToastClose();
+        console.log('Toast closed');
       },
       duration: 3000,
     });
@@ -93,7 +94,9 @@ export const StoryList = ({ data = [] as StoryItem[] }: StoryListProps) => {
             className={index < newItems.length ? 'new-item' : ''}
           /> // Add 'new-item' class to newly added items
         ))}
-        <InfiniteScroll pageSize={pageSize} onFetchMore={handleFetchMore} />
+        {scrollInfinite && (
+          <InfiniteScroll pageSize={pageSize} onFetchMore={handleFetchMore} />
+        )}
       </div>
     </div>
   );
