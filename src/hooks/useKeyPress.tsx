@@ -22,12 +22,10 @@ export function useKeyPress(targetKey: string): boolean {
     // Add event listeners
     window.addEventListener('keydown', downHandler);
     window.addEventListener('keyup', upHandler);
-    console.log('did mount');
     // Remove event listeners on cleanup
     return () => {
       window.removeEventListener('keydown', downHandler);
       window.removeEventListener('keyup', upHandler);
-      console.log('cleanup');
     };
   }, [targetKey]);
 

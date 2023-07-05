@@ -41,7 +41,7 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
       >
         <StoriesPageHeader pageTitle="Home" />
         <section>
-          <StoryList data={stories} />
+          <StoryList data={stories} scrollInfinite />
         </section>
       </div>
       <div

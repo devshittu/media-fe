@@ -8,6 +8,7 @@ import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
 import {
   ExternalLinkIcon,
   EyeIcon,
+  FlagIcon,
   HelpCircleIcon,
   Icon,
   MessageSquareIcon,
@@ -26,6 +27,23 @@ import Drawer from '../nav/drawer';
 import { DrawerSide } from '../nav';
 
 export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
+  const openModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log('openModal');
+
+    const modal = new Modal({
+      title: 'Report Item Selected',
+      id: 'first-modal',
+      size: 'small',
+      children: (
+        <div>
+          Hello <Button>Show Toast</Button>
+        </div>
+      ),
+    });
+    modal.open();
+  };
+
   return (
     <div className="p-6">
       <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -58,6 +76,18 @@ export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
             <span className="flex-1 ml-3 whitespace-nowrap">Twitter</span>
           </Link>
         </li>
+        <li>
+          <Link
+            href="#"
+            onClick={openModal}
+            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            data-action="Report"
+            target="_blank"
+          >
+            <Icon icon={<FlagIcon />} className="w-6" />
+            <span className="flex-1 ml-3 whitespace-nowrap">Report</span>
+          </Link>
+        </li>
       </ul>
       <div>
         <Link
@@ -77,16 +107,31 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
     {
       id: '1',
       media:
-        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=20',
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=10',
       caption: '1 ' + story?.title,
     },
     {
       id: '2',
       media:
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1399&q=20',
+        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=399&q=10',
       caption: '2 ' + story?.title,
     },
   ];
+
+  //   const carouselItems: CarouselItem[] = [
+  //   {
+  //     id: '1',
+  //     media:
+  //       'https://source.unsplash.com/random/540x230?Cryptocurrency&sig=1',
+  //     caption: '1 ' + story?.title,
+  //   },
+  //   {
+  //     id: '2',
+  //     media:
+  //       'https://source.unsplash.com/random/540x230?Cryptocurrency&sig=2',
+  //     caption: '2 ' + story?.title,
+  //   },
+  // ];
 
   const carouselOptions: CarouselOptions = {
     // autoplay: true,
@@ -118,7 +163,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
       // type: 'success',
       onClose: () => {
         // Handle close event
-        console.log('Drawer closed');
+        // console.log('Drawer closed');
       },
     });
 
@@ -126,8 +171,6 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   };
 
   const openDrawer = () => {
-    console.log('openDrawer');
-
     const drawer = new Drawer({
       title: 'Hello, world!',
       titleIcon: <ShareIcon />,
@@ -141,7 +184,6 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
       // type: 'success',
       onClose: () => {
         // Handle close event
-        console.log('Drawer closed');
       },
     });
 
@@ -149,8 +191,6 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
   };
 
   const openModal = () => {
-    console.log('openModal');
-
     const modal = new Modal({
       title: 'Hello, world!',
       id: 'first-modal',
@@ -160,17 +200,9 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           Hello <Button onClick={ShowToast}>Show Toast</Button>
         </div>
       ),
-      // type: 'success',
-      onClose: () => {
-        // Handle close event
-        handleModalClose();
-      },
     });
 
     modal.open();
-  };
-  const handleModalClose = () => {
-    console.log('handleModalClose');
   };
 
   const ShowToast = () => {
@@ -263,10 +295,10 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         />
         <span className="flex-grow flex flex-col pl-4">
           <span className="title-font font-medium text-slate-900 dark:text-slate-100">
-            Holden Caulfield
+            John Doe
           </span>
           <span className="text-slate-400 text-xs tracking-widest mt-0.5">
-            UI DEVELOPER
+            Correspondence
           </span>
         </span>
       </Link>
