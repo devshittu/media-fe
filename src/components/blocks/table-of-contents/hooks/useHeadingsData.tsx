@@ -24,7 +24,7 @@ const useHeadingsData = () => {
 
       const newNestedHeadings = getNestedHeadings(headingElements);
       setNestedHeadings(newNestedHeadings);
-    }, 1000);
+    }, 500);
   }, []);
 
   const getNestedHeadings = (headingElements: HTMLElement[]): Heading[] => {
