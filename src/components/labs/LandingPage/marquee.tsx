@@ -27,15 +27,15 @@ const Marquee = ({
   };
 
   return (
-    <section>
-      <div className="marquee flex gap-4x relative select-none overflow-hidden my-2x group">
+    <section className=" w-full">
+      <div className="marquee flex gap-4x relative select-none overflow-hidden my-2x group max-w-fit">
         {[...Array(2)].map((_, index) => (
           <div
             key={index}
-            aria-hidden={index === 1 ? 'true' : undefined}
+            aria-hidden={index === 1 ? 'true' : 'false'}
             className={`${
               hoverToPause ? ` group-hover:paused ` : ''
-            } motion-reduce:paused shrink-0 flex justify-around items-center gap-4 min-h-fitx my-2 min-w-full  ${
+            } motion-reduce:paused shrink-0 flex justify-around items-center gap-4 my-2 min-w-full  ${
               play ? ` ${getSpeedClass()} ${reverse ? `reverse ` : ''} ` : ''
             }`}
           >
