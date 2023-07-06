@@ -23,6 +23,7 @@ const variants = {
 
 export type LinkProps = {
   href: string;
+  title?: string;
   children: ReactNode;
   variant?: keyof typeof variants;
   icon?: JSX.Element;
