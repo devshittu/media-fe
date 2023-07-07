@@ -25,6 +25,7 @@ import {
 } from '@/components/illustrations/icons/social';
 import Drawer from '../nav/drawer';
 import { DrawerSide } from '../nav';
+import Dropdown from './dropdown';
 
 export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
   const openModal = (e: React.MouseEvent) => {
@@ -228,6 +229,11 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest">
           {`CATEGORY`}
         </div>
+
+      <Dropdown
+        trigger={<button>Toggle Dropdown</button>}
+        content={<div>This is the dropdown content</div>}
+      />
 
         <button
           className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
