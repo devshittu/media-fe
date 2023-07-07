@@ -5,7 +5,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <>
-      <footer className="fixed bottom-0 left-0 z-50 w-full h-16x lg:h-48x bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
+      <footer className="fixed bottom-0 left-0 z-20 w-full h-16x lg:h-48x bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
         <div className="flex h-full  mx-auto font-medium">
           <div className="px-4 pt-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
             <div className="grid gap-10 row-gap-6 mb-2 sm:grid-cols-2 lg:grid-cols-4 justify-between">

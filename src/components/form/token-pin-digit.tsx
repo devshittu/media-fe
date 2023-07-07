@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-interface PinDigitProps {
+type PinDigitProps = {
   focused: boolean;
   value: string | undefined;
-}
+};
 
 function PinDigit({ focused, value }: PinDigitProps) {
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState<boolean>(false);
 
   useEffect(() => {
     if (value) {
@@ -36,6 +36,8 @@ function PinDigit({ focused, value }: PinDigitProps) {
 
 type TokenPinInputFieldProps = {
   userLoginStatus: UserLoginStatus; // (status: string) => void
+  id: string;
+  pinLength: number;
 };
 
 export enum UserLoginStatus {
@@ -46,7 +48,11 @@ export enum UserLoginStatus {
   LOGGED_OUT = 'logged-out',
 }
 
-function TokenPinInputField({ userLoginStatus }: TokenPinInputFieldProps) {
+function TokenPinInputField({
+  userLoginStatus,
+  pinLength = 4,
+  id = 'app-pin-hidden-input',
+}: TokenPinInputFieldProps) {
   const [pin, setPin] = useState('');
   const pinInputRef = useRef<HTMLInputElement>(null);
   const [userLoginState, setUserLoginState] =
@@ -68,28 +74,32 @@ function TokenPinInputField({ userLoginStatus }: TokenPinInputFieldProps) {
     const verifyPin = async (pin: string) => {
       try {
         setUserLoginState(UserLoginStatus.VERIFYING_LOG_IN);
-        await new Promise<boolean>((resolve, reject) => {
-          setTimeout(() => {
-            if (pin === '1234') {
-              if (rememberMe) console.log('Add it to the local storage.'); //setData(true); //Todo Add a remind me checkmark. and set it he localstorage.
-              resolve(true);
-            } else {
-              reject(`Invalid pin: ${pin}`);
-            }
-          }, Math.floor(Math.random() * (700 - 300 + 1)) + 300);
-        });
-        setUserLoginState(UserLoginStatus.LOGGED_IN);
+
+        const verifyC = (pin: string) => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if (pin === '1234') {
+                // if (rememberMe) setData(true); //Todo Add a remind me checkmark. and set it he localstorage.
+                resolve(true);
+              } else {
+                reject(`Invalid pin: ${pin}`);
+              }
+            }, Math.floor(Math.random() * (700 - 300 + 1)) + 300);
+          });
+        };
+        if (await verifyC(pin)) {
+          setUserLoginState(UserLoginStatus.LOGGED_IN);
+        }
       } catch (err) {
         console.error(err);
         setUserLoginState(UserLoginStatus.LOG_IN_ERROR);
       }
     };
-
-    if (pin.length === 4) {
+    if (pin.length === pinLength) {
       verifyPin(pin);
     }
 
-    if (userLoginState === UserLoginStatus.LOG_IN_ERROR) {
+    if (userLoginStatus === UserLoginStatus.LOG_IN_ERROR) {
       setUserLoginState(UserLoginStatus.LOG_IN_ERROR);
     }
 
@@ -97,8 +107,10 @@ function TokenPinInputField({ userLoginStatus }: TokenPinInputFieldProps) {
   }, [pin]);
 
   const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPin = e.target.value.substring(0, 4);
-    setPin(newPin);
+    if (e.target.value.length <= pinLength) {
+      const newPin = e.target.value.substring(0, pinLength);
+      setPin(newPin);
+    }
   };
 
   const handleRememberMeChange = () => {
@@ -115,14 +127,17 @@ function TokenPinInputField({ userLoginStatus }: TokenPinInputFieldProps) {
 
   return (
     <div className="absolutex z-30 opacity-0x left-[50%] top-[50%] pointer-events-auto app-pin-wrapper space-y-3">
+      <label htmlFor={id} className="hidden">
+        Pin
+      </label>
       <input
         className="bg-transparent border-none ring-0 h-0 absolute w-0"
         disabled={
           userLoginState !== UserLoginStatus.LOGGING_IN &&
           userLoginState !== UserLoginStatus.LOG_IN_ERROR
         }
-        id="app-pin-hidden-input"
-        maxLength={4}
+        id={id}
+        maxLength={pinLength}
         ref={pinInputRef}
         type="number"
         value={pin}
@@ -130,6 +145,7 @@ function TokenPinInputField({ userLoginStatus }: TokenPinInputFieldProps) {
       />
       <div
         role="button"
+        title="token"
         tabIndex={0}
         className="flex gap-2"
         onClick={handlePinDigitClick}
@@ -139,15 +155,18 @@ function TokenPinInputField({ userLoginStatus }: TokenPinInputFieldProps) {
           }
         }}
       >
-        <PinDigit focused={pin.length === 0} value={pin[0]} />
-        <PinDigit focused={pin.length === 1} value={pin[1]} />
-        <PinDigit focused={pin.length === 2} value={pin[2]} />
-        <PinDigit focused={pin.length === 3} value={pin[3]} />
+        {[...Array(pinLength)].map((_, index) => (
+          <PinDigit
+            key={index}
+            focused={pin.length === index}
+            value={pin[index]}
+          />
+        ))}
       </div>
       <h1>
         {'Enter the "1234" '}
         <button
-          onClick={() => setUserLoginState(UserLoginStatus.LOGGED_OUT)}
+          onClick={handleCancelClick}
           className="text-blue-600 dark:text-blue-500 hover:underline"
         >
           Cancel
