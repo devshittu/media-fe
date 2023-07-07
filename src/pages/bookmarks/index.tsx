@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import BookmarkMoment, { BookmarkMomentItem } from './bookmark-moment';
 import { SidePanel } from '@/components/blocks/side-panel';
 import { StoryItem, getAllStories } from '@/testing';
-import {SplashLoaderComponent} from '@/components/blocks/splash/splash-loader-component';
+import {SplashLoaderComponent} from '@/components/blocks/splash-loader/splash-loader-component';
 
 const Index = () => {
   const gender = Math.random() < 0.5 ? 'male' : 'female';
@@ -89,7 +89,7 @@ const Index = () => {
               ))} */}
             </React.Fragment>
           ))}
-          <SplashLoaderComponent isActive />
+          {/* <SplashLoaderComponent isActive /> */}
         </section>
       </div>
       <div
