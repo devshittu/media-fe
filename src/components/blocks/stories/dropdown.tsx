@@ -61,7 +61,7 @@ const Dropdown: React.FC<DropdownProps> = ({ trigger, content }) => {
             >
               {content}
             </div>,
-            document.body
+            document.body,
           )}
       </div>
     </>
