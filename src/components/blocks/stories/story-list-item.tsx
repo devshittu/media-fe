@@ -4,7 +4,11 @@ import { Link } from '@/components/labs/typography';
 import Image from 'next/image';
 import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
-import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
+import {
+  Carousel,
+  CarouselItem,
+  CarouselOptions,
+} from '@/components/blocks/carousel';
 import {
   ExternalLinkIcon,
   EyeIcon,
@@ -16,7 +20,6 @@ import {
   ShareIcon,
   TwitterIcon,
 } from '@/components/illustrations';
-import CarouselModule from '../carousel/carousel';
 import { Toast } from '../toast';
 import { Button } from '@/components/button';
 import {
@@ -230,10 +233,10 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           {`CATEGORY`}
         </div>
 
-      <Dropdown
+        {/* <Dropdown
         trigger={<button>Toggle Dropdown</button>}
         content={<div>This is the dropdown content</div>}
-      />
+      /> */}
 
         <button
           className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -273,10 +276,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
       </Link>
       <p className="leading-relaxed mb-8 text-justify">{`${story?.body}`}</p>
 
-      <CarouselModule.Carousel
-        items={carouselItems}
-        options={carouselOptions}
-      />
+      <Carousel items={carouselItems} options={carouselOptions} />
       {/* <Carousel items={carouselItems} /> */}
       <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
         <Link href="/" className="text-blue-500 inline-flex items-center">
