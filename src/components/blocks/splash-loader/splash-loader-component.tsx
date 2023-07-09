@@ -3,12 +3,11 @@ import Portal from '@/hoc/Portal';
 import React from 'react';
 import { SplashLoaderProps } from './types';
 
-
 export const SplashLoaderComponent = ({
   id = 'app-splash-loader',
   isActive,
   onExit,
-  children
+  children,
 }: SplashLoaderProps) => {
   const handleClick = () => {
     if (onExit) onExit();
@@ -27,12 +26,14 @@ export const SplashLoaderComponent = ({
         onClick={handleClick}
         data-splash-state={`${isActive ? 'open' : 'close'}`}
       >
-        {children ? (children) :(
-        <div
-          className={`block relative left-[50%] top-[50%] w-[100px] h-[100px] -mt-[50px] -ml-[50px] animate-spin duration-1000 z-[1000]`}
-        >
-          <LoaderIcon />
-        </div>
+        {children ? (
+          children
+        ) : (
+          <div
+            className={`block relative left-[50%] top-[50%] w-[100px] h-[100px] -mt-[50px] -ml-[50px] animate-spin duration-1000 z-[1000]`}
+          >
+            <LoaderIcon />
+          </div>
         )}
       </div>
     </Portal>
