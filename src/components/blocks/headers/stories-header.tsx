@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import { DrawerSide } from '../nav';
 import MainMenu from '@/components/menus/main-menu';
 import { useScrollBehavior } from '@/hooks';
@@ -6,6 +6,8 @@ import { rangeLimit } from '@/utils/helpers';
 import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import Drawer from '../nav/drawer';
+import { Button } from '@/components/button';
+import { useHeaderScroll } from './useHeaderScroll';
 
 export type StoriesPageHeaderProps = {
   pageTitle: string;
@@ -15,30 +17,7 @@ export const StoriesPageHeader = ({
   pageTitle = 'Home',
 }: StoriesPageHeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
-  const [topPosition, setTopPosition] = useState(0);
-  const { isScrolledUp } = useScrollBehavior();
-
-  useEffect(() => {
-    function handleScroll() {
-      setTopPosition((prevTopPosition) => {
-        const minTop = -53; // Initial top position of the header
-        const newTop = rangeLimit(
-          prevTopPosition + (isScrolledUp ? 1 : -1) * 4, // Adjust the scroll speed (4x) as desired
-          minTop,
-          0,
-        );
-        return newTop;
-      });
-    }
-
-    // Attach the event listener to the mouse wheel scroll event
-    window.addEventListener('scroll', handleScroll);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isScrolledUp]);
+  const { topPosition } = useHeaderScroll(53);
 
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
@@ -56,7 +35,8 @@ export const StoriesPageHeader = ({
 
     drawer.open();
   };
-  const handleOpenDrawer = () => {
+  const handleOpenDrawer = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     openMainMenuDrawer();
   };
   return (
