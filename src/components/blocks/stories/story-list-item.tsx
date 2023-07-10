@@ -236,7 +236,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         {/* <Dropdown
         trigger={<button>Toggle Dropdown</button>}
         content={<div>This is the dropdown content</div>}
-      /> */}
+      />
 
         <button
           className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -251,7 +251,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           onClick={openDrawer}
         >
           Drawer
-        </button>
+        </button> */}
 
         {/* Context Menu Trigger */}
 
@@ -269,44 +269,52 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
       <Link href={`/stories/${story?.slug}`}>
         <h2
           id={story?.slug}
-          className="story-header sm:text-3xl text-2xl title-font mt-4 mb-4  font-extrabold text-slate-900 tracking-tight dark:text-slate-200"
+          className="story-header sm:text-2xl text-xl title-font mt-4 mb-4  font-extrabold tracking-tight text-slate-900 dark:text-slate-200"
         >
           {`${story?.id}. ${story?.title}`}
         </h2>
       </Link>
-      <p className="leading-relaxed mb-8 text-justify">{`${story?.body}`}</p>
-
+      <p className="leading-relaxed text-lg mb-8 text-justify text-slate-800 dark:text-slate-300">{`${story?.body}`}</p>
+      
       <Carousel items={carouselItems} options={carouselOptions} />
-      {/* <Carousel items={carouselItems} /> */}
+<div className='mb-8'></div>
       <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
-        <Link href="/" className="text-blue-500 inline-flex items-center">
-          Learn more
+        <Link href="/" className="text-cyan-500 inline-flex items-center">
+          <span className='text-base'>Learn more</span>
           <ExternalLinkIcon className="w-4 h-4 ml-2" />
         </Link>
-        <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2  border-slate-200 dark:border-slate-700">
+        <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-base pr-3 py-1 border-r-2  border-slate-200 dark:border-slate-700">
           <EyeIcon className="w-4 h-4 mr-1" />
           1.2K
         </span>
-        <span className="text-slate-400 inline-flex items-center leading-none text-sm">
+        <span className="text-slate-400 inline-flex items-center leading-none text-base">
           <MessageSquareIcon className="w-4 h-4 mr-1" />6
         </span>
       </div>
-      <Link href="/" className="inline-flex items-center">
-        <Image
-          width="104"
-          height="104"
-          alt="blog"
-          src="https://dummyimage.com/104x104"
-          className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-        />
-        <span className="flex-grow flex flex-col pl-4">
-          <span className="title-font font-medium text-slate-900 dark:text-slate-100">
-            John Doe
-          </span>
-          <span className="text-slate-400 text-xs tracking-widest mt-0.5">
-            Correspondence
-          </span>
-        </span>
+      <Link href="#" className="inline-flex items-center">
+      <div className="flex items-center space-x-4">
+        <div className="flex-shrink-0">
+          <Image
+            width="48"
+            height="48"
+            className="rounded-md w-14 h-14"
+            src={`https://dummyimage.com/104x104`}
+            alt="Avatar image"
+            loading="lazy"
+          />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
+            {`John Doe`}
+          </p>
+          <p className="text-sm text-slate-500 truncate dark:text-slate-400">
+            {`correspondence, Reuter`}
+          </p>
+        </div>
+        {/* <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+          <Button className="rounded-lg">Subscribe</Button>
+        </div> */}
+      </div>
       </Link>
     </article>
   );
