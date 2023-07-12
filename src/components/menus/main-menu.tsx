@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from '@/components/labs/typography';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import {
@@ -14,7 +14,7 @@ import {
   XIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
-
+import TourSequence from '../blocks/tour/tour-sequence';
 const MainMenu = () => {
   const mainMenuList: MenuItem[] = [
     {
@@ -67,10 +67,35 @@ const MainMenu = () => {
       id: 'ui-components-page',
     },
   ];
+
+  const [showHelp, setShowHelp] = useState(false);
   return (
     <>
       <MenuList menu={mainMenuList} />
       <ThemeSwitch />
+      <button onClick={() => setShowHelp(true)}>Show help</button>
+      <TourSequence
+        sequence={[
+          {
+            forElement: '#page-title',
+            text: 'This is where you will find the page title for the current page.',
+          },
+          {
+            forElement: '#app-search',
+            text: 'Search stories here...',
+          },
+          {
+            forElement: '#trendsForYou',
+            text: 'This is where you will find some trends for you',
+          },
+          {
+            forElement: '.App-nowhere',
+            text: 'This help text will never appear',
+          },
+        ]}
+        open={showHelp}
+        onClose={() => setShowHelp(false)}
+      />
       <div
         id="dropdown-cta"
         className="p-4 mt-6 rounded-lg bg-blue-50 dark:bg-blue-900"
