@@ -8,13 +8,6 @@ import React, {
   HTMLAttributes,
   cloneElement,
 } from 'react';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  Icon,
-  InfoIcon,
-  XIcon,
-} from '@/components/illustrations';
 
 type CardProps = {
   heading: string;
@@ -70,6 +63,7 @@ const Card: React.FC<CardProps> = forwardRef(
     );
   },
 );
+Card.displayName = 'Card';
 
 export const useCardContext = (): CardContextType => {
   const context = useContext(CardContext);
@@ -85,15 +79,6 @@ const CardHeader: React.FC<CardHeaderProps> = ({ children }) => {
   return (
     <div className="card-header flex items-center justify-between">
       {children}
-      {/*<h3>{children}</h3>
-       <button className="close-button" onClick={toggleOpen}>
-        Close
-      </button>
-         <Icon icon={<InfoIcon/>} strokeWidth={3} className="w-7 h-7 text-slate-500 dark:text-slate-400 mb-3 justify-start items-start" />
-    <a href="#" className="self-start text-amber-600 text-base hover:underline">
-        Skip
-        
-    </a> */}
     </div>
   );
 };
@@ -118,7 +103,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ children, ...props }) => {
       className={`card-footer${
         open ? ' open' : ''
       } flex items-center justify-between`}
-    //   {...props}
+      //   {...props}
     >
       {React.Children.map(children, (child) =>
         cloneElement(child as React.ReactElement, { open }),
