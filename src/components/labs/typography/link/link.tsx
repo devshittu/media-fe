@@ -23,6 +23,7 @@ const variants = {
 
 export type LinkProps = {
   href: string;
+  id?: string;
   title?: string;
   children: ReactNode;
   variant?: keyof typeof variants;
@@ -35,6 +36,7 @@ export type LinkProps = {
 
 export const Link = ({
   href,
+  id,
   children,
   variant = 'link',
   icon,
