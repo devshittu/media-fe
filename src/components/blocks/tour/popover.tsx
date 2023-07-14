@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   useFloating,
   autoUpdate,
@@ -13,31 +13,52 @@ import {
   useId,
   Strategy,
   Placement,
+  ReferenceType,
+  FloatingOverlay,
+  arrow,
 } from '@floating-ui/react';
+import Portal from '@/hoc/Portal';
+
 type PopoverProps = {
-  strategy?: string;
-  placement?: string;
+  portaled?: boolean;
+  strategy?: Strategy;
+  placement?: Placement;
   children: React.ReactNode;
+  refElement?: string | null;
+  isOpen?: boolean;
 };
 
-const Popover = ({
-  strategy: _strategy = 'absolute',
-  placement: _placement = 'bottom',
+export function Popover({
   children,
-}: PopoverProps) => {
-  const [open, setOpen] = useState(false);
+  isOpen = false,
+  portaled,
+  refElement,
+  strategy = 'absolute',
+  placement = 'bottom',
+}: PopoverProps) {
+  const [open, setOpen] = useState(isOpen);
+  const referenceRef = useRef<HTMLElement | null>(null);
 
-  const { x, y, refs, strategy, context } = useFloating({
+  useEffect(() => {
+    const referenceElement = document.querySelector(refElement || '') as HTMLElement;
+    referenceRef.current = referenceElement;
+  }, [refElement]);
+
+  const { x, y, refs, context } = useFloating({
     open,
     onOpenChange: setOpen,
+    elements: {
+      reference: referenceRef.current as ReferenceType,
+    },
     middleware: [
       offset(10),
       flip({ fallbackAxisSideDirection: 'end' }),
       shift(),
+      arrow({ element: referenceRef.current }),
     ],
     whileElementsMounted: autoUpdate,
-    strategy: _strategy as Strategy,
-    placement: _placement as Placement,
+    strategy,
+    placement,
   });
 
   const click = useClick(context);
@@ -49,51 +70,43 @@ const Popover = ({
     dismiss,
     role,
   ]);
-
   const headingId = useId();
-
-  return (
+  const popoverWrapperJsx = (
     <>
-      <button ref={refs.setReference} {...getReferenceProps()}>
-        {_strategy} Trigger
-      </button>
       {open && (
-        <FloatingFocusManager context={context} modal={false}>
-          {children ? (
-            <>{children}</>
-          ) : (
-            <>
-              <div
-                className="Popover"
-                ref={refs.setFloating}
-                style={{
-                  position: strategy,
-                  top: y ?? 0,
-                  left: x ?? 0,
-                }}
-                aria-labelledby={headingId}
-                {...getFloatingProps()}
-              >
-                <h2 id={headingId}>
-                  (x: {Math.round(x || 0)}, y: {Math.round(y || 0)})
-                </h2>
-                <textarea placeholder="Write your review..." />
-                <br />
-                <button
-                  style={{ float: 'right' }}
-                  onClick={() => {
-                    console.log('Added review.');
-                    setOpen(false);
-                  }}
-                >
-                  Add
-                </button>
-              </div>
-            </>
-          )}
-        </FloatingFocusManager>
+        <FloatingOverlay lockScroll style={{ zIndex:99 }}>
+          <FloatingFocusManager context={context} modal={false}>
+            <div
+              className="grid place-items-center bg-gray-1000 text-gray-50"
+              ref={refs.setFloating}
+              style={{
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+                // transform: `translate3d(${Math.round(x || 0)}px, ${Math.round(
+                //   y || 0
+                // )}px, 0)`,
+              }}
+              aria-labelledby={headingId}
+              {...getFloatingProps()}
+            >
+                {children ?? 'Floating'}
+            </div>
+          </FloatingFocusManager>
+        </FloatingOverlay>
       )}
     </>
   );
-};
+
+  return (
+    <>
+      {portaled && typeof document !== 'undefined' ? (
+        <Portal wrapperId="floating-root">{popoverWrapperJsx}</Portal>
+      ) : (
+        popoverWrapperJsx
+      )}
+    </>
+  );
+}
+
 export default Popover;
