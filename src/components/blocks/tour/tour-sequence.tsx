@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import TourBubble from './tour-bubble';
-import Portal from '@/hoc/Portal';
 
 type TourSequenceItem = {
   forElement: string;
@@ -54,7 +53,7 @@ const TourSequence: React.FC<TourSequenceProps> = (props) => {
       }
       return p + 1;
     });
-  };
+ };
 
   const onPrevious = () => {
     setPosition((p) => {
