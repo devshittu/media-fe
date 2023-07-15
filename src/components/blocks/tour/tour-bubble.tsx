@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from '../card';
-import Popover from './popover';
+import TourPopper from './tour-popper';
 // import { TourCard } from './tour-card';
 import {
   ChevronLeftIcon,
@@ -29,7 +29,7 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
     : null;
   return element ? (
     <>
-      <Popover
+      <TourPopper
         strategy="fixed"
         placement="bottom-start"
         refElement={props.forElement}
@@ -39,6 +39,7 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
         <Card
           heading="My Card"
           description="This is a reusable card component."
+          className="!bg-sky-200"
         >
           <CardHeader>
             <Icon
@@ -54,16 +55,18 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
             </Button>
           </CardHeader>
 
-            <h5 className="mb-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
-              Guide?
-            </h5>
+          <h5 className="mb-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
+            Guide?
+          </h5>
           <CardBody>
-            <div className=' text-slate-800 dark:text-slate-300'>{props.content}</div>
+            <div className=" text-slate-800 dark:text-slate-300">
+              {props.content}
+            </div>
           </CardBody>
           <CardFooter>
             {props.previousLabel ? (
               <Button
-              icon={<ChevronLeftIcon />} 
+                icon={<ChevronLeftIcon />}
                 className="inline-flex items-center text-blue-600 hover:underline"
                 onClick={props.onPrevious}
               >
@@ -76,8 +79,8 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
 
             {props.nextLabel ? (
               <Button
-              iconPosition='right'
-              icon={<ChevronRightIcon />}
+                iconPosition="right"
+                icon={<ChevronRightIcon />}
                 className="inline-flex items-center text-blue-600 hover:underline"
                 onClick={props.onNext}
               >
@@ -89,7 +92,7 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
             )}
           </CardFooter>
         </Card>
-      </Popover>
+      </TourPopper>
     </>
   ) : null;
 };
