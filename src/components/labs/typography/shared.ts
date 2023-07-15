@@ -3,6 +3,7 @@ export type TextProps = {
   style?: any;
   textStyle?: any;
   color?: string;
+  as?: 'span' | 'strong' | 'p' | 'em';
   fontSize?: number;
   children?: React.ReactNode;
 };
