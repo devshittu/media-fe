@@ -89,7 +89,7 @@ const Index = () => {
               ))} */}
             </React.Fragment>
           ))}
-          {/* <SplashLoaderComponent isActive /> */}
+          {/* <SplashLoaderComponent isActive /> */}    
         </section>
       </div>
       <div
