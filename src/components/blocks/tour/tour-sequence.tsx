@@ -53,7 +53,7 @@ const TourSequence: React.FC<TourSequenceProps> = (props) => {
       }
       return p + 1;
     });
- };
+  };
 
   const onPrevious = () => {
     setPosition((p) => {
