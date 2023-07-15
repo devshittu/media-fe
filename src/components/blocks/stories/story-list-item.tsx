@@ -289,7 +289,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
               <MenuItem
                 url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
                 data-action="share/whatsapp/share"
-                target="_blank"
+                
                 label="Whatsapp"
                 icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
               />
@@ -318,7 +318,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         </Popover>
       </div>
 
-      <Link  href={`/stories/${story?.slug}`}>
+      <Link href={`/stories/${story?.slug}`}>
         <h2
           id={story?.slug}
           className="story-header sm:text-2xl text-xl title-font mt-4 mb-4  font-extrabold tracking-tight text-slate-900 dark:text-slate-200"
