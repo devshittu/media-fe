@@ -1,4 +1,11 @@
-import React, { createContext, ReactNode, forwardRef, ForwardedRef, HTMLAttributes, useContext } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  forwardRef,
+  ForwardedRef,
+  HTMLAttributes,
+  useContext,
+} from 'react';
 
 import { Link } from '@/components/labs/typography';
 
@@ -21,14 +28,24 @@ const Menu: React.FC<MenuProps> = forwardRef(
     };
 
     return (
-      <div className="menu p-4 pb-0 text-gray-900 md:pb-4 dark:text-white" ref={ref} {...rest}>
-        <ul className="space-y-4" aria-labelledby="mega-menu-icons-dropdown-button">
-          <MenuContext.Provider value={contextValue}>{children}</MenuContext.Provider>
+      <div
+        className="menu bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 dark:divide-slate-600"
+        ref={ref}
+        {...rest}
+      >
+        <ul
+          className="space-y-2 py-2 text-lg text-slate-700 dark:text-slate-200"
+          aria-labelledby="menu-icons-dropdown-button"
+        >
+          <MenuContext.Provider value={contextValue}>
+            {children}
+          </MenuContext.Provider>
         </ul>
       </div>
     );
-  }
+  },
 );
+Menu.displayName = 'Menu';
 
 const useMenuContext = (): MenuContextType => {
   const context = useContext(MenuContext);
@@ -47,7 +64,14 @@ type MenuItemProps = {
   tag?: ReactNode;
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({ label, onClick, url, disabled = false, icon, tag }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  label,
+  onClick,
+  url,
+  disabled = false,
+  icon,
+  tag,
+}) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -56,28 +80,20 @@ const MenuItem: React.FC<MenuItemProps> = ({ label, onClick, url, disabled = fal
 
   return (
     <li>
-
-          <Link
-            href="https://twitter.com/intent/tweet"
-            className="flex items-center p-3 text-base font-bold text-slate-900 bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
-            data-action="share/twitter/share"
-            target="_blank"
-          >
-      {/* <a
-        href="#"
-        className={`flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 group ${
+      <Link
+        href={url}
+        className={`flex items-center px-4 py-2 hover:text-cyan-600 dark:hover:text-cyan-500 hover:bg-slate-100 dark:hover:bg-slate-900 group ${
           disabled ? 'cursor-not-allowed opacity-50' : ''
         }`}
         onClick={handleClick}
-      > */}
+      >
         {icon && (
-          <span className="w-3 h-3 mr-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500">
+          <span className="mr-2 text-slate-400 dark:text-slate-500 group-hover:text-cyan-600 dark:group-hover:text-cyan-500">
             {icon}
           </span>
         )}
-        <span>{label}</span>
+        <h4>{label}</h4>
         {tag && <span className="ml-auto">{tag}</span>}
-      {/* </a> */}
       </Link>
     </li>
   );
@@ -88,7 +104,11 @@ type MenuHeaderProps = {
 };
 
 const MenuHeader: React.FC<MenuHeaderProps> = ({ children }) => {
-  return <div className="menu-header">{children}</div>;
+  return (
+    <div className="menu-header border-b dark:border-slate-600 px-4 py-2">
+      {children}
+    </div>
+  );
 };
 
 type MenuFooterProps = {
