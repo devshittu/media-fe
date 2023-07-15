@@ -1,10 +1,14 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from '@/components/labs/typography';
 import Image from 'next/image';
 import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
-import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
+import {
+  Carousel,
+  CarouselItem,
+  CarouselOptions,
+} from '@/components/blocks/carousel';
 import {
   ExternalLinkIcon,
   EyeIcon,
@@ -16,16 +20,27 @@ import {
   ShareIcon,
   TwitterIcon,
 } from '@/components/illustrations';
-import CarouselModule from '../carousel/carousel';
 import { Toast } from '../toast';
 import { Button } from '@/components/button';
 import {
+  GoogleColoredIcon,
   TwitterColoredIcon,
   WhatsappColoredIcon,
 } from '@/components/illustrations/icons/social';
 import Drawer from '../nav/drawer';
 import { DrawerSide } from '../nav';
 import Dropdown from './dropdown';
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeading,
+  PopoverTrigger,
+} from '../popover';
+import { Menu, MenuHeader, MenuItem } from '@/components/menus/menu';
+import SvgGoogleColored from '@/components/illustrations/icons/social/GoogleColored';
+import { Tag } from '../tag/';
 
 export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
   const openModal = (e: React.MouseEvent) => {
@@ -47,21 +62,21 @@ export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
 
   return (
     <div className="p-6">
-      <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
+      <p className="text-sm font-normal text-slate-500 dark:text-slate-400">
         Connect and share with the people on your favorite social media
         platforms.
       </p>
       <ul className="my-4 space-y-3">
         <li>
           <Link
-            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
             href={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
             data-action="share/whatsapp/share"
             target="_blank"
           >
             <Icon icon={<WhatsappColoredIcon />} className="w-6" />
             <span className="flex-1 ml-3 whitespace-nowrap">Whatsapp</span>
-            <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
+            <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-slate-500 bg-slate-200 rounded dark:bg-slate-700 dark:text-slate-400">
               New
             </span>
           </Link>
@@ -69,7 +84,7 @@ export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
         <li>
           <Link
             href="https://twitter.com/intent/tweet"
-            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
             data-action="share/twitter/share"
             target="_blank"
           >
@@ -81,7 +96,7 @@ export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
           <Link
             href="#"
             onClick={openModal}
-            className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
             data-action="Report"
             target="_blank"
           >
@@ -93,7 +108,7 @@ export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
       <div>
         <Link
           href="#"
-          className="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400"
+          className="inline-flex items-center text-xs font-normal text-slate-500 hover:underline dark:text-slate-400"
         >
           <HelpCircleIcon className="w-3 mr-2" strokeWidth={2.5} />
           Why do I need to share?
@@ -104,6 +119,7 @@ export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
 };
 
 export const StoryListItem = ({ story, className }: StoryListItemProps) => {
+  const [open, setOpen] = useState(false);
   const carouselItems: CarouselItem[] = [
     {
       id: '1',
@@ -230,7 +246,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           {`CATEGORY`}
         </div>
 
-      <Dropdown
+        {/* <Dropdown
         trigger={<button>Toggle Dropdown</button>}
         content={<div>This is the dropdown content</div>}
       />
@@ -248,8 +264,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           onClick={openDrawer}
         >
           Drawer
-        </button>
-
+        </button> */}
         {/* Context Menu Trigger */}
 
         <Link
@@ -261,52 +276,97 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         >
           <Icon icon={<MoreHorizontalIcon />} className="w-6" />
         </Link>
+
+        <Popover open={open} onOpenChange={setOpen} placement="bottom-end">
+          <PopoverTrigger onClick={() => setOpen((v) => !v)}>
+            <Icon icon={<MoreHorizontalIcon />} className="w-6" />
+          </PopoverTrigger>
+          <PopoverContent className="Popover z-20">
+            <Menu>
+              <MenuHeader>
+                <h3 className="text-lg font-bold">Share</h3>
+              </MenuHeader>
+              <MenuItem
+                url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
+                data-action="share/whatsapp/share"
+                
+                label="Whatsapp"
+                icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
+              />
+              <MenuItem
+                url="https://twitter.com/intent/tweet"
+                label="Twitter"
+                icon={<Icon icon={<TwitterColoredIcon />} className="w-6" />}
+              />
+              <MenuItem
+                label="Report"
+                url="#"
+                icon={<Icon icon={<FlagIcon />} className="w-6" />}
+                onClick={openModal}
+              />
+              <MenuItem
+                label="Pro Version"
+                url="#"
+                icon={<Icon icon={<GoogleColoredIcon />} className="w-6" />}
+                tag={<Tag variant="green">Pro</Tag>}
+              />
+            </Menu>
+            {/* <PopoverHeading>My popover heading</PopoverHeading>
+          <PopoverDescription>My popover description</PopoverDescription>
+          <PopoverClose>Close</PopoverClose> */}
+          </PopoverContent>
+        </Popover>
       </div>
 
       <Link href={`/stories/${story?.slug}`}>
         <h2
           id={story?.slug}
-          className="story-header sm:text-3xl text-2xl title-font mt-4 mb-4  font-extrabold text-slate-900 tracking-tight dark:text-slate-200"
+          className="story-header sm:text-2xl text-xl title-font mt-4 mb-4  font-extrabold tracking-tight text-slate-900 dark:text-slate-200"
         >
           {`${story?.id}. ${story?.title}`}
         </h2>
       </Link>
-      <p className="leading-relaxed mb-8 text-justify">{`${story?.body}`}</p>
+      <p className="leading-relaxed text-lg mb-8 text-justify text-slate-800 dark:text-slate-300">{`${story?.body}`}</p>
 
-      <CarouselModule.Carousel
-        items={carouselItems}
-        options={carouselOptions}
-      />
-      {/* <Carousel items={carouselItems} /> */}
+      <Carousel items={carouselItems} options={carouselOptions} />
+      <div className="mb-8"></div>
       <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
-        <Link href="/" className="text-blue-500 inline-flex items-center">
-          Learn more
+        <Link href="/" className="text-cyan-500 inline-flex items-center">
+          <span className="text-base">Learn more</span>
           <ExternalLinkIcon className="w-4 h-4 ml-2" />
         </Link>
-        <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2  border-slate-200 dark:border-slate-700">
+        <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-base pr-3 py-1 border-r-2  border-slate-200 dark:border-slate-700">
           <EyeIcon className="w-4 h-4 mr-1" />
           1.2K
         </span>
-        <span className="text-slate-400 inline-flex items-center leading-none text-sm">
+        <span className="text-slate-400 inline-flex items-center leading-none text-base">
           <MessageSquareIcon className="w-4 h-4 mr-1" />6
         </span>
       </div>
-      <Link href="/" className="inline-flex items-center">
-        <Image
-          width="104"
-          height="104"
-          alt="blog"
-          src="https://dummyimage.com/104x104"
-          className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-        />
-        <span className="flex-grow flex flex-col pl-4">
-          <span className="title-font font-medium text-slate-900 dark:text-slate-100">
-            John Doe
-          </span>
-          <span className="text-slate-400 text-xs tracking-widest mt-0.5">
-            Correspondence
-          </span>
-        </span>
+      <Link href="#" className="inline-flex items-center">
+        <div className="flex items-center space-x-4">
+          <div className="flex-shrink-0">
+            <Image
+              width="48"
+              height="48"
+              className="rounded-md w-14 h-14"
+              src={`https://dummyimage.com/104x104`}
+              alt="Avatar image"
+              loading="lazy"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
+              {`John Doe`}
+            </p>
+            <p className="text-sm text-slate-500 truncate dark:text-slate-400">
+              {`correspondence, Reuter`}
+            </p>
+          </div>
+          {/* <div className="inline-flex items-center text-base font-semibold text-slate-900 dark:text-white">
+          <Button className="rounded-lg">Subscribe</Button>
+        </div> */}
+        </div>
       </Link>
     </article>
   );

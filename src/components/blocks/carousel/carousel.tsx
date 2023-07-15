@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CarouselProps } from './types';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
 
-const Carousel = ({ items, options = {} }: CarouselProps) => {
+export const Carousel = ({ items, options = {} }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const prev = () => {
@@ -107,8 +107,6 @@ const Carousel = ({ items, options = {} }: CarouselProps) => {
   );
 };
 
-const CarouselModule = {
-  Carousel,
-};
+export default Carousel;
 
-export default CarouselModule;
+//Path: src/components/blocks/carousel/carousel.tsx

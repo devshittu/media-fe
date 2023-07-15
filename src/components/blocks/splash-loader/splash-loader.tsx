@@ -13,12 +13,7 @@ class SplashLoader {
   private isOpen: boolean;
   private elementContainer: HTMLElement | null = null;
 
-  constructor({
-    id,
-    children,
-    onExit,
-    onShow,
-  }: SplashLoaderClassProps) {
+  constructor({ id, children, onExit, onShow }: SplashLoaderClassProps) {
     this.id = id ? id : `splash-loader-${Date.now().toString()}`;
     this.container = document.createElement('div');
     this.onShow = onShow;
@@ -34,7 +29,7 @@ class SplashLoader {
       if (this.onShow) {
         this.onShow();
       }
-      
+
       this.renderSplashLoader();
     }
   };

@@ -43,7 +43,12 @@ export const SidePanel = () => {
     >
       <div className={`sticky top-0 z-10 bg-white dark:bg-slate-900`}>
         <div className="py-4">
-          <InputField name="Search" placeholder="Search app" className="mb-4" />
+          <InputField
+            id="app-search"
+            name="Search"
+            placeholder="Search app"
+            className="mb-4"
+          />
         </div>
       </div>
       <div

@@ -18,6 +18,8 @@
 # icons sources
 src/components/illustrations/source/
 
+src/stories
+
 # misc
 .DS_Store
 *.pem

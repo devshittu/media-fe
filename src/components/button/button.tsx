@@ -191,9 +191,21 @@ export const Button = ({
 
   const buttonContent = (
     <>
-      {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
+      {icon && iconPosition === 'left' && (
+        <span className="mr-2">
+          {React.cloneElement(icon, {
+            className: iconClasses,
+          })}
+        </span>
+      )}
       {children}
-      {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
+      {icon && iconPosition === 'right' && (
+        <span className="ml-2">
+          {React.cloneElement(icon, {
+            className: iconClasses,
+          })}
+        </span>
+      )}
     </>
   );
 

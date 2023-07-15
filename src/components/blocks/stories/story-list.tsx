@@ -7,6 +7,7 @@ import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
 import { StoryItem } from '@/testing';
 import { InfiniteScroll } from '@/components/infinite-scroll';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
+import { useHeaderScroll } from '../headers/useHeaderScroll';
 
 export const StoryList = ({
   data = [] as StoryItem[],
@@ -16,6 +17,7 @@ export const StoryList = ({
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
 
+  const { topPosition } = useHeaderScroll(53);
   const pageSize = PAGINATE_STORIES_LIMIT;
 
   const fetchMoreStories = useCallback((page: number, pageSize: number) => {
@@ -79,9 +81,11 @@ export const StoryList = ({
     // document.body.scrollTop = scrollTop + newItemsHeight; // For older browser compatibility
   }, [newItems]);
   return (
-    <div className={`mt-28 lg:mt-0`}>
+    <div id="stream" className={`mt-28 lg:mt-0 relative`}>
       <div
-        className={`flex align-middle items-center justify-around min-h-[56px]`}
+        id="refresh-set"
+        className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98`}
+        style={{ transform: `translateY(${topPosition}px)` }}
       >
         <Button onClick={loadLatest}>Load new feeds</Button>
         <Button onClick={ShowToast}>Show Toast</Button>

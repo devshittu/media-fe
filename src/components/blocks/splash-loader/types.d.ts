@@ -1,4 +1,3 @@
-
 export type SplashLoaderProps = {
   id?: string;
   isActive: boolean;
@@ -6,7 +5,6 @@ export type SplashLoaderProps = {
   onShow?: () => void;
   children?: React.ReactNode;
 };
-
 
 export type SplashLoaderClassProps = Omit<SplashLoaderProps, 'isActive'> & {
   isActive?: boolean;

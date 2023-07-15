@@ -21,7 +21,7 @@ const Overlay = ({ id, isActive, onClick, closeOnClick }: OverlayProps) => {
       } transition-opacity duration-100 ${
         isActive ? 'opacity-100' : 'opacity-0'
       }`}
-      id={`${id}-drawer-overlay`}
+      id={`${id}-overlay`}
       aria-labelledby={`${id}-label`}
       aria-hidden="true"
       onClick={handleClick}

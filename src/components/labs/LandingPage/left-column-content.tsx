@@ -17,19 +17,31 @@ import TokenPinInputField, {
   UserLoginStatus,
 } from '@/components/form/token-pin-digit';
 import { Modal } from '@/components/blocks/modal';
+import Wizard from '@/components/blocks/wizard/wizard';
+import steps from '@/components/blocks/wizard/steps';
+import { useRouter } from 'next/router';
 
 const LeftColumnContent = () => {
-  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const router = useRouter();
 
+  const [categories, setCategories] = useState<CategoryItem[]>([]);
+  const handleFinish = () => {
+    // Handle logic when the user finishes the wizard
+    console.log('Wizard finished!');
+
+    // goto the landing page
+    router.push('/stories');
+  };
   const openModal = () => {
     console.log('openModal');
 
     const modal = new Modal({
       title: 'Enter your Token',
       id: 'pin-dialog',
-      size: 'small',
+      size: 'full',
       children: (
-        <TokenPinInputField userLoginStatus={UserLoginStatus.LOGGING_IN} />
+        // <TokenPinInputField userLoginStatus={UserLoginStatus.LOGGING_IN} />
+        <Wizard steps={steps} onFinish={handleFinish} />
       ),
       // type: 'success',
       onClose: () => {
