@@ -32,3 +32,5 @@ export const Default: Story = {
     },
   },
 };
+
+//Path: src/components/form/checkbox-group.stories.tsx
