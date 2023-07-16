@@ -1,58 +1,97 @@
 import TokenPinInputField, {
   UserLoginStatus,
 } from '@/components/form/token-pin-digit';
-import WizardStep from './wizard-step';
 import Image from 'next/image';
-import {LayoutCheckbox} from '@/components/form/layout-checkbox';
 import { useState } from 'react';
+import CustomCheckboxGroup, {
+  Option,
+} from '@/components/form/custom-checkbox-group';
 
 // Step1.tsx
 export const Step1: React.FC = () => {
- const [checkboxStates, setCheckboxStates] = useState({
-    react: false,
-    vue: false,
-    angular: false,
-  });
+  const options: Option[] = [
+    {
+      id: 'react-option',
+      label: 'React Js',
+      description: 'A JavaScript library for building user interfaces.',
+    },
+    {
+      id: 'vue-option',
+      label: 'Vue Js',
+      description: 'Vue.js is a model–view front end JavaScript framework.',
+    },
+    {
+      id: 'angular-option',
+      label: 'Angular',
+      description: 'A TypeScript-based web application framework.',
+    },
+    {
+      id: 'svelte-option',
+      label: 'Svelte',
+      description: 'A TypeScript-based web application framework.',
+    },
+  ];
 
-  const handleCheckboxChange = (checkboxId: string, isChecked: boolean) => {
-    setCheckboxStates((prevState) => ({
-      ...prevState,
-      [checkboxId]: isChecked,
-    }));
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+
+  const CustomDisplayComponent: React.FC<Option & { checked: boolean }> = ({
+    id,
+    label,
+    description,
+    checked,
+  }) => {
+    const handleClick = () => {
+      const optionExists = selectedOptions.some((option) => option.id === id);
+
+      let newSelectedOptions: Option[];
+
+      if (optionExists) {
+        newSelectedOptions = selectedOptions.filter(
+          (option) => option.id !== id,
+        );
+      } else {
+        newSelectedOptions = [...selectedOptions, { id, label, description }];
+      }
+
+      setSelectedOptions(newSelectedOptions);
+      console.log(newSelectedOptions);
+    };
+
+    return (
+      <div
+        role="button"
+        className={`my-custom-checkbox ${checked ? 'checked' : ''}`}
+        onClick={handleClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleClick();
+          }
+        }}
+      >
+        <p>ID: {id}</p>
+        <p>Label: {label}</p>
+        <p>Description: {description}</p>
+      </div>
+    );
   };
+
+  const handleCheckboxGroupChange = (selectedOptions: Option[]) => {
+    // Handle selected options logic
+    console.log('Selected Options:', selectedOptions);
+  };
+
   return (
     <div>
-      {/* Step 1: Signup with only email (a token will be sent to your email) */}
-
-    <div>
       <h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white">
-        Choose technology:
+        Choose technologies:
       </h3>
-      <ul className="grid w-full gap-6 md:grid-cols-3">
-        <LayoutCheckbox
-          id="react-option"
-          label="React Js"
-          description="A JavaScript library for building user interfaces."
-          isChecked={checkboxStates.react}
-          onChange={(isChecked) => handleCheckboxChange('react', isChecked)}
-        />
-        <LayoutCheckbox
-          id="flowbite-option"
-          label="Vue Js"
-          description="Vue.js is a model–view front end JavaScript framework."
-          isChecked={checkboxStates.vue}
-          onChange={(isChecked) => handleCheckboxChange('vue', isChecked)}
-        />
-        <LayoutCheckbox
-          id="angular-option"
-          label="Angular"
-          description="A TypeScript-based web application framework."
-          isChecked={checkboxStates.angular}
-          onChange={(isChecked) => handleCheckboxChange('angular', isChecked)}
-        />
-      </ul>
+      <CustomCheckboxGroup
+        options={options}
+        onChange={handleCheckboxGroupChange}
+        DisplayComponent={CustomDisplayComponent}
+        // displayComponentProps={{ customProp: 'A default prop', ...options }}
+      />
     </div>
- </div>
   );
 };
 
@@ -92,18 +131,18 @@ export const Step5: React.FC = () => {
   return (
     <div>
       Step 5: Set favorite channels to follow (skippable)
-      <ul
-        className="max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
-      >
+      <ul className="max-w-sm divide-y divide-gray-200 dark:divide-gray-700">
         <li className="py-3 sm:py-4">
           <div className="flex items-center space-x-3">
             <div className="flex-shrink-0">
-          <Image
-            width="48"
-            height="48"
-            className="rounded-md w-14 h-14"
-            alt="Avatar image"
-            loading="lazy"  src={`https://xsgames.co/randomusers/avatar.php?g=male`}/>
+              <Image
+                width="48"
+                height="48"
+                className="rounded-md w-14 h-14"
+                alt="Avatar image"
+                loading="lazy"
+                src={`https://xsgames.co/randomusers/avatar.php?g=male`}
+              />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
@@ -122,12 +161,14 @@ export const Step5: React.FC = () => {
         <li className="py-3 sm:py-4">
           <div className="flex items-center space-x-3">
             <div className="flex-shrink-0">
-          <Image
-            width="48"
-            height="48"
-            className="rounded-md w-14 h-14"
-            alt="Avatar image"
-            loading="lazy"  src={`https://xsgames.co/randomusers/avatar.php?g=female`}/>
+              <Image
+                width="48"
+                height="48"
+                className="rounded-md w-14 h-14"
+                alt="Avatar image"
+                loading="lazy"
+                src={`https://xsgames.co/randomusers/avatar.php?g=female`}
+              />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
