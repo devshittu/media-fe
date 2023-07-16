@@ -289,7 +289,6 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
               <MenuItem
                 url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
                 data-action="share/whatsapp/share"
-                
                 label="Whatsapp"
                 icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
               />
