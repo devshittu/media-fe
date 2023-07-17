@@ -39,13 +39,13 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
         <Card
           heading="My Card"
           description="This is a reusable card component."
-          className="!bg-sky-200"
+          className="!bg-amber-300  shadow-2xl"
         >
-          <CardHeader>
+          <CardHeader className=" text-slate-900 dark:text-amber-950">
             <Icon
               icon={<InfoIcon />}
               strokeWidth={3}
-              className="w-7 h-7 text-slate-500 dark:text-slate-400 mb-3 justify-start items-start"
+              className="w-7 h-7  text-slate-900 dark:text-amber-950 mb-3 justify-start items-start"
             />
             <Button
               className="self-start text-amber-600 text-base hover:underline"
@@ -55,11 +55,11 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
             </Button>
           </CardHeader>
 
-          <h5 className="mb-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
+          <h5 className="mb-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-amber-950">
             Guide?
           </h5>
           <CardBody>
-            <div className=" text-slate-800 dark:text-slate-300">
+            <div className=" text-slate-800 dark:text-amber-800">
               {props.content}
             </div>
           </CardBody>
