@@ -12,9 +12,12 @@ import {
   HashIcon,
   MusicIcon,
   XIcon,
+  UserPlusIcon,
+  HelpCircleIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
 import TourSequence from '../blocks/tour/tour-sequence';
+import { Button } from '../button';
 const MainMenu = () => {
   const mainMenuList: MenuItem[] = [
     {
@@ -54,10 +57,16 @@ const MainMenu = () => {
       url: '/hashtags',
       id: 'hashtags-page',
     },
+    // {
+    //   name: 'Music',
+    //   icon: <MusicIcon />,
+    //   url: '/music',
+    //   id: 'music-page',
+    // },
     {
-      name: 'Music',
-      icon: <MusicIcon />,
-      url: '/music',
+      name: 'Auth',
+      icon: <UserPlusIcon />,
+      url: '/auth/signup',
       id: 'music-page',
     },
     {
@@ -79,31 +88,6 @@ const MainMenu = () => {
     <>
       <MenuList menu={mainMenuList} />
       <ThemeSwitch />
-      <button onClick={openHelp}>Show help</button>
-      {showHelp && (
-        <TourSequence
-          sequence={[
-            {
-              forElement: '#page-title',
-              text: 'This is where you will find the page title for the current page.',
-            },
-            {
-              forElement: '#app-search',
-              text: 'Search stories here...',
-            },
-            {
-              forElement: '#trendsForYouTitle',
-              text: 'This is where you will find some trends for you',
-            },
-            {
-              forElement: '.App-nowhere',
-              text: 'This help text will never appear',
-            },
-          ]}
-          open={showHelp}
-          onClose={closeHelp}
-        />
-      )}
       <div
         id="dropdown-cta"
         className="p-4 mt-6 rounded-lg bg-blue-50 dark:bg-blue-900"
@@ -124,15 +108,47 @@ const MainMenu = () => {
           </button>
         </div>
         <p className="mb-3 text-sm text-blue-800 dark:text-blue-400">
-          Preview the new Media FE dashboard navigation! You can turn the new
-          navigation off for a limited time in your profile.
+          Explore our website with the Help button for a quick tour. Discover
+          seamless navigation in just a few clicks!
         </p>
-        <Link
+        {/* <Link
           className="text-sm text-blue-800 underline font-medium hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
           href="#"
         >
           Turn new navigation off
-        </Link>
+        </Link> */}
+
+        <Button
+          onClick={openHelp}
+          icon={<HelpCircleIcon />}
+          className="text-sm text-blue-800 underline font-medium hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          Show help
+        </Button>
+        {showHelp && (
+          <TourSequence
+            sequence={[
+              {
+                forElement: '#page-title',
+                text: 'This is where you will find the page title for the current page.',
+              },
+              {
+                forElement: '#app-search',
+                text: 'Search stories here...',
+              },
+              {
+                forElement: '#trendsForYouTitle',
+                text: 'This is where you will find some trends for you',
+              },
+              {
+                forElement: '.App-nowhere',
+                text: 'This help text will never appear',
+              },
+            ]}
+            open={showHelp}
+            onClose={closeHelp}
+          />
+        )}
       </div>
     </>
   );
