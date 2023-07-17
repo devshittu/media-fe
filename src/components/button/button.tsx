@@ -6,7 +6,16 @@ export type ButtonProps = {
   disabled?: boolean;
   loading?: boolean;
   nativeType?: 'button' | 'submit' | 'reset';
-  type?: 'info' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
+  type?:
+    | 'info'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'dark'
+    | 'light'
+    | null;
   icon?: JSX.Element;
   iconPosition?: 'left' | 'right';
   size?: 'small' | 'medium' | 'large';
@@ -34,7 +43,7 @@ export const Button = ({
   disabled = false,
   loading = false,
   nativeType = 'button',
-  type = 'primary',
+  type = null,
   icon,
   iconPosition = 'left',
   size = 'medium',
@@ -118,8 +127,7 @@ export const Button = ({
               }`
         } focus:ring-amber-300 `;
         break;
-      case 'primary':
-      default:
+      case 'dark':
         classes += ` 
         ${
           !outlined
@@ -132,6 +140,24 @@ export const Button = ({
                   : 'border'
               }`
         } focus:ring-neutral-300 `;
+        break;
+
+      case 'primary':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-cyan-500 hover:bg-cyan-600 text-white`
+            : `border border-cyan-500 hover:bg-cyan-500 hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
+        } focus:ring-cyan-300 `;
+        break;
+      default:
+        classes += ``;
     }
     return classes;
   };
@@ -164,16 +190,16 @@ export const Button = ({
   };
   const badgeTypeClasses = getBadgeTypeClasses();
   const buttonClasses = `relative inline-flex items-center
-    ${buttonTypeClasses} focus:z-10 focus:ring-4 
+    ${buttonTypeClasses} ${type !== null && 'focus:z-10 focus:ring-4'} 
     ${rounded ? 'rounded-full' : ''}
     ${disabled ? 'opacity-50 cursor-not-allowed' : 'opacity-100 cursor-pointer'}
     ${loading ? 'pointer-events-none' : ''}
     ${
-      size === 'large'
-        ? 'px-6 py-3 text-lg'
-        : size === 'medium'
-        ? 'px-4 py-2 text-base'
-        : 'px-2 py-1 text-sm'
+      {
+        large: `${type !== null && 'px-6 py-3'} text-lg`,
+        medium: `${type !== null && 'px-4 py-2'} text-base`,
+        small: `${type !== null && 'px-2 py-1'} text-sm`,
+      }[size]
     }
     ${expand ? 'w-full' : ''}
     ${className ?? ''}
