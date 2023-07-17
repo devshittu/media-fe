@@ -6,6 +6,19 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ReactElement, ReactNode } from 'react';
 
+//MSW wrapping
+import dynamic from 'next/dynamic';
+import { API_MOCKING } from '@/config/constants';
+import { MSWWrapperProps } from '@/lib/msw';
+
+const MSWWrapper = dynamic<MSWWrapperProps>(() =>
+  import('@/lib/msw').then(({ MSWWrapper }) => MSWWrapper),
+);
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'true') {
+  require('@/testing/mocks/initialize')
+}
+
+
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -36,7 +49,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           `}
         </style>
       </Head>
-      <AppProvider>{pageContent}</AppProvider>
+      <AppProvider>
+        {/* {API_MOCKING ? <MSWWrapper>{pageContent}</MSWWrapper> : pageContent} */}
+        {pageContent}
+      </AppProvider>
     </>
   );
 };
