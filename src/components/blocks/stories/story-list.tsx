@@ -16,7 +16,14 @@ export const StoryList = ({
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
+  const [showLatestButton, setShowLatestButton] = useState(false);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowLatestButton(true);
+    }, 10000);
+    return () => clearTimeout(timeout);
+  }, []);
   const { topPosition } = useHeaderScroll(53);
   const pageSize = PAGINATE_STORIES_LIMIT;
 
@@ -80,16 +87,25 @@ export const StoryList = ({
     document.documentElement.scrollTop = scrollTop + newItemsHeight;
     // document.body.scrollTop = scrollTop + newItemsHeight; // For older browser compatibility
   }, [newItems]);
+
   return (
     <div id="stream" className={`mt-28 lg:mt-0 relative`}>
+      {/* {showLatestButton && ( */}
       <div
         id="refresh-set"
-        className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98`}
+        className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98 transition-transform -translate-y-full   ${
+          showLatestButton
+            ? 'transform-none opacity-100'
+            : '-translate-y-full  opacity-0'
+        }`}
         style={{ transform: `translateY(${topPosition}px)` }}
       >
-        <Button onClick={loadLatest}>Load new feeds</Button>
+        <Button onClick={loadLatest} type="primary">
+          Load new feeds
+        </Button>
         <Button onClick={ShowToast}>Show Toast</Button>
       </div>
+      {/* )} */}
       <div>
         {existingItems.map((item, index) => (
           <StoryListItem
