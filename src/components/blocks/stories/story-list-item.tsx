@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import React, { useState } from 'react';
+import React, { ReactEventHandler, useState } from 'react';
 import { Link } from '@/components/labs/typography';
 import Image from 'next/image';
 import { Modal } from '@/components/blocks/modal';
@@ -10,6 +10,7 @@ import {
   CarouselOptions,
 } from '@/components/blocks/carousel';
 import {
+  BookmarkIcon,
   ExternalLinkIcon,
   EyeIcon,
   FlagIcon,
@@ -187,11 +188,14 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
     drawer.open();
   };
 
-  const openDrawer = () => {
+  const addBookmark = (event: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
     const drawer = new Drawer({
-      title: 'Hello, world!',
-      titleIcon: <ShareIcon />,
-      id: 'first-drawer',
+      title: 'Add Bookmark!',
+      titleIcon: <BookmarkIcon />,
+      id: 'add-bookmark',
       side: DrawerSide.TOP,
       children: (
         <div>
@@ -302,6 +306,19 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
                 url="#"
                 icon={<Icon icon={<FlagIcon />} className="w-6" />}
                 onClick={openModal}
+              />
+              <MenuItem
+                label="Add Bookmark"
+                url="#"
+                onClick={addBookmark}
+                icon={
+                  <Icon
+                    icon={<BookmarkIcon />}
+                    className="w-6 text-slate-900"
+                    strokeWidth={2.5}
+                  />
+                }
+                tag={<Tag variant="green">Pro</Tag>}
               />
               <MenuItem
                 label="Pro Version"
