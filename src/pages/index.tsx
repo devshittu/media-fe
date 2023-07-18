@@ -1,6 +1,6 @@
 import { Seo } from '@/components/seo';
 import React, { ReactElement } from 'react';
-import PublicLayout from '@/layouts/public-layout';
+import LandingLayout from '@/layouts/landing-layout';
 import {
   Feature,
   Hero,
@@ -97,7 +97,7 @@ export default function Home({ categories }: PublicHomePageProps) {
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <PublicLayout>{page}</PublicLayout>;
+  return <LandingLayout>{page}</LandingLayout>;
 };
 
 export const getServerSideProps = async ({
