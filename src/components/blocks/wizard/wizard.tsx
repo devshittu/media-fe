@@ -85,8 +85,6 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
   );
 
   const isNextStepDisabled = () => {
-    const currentStepInfo = steps[state.currentStep];
-    console.log('currentStepInfo', currentStepInfo, 'state', state);
     if (isCurrentStepMandatory) {
       // Check if mandatory step conditions are fulfilled
       // Replace this condition with your specific logic
