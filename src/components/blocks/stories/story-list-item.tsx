@@ -243,8 +243,12 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
 
   return (
     <article
-      className={`p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
+      className={`relative p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
     >
+      <div
+        id={`scroll-to-${story.slug}`}
+        style={{ position: 'absolute', top: '-100px', left: '0' }}
+      ></div>
       <div className={`flex align-middle items-center justify-between w-full`}>
         <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest">
           {`CATEGORY`}
