@@ -16,6 +16,7 @@ import {
   ReferenceType,
   FloatingOverlay,
   arrow,
+  FloatingArrow,
 } from '@floating-ui/react';
 import Portal from '@/hoc/Portal';
 import Overlay from '../overlay/overlay';
@@ -39,14 +40,7 @@ export function TourPopper({
 }: TourPopperProps) {
   const [open, setOpen] = useState(isOpen);
   const referenceRef = useRef<HTMLElement | null>(null);
-  useEffect(() => {
-    if (isOpen) {
-      const element = document.querySelector(refElement || '') as HTMLElement;
-      if (element) {
-        element.style.zIndex = '9999999'; // Set a high zIndex value when the element is open
-      }
-    }
-  }, [isOpen, refElement]);
+
   useEffect(() => {
     const referenceElement = document.querySelector(
       refElement || '',
@@ -103,6 +97,12 @@ export function TourPopper({
                 {...getFloatingProps()}
               >
                 {children ?? 'Floating'}
+                {/* TODO: reflect same color on all from the sequence. */}
+                <FloatingArrow
+                  width={20}
+                  className="fill-amber-300 ml-4"
+                  context={context}
+                />
               </div>
             </FloatingFocusManager>
           </FloatingOverlay>
