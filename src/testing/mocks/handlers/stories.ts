@@ -8,9 +8,7 @@ import { requireAuth } from '../utils';
 const getStoriesHandler = rest.get(
   `${API_URL}/stories`,
   async (req, res, ctx) => {
-    const categoryId = req.url.searchParams.get(
-      'categoryId'
-    ) as string;
+    const categoryId = req.url.searchParams.get('categoryId') as string;
 
     const stories = db.story.findMany({
       where: {
@@ -20,12 +18,8 @@ const getStoriesHandler = rest.get(
       },
     });
 
-    return res(
-      ctx.delay(300),
-      ctx.status(200),
-      ctx.json(stories)
-    );
-  }
+    return res(ctx.delay(300), ctx.status(200), ctx.json(stories));
+  },
 );
 
 const getStoryHandler = rest.get(
@@ -45,16 +39,12 @@ const getStoryHandler = rest.get(
       return res(
         ctx.delay(300),
         ctx.status(404),
-        ctx.json({ message: 'Not found!' })
+        ctx.json({ message: 'Not found!' }),
       );
     }
 
-    return res(
-      ctx.delay(300),
-      ctx.status(200),
-      ctx.json(story)
-    );
-  }
+    return res(ctx.delay(300), ctx.status(200), ctx.json(story));
+  },
 );
 
 const createStoryHandler = rest.post(
@@ -69,12 +59,8 @@ const createStoryHandler = rest.post(
       categoryId: user?.categoryId,
     });
 
-    return res(
-      ctx.delay(300),
-      ctx.status(200),
-      ctx.json(story)
-    );
-  }
+    return res(ctx.delay(300), ctx.status(200), ctx.json(story));
+  },
 );
 
 export const storiesHandlers = [

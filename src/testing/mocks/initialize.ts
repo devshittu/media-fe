@@ -9,6 +9,6 @@ const initializeMocks = async () => {
     worker.start();
   }
 
-seedDb();
+  seedDb();
 };
 initializeMocks();

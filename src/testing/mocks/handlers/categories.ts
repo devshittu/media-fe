@@ -7,8 +7,7 @@ import { db } from '../db';
 const getCategoryHandler = rest.get(
   `${API_URL}/categories/:categoryId`,
   (req, res, ctx) => {
-    const categoryId = req.params
-      .categoryId as string;
+    const categoryId = req.params.categoryId as string;
 
     const category = db.category.findFirst({
       where: {
@@ -19,20 +18,11 @@ const getCategoryHandler = rest.get(
     });
 
     if (!category) {
-      return res(
-        ctx.status(404),
-        ctx.json({ message: 'Not found!' })
-      );
+      return res(ctx.status(404), ctx.json({ message: 'Not found!' }));
     }
 
-    return res(
-      ctx.delay(300),
-      ctx.status(200),
-      ctx.json(category)
-    );
-  }
+    return res(ctx.delay(300), ctx.status(200), ctx.json(category));
+  },
 );
 
-export const categoriesHandlers = [
-  getCategoryHandler,
-];
+export const categoriesHandlers = [getCategoryHandler];

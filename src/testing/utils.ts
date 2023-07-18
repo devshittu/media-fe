@@ -17,8 +17,7 @@ const sanitizeUser = (user: any): AuthUser => {
   return sanitizedUser;
 };
 
-export const getUser = () =>
-  sanitizeUser(testData.users[0]);
+export const getUser = () => sanitizeUser(testData.users[0]);
 
 // returns the user object and auth token if the provided credentials are valid
 export const authenticate = ({
@@ -60,9 +59,7 @@ export const requireAuth = ({
 
     if (encodedToken !== AUTH_TOKEN) {
       if (shouldThrow) {
-        throw new Error(
-          'No authorization token provided!'
-        );
+        throw new Error('No authorization token provided!');
       }
       return null;
     }
