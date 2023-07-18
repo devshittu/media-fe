@@ -9,14 +9,8 @@ type PublicLayoutProps = {
 
 const PublicLayout = ({ children }: PublicLayoutProps) => {
   return (
-    <div
-      className={`relative containerx lg:grid lg:grid-cols-12 lg:max-w-7xlx mx-auto`}
-    >
-      <LeftColumn>
-        <LeftColumnContent />
-      </LeftColumn>
-
-      <main className={`w-full  lg:col-span-6`}>{children}</main>
+    <div className={`relative containerx lg:grid lg:grid-cols-12 mx-auto`}>
+      <div className={`w-full  lg:col-span-12`}>{children}</div>
     </div>
   );
 };
