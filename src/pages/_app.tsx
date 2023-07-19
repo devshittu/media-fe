@@ -6,6 +6,10 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ReactElement, ReactNode } from 'react';
 
+if (process.env.NEXT_PUBLIC_API_MOCKING === 'true') {
+  require('@/testing/mocks/initialize');
+}
+
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };

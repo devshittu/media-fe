@@ -16,9 +16,17 @@ import {
   ReferenceType,
   FloatingOverlay,
   arrow,
+  FloatingArrow,
 } from '@floating-ui/react';
 import Portal from '@/hoc/Portal';
 import Overlay from '../overlay/overlay';
+
+export enum TourPopperType {
+  WARNING = 'warning',
+  SUCCESS = 'success',
+  INFO = 'info',
+  ERROR = 'error',
+}
 
 type TourPopperProps = {
   portaled?: boolean;
@@ -27,26 +35,49 @@ type TourPopperProps = {
   children: React.ReactNode;
   refElement?: string | null;
   isOpen?: boolean;
+  type?: TourPopperType;
+  onClose?: () => void;
 };
 
 export function TourPopper({
   children,
   isOpen = false,
   portaled,
+  onClose,
   refElement,
+  type = TourPopperType.WARNING,
   strategy = 'absolute',
   placement = 'bottom',
 }: TourPopperProps) {
   const [open, setOpen] = useState(isOpen);
   const referenceRef = useRef<HTMLElement | null>(null);
-  useEffect(() => {
-    if (isOpen) {
-      const element = document.querySelector(refElement || '') as HTMLElement;
-      if (element) {
-        element.style.zIndex = '9999999'; // Set a high zIndex value when the element is open
-      }
+  const arrowRef = useRef<SVGSVGElement | null>(null); //useRef<HTMLElement | SVGSVGElement | null>(null);
+
+  const getTourTypeClasses = (): { classes: string; arrowClasses: string } => {
+    let classes = ``;
+    let arrowClasses = ``;
+    switch (type) {
+      case TourPopperType.WARNING:
+        classes += `bg-amber-300`;
+        arrowClasses += `fill-amber-300`;
+        break;
+      case TourPopperType.INFO:
+        classes += `bg-sky-300`;
+        arrowClasses += `fill-sky-300`;
+        break;
+      case TourPopperType.ERROR:
+        classes += `bg-rose-300`;
+        arrowClasses += `fill-rose-300`;
+        break;
+      case TourPopperType.SUCCESS:
+        classes += `bg-emerald-300`;
+        arrowClasses += `fill-emerald-300`;
+        break;
     }
-  }, [isOpen, refElement]);
+
+    return { classes, arrowClasses };
+  };
+  const { classes, arrowClasses } = getTourTypeClasses();
   useEffect(() => {
     const referenceElement = document.querySelector(
       refElement || '',
@@ -56,7 +87,13 @@ export function TourPopper({
 
   const { x, y, refs, context } = useFloating({
     open,
-    onOpenChange: setOpen,
+    // onOpenChange: setOpen,
+    onOpenChange(isOpen, event) {
+      setOpen(isOpen);
+      if (!isOpen) {
+        if (onClose) onClose();
+      }
+    },
     elements: {
       reference: referenceRef.current as ReferenceType,
     },
@@ -89,7 +126,9 @@ export function TourPopper({
           <FloatingOverlay lockScroll style={{ zIndex: 99 }}>
             <FloatingFocusManager context={context} modal={false}>
               <div
-                className="grid place-items-center bg-gray-1000 text-gray-50"
+                className={`grid place-items-center ${
+                  classes ? classes : 'bg-gray-100 text-gray-50'
+                } `}
                 ref={refs.setFloating}
                 style={{
                   position: strategy,
@@ -103,6 +142,15 @@ export function TourPopper({
                 {...getFloatingProps()}
               >
                 {children ?? 'Floating'}
+                {/* TODO: reflect same color on all from the sequence. */}
+                <FloatingArrow
+                  width={20}
+                  className={`${
+                    arrowClasses ? arrowClasses : 'fill-black-300'
+                  } ml-4`}
+                  context={context}
+                  ref={arrowRef}
+                />
               </div>
             </FloatingFocusManager>
           </FloatingOverlay>

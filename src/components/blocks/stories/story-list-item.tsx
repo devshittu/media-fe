@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import React, { useState } from 'react';
+import React, { ReactEventHandler, useState } from 'react';
 import { Link } from '@/components/labs/typography';
 import Image from 'next/image';
 import { Modal } from '@/components/blocks/modal';
@@ -10,6 +10,7 @@ import {
   CarouselOptions,
 } from '@/components/blocks/carousel';
 import {
+  BookmarkIcon,
   ExternalLinkIcon,
   EyeIcon,
   FlagIcon,
@@ -187,11 +188,14 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
     drawer.open();
   };
 
-  const openDrawer = () => {
+  const addBookmark = (event: React.MouseEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
     const drawer = new Drawer({
-      title: 'Hello, world!',
-      titleIcon: <ShareIcon />,
-      id: 'first-drawer',
+      title: 'Add Bookmark!',
+      titleIcon: <BookmarkIcon />,
+      id: 'add-bookmark',
       side: DrawerSide.TOP,
       children: (
         <div>
@@ -239,8 +243,12 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
 
   return (
     <article
-      className={`p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
+      className={`relative p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
     >
+      <div
+        id={`scroll-to-${story.slug}`}
+        style={{ position: 'absolute', top: '-100px', left: '0' }}
+      ></div>
       <div className={`flex align-middle items-center justify-between w-full`}>
         <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest">
           {`CATEGORY`}
@@ -302,6 +310,19 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
                 url="#"
                 icon={<Icon icon={<FlagIcon />} className="w-6" />}
                 onClick={openModal}
+              />
+              <MenuItem
+                label="Add Bookmark"
+                url="#"
+                onClick={addBookmark}
+                icon={
+                  <Icon
+                    icon={<BookmarkIcon />}
+                    className="w-6 text-slate-900"
+                    strokeWidth={2.5}
+                  />
+                }
+                tag={<Tag variant="green">Pro</Tag>}
               />
               <MenuItem
                 label="Pro Version"

@@ -48,12 +48,17 @@ export const StoriesPageHeader = ({
         style={{ transform: `translateY(${topPosition}px)` }}
       >
         <div className={`transition-all duration-350 ease-out`}>
-          <h1
-            id="page-title"
-            className="mb-4x text-4xlx text-xl p-4 pl-8 font-extrabold leading-none tracking-tight text-slate-900 md:text-5xlx lg:text-6xlx dark:text-white"
+          <div
+            id="page-title-wrapper"
+            className="text-xl p-4 pl-8 text-slate-900  dark:text-white"
           >
-            {pageTitle}
-          </h1>
+            <h3
+              className=" inline-block font-extrabold leading-none tracking-tight"
+              id="page-title"
+            >
+              {pageTitle}
+            </h3>
+          </div>
         </div>
         <div>
           <ul

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from '../card';
-import TourPopper from './tour-popper';
-// import { TourCard } from './tour-card';
+import TourPopper, { TourPopperType } from './tour-popper';
+
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -21,6 +21,7 @@ type TourBubbleProps = {
   onPrevious: () => void;
   onNext: () => void;
   content: React.ReactNode;
+  type?: TourPopperType;
 };
 
 const TourBubble: React.FC<TourBubbleProps> = (props) => {
@@ -35,17 +36,19 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
         refElement={props.forElement}
         portaled
         isOpen={props.open}
+        onClose={props.onClose}
+        type={props.type}
       >
         <Card
           heading="My Card"
           description="This is a reusable card component."
-          className="!bg-sky-200"
+          className="!bg-transparent shadow-2xl"
         >
-          <CardHeader>
+          <CardHeader className=" text-slate-900 dark:text-amber-950">
             <Icon
               icon={<InfoIcon />}
               strokeWidth={3}
-              className="w-7 h-7 text-slate-500 dark:text-slate-400 mb-3 justify-start items-start"
+              className="w-7 h-7  text-slate-900 dark:text-amber-950 mb-3 justify-start items-start"
             />
             <Button
               className="self-start text-amber-600 text-base hover:underline"
@@ -55,11 +58,11 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
             </Button>
           </CardHeader>
 
-          <h5 className="mb-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
+          <h5 className="mb-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-amber-950">
             Guide?
           </h5>
           <CardBody>
-            <div className=" text-slate-800 dark:text-slate-300">
+            <div className=" text-slate-800 dark:text-amber-800">
               {props.content}
             </div>
           </CardBody>
@@ -70,7 +73,6 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
                 className="inline-flex items-center text-blue-600 hover:underline"
                 onClick={props.onPrevious}
               >
-                {/* <Icon icon={<ChevronLeftIcon />} className="w-6 h-6 mr-2.5" /> */}
                 {props.previousLabel}
               </Button>
             ) : (
@@ -85,7 +87,6 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
                 onClick={props.onNext}
               >
                 {props.nextLabel}
-                {/* <Icon icon={<ChevronRightIcon />} className="w-6 h-6 ml-2.5" /> */}
               </Button>
             ) : (
               <div>&nbsp;</div>

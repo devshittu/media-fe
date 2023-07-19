@@ -1,6 +1,6 @@
 import { Seo } from '@/components/seo';
 import React, { ReactElement } from 'react';
-import PublicLayout from '@/layouts/public-layout';
+import LandingLayout from '@/layouts/landing-layout';
 import {
   Feature,
   Hero,
@@ -13,10 +13,6 @@ import { Link } from '@/components/labs/typography';
 import { getCategories } from '@/testing/test-data';
 import { StoryItem } from '@/testing';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-//Todo remove this import after sorting the Token InputField in this file and implemented in src/components/labs/LandingPage/left-column-content.tsx
-// import TokenPinInputField, {
-//   UserLoginStatus,
-// } from '@/components/form/token-pin-digit';
 
 type PublicHomePageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -40,7 +36,6 @@ export default function Home({ categories }: PublicHomePageProps) {
     <>
       <Seo title="New App" />
       <Nav />
-      {/* <TokenPinInputField setUserStatus={UserLoginStatus.LOGGING_IN} /> */}
       <Hero />
       <Feature />
       <Marquee play speed="slow" hoverToPause>
@@ -97,7 +92,7 @@ export default function Home({ categories }: PublicHomePageProps) {
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <PublicLayout>{page}</PublicLayout>;
+  return <LandingLayout>{page}</LandingLayout>;
 };
 
 export const getServerSideProps = async ({

@@ -22,7 +22,10 @@ const Heading: React.FC<HeadingProps> = ({ heading, activeId }) => (
       href={`#${heading.id}`}
       onClick={(e) => {
         e.preventDefault();
-        document.querySelector(`#${heading.id}`)?.scrollIntoView({
+        // document.querySelector(`#${heading.id}`)?.scrollIntoView({
+        //   behavior: 'smooth',
+        // });
+        document.querySelector(`#scroll-to-${heading.id}`)?.scrollIntoView({
           behavior: 'smooth',
         });
       }}

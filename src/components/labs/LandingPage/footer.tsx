@@ -1,8 +1,16 @@
 import { Button } from '@/components/button';
 import { Link } from '@/components/labs/typography';
 import React from 'react';
+import {Copyright} from '../public-page/copyright';
+import { COPYRIGHT_TEXT } from '@/config/constants';
 
 const Footer = () => {
+  const copyrightText = COPYRIGHT_TEXT;
+  const links = [
+    { href: '/faq', label: 'F.A.Q' },
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms & Conditions' },
+  ];
   return (
     <>
       <footer className="fixed bottom-0 left-0 z-20 w-full h-16x lg:h-48x bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
@@ -53,37 +61,8 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col-reverse justify-between py-5 border-t lg:flex-row">
-              <p className="text-sm">
-                © Copyright 2023 MEDIA FE Inc. All rights reserved.
-              </p>
-              <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row text-sm">
-                <li>
-                  <Link
-                    href="/"
-                    className=" transition-colors duration-300 hover:text-cyan-400"
-                  >
-                    F.A.Q
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy"
-                    className=" transition-colors duration-300 hover:text-cyan-400"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/terms"
-                    className=" transition-colors duration-300 hover:text-cyan-400"
-                  >
-                    Terms &amp; Conditions
-                  </Link>
-                </li>
-              </ul>
-            </div>
+
+            <Copyright text={copyrightText} links={links} />
           </div>
         </div>
       </footer>

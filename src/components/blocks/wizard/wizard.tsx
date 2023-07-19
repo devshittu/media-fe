@@ -85,8 +85,6 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
   );
 
   const isNextStepDisabled = () => {
-    const currentStepInfo = steps[state.currentStep];
-    console.log('currentStepInfo', currentStepInfo, 'state', state);
     if (isCurrentStepMandatory) {
       // Check if mandatory step conditions are fulfilled
       // Replace this condition with your specific logic
@@ -119,7 +117,7 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
       </CardBody>
       <CardFooter className="absolute bottom-0 left-0 px-4 py-3 border-t border-gray-200 w-full flex justify-end items-center gap-3">
         <div></div>
-        <div>
+        <div className="flex gap-4">
           {state.currentStep > 0 && (
             <Button onClick={goToPreviousStep}>Previous</Button>
           )}

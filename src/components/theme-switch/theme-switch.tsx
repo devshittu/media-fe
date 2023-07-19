@@ -10,9 +10,10 @@ import {
 } from '@/components/illustrations';
 type ThemeSwitchProps = {
   showLabel?: boolean;
+  className?: string;
 };
 
-const ThemeSwitch = ({ showLabel = false }: ThemeSwitchProps) => {
+const ThemeSwitch = ({ className, showLabel = false }: ThemeSwitchProps) => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, systemTheme, forcedTheme } = useTheme();
 
@@ -62,7 +63,7 @@ const ThemeSwitch = ({ showLabel = false }: ThemeSwitchProps) => {
       </button> */}
 
       <div
-        className="grid max-w-full grid-cols-3 gap-1 p-1 mx-auto my-2 bg-slate-100 rounded-lgx dark:bg-slate-600"
+        className={`grid max-w-full grid-cols-3 gap-1 p-1 mx-auto my-2 bg-slate-100 dark:bg-slate-950 ${className}`}
         role="group"
       >
         <button

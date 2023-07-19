@@ -58,7 +58,7 @@ const useMenuContext = (): MenuContextType => {
 type MenuItemProps = {
   label: string;
   url: string;
-  onClick?: () => void;
+  onClick?: (event?: React.MouseEvent) => void;
   disabled?: boolean;
   icon?: ReactNode;
   tag?: ReactNode;
