@@ -12,9 +12,15 @@ interface MoreArticlesProps {
   }[];
 }
 
-const MoreArticles: React.FC<MoreArticlesProps> = ({ heading, articles }) => {
+export const MoreArticles: React.FC<MoreArticlesProps> = ({
+  heading,
+  articles,
+}) => {
   return (
-    <aside aria-label="Related articles" className="py-8 lg:py-24 bg-slate-50 dark:bg-slate-800">
+    <aside
+      aria-label="Related articles"
+      className="py-8 lg:py-24 bg-slate-50 dark:bg-slate-800"
+    >
       <div className="px-4 mx-auto max-w-screen-xl">
         <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
           {heading}
@@ -24,8 +30,8 @@ const MoreArticles: React.FC<MoreArticlesProps> = ({ heading, articles }) => {
             <article key={index} className="max-w-xs">
               <a href={article.url}>
                 <img
-                width={500}
-                height={500}
+                  width={500}
+                  height={500}
                   src={article.imageUrl}
                   className="mb-5 rounded-lg"
                   alt={` ${index + 1}`}
