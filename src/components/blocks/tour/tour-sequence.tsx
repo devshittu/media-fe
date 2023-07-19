@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import TourBubble from './tour-bubble';
+import { TourPopperType } from './tour-popper';
 
 type TourSequenceItem = {
   forElement: string;
@@ -11,6 +12,7 @@ type TourSequenceProps = {
   sequence?: TourSequenceItem[];
   open: boolean;
   onClose: () => void;
+  type?: TourPopperType;
 };
 
 function isVisible(element: HTMLElement | null): boolean {
@@ -72,6 +74,7 @@ const TourSequence: React.FC<TourSequenceProps> = (props) => {
           forElement={data.forElement}
           placement={data.placement}
           onClose={props.onClose}
+          type={props.type}
           previousLabel={position > 0 ? 'Previous' : undefined}
           nextLabel={position < (sequence?.length || 0) - 1 ? 'Next' : 'Finish'}
           onPrevious={onPrevious}
