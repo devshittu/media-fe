@@ -1,10 +1,10 @@
-
 import { AppLogoIcon, Icon } from '@/components/illustrations';
 import React from 'react';
 import { Link } from '@/components/labs';
 import { Button } from '@/components/button';
 import { APP_NAME, COPYRIGHT_TEXT } from '@/config/constants';
-import Copyright from './copyright';
+import {Copyright} from './copyright';
+import ThemeSwitch from '@/components/theme-switch/theme-switch';
 
 type Category = {
   name: string;
@@ -18,9 +18,8 @@ type FooterProps = {
   categories: Category[];
 };
 
-const Footer: React.FC<FooterProps> = ({ categories }) => {
-
-    const copyrightText = COPYRIGHT_TEXT;
+export const Footer: React.FC<FooterProps> = ({ categories }) => {
+  const copyrightText = COPYRIGHT_TEXT;
   const links = [
     { href: '/faq', label: 'F.A.Q' },
     { href: '/privacy', label: 'Privacy Policy' },
@@ -48,14 +47,14 @@ const Footer: React.FC<FooterProps> = ({ categories }) => {
           ))}
         </div>
 
-
-
-      <Copyright text={copyrightText} links={links} />
-
+        <Copyright
+          text={copyrightText}
+          links={links}
+          themeComponent={<ThemeSwitch className="!m-0" />}
+        />
       </div>
     </footer>
   );
 };
 
 export default Footer;
-
