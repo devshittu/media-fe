@@ -16,8 +16,10 @@ export const THEME_SYSTEM = 'system';
 export const RECENT_ARTICLES_LIMIT = 2;
 export const PAGINATE_STORIES_LIMIT = 8;
 
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME as string ?? `Media-FE`;
+export const APP_NAME =
+  (process.env.NEXT_PUBLIC_APP_NAME as string) ?? `Media-FE`;
 const d = new Date();
 let year = d.getFullYear();
-export const COPYRIGHT_TEXT = process.env.NEXT_PUBLIC_COPYRIGHT_TEXT as string ?? `© Copyright ${year} ${APP_NAME} Inc. All rights reserved.`;
-
+export const COPYRIGHT_TEXT =
+  (process.env.NEXT_PUBLIC_COPYRIGHT_TEXT as string) ??
+  `© Copyright ${year} ${APP_NAME} Inc. All rights reserved.`;
