@@ -1,15 +1,24 @@
 import React from 'react';
 import { Link } from '@/components/labs';
 
-interface CopyrightProps {
+type CopyrightProps = {
   text: string;
   links: { href: string; label: string }[];
-}
+  themeComponent?: JSX.Element;
+};
 
-const Copyright: React.FC<CopyrightProps> = ({ text, links }) => {
+export const Copyright: React.FC<CopyrightProps> = ({
+  text,
+  links,
+  themeComponent,
+}) => {
   return (
-    <div className="flex flex-col-reverse justify-between py-5 border-t border-slate-300 dark:border-slate-700 lg:flex-row">
+    <div className="flex flex-col-reverse justify-between md:items-center py-5 border-t border-slate-300 dark:border-slate-700 lg:flex-row">
       <p className="text-sm">{text}</p>
+
+      {themeComponent && (
+        <div className="hidden md:block">{themeComponent}</div>
+      )}
       <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row text-sm">
         {links.map((link) => (
           <li key={link.href}>
@@ -26,4 +35,4 @@ const Copyright: React.FC<CopyrightProps> = ({ text, links }) => {
   );
 };
 
-export default Copyright;
+// export default Copyright;
