@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from '../card';
-import TourPopper from './tour-popper';
-// import { TourCard } from './tour-card';
+import TourPopper, { TourPopperType } from './tour-popper';
+
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -21,6 +21,7 @@ type TourBubbleProps = {
   onPrevious: () => void;
   onNext: () => void;
   content: React.ReactNode;
+  type?: TourPopperType;
 };
 
 const TourBubble: React.FC<TourBubbleProps> = (props) => {
@@ -35,11 +36,13 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
         refElement={props.forElement}
         portaled
         isOpen={props.open}
+        onClose={props.onClose}
+        type={props.type}
       >
         <Card
           heading="My Card"
           description="This is a reusable card component."
-          className="!bg-amber-300  shadow-2xl"
+          className="!bg-transparent shadow-2xl"
         >
           <CardHeader className=" text-slate-900 dark:text-amber-950">
             <Icon
@@ -70,7 +73,6 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
                 className="inline-flex items-center text-blue-600 hover:underline"
                 onClick={props.onPrevious}
               >
-                {/* <Icon icon={<ChevronLeftIcon />} className="w-6 h-6 mr-2.5" /> */}
                 {props.previousLabel}
               </Button>
             ) : (
@@ -85,7 +87,6 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
                 onClick={props.onNext}
               >
                 {props.nextLabel}
-                {/* <Icon icon={<ChevronRightIcon />} className="w-6 h-6 ml-2.5" /> */}
               </Button>
             ) : (
               <div>&nbsp;</div>
