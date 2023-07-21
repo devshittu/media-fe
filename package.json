@@ -18,9 +18,11 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.32.0",
     "@types/node": "20.1.1",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "axios": "^1.4.0",
     "eslint": "^8.0.1",
     "eslint-config-next": "13.4.1",
     "next": "13.4.1",
@@ -41,6 +43,7 @@
     "@storybook/react": "^7.0.26",
     "@storybook/testing-library": "^0.0.14-next.2",
     "@svgr/webpack": "^8.0.1",
+    "@tanstack/eslint-plugin-query": "^4.29.25",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "autoprefixer": "^10.4.14",
     "eslint-config-prettier": "^8.8.0",
