@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
@@ -7,24 +7,27 @@ import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
 import { StoryItem } from '@/testing';
 import { InfiniteScroll } from '@/components/infinite-scroll';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { useHeaderScroll } from '../headers/useHeaderScroll';
+import { useScrollSync } from '../../../hooks/useScrollSync';
+import { StoryListItemLoadingPlaceholder } from './story-list-item-loading-placeholder';
 
 export const StoryList = ({
   data = [] as StoryItem[],
   scrollInfinite = false,
+  isLoading,
 }: StoryListProps) => {
   const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
+  // console.table(existingItems)
   const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
   const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
   const [showLatestButton, setShowLatestButton] = useState(false);
-
+  //Todo calculate the 53 which is the real height of the header
+  const { topPosition } = useScrollSync(53);
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLatestButton(true);
     }, 10000);
     return () => clearTimeout(timeout);
   }, []);
-  const { topPosition } = useHeaderScroll(53);
   const pageSize = PAGINATE_STORIES_LIMIT;
 
   const fetchMoreStories = useCallback((page: number, pageSize: number) => {
@@ -90,34 +93,43 @@ export const StoryList = ({
 
   return (
     <div id="stream" className={`mt-28 lg:mt-0 relative`}>
-      {/* {showLatestButton && ( */}
-      <div
-        id="refresh-set"
-        className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98 transition-transform -translate-y-full   ${
-          showLatestButton
-            ? 'transform-none opacity-100'
-            : '-translate-y-full  opacity-0'
-        }`}
-        style={{ transform: `translateY(${topPosition}px)` }}
-      >
-        <Button onClick={loadLatest} type="primary">
-          Load new feeds
-        </Button>
-        <Button onClick={ShowToast}>Show Toast</Button>
-      </div>
-      {/* )} */}
-      <div>
-        {existingItems.map((item, index) => (
-          <StoryListItem
-            key={item.id + index}
-            story={item}
-            className={index < newItems.length ? 'new-item' : ''}
-          /> // Add 'new-item' class to newly added items
-        ))}
-        {scrollInfinite && (
-          <InfiniteScroll pageSize={pageSize} onFetchMore={handleFetchMore} />
-        )}
-      </div>
+      {isLoading ? (
+        <StoryListItemLoadingPlaceholder />
+      ) : (
+        <>
+          {/* {showLatestButton && ( */}
+          <div
+            id="refresh-set"
+            className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98  transition-all  duration-200 ease-out  ${
+              showLatestButton
+                ? 'transform-none opacity-100'
+                : '-translate-y-full  opacity-0'
+            }`}
+            style={{ transform: `translateY(${topPosition}px)` }}
+          >
+            <Button onClick={loadLatest} type="primary">
+              Load new feeds
+            </Button>
+            <Button onClick={ShowToast}>Show Toast</Button>
+          </div>
+          {/* )} */}
+          <div>
+            {existingItems.map((item, index) => (
+              <StoryListItem
+                key={item.id + index}
+                story={item}
+                className={index < newItems.length ? 'new-item' : ''}
+              /> // Add 'new-item' class to newly added items
+            ))}
+            {scrollInfinite && (
+              <InfiniteScroll
+                pageSize={pageSize}
+                onFetchMore={handleFetchMore}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
