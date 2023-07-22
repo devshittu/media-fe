@@ -1,45 +1,33 @@
-import React, { useEffect, useState, useRef, use } from 'react';
+import React, { useEffect, useState, useRef, use, useLayoutEffect } from 'react';
 import { InputField } from '@/components/form';
-import { useScrollBehavior } from '@/hooks';
+import { useScrollBehavior, useScrollSpeed } from '@/hooks';
 import { AccountList } from '../account/list';
 import { SidePanelSection } from './side-panel-section';
 import { HashtagList } from '../hashtags';
 import { rangeLimit } from '@/utils';
+import { useScrollSync } from '../../../hooks/useScrollSync';
 
 export const SidePanel = () => {
-  const { isScrolledUp, screenHeight } = useScrollBehavior();
+  const { screenHeight } = useScrollBehavior();
   const sidePanelRef = useRef<HTMLDivElement>(null);
   const [sidePanelHeight, setSidePanelHeight] = useState<number>(0);
-  const [sidebarTop, setSidebarTop] = useState(0); // Initial top position of the sidebar
 
   useEffect(() => {
-    function handleScroll() {
-      if (sidePanelRef.current) {
-        setSidePanelHeight(sidePanelRef.current.getBoundingClientRect().height);
-      }
-
-      setSidebarTop((prevTopPosition) => {
-        const minTop = screenHeight - sidePanelHeight;
-        const newTop = rangeLimit(
-          prevTopPosition + (isScrolledUp ? 1 : -1) * 10, // Adjust the scroll speed as desired
-          minTop,
-          0,
-        );
-        return newTop;
-      });
+    // Listen for changes in the content rendered by <HashtagList /> and <AccountList />
+    // This effect will run after the content has updated
+    if (sidePanelRef.current) {
+      const sidePanelTop = sidePanelRef.current.getBoundingClientRect().top;
+      const sidePanelHeightIn = sidePanelRef.current.getBoundingClientRect().height;
+      setSidePanelHeight(Math.abs(screenHeight - (sidePanelHeightIn - sidePanelTop)));
     }
-    // Attach the event listener to the mouse wheel scroll event
-    window.addEventListener('scroll', handleScroll);
+  }, [sidePanelRef.current?.innerHTML, screenHeight]); // This effect will run whenever the content rendered by <HashtagList /> or <AccountList /> changes
 
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isScrolledUp, sidePanelHeight, screenHeight]);
+  const { topPosition: sidebarTop } = useScrollSync(sidePanelHeight || 0); // top position set to 60
+
+
   return (
     <div
       className="flex-1 pb-0 hidden lg:block lg:sticky top-0 min-h-screen"
-      // style={{ top: `${sidebarTop}px` }}
     >
       <div className={`sticky top-0 z-10 bg-white dark:bg-slate-900`}>
         <div className="py-4">
@@ -52,10 +40,9 @@ export const SidePanel = () => {
         </div>
       </div>
       <div
-        className=" space-y-16 min-h-screen sticky top-28 overflow-hidden pb-60  transition-all  duration-75"
+        className=" space-y-16 min-h-screen sticky top-28 overflow-hidden pb-60  transition-all  duration-100 ease-out"
         ref={sidePanelRef}
         style={{ transform: `translateY(${sidebarTop}px)` }}
-        // style={{ top: `${sidebarTop}px` }}
       >
         <SidePanelSection id="trendsForYou" title="Trending">
           <HashtagList />
