@@ -7,7 +7,7 @@ import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import Drawer from '../nav/drawer';
 import { Button } from '@/components/button';
-import { useHeaderScroll } from './useHeaderScroll';
+import { useScrollSync } from '../../../hooks/useScrollSync';
 
 export type StoriesPageHeaderProps = {
   pageTitle: string;
@@ -17,7 +17,18 @@ export const StoriesPageHeader = ({
   pageTitle = 'Home',
 }: StoriesPageHeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
-  const { topPosition } = useHeaderScroll(53);
+
+  const [pageTitleBoxHeight, setPageTitleBoxHeight] = useState(0);
+  const pageTitleRef = useRef<HTMLDivElement>(null);
+
+  // Calculate the height of the element when the component mounts or when its content changes
+  useEffect(() => {
+    if (pageTitleRef.current) {
+      const height = pageTitleRef.current.clientHeight;
+      setPageTitleBoxHeight(height);
+    }
+  }, [pageTitleRef]);
+  const { topPosition } = useScrollSync(pageTitleBoxHeight); // top position set to 60
 
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
@@ -44,13 +55,14 @@ export const StoriesPageHeader = ({
       {/* Desktop */}
       <header
         ref={headerRef}
-        className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-75 ease-out transform translate-x-0 translate-z-0  lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
+        className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
         style={{ transform: `translateY(${topPosition}px)` }}
       >
         <div className={`transition-all duration-350 ease-out`}>
           <div
             id="page-title-wrapper"
             className="text-xl p-4 pl-8 text-slate-900  dark:text-white"
+            ref={pageTitleRef}
           >
             <h3
               className=" inline-block font-extrabold leading-none tracking-tight"
