@@ -7,13 +7,19 @@ import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { StoryList } from '@/components/blocks/stories/';
 
-import { getAllStories } from '@/testing/test-data';
+// import { getAllStories } from '@/testing/test-data';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { StoryItem } from '@/testing';
+import { getStories, useStories } from '@/features/stories';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 const Index = ({ stories }: PublicStoriesPageProps) => {
+  const storiesFromUse = useStories({
+    // params: {
+    //   organizationId: user.data?.organizationId,
+    // },
+  });
   const handleToastClose = () => {
     console.log('Toast closed');
   };
@@ -40,9 +46,14 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
         className={`flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-full lg:max-w-[640px] box-border border-slate-100 dark:border-slate-800`}
       >
         <StoriesPageHeader pageTitle="Home" />
-        <section>
-          <StoryList data={stories} scrollInfinite />
-        </section>
+        <>
+          {/* <StoryList data={stories} scrollInfinite /> */}
+          <StoryList
+            data={storiesFromUse.data}
+            isLoading={storiesFromUse.isLoading}
+            scrollInfinite
+          />
+        </>
       </div>
       <div
         className={`relative hidden lg:flex p-0 z-0 min-w-0 min-h-0 box-border my-0 ml-0 flex-shrink-0 basis-auto flex-col border-0 w-[350px] items-stretch`}
@@ -60,7 +71,15 @@ Index.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
-  const stories = await getAllStories().catch(() => [] as StoryItem[]);
+  // console.log('getServerSideProps:params:// ', params);
+  const categoryId = params?.categoryId as string;
+  // const stories = await getAllStories().catch(() => [] as StoryItem[]);
+  const stories = await getStories({
+    params: {
+      categoryId: categoryId,
+    },
+  }).catch(() => [] as StoryItem[]);
+
   return {
     props: {
       stories,
