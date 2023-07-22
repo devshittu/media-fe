@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from '@/components/labs';
 import { Button } from '@/components/button';
 import { APP_NAME, COPYRIGHT_TEXT } from '@/config/constants';
-import {Copyright} from './copyright';
+import { Copyright } from './copyright';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 
 type Category = {

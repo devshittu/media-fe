@@ -19,7 +19,10 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ trails }) => {
   const linkTrail = trails || pathname.split('/').filter((path) => path !== '');
 
   return (
-    <nav aria-label="breadcrumb" className="w-full text-slate-600 dark:text-slate-500">
+    <nav
+      aria-label="breadcrumb"
+      className="w-full text-slate-600 dark:text-slate-500"
+    >
       <ol className="flex h-8 space-x-2">
         <li className="flex items-center">
           <Link href="/" title="Back to homepage" className="hover:underline">

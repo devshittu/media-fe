@@ -1,6 +1,10 @@
-
-
-import { AppLogoIcon, ChevronLeftIcon, ChevronRightIcon, Icon, MenuIcon } from '@/components/illustrations';
+import {
+  AppLogoIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Icon,
+  MenuIcon,
+} from '@/components/illustrations';
 import React from 'react';
 import { Link } from '@/components/labs'; // Import your Button component
 import { Button } from '@/components/button';
@@ -11,7 +15,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
-    const router = useRouter();
+  const router = useRouter();
 
   const goBack = () => {
     router.back();
@@ -24,22 +28,22 @@ export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
   return (
     <header className="p-1">
       <div className="container flex justify-between h-16 mx-auto">
-        <div className='flex flex-row gap-4'>
-        <Link
-          href="/"
-          aria-label="Back to homepage"
-          className="flex items-center p-2 text-slate-900 dark:text-slate-100"
-          onClick={goBack}
-        >
-          <ChevronLeftIcon className="w-8 stroke-2" />
-        </Link>
-        <Link
-          href="/"
-          aria-label="Back to homepage"
-          className="flex items-center p-2 text-slate-900 dark:text-slate-100"
-        >
-          <AppLogoIcon className="w-8 stroke-2" />
-        </Link>
+        <div className="flex flex-row gap-4">
+          <Link
+            href="/"
+            aria-label="Back to homepage"
+            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+            onClick={goBack}
+          >
+            <ChevronLeftIcon className="w-8 stroke-2" />
+          </Link>
+          <Link
+            href="/"
+            aria-label="Back to homepage"
+            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+          >
+            <AppLogoIcon className="w-8 stroke-2" />
+          </Link>
         </div>
         <ul className="items-stretch hidden space-x-3 lg:flex">
           {menuLinks.map((link) => (
@@ -59,20 +63,17 @@ export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
             Sign up
           </Button>
 
-        <Link
-          href="/"
-          aria-label="Back to homepage"
-          className="flex items-center p-2 text-slate-900 dark:text-slate-100"
-          onClick={goBack}
-        >
-          <ChevronRightIcon className="w-8 stroke-2" />
-        </Link>
+          <Link
+            href="/"
+            aria-label="Back to homepage"
+            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+            onClick={goBack}
+          >
+            <ChevronRightIcon className="w-8 stroke-2" />
+          </Link>
         </div>
         <Button className="p-4 lg:hidden">
-          
-          <Icon icon={
-            <MenuIcon />
-          } className='w-6 h-6 dark:text-gray-100'/>
+          <Icon icon={<MenuIcon />} className="w-6 h-6 dark:text-gray-100" />
         </Button>
       </div>
     </header>
