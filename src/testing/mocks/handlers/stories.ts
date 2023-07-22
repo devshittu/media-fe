@@ -3,20 +3,21 @@ import { rest } from 'msw';
 import { API_URL } from '@/config/constants';
 
 import { db } from '../db';
-import { requireAuth } from '../utils';
+// import { requireAuth } from '../utils';
 
 const getStoriesHandler = rest.get(
   `${API_URL}/stories`,
   async (req, res, ctx) => {
     const categoryId = req.url.searchParams.get('categoryId') as string;
 
-    const stories = db.story.findMany({
-      where: {
-        categoryId: {
-          equals: categoryId,
-        },
-      },
-    });
+    // const stories = db.story.findMany({
+    //   where: {
+    //     categoryId: {
+    //       equals: categoryId,
+    //     },
+    //   },
+    // });
+    const stories = db.story.getAll();
 
     return res(ctx.delay(300), ctx.status(200), ctx.json(stories));
   },
@@ -47,24 +48,24 @@ const getStoryHandler = rest.get(
   },
 );
 
-const createStoryHandler = rest.post(
-  `${API_URL}/stories`,
-  async (req, res, ctx) => {
-    const user = requireAuth({ req });
+// const createStoryHandler = rest.post(
+//   `${API_URL}/stories`,
+//   async (req, res, ctx) => {
+//     const user = requireAuth({ req });
 
-    const storyData = await req.json();
+//     const storyData = await req.json();
 
-    const story = db.story.create({
-      ...storyData,
-      categoryId: user?.categoryId,
-    });
+//     const story = db.story.create({
+//       ...storyData,
+//       categoryId: user?.categoryId,
+//     });
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(story));
-  },
-);
+//     return res(ctx.delay(300), ctx.status(200), ctx.json(story));
+//   },
+// );
 
 export const storiesHandlers = [
   getStoriesHandler,
   getStoryHandler,
-  createStoryHandler,
+  // createStoryHandler,
 ];

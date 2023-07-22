@@ -15,8 +15,7 @@ apiClient.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    const message =
-      error.response?.data?.message || error.message;
+    const message = error.response?.data?.message || error.message;
 
     // notificationsStore.getState().showNotification({
     //   type: 'error',
@@ -26,5 +25,5 @@ apiClient.interceptors.response.use(
     // });
 
     return Promise.reject(error);
-  }
+  },
 );

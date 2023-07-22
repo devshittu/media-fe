@@ -1,7 +1,7 @@
 import { Button } from '@/components/button';
 import { Link } from '@/components/labs/typography';
 import React from 'react';
-import {Copyright} from '../public-page/copyright';
+import { Copyright } from '../public-page/copyright';
 import { COPYRIGHT_TEXT } from '@/config/constants';
 
 const Footer = () => {

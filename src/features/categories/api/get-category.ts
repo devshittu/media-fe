@@ -11,14 +11,10 @@ type GetCategoryOptions = {
 export const getCategory = ({
   categoryId,
 }: GetCategoryOptions): Promise<Category> => {
-  return apiClient.get(
-    `/categories/${categoryId}`
-  );
+  return apiClient.get(`/categories/${categoryId}`);
 };
 
-export const useCategory = ({
-  categoryId,
-}: GetCategoryOptions) => {
+export const useCategory = ({ categoryId }: GetCategoryOptions) => {
   const { data, isLoading } = useQuery({
     queryKey: ['categories', categoryId],
     queryFn: () => getCategory({ categoryId }),

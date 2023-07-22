@@ -2,6 +2,10 @@ import { ReactNode } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { NavProvider, BodyStyleUpdater } from '@/components/blocks/nav/';
 import RootLayout from '@/layouts/root-layout';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/lib/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { IS_DEVELOPMENT } from '@/config/constants';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -15,7 +19,11 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
         <NavProvider>
           {/* <RootLayout> */}
           <BodyStyleUpdater />
-          {children}
+
+          <QueryClientProvider client={queryClient}>
+            {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
+            {children}
+          </QueryClientProvider>
           {/* </RootLayout> */}
         </NavProvider>
       </ThemeProvider>
