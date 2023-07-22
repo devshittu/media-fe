@@ -7,4 +7,5 @@ export type StoryListItemProps = {
 export type StoryListProps = {
   data?: StoryItem[];
   scrollInfinite?: boolean;
+  isLoading?: boolean;
 };
