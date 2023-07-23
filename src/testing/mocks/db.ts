@@ -25,5 +25,11 @@ const models = {
     description: String,
     slug: String,
   },
+  hashtag: {
+    id: primaryKey(uid),
+    label: String,
+    count: Number,
+    stories: Array,
+  },
 };
 export const db = factory(models);
