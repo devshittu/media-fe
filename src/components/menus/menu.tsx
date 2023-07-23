@@ -58,7 +58,7 @@ const useMenuContext = (): MenuContextType => {
 type MenuItemProps = {
   label: string;
   url: string;
-  onClick?: (event?: React.MouseEvent) => void;
+  onClick?: React.MouseEventHandler;
   disabled?: boolean;
   icon?: ReactNode;
   tag?: ReactNode;
@@ -72,9 +72,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
   icon,
   tag,
 }) => {
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent) => {
     if (onClick) {
-      onClick();
+      onClick(event); // Pass the event parameter when calling onClick
     }
   };
 
