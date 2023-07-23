@@ -1,5 +1,11 @@
 export const rangeLimit = (value: number, min: number, max: number): number =>
   Math.max(min, Math.min(value, max));
+export const removeHashFromHashtag = (word: string): string => {
+  // Regular expression to match '#' at the beginning of a word
+  const regex = /^#(.+)/;
+  // Use the replace method with the regex to remove the '#' at the beginning and extract the rest of the word
+  return word.replace(regex, '$1');
+};
 
 export const formatDate = (date: number | string) => {
   return new Date(date).toLocaleDateString('en-US', {
