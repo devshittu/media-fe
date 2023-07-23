@@ -21,3 +21,10 @@ export type CategoryItem = {
   description: string;
   title: string;
 };
+
+export type HashtagItem = {
+  id: string;
+  label: string;
+  count: number;
+  stories: string[];
+};
