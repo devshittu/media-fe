@@ -150,6 +150,7 @@ export const PopoverTrigger = React.forwardRef<
     <button
       ref={ref}
       type="button"
+      name="context-menu-toggle"
       // The user can style the trigger based on the state
       data-state={context.open ? 'open' : 'closed'}
       {...context.getReferenceProps(props)}
