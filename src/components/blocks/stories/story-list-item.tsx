@@ -275,7 +275,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
         </button> */}
         {/* Context Menu Trigger */}
 
-        <Link
+        {/* <Link
           href="/"
           onClick={(e) => {
             e.preventDefault();
@@ -283,7 +283,7 @@ export const StoryListItem = ({ story, className }: StoryListItemProps) => {
           }}
         >
           <Icon icon={<MoreHorizontalIcon />} className="w-6" />
-        </Link>
+        </Link> */}
 
         <Popover open={open} onOpenChange={setOpen} placement="bottom-end">
           <PopoverTrigger onClick={() => setOpen((v) => !v)}>
