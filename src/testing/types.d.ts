@@ -9,8 +9,8 @@ export type StoryItem = {
   slug: string;
   body: string;
   categoryId: string;
-  createdAt: number;
-  updatedAt: number;
+  created_at: number;
+  updated_at: number;
   parent_stories: string[];
   children_stories: string[];
 };
