@@ -12,4 +12,6 @@ export const seedDb = () => {
   testData.stories.forEach((story) => db.story.create(story));
 
   testData.categories.forEach((category) => db.category.create(category));
+
+  testData.settings.forEach((setting) => db.settings.create(setting));
 };
