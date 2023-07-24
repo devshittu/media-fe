@@ -1,7 +1,5 @@
 import { SidePanel } from '@/components/blocks/side-panel';
-import { StoryListItem } from '@/components/blocks/stories';
 import { Toast } from '@/components/blocks/toast';
-import { Button } from '@/components/button';
 import { ReactElement, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
