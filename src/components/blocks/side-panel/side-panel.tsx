@@ -1,8 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { InputField } from '@/components/form';
 import { useScrollBehavior, useScrollSpeed } from '@/hooks';
 import { AccountList } from '../account/list';

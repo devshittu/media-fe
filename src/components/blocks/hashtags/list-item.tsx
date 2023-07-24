@@ -15,7 +15,7 @@ export const HashtagListItem = ({
         id={hashtag.id}
         className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
       >
-        {`#` + hashtag.label }
+        {`#` + hashtag.label}
 
         {/* &nbsp;&nbsp;<Tag variant='yellow'>{hashtag.count}</Tag> */}
         {closable && (
