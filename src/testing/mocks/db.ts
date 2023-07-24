@@ -1,9 +1,9 @@
-import { factory, primaryKey } from '@mswjs/data';
+import { factory, nullable, primaryKey } from '@mswjs/data';
 import { uid } from '@/utils/';
 const models = {
   user: {
     id: primaryKey(uid),
-    createdAt: Date.now,
+    created_at: Date.now,
     email: String,
     password: String,
     organizationId: String,
@@ -14,8 +14,8 @@ const models = {
     slug: String,
     body: String,
     categoryId: String,
-    createdAt: Date.now,
-    updatedAt: Date.now,
+    created_at: Date.now,
+    updated_at: Date.now,
     parent_stories: Array,
     children_stories: Array,
   },
@@ -30,6 +30,26 @@ const models = {
     label: String,
     count: Number,
     stories: Array,
+  },
+  settings: {
+    id: primaryKey(uid),
+    user_id: String,
+    theme: String,
+    account_details: {
+      display_name: String,
+      email: String,
+    },
+    notifications: {
+      email: {
+        account: Number, // email about the user's account
+        marketing: Number, // email about the marketing, products and promotions
+        updates: Number, // newly on-boarded features/announcements
+      },
+    },
+    favorite_categories: nullable(Array),
+    last_updated: Date.now,
+    created_at: Date.now,
+    updated_at: Date.now,
   },
 };
 export const db = factory(models);
