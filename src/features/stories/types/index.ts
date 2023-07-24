@@ -6,7 +6,7 @@ export type Story = Entity & {
   body: string;
   slug: string;
   categoryId: string;
-  updatedAt: string;
+  updated_at: string;
   parent_stories: string[];
   children_stories: string[];
 };
