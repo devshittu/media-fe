@@ -11,12 +11,14 @@ import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import Drawer from '@/components/blocks/nav/drawer';
 import { DrawerSide } from '@/components/blocks/nav';
+import { useSettings } from '@/features/settings/api/get-settings';
 
 const Index = () => {
   const headerRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<FieldError | null>(null);
 
+  const { data, isLoading } = useSettings({ params: { user_id: '1' } });
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
       title: 'Media Inc.',
