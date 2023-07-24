@@ -22,7 +22,7 @@ const Index = () => {
       // Group the items by date
       const grouped = data.reduce(
         (acc: { [key: string]: StoryItem[] }, item: StoryItem) => {
-          const date = new Date(item.createdAt * 1000).toLocaleDateString(
+          const date = new Date(item.created_at * 1000).toLocaleDateString(
             'en-US',
             {
               day: 'numeric',
