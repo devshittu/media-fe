@@ -1,40 +1,34 @@
 import React, { useState } from 'react';
-import { CustomCheckbox } from './custom-checkbox';
+import CustomCheckbox from './custom-checkbox';
 
-export type Option = {
+export type Option<T> = T & {
   id: string;
-  label: string;
-  description: string;
-  displayComponentProps?: any; // Additional props for the DisplayComponent
+  label?: string;
 };
 
-type CustomCheckboxGroupProps = {
-  options: Option[];
-  onChange: (selectedOptions: Option[]) => void;
-  DisplayComponent?: React.ComponentType<any>; // DisplayComponent prop type
-  displayComponentProps?: any; // Additional props for the DisplayComponent
+type CustomCheckboxGroupProps<T, P> = {
+  options: Option<T>[];
+  initialSelectedOptions?: Option<T>[]; // Make initialSelectedOptions optional
+  onChange: (selectedOptions: Option<T>[]) => void;
+  renderDisplayComponent?: (option: T) => JSX.Element; // Custom render function for display
 };
 
-export const CustomCheckboxGroup: React.FC<CustomCheckboxGroupProps> = ({
+function CustomCheckboxGroup<T, P>({
   options,
+  initialSelectedOptions = [],
   onChange,
-  DisplayComponent,
-  displayComponentProps, // Additional props for the DisplayComponent
-}) => {
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  renderDisplayComponent,
+}: CustomCheckboxGroupProps<T, P>) {
+  const [selectedOptions, setSelectedOptions] = useState<Option<T>[]>(
+    initialSelectedOptions,
+  );
 
-  const handleCheckboxChange = (option: Option, isChecked: boolean) => {
-    let updatedOptions: Option[];
-
-    if (isChecked) {
-      // Add the selected option
-      updatedOptions = [...selectedOptions, option];
-    } else {
-      // Remove the deselected option
-      updatedOptions = selectedOptions.filter(
-        (selectedOption) => selectedOption.id !== option.id,
-      );
-    }
+  const handleCheckboxChange = (option: Option<T>, isChecked: boolean) => {
+    const updatedOptions = isChecked
+      ? [...selectedOptions, option]
+      : selectedOptions.filter(
+          (selectedOption) => selectedOption.id !== option.id,
+        );
 
     setSelectedOptions(updatedOptions);
     onChange(updatedOptions);
@@ -42,114 +36,21 @@ export const CustomCheckboxGroup: React.FC<CustomCheckboxGroupProps> = ({
 
   return (
     <ul className="grid w-full gap-6 md:grid-cols-3">
-      {options.map((option) => {
-        const {
-          id,
-          label,
-          description,
-          displayComponentProps: optionDisplayComponentProps = {},
-        } = option;
-
-        const mergedDisplayComponentProps = {
-          id,
-          label,
-          description,
-          ...optionDisplayComponentProps,
-          ...displayComponentProps,
-        };
-
-        return (
-          <CustomCheckbox
-            key={option.id}
-            id={option.id}
-            label={option.label}
-            description={option.description}
-            isChecked={selectedOptions.some(
-              (selectedOption) => selectedOption.id === option.id,
-            )}
-            onChange={(isChecked) => handleCheckboxChange(option, isChecked)}
-            DisplayComponent={DisplayComponent} // Pass DisplayComponent prop
-            displayComponentProps={mergedDisplayComponentProps} // Pass merged displayComponentProps
-          />
-        );
-      })}
-      {selectedOptions.map((s) => s.label + ', ')}
+      {options.map((option) => (
+        <CustomCheckbox
+          key={option.id}
+          option={option}
+          isChecked={selectedOptions.some(
+            (selectedOption) => selectedOption.id === option.id,
+          )}
+          onChange={(isChecked) => handleCheckboxChange(option, isChecked)}
+          renderDisplayComponent={renderDisplayComponent}
+        />
+      ))}
     </ul>
   );
-};
+}
 
 export default CustomCheckboxGroup;
 
-// import React, { useState } from 'react';
-// import { CustomCheckbox } from './custom-checkbox';
-
-// export type Option = {
-//   id: string;
-//   label: string;
-//   description: string;
-//   displayComponentProps?: any;
-// };
-
-// type CustomCheckboxGroupProps = {
-//   options: Option[];
-//   onChange: (selectedOptions: Option[]) => void;
-//   DisplayComponent?: React.ComponentType<any>; // DisplayComponent prop type
-//   displayComponentProps?: any; // Additional props for the DisplayComponent
-// };
-
-// const CustomCheckboxGroup: React.FC<CustomCheckboxGroupProps> = ({
-//   options,
-//   onChange,
-//   DisplayComponent,
-//   displayComponentProps, // Additional props for the DisplayComponent
-// }) => {
-//   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-
-//   const handleCheckboxChange = (option: Option, isChecked: boolean) => {
-//     let updatedOptions: Option[];
-
-//     if (isChecked) {
-//       // Add the selected option
-//       updatedOptions = [...selectedOptions, option];
-//     } else {
-//       // Remove the deselected option
-//       updatedOptions = selectedOptions.filter(
-//         (selectedOption) => selectedOption.id !== option.id,
-//       );
-//     }
-
-//     setSelectedOptions(updatedOptions);
-//     onChange(updatedOptions);
-//   };
-
-//   return (
-//     <ul className="grid w-full gap-6 md:grid-cols-3">
-//       {options.map((option) => {
-//         const {
-//           displayComponentProps: optionDisplayProps,
-//           ...restOptionProps
-//         } = option;
-//         const mergedDisplayProps = {
-//           ...displayComponentProps,
-//           ...optionDisplayProps,
-//         };
-
-//         return (
-//           <CustomCheckbox
-//             key={option.id}
-//             {...restOptionProps}
-//             isChecked={selectedOptions.some(
-//               (selectedOption) => selectedOption.id === option.id,
-//             )}
-//             onChange={(isChecked) => handleCheckboxChange(option, isChecked)}
-//             DisplayComponent={DisplayComponent} // Pass DisplayComponent prop
-//             displayComponentProps={mergedDisplayProps} // Pass merged displayComponentProps
-//           />
-//         );
-//       })}
-//       {selectedOptions.map((s) => s.label + ', ')}
-//     </ul>
-//   );
-// };
-
-// export default CustomCheckboxGroup;
+//Path: src/components/form/custom-checkbox-group.tsx
