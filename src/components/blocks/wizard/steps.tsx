@@ -6,90 +6,76 @@ import { useState } from 'react';
 import CustomCheckboxGroup, {
   Option,
 } from '@/components/form/custom-checkbox-group';
-
+type OptionData = {
+  id: string;
+  title: string;
+  description: string;
+  slug: string;
+};
+const options: Option<OptionData>[] = [
+  {
+    id: '1',
+    title: 'Option 1',
+    description: 'Description for Option 1',
+    slug: 'option-1',
+    label: 'Option 1 Label',
+  },
+  {
+    id: '2',
+    title: 'Option 2',
+    description: 'Description for Option 2',
+    slug: 'option-2',
+    label: 'Option 2 Label',
+  },
+  // Add more options as needed
+];
+const initialOptions: Option<OptionData>[] = [
+  {
+    id: '1',
+    title: 'Option 1',
+    description: 'Description for Option 1',
+    slug: 'option-1',
+    label: 'Option 1 Label',
+  },
+  {
+    id: '2',
+    title: 'Option 2',
+    description: 'Description for Option 2',
+    slug: 'option-2',
+    label: 'Option 1 Label',
+  },
+  // Add more options as needed
+];
 // Step1.tsx
 export const Step1: React.FC = () => {
-  const options: Option[] = [
-    {
-      id: 'react-option',
-      label: 'React Js',
-      description: 'A JavaScript library for building user interfaces.',
-    },
-    {
-      id: 'vue-option',
-      label: 'Vue Js',
-      description: 'Vue.js is a model–view front end JavaScript framework.',
-    },
-    {
-      id: 'angular-option',
-      label: 'Angular',
-      description: 'A TypeScript-based web application framework.',
-    },
-    {
-      id: 'svelte-option',
-      label: 'Svelte',
-      description: 'A TypeScript-based web application framework.',
-    },
-  ];
-
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-
-  const CustomDisplayComponent: React.FC<Option & { checked: boolean }> = ({
-    id,
-    label,
-    description,
-    checked,
-  }) => {
-    const handleClick = () => {
-      const optionExists = selectedOptions.some((option) => option.id === id);
-
-      let newSelectedOptions: Option[];
-
-      if (optionExists) {
-        newSelectedOptions = selectedOptions.filter(
-          (option) => option.id !== id,
-        );
-      } else {
-        newSelectedOptions = [...selectedOptions, { id, label, description }];
-      }
-
-      setSelectedOptions(newSelectedOptions);
-      console.log(newSelectedOptions);
-    };
-
-    return (
-      <div
-        role="button"
-        className={`my-custom-checkbox ${checked ? 'checked' : ''}`}
-        onClick={handleClick}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleClick();
-          }
-        }}
-      >
-        <p>ID: {id}</p>
-        <p>Label: {label}</p>
-        <p>Description: {description}</p>
-      </div>
-    );
+  const handleCustomCheckboxGroupChange = (
+    selectedOptions: Option<OptionData>[],
+  ) => {
+    // Handle the change of selected options here
+    // e.g., update the state or perform other actions
+    console.table(selectedOptions);
   };
 
-  const handleCheckboxGroupChange = (selectedOptions: Option[]) => {
-    // Handle selected options logic
-    console.log('Selected Options:', selectedOptions);
-  };
+  const renderOptionData = (option: OptionData) => (
+    <div>
+      <div>ID: {option.id}</div>
+      <div>Title: {option.title}</div>
+      <div>Description: {option.description}</div>
+      <div>Slug: {option.slug}</div>
+    </div>
+  );
 
   return (
     <div>
       <h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white">
         Choose technologies:
       </h3>
-      <CustomCheckboxGroup
+
+      <CustomCheckboxGroup<OptionData, OptionData>
+        initialSelectedOptions={initialOptions}
         options={options}
-        onChange={handleCheckboxGroupChange}
-        DisplayComponent={CustomDisplayComponent}
-        // displayComponentProps={{ customProp: 'A default prop', ...options }}
+        onChange={handleCustomCheckboxGroupChange}
+        renderDisplayComponent={renderOptionData}
       />
     </div>
   );
