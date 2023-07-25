@@ -87,3 +87,5 @@ const TourSequence: React.FC<TourSequenceProps> = (props) => {
 };
 
 export default TourSequence;
+
+//Path: src/components/blocks/tour/tour-sequence.tsx
