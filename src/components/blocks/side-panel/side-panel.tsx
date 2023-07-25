@@ -3,8 +3,8 @@ import { InputField } from '@/components/form';
 import { useScrollBehavior, useScrollSpeed } from '@/hooks';
 import { AccountList } from '../account/list';
 import { SidePanelSection } from './side-panel-section';
-import { HashtagList } from '../hashtags';
-import { useScrollSync } from '../../../hooks/useScrollSync';
+import { HashtagList } from '@/features/hashtags/components';
+import { useScrollSync } from '@/hooks/useScrollSync';
 
 export const SidePanel = () => {
   const { screenHeight } = useScrollBehavior();
