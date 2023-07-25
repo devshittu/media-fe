@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from '../card';
 import TourPopper, { TourPopperType } from './tour-popper';
 
@@ -99,3 +99,5 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
 };
 
 export default TourBubble;
+
+//Path: src/components/blocks/tour/tour-bubble.tsx
