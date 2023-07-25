@@ -5,7 +5,7 @@ import {
   StoryList,
   StoryListItem,
   StoryListItemLoadingPlaceholder,
-} from '@/components/blocks/stories/';
+} from '@/features/stories/components';
 import {
   getChildrenStories,
   getParentStories,
