@@ -6,6 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { IS_DEVELOPMENT } from '@/config/constants';
+import { CategoriesProvider } from '@/features/categories/hooks';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -22,7 +23,10 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
 
           <QueryClientProvider client={queryClient}>
             {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
-            {children}
+
+            <CategoriesProvider>
+              {children}
+              </CategoriesProvider>
           </QueryClientProvider>
           {/* </RootLayout> */}
         </NavProvider>
