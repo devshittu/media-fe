@@ -35,7 +35,7 @@ function CustomCheckboxGroup<T, P>({
   };
 
   return (
-    <ul className="grid w-full gap-6 md:grid-cols-3">
+    <ul className="grid w-full gap-2 grid-cols-2 md:gap-6  md:grid-cols-3">
       {options.map((option) => (
         <CustomCheckbox
           key={option.id}
