@@ -42,85 +42,84 @@ import {
 import { Menu, MenuHeader, MenuItem } from '@/components/menus/menu';
 import { Tag } from '../../../components/blocks/tag';
 
+// export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
+//   const openModal = (e: React.MouseEvent) => {
+//     e.preventDefault();
+//     console.log('openModal');
 
-export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
-  const openModal = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log('openModal');
+//     const modal = new Modal({
+//       title: 'Report Item Selected',
+//       id: 'first-modal',
+//       size: 'small',
+//       children: (
+//         <div>
+//           Hello <Button>Show Toast</Button>
+//         </div>
+//       ),
+//     });
+//     modal.open();
+//   };
 
-    const modal = new Modal({
-      title: 'Report Item Selected',
-      id: 'first-modal',
-      size: 'small',
-      children: (
-        <div>
-          Hello <Button>Show Toast</Button>
-        </div>
-      ),
-    });
-    modal.open();
-  };
-
-  return (
-    <div className="p-6">
-      <p className="text-sm font-normal text-slate-500 dark:text-slate-400">
-        Connect and share with the people on your favorite social media
-        platforms.
-      </p>
-      <ul className="my-4 space-y-3">
-        <li>
-          <Link
-            className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
-            href={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
-            data-action="share/whatsapp/share"
-            target="_blank"
-          >
-            <Icon icon={<WhatsappColoredIcon />} className="w-6" />
-            <span className="flex-1 ml-3 whitespace-nowrap">Whatsapp</span>
-            <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-slate-500 bg-slate-200 rounded dark:bg-slate-700 dark:text-slate-400">
-              New
-            </span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="https://twitter.com/intent/tweet"
-            className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
-            data-action="share/twitter/share"
-            target="_blank"
-          >
-            <Icon icon={<TwitterColoredIcon />} className="w-6" />
-            <span className="flex-1 ml-3 whitespace-nowrap">Twitter</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="#"
-            onClick={openModal}
-            className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
-            data-action="Report"
-            target="_blank"
-          >
-            <Icon icon={<FlagIcon />} className="w-6" />
-            <span className="flex-1 ml-3 whitespace-nowrap">Report</span>
-          </Link>
-        </li>
-      </ul>
-      <div>
-        <Link
-          href="#"
-          className="inline-flex items-center text-xs font-normal text-slate-500 hover:underline dark:text-slate-400"
-        >
-          <HelpCircleIcon className="w-3 mr-2" strokeWidth={2.5} />
-          Why do I need to share?
-        </Link>
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="p-6">
+//       <p className="text-sm font-normal text-slate-500 dark:text-slate-400">
+//         Connect and share with the people on your favorite social media
+//         platforms.
+//       </p>
+//       <ul className="my-4 space-y-3">
+//         <li>
+//           <Link
+//             className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
+//             href={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
+//             data-action="share/whatsapp/share"
+//             target="_blank"
+//           >
+//             <Icon icon={<WhatsappColoredIcon />} className="w-6" />
+//             <span className="flex-1 ml-3 whitespace-nowrap">Whatsapp</span>
+//             <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-slate-500 bg-slate-200 rounded dark:bg-slate-700 dark:text-slate-400">
+//               New
+//             </span>
+//           </Link>
+//         </li>
+//         <li>
+//           <Link
+//             href="https://twitter.com/intent/tweet"
+//             className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
+//             data-action="share/twitter/share"
+//             target="_blank"
+//           >
+//             <Icon icon={<TwitterColoredIcon />} className="w-6" />
+//             <span className="flex-1 ml-3 whitespace-nowrap">Twitter</span>
+//           </Link>
+//         </li>
+//         <li>
+//           <Link
+//             href="#"
+//             onClick={openModal}
+//             className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
+//             data-action="Report"
+//             target="_blank"
+//           >
+//             <Icon icon={<FlagIcon />} className="w-6" />
+//             <span className="flex-1 ml-3 whitespace-nowrap">Report</span>
+//           </Link>
+//         </li>
+//       </ul>
+//       <div>
+//         <Link
+//           href="#"
+//           className="inline-flex items-center text-xs font-normal text-slate-500 hover:underline dark:text-slate-400"
+//         >
+//           <HelpCircleIcon className="w-3 mr-2" strokeWidth={2.5} />
+//           Why do I need to share?
+//         </Link>
+//       </div>
+//     </div>
+//   );
+// };
 
 export const StoryListItem = React.memo(
-  ({ story, className }: StoryListItemProps) => {
+  ({ story, className, categories }: StoryListItemProps) => {
     const [open, setOpen] = useState(false);
     const carouselItems: CarouselItem[] = [
       {
@@ -157,22 +156,22 @@ export const StoryListItem = React.memo(
     // carousel.next(); // Invoke next slide
     // carousel.prev(); // Invoke previous slide
 
-    const openContextMenu = () => {
-      const drawer = new Drawer({
-        title: 'Share!',
-        titleIcon: <ShareIcon />,
-        id: 'story-list-item-share',
-        side: DrawerSide.BOTTOM,
-        children: <StoryListItemContextMenu story={story} />,
-        // type: 'success',
-        onClose: () => {
-          // Handle close event
-          // console.log('Drawer closed');
-        },
-      });
+    // const openContextMenu = () => {
+    //   const drawer = new Drawer({
+    //     title: 'Share!',
+    //     titleIcon: <ShareIcon />,
+    //     id: 'story-list-item-share',
+    //     side: DrawerSide.BOTTOM,
+    //     children: <StoryListItemContextMenu story={story} />,
+    //     // type: 'success',
+    //     onClose: () => {
+    //       // Handle close event
+    //       // console.log('Drawer closed');
+    //     },
+    //   });
 
-      drawer.open();
-    };
+    //   drawer.open();
+    // };
 
     const addBookmark = (event: React.MouseEvent) => {
       if (event) {
@@ -238,8 +237,8 @@ export const StoryListItem = React.memo(
         <div
           className={`flex align-middle items-center justify-between w-full`}
         >
-          <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest">
-            {`CATEGORY`}
+          <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest uppercase">
+            {`${categories[story.categoryId]}`}
           </div>
 
           {/* <Dropdown
