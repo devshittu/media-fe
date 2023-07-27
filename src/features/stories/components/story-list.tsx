@@ -9,6 +9,8 @@ import { InfiniteScroll } from '@/components/infinite-scroll';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { useScrollSync } from '../../../hooks/useScrollSync';
 import { StoryListItemLoadingPlaceholder } from './story-list-item-loading-placeholder';
+import { QUERY_KEYS } from '@/config/query';
+import { useCategoryContext } from '@/features/categories/hooks';
 
 export const StoryList = ({
   data = [] as StoryItem[],
@@ -22,6 +24,7 @@ export const StoryList = ({
   const [showLatestButton, setShowLatestButton] = useState(false);
   //Todo calculate the 53 which is the real height of the header
   const { topPosition } = useScrollSync(53);
+const { categoryTitlesLookUpTable } = useCategoryContext();
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLatestButton(true);
@@ -118,6 +121,7 @@ export const StoryList = ({
               <StoryListItem
                 key={item.id + index}
                 story={item}
+                categories={categoryTitlesLookUpTable}
                 className={index < newItems.length ? 'new-item' : ''}
               /> // Add 'new-item' class to newly added items
             ))}
