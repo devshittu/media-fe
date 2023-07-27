@@ -28,7 +28,7 @@ function CustomCheckbox<T extends { id: string; label?: string }>({
       />
       <label
         htmlFor={option.id}
-        className="inline-flex items-center justify-between w-full p-5 text-slate-500 bg-white border-2 border-slate-200 cursor-pointer dark:hover:text-slate-300 dark:border-slate-700 peer-checked:border-cyan-600 hover:text-slate-600 dark:peer-checked:text-slate-300 peer-checked:text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+        className="inline-flex items-center justify-between w-full p-2 md:p-5 text-slate-500 bg-white border-2 border-slate-200 cursor-pointer dark:hover:text-slate-300 dark:border-slate-700 peer-checked:border-cyan-600 hover:text-slate-600 dark:peer-checked:text-slate-300 peer-checked:text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
       >
         {renderDisplayComponent ? renderDisplayComponent(option) : null}
       </label>
