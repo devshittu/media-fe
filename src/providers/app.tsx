@@ -24,9 +24,7 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
           <QueryClientProvider client={queryClient}>
             {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
 
-            <CategoriesProvider>
-              {children}
-              </CategoriesProvider>
+            <CategoriesProvider>{children}</CategoriesProvider>
           </QueryClientProvider>
           {/* </RootLayout> */}
         </NavProvider>
