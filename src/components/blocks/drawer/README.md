@@ -18,8 +18,7 @@ In your Component where you need your navigation drawer paste the following
 
 ```js
 
-import Drawer from '@/components/blocks/nav/drawer';
-import { DrawerSide } from '@/components/blocks/nav';
+import {Drawer, DrawerSide} from '@/components/blocks/drawer';
 import React from 'react'
 
 const Page = () => {

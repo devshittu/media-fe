@@ -1,11 +1,10 @@
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
-import { DrawerSide } from '../nav';
 import MainMenu from '@/components/menus/main-menu';
 import { useScrollBehavior } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
 import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
-import Drawer from '../nav/drawer';
+import {Drawer, DrawerSide} from '../drawer';
 import { Button } from '@/components/button';
 import { useScrollSync } from '../../../hooks/useScrollSync';
 

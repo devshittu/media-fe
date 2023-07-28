@@ -150,4 +150,4 @@ export const DrawerComponent = ({
   );
 };
 
-//Path: src/components/blocks/nav/drawer-component.tsx
+//Path: src/components/blocks/drawer/drawer-component.tsx
