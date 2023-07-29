@@ -1,126 +1,18 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-import React, { ReactEventHandler, useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from '@/components/labs/typography';
-import Image from 'next/image';
-import { Modal } from '@/components/blocks/modal';
 import { StoryListItemProps } from './types';
 import {
-  Carousel,
   CarouselItem,
   CarouselOptions,
 } from '@/components/blocks/carousel';
-import {
-  BookmarkIcon,
-  ExternalLinkIcon,
-  EyeIcon,
-  FlagIcon,
-  HelpCircleIcon,
-  Icon,
-  MessageSquareIcon,
-  MoreHorizontalIcon,
-  ShareIcon,
-  TwitterIcon,
-} from '@/components/illustrations';
-import { Toast } from '../../../components/blocks/toast';
-import { Button } from '@/components/button';
-import {
-  GoogleColoredIcon,
-  TwitterColoredIcon,
-  WhatsappColoredIcon,
-} from '@/components/illustrations/icons/social';
-import Drawer from '../../../components/blocks/nav/drawer';
-import { DrawerSide } from '../../../components/blocks/nav';
-import Dropdown from './dropdown';
-import {
-  Popover,
-  PopoverClose,
-  PopoverContent,
-  PopoverDescription,
-  PopoverHeading,
-  PopoverTrigger,
-} from '../../../components/blocks/popover';
-import { Menu, MenuHeader, MenuItem } from '@/components/menus/menu';
-import { Tag } from '../../../components/blocks/tag';
-
-// export const StoryListItemContextMenu = ({ story }: StoryListItemProps) => {
-//   const openModal = (e: React.MouseEvent) => {
-//     e.preventDefault();
-//     console.log('openModal');
-
-//     const modal = new Modal({
-//       title: 'Report Item Selected',
-//       id: 'first-modal',
-//       size: 'small',
-//       children: (
-//         <div>
-//           Hello <Button>Show Toast</Button>
-//         </div>
-//       ),
-//     });
-//     modal.open();
-//   };
-
-//   return (
-//     <div className="p-6">
-//       <p className="text-sm font-normal text-slate-500 dark:text-slate-400">
-//         Connect and share with the people on your favorite social media
-//         platforms.
-//       </p>
-//       <ul className="my-4 space-y-3">
-//         <li>
-//           <Link
-//             className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
-//             href={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
-//             data-action="share/whatsapp/share"
-//             target="_blank"
-//           >
-//             <Icon icon={<WhatsappColoredIcon />} className="w-6" />
-//             <span className="flex-1 ml-3 whitespace-nowrap">Whatsapp</span>
-//             <span className="inline-flex items-center justify-center px-2 py-0.5 ml-3 text-xs font-medium text-slate-500 bg-slate-200 rounded dark:bg-slate-700 dark:text-slate-400">
-//               New
-//             </span>
-//           </Link>
-//         </li>
-//         <li>
-//           <Link
-//             href="https://twitter.com/intent/tweet"
-//             className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
-//             data-action="share/twitter/share"
-//             target="_blank"
-//           >
-//             <Icon icon={<TwitterColoredIcon />} className="w-6" />
-//             <span className="flex-1 ml-3 whitespace-nowrap">Twitter</span>
-//           </Link>
-//         </li>
-//         <li>
-//           <Link
-//             href="#"
-//             onClick={openModal}
-//             className="flex items-center p-3 text-base font-bold text-slate-900 rounded-lg bg-slate-50 hover:bg-slate-100 group hover:shadow dark:bg-slate-600 dark:hover:bg-slate-500 dark:text-white"
-//             data-action="Report"
-//             target="_blank"
-//           >
-//             <Icon icon={<FlagIcon />} className="w-6" />
-//             <span className="flex-1 ml-3 whitespace-nowrap">Report</span>
-//           </Link>
-//         </li>
-//       </ul>
-//       <div>
-//         <Link
-//           href="#"
-//           className="inline-flex items-center text-xs font-normal text-slate-500 hover:underline dark:text-slate-400"
-//         >
-//           <HelpCircleIcon className="w-3 mr-2" strokeWidth={2.5} />
-//           Why do I need to share?
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// };
+import { ContextMenu } from './context-menu/context-menu';
+import { UserDetails } from './user-details';
+import { StoryMedia } from './story-media';
+import { StoryStats } from './story-stats';
 
 export const StoryListItem = React.memo(
   ({ story, className, categories }: StoryListItemProps) => {
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const carouselItems: CarouselItem[] = [
       {
         id: '1',
@@ -145,86 +37,16 @@ export const StoryListItem = React.memo(
       onPrev: () => {
         console.log('Previous slide');
       },
-      // onSlide: () => {
-      //   console.log('Slide changed');
-      // },
-      // onChange: () => {
-      //   console.log('Active slide changed');
-      // },
+      onSlide: () => {
+        console.log('Slide changed');
+      },
+      onChange: () => {
+        console.log('Active slide changed');
+      },
     };
     // const carousel = CarouselComponent({ carouselItems, carouselOptions });
     // carousel.next(); // Invoke next slide
     // carousel.prev(); // Invoke previous slide
-
-    // const openContextMenu = () => {
-    //   const drawer = new Drawer({
-    //     title: 'Share!',
-    //     titleIcon: <ShareIcon />,
-    //     id: 'story-list-item-share',
-    //     side: DrawerSide.BOTTOM,
-    //     children: <StoryListItemContextMenu story={story} />,
-    //     // type: 'success',
-    //     onClose: () => {
-    //       // Handle close event
-    //       // console.log('Drawer closed');
-    //     },
-    //   });
-
-    //   drawer.open();
-    // };
-
-    const addBookmark = (event: React.MouseEvent) => {
-      if (event) {
-        event.preventDefault();
-      }
-      const drawer = new Drawer({
-        title: 'Add Bookmark!',
-        titleIcon: <BookmarkIcon />,
-        id: 'add-bookmark',
-        side: DrawerSide.TOP,
-        children: (
-          <div>
-            Hello <Button onClick={ShowToast}>Show Toast</Button>
-          </div>
-        ),
-        // type: 'success',
-        onClose: () => {
-          // Handle close event
-        },
-      });
-
-      drawer.open();
-    };
-
-    const openModal = () => {
-      const modal = new Modal({
-        title: 'Hello, world!',
-        id: 'first-modal',
-        size: 'full',
-        children: (
-          <div>
-            Hello <Button onClick={ShowToast}>Show Toast</Button>
-          </div>
-        ),
-      });
-
-      modal.open();
-    };
-
-    const ShowToast = () => {
-      const notify = new Toast({
-        message: 'Hello, world!',
-        position: 'bottom-center',
-        type: 'success',
-        onClose: () => {
-          // Handle close event
-          console.log('toast closed');
-        },
-        duration: 3000,
-      });
-
-      notify.open();
-    };
 
     return (
       <article
@@ -241,88 +63,8 @@ export const StoryListItem = React.memo(
             {`${categories[story.categoryId]}`}
           </div>
 
-          {/* <Dropdown
-        trigger={<button>Toggle Dropdown</button>}
-        content={<div>This is the dropdown content</div>}
-      />
-
-        <button
-          className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          type="button"
-          onClick={openModal}
-        >
-          Modal
-        </button>
-        <button
-          className="block w-full md:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          type="button"
-          onClick={openDrawer}
-        >
-          Drawer
-        </button> */}
           {/* Context Menu Trigger */}
-
-          {/* <Link
-          href="/"
-          onClick={(e) => {
-            e.preventDefault();
-            return openContextMenu();
-          }}
-        >
-          <Icon icon={<MoreHorizontalIcon />} className="w-6" />
-        </Link> */}
-
-          <Popover open={open} onOpenChange={setOpen} placement="bottom-end">
-            <PopoverTrigger onClick={() => setOpen((v) => !v)}>
-              <Icon icon={<MoreHorizontalIcon />} className="w-6" />
-            </PopoverTrigger>
-            <PopoverContent className="Popover z-20">
-              <Menu>
-                <MenuHeader>
-                  <h3 className="text-lg font-bold">Share</h3>
-                </MenuHeader>
-                <MenuItem
-                  url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
-                  data-action="share/whatsapp/share"
-                  label="Whatsapp"
-                  icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
-                />
-                <MenuItem
-                  url="https://twitter.com/intent/tweet"
-                  label="Twitter"
-                  icon={<Icon icon={<TwitterColoredIcon />} className="w-6" />}
-                />
-                <MenuItem
-                  label="Report"
-                  url="#"
-                  icon={<Icon icon={<FlagIcon />} className="w-6" />}
-                  onClick={openModal}
-                />
-                <MenuItem
-                  label="Add Bookmark"
-                  url="#"
-                  onClick={addBookmark}
-                  icon={
-                    <Icon
-                      icon={<BookmarkIcon />}
-                      className="w-6 text-slate-900"
-                      strokeWidth={2.5}
-                    />
-                  }
-                  tag={<Tag variant="green">Pro</Tag>}
-                />
-                <MenuItem
-                  label="Pro Version"
-                  url="#"
-                  icon={<Icon icon={<GoogleColoredIcon />} className="w-6" />}
-                  tag={<Tag variant="green">Pro</Tag>}
-                />
-              </Menu>
-              {/* <PopoverHeading>My popover heading</PopoverHeading>
-          <PopoverDescription>My popover description</PopoverDescription>
-          <PopoverClose>Close</PopoverClose> */}
-            </PopoverContent>
-          </Popover>
+          <ContextMenu story={story} />
         </div>
 
         <Link href={`/stories/${story?.slug}`}>
@@ -335,46 +77,12 @@ export const StoryListItem = React.memo(
         </Link>
         <p className="leading-relaxed text-lg mb-8 text-justify text-slate-800 dark:text-slate-300">{`${story?.body}`}</p>
 
-        <Carousel items={carouselItems} options={carouselOptions} />
-        <div className="mb-8"></div>
-        <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
-          <Link href="/" className="text-cyan-500 inline-flex items-center">
-            <span className="text-base">Learn more</span>
-            <ExternalLinkIcon className="w-4 h-4 ml-2" />
-          </Link>
-          <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-base pr-3 py-1 border-r-2  border-slate-200 dark:border-slate-700">
-            <EyeIcon className="w-4 h-4 mr-1" />
-            1.2K
-          </span>
-          <span className="text-slate-400 inline-flex items-center leading-none text-base">
-            <MessageSquareIcon className="w-4 h-4 mr-1" />6
-          </span>
-        </div>
-        <Link href="#" className="inline-flex items-center">
-          <div className="flex items-center space-x-4">
-            <div className="flex-shrink-0">
-              <Image
-                width="48"
-                height="48"
-                className="rounded-md w-14 h-14"
-                src={`https://dummyimage.com/104x104`}
-                alt="Avatar image"
-                loading="lazy"
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
-                {`John Doe`}
-              </p>
-              <p className="text-sm text-slate-500 truncate dark:text-slate-400">
-                {`correspondence, Reuter`}
-              </p>
-            </div>
-            {/* <div className="inline-flex items-center text-base font-semibold text-slate-900 dark:text-white">
-          <Button className="rounded-lg">Subscribe</Button>
-        </div> */}
-          </div>
-        </Link>
+        <StoryMedia
+          carouselItems={carouselItems}
+          carouselOptions={carouselOptions}
+        />
+        <StoryStats viewCount={1200} commentCount={6} />
+        <UserDetails name="John Doe" organization="Correspondence, Reuter" />
       </article>
     );
   },
