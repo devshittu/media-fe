@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/api-client';
 
 import { Story } from '../types';
 import { QUERY_KEYS } from '@/config/query';
-const {GET_STORIES} = QUERY_KEYS
+const { GET_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
   params?: {
