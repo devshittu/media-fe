@@ -29,7 +29,7 @@ const Menu: React.FC<MenuProps> = forwardRef(
 
     return (
       <div
-        className="menu bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 dark:divide-slate-600"
+        className="menu bg-white divide-y divide-slate-100 shadow w-44 md:w-48 dark:bg-slate-800 dark:divide-slate-600"
         ref={ref}
         {...rest}
       >
