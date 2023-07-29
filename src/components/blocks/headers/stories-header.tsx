@@ -4,7 +4,7 @@ import { useScrollBehavior } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
 import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
-import {Drawer, DrawerSide} from '../drawer';
+import { Drawer, DrawerSide } from '../drawer';
 import { Button } from '@/components/button';
 import { useScrollSync } from '../../../hooks/useScrollSync';
 
