@@ -3,20 +3,22 @@ import { Toast } from '@/components/blocks/toast';
 import { ReactElement, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import { StoryList } from '@/components/blocks/stories/';
+import { StoryList } from '@/features/stories/components';
 
 // import { getAllStories } from '@/testing/test-data';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { StoryItem } from '@/testing';
 import { getStories, useStories } from '@/features/stories';
+import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 const Index = ({ stories }: PublicStoriesPageProps) => {
   const storiesFromUse = useStories({
-    // params: {
-    //   organizationId: user.data?.organizationId,
-    // },
+    params: {
+      page: 1,
+      limit: PAGINATE_STORIES_LIMIT,
+    },
   });
   const handleToastClose = () => {
     console.log('Toast closed');
@@ -49,7 +51,7 @@ const Index = ({ stories }: PublicStoriesPageProps) => {
           <StoryList
             data={storiesFromUse.data}
             isLoading={storiesFromUse.isLoading}
-            scrollInfinite
+            // scrollInfinite
           />
         </>
       </div>
