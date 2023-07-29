@@ -1,5 +1,5 @@
 // api:
-export * from './api/get-settings';
+export * from './api/get-user-settings';
 // components:
 export * from './components/';
 // types:
