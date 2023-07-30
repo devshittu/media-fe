@@ -23,9 +23,10 @@ import { Loading } from '@/components/loading';
 import { NotFound } from '@/components/not-found';
 import { TimelineScrollbar } from '@/components/blocks/timeline-scroller';
 import { HeadingsLoadingPlaceholder } from '@/components/blocks/table-of-contents/';
+import { Story } from '@/features/stories';
 
 const Index = () => {
-  const [stories, setStories] = useState<StoryItem[]>([]);
+  const [stories, setStories] = useState<Story[]>([]);
 
   const router = useRouter();
   const storyId = router.query.storyId as string;
@@ -36,7 +37,7 @@ const Index = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const relatedStories = await getRelatedStories(storyId);
+      const relatedStories = await getRelatedStories(storyId)  as Story[];
       if (relatedStories) {
         setStories(relatedStories);
       }
