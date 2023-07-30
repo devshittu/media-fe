@@ -10,6 +10,12 @@ export type Story = Entity & {
   parent_stories: string[];
   children_stories: string[];
 };
+export type StoryResponse = {
+  stories: Story[];
+  page: number;
+  total_pages: number;
+  total: number;
+};
 // export type CreateStoryData = Pick<
 //   Story,
 //   'position' | 'department' | 'location' | 'info'
