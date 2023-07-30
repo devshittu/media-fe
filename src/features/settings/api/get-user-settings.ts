@@ -26,7 +26,6 @@ export const useUserSettings = ({ params }: GetUserSettingsOptions) => {
     initialData: {} as Setting, // Set initialData to an empty Setting object
   });
 
-
   return {
     data,
     isLoading: isFetching && !isFetched,

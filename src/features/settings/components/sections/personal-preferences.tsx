@@ -80,8 +80,11 @@ export const PersonalPreferences = ({
   }
   const allCategories = dataFromUseCategories.data as Option<Category>[];
 
-  console.log('categories', userSelectedCategoriesId)
-  const initCategories = getObjectsByIds(allCategories, userSelectedCategoriesId);
+  console.log('categories', userSelectedCategoriesId);
+  const initCategories = getObjectsByIds(
+    allCategories,
+    userSelectedCategoriesId,
+  );
 
   return (
     <SettingsFieldset
