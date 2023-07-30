@@ -1,24 +1,36 @@
 import { Link } from '@/components/labs/typography';
 import { Button } from '@/components/button';
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, Suspense, useRef, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import MainMenu from '@/components/menus/main-menu';
-import CheckboxGroup from '@/components/form/checkbox-group';
-import RadioGroup from '@/components/form/radio-group';
-import { SettingsField, SettingsFieldset } from '@/components/blocks/settings/';
 import { FieldError, InputField } from '@/components/form';
-import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
-import Drawer from '@/components/blocks/nav/drawer';
-import { DrawerSide } from '@/components/blocks/nav';
-import { useSettings } from '@/features/settings/api/get-settings';
+import { Drawer, DrawerSide } from '@/components/blocks/drawer';
+import {
+  SystemPreferences,
+  AccountSettings,
+  PersonalPreferences,
+} from '@/features/settings/';
+import { Loading } from '@/components/loading';
+import { Category } from '@/features/categories';
+import dynamic from 'next/dynamic'; // Import next/dynamic
+import { useUserSettings } from '@/features/settings/api/get-user-settings';
+
+// Rest of the code remains the same...
+const PersonalPreferencesLazy = dynamic(
+  () =>
+    import('@/features/settings/components/sections/personal-preferences').then(
+      (mod) => mod.PersonalPreferences,
+    ),
+  { loading: () => <Loading /> }, // Optional loading indicator while the component is loading
+);
 
 const Index = () => {
   const headerRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<FieldError | null>(null);
 
-  const { data, isLoading } = useSettings({ params: { user_id: '1' } });
+  const dataFromUseSettings = useUserSettings({ params: { user_id: '1' } });
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
       title: 'Media Inc.',
@@ -55,7 +67,9 @@ const Index = () => {
       console.log('Form submitted');
     }
   };
-
+  if (dataFromUseSettings.isLoading) {
+    return <Loading />;
+  }
   return (
     <div
       className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}
@@ -136,47 +150,17 @@ const Index = () => {
         <section>
           <div className={`mt-28 lg:mt-7`}>
             <div className={`flex flex-col space-y-10`}>
-              <SettingsFieldset
-                id="Notifications"
-                title="Notification"
-                description="Select the kinds of notifications you get about your activities, interests, and recommendations."
-              >
-                <SettingsField
-                  id="myField"
-                  fieldType="checkbox"
-                  title="Who haven’t confirmed their phone number"
-                  description="See information about your account, download an archive of your data, or learn about your account deactivation options"
-                />
-                <SettingsField
-                  id="myField2"
-                  fieldType="text"
-                  fieldName="info"
-                  fieldPlaceholder="Enter your email"
-                  title="Account Email"
-                  description="See information about your account, download an archive of your data, or learn about your account deactivation options"
-                />
-                <SettingsField
-                  id="myField3"
-                  fieldType="textarea"
-                  fieldPlaceholder="Enter your long text here..."
-                  title="Who haven’t confirmed their phone number"
-                  description="See information about your account, download an archive of your data, or learn about your account deactivation options"
-                ></SettingsField>
-              </SettingsFieldset>
+              <AccountSettings />
+              {/* <PersonalPreferences categories={dataFromUseSettings.data.favorite_categories as Category[]} /> */}
 
-              <SettingsFieldset
-                id="SystemSettings"
-                title="System Settings"
-                description="See information about your account, download an archive of your data, or learn about your account deactivation options"
-              >
-                <SettingsField
-                  id="theme"
-                  title="Theme"
-                  description="Set your theme according to your preference"
-                >
-                  <ThemeSwitch showLabel />
-                </SettingsField>
-              </SettingsFieldset>
+              <Suspense fallback={<Loading />}>
+                <PersonalPreferencesLazy
+                  userSelectedCategoriesId={
+                    dataFromUseSettings.data?.favorite_categories as string[]
+                  }
+                />
+              </Suspense>
+              <SystemPreferences />
             </div>
           </div>
         </section>
@@ -190,3 +174,5 @@ Index.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Index;
+
+//Path: src/pages/settings/index.tsx
