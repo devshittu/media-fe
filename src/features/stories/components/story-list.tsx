@@ -4,35 +4,58 @@ import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
 import { StoryListProps } from './types';
 import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
-import { StoryItem } from '@/testing';
 import { InfiniteScroll } from '@/components/infinite-scroll';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { useScrollSync } from '../../../hooks/useScrollSync';
 import { StoryListItemLoadingPlaceholder } from './story-list-item-loading-placeholder';
+import { useCategoryContext } from '@/features/categories/hooks';
+import { Story } from '../types';
+import { getStories } from '../api/get-stories';
 
 export const StoryList = ({
-  data = [] as StoryItem[],
+  data = [] as Story[],
+  totalPages,
   scrollInfinite = false,
   isLoading,
 }: StoryListProps) => {
-  const [existingItems, setExistingItems] = useState<StoryItem[]>(data || []); // State for existing items
-  // console.table(existingItems)
-  const [newItems, setNewItems] = useState<StoryItem[]>([]); // State for newly fetched items
-  const [moreItems, setMoreItems] = useState<StoryItem[]>([]);
+  const [existingItems, setExistingItems] = useState<Story[]>(data || []); // State for existing items
+  const [newItems, setNewItems] = useState<Story[]>([]); // State for newly fetched items
+  const [moreItems, setMoreItems] = useState<Story[]>([]);
   const [showLatestButton, setShowLatestButton] = useState(false);
   //Todo calculate the 53 which is the real height of the header
   const { topPosition } = useScrollSync(53);
+  const { categoryTitlesLookUpTable } = useCategoryContext();
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLatestButton(true);
     }, 10000);
     return () => clearTimeout(timeout);
   }, []);
+  useEffect(() => {
+    if (data) {
+      setExistingItems(data);
+    }
+  }, [data]);
+  // const isExistingItemsInitialized = useRef(false);
+
+  // useEffect(() => {
+  //   // Initialize existingItems with data when the component mounts
+  //   if (!isExistingItemsInitialized.current) {
+  //     setExistingItems(data || []);
+  //     isExistingItemsInitialized.current = true;
+  //   }
+  // }, [data]);
   const pageSize = PAGINATE_STORIES_LIMIT;
 
   const fetchMoreStories = useCallback((page: number, pageSize: number) => {
-    getAllStories(page, pageSize).then((res) => {
-      setMoreItems(res);
+    const stories = getStories({
+      params: {
+        page: page,
+        per_page: pageSize,
+      },
+    }).then(({ stories }) => {
+      console.log('fetchMoreStories:// ', stories);
+      setMoreItems(stories);
     });
   }, []);
   const handleFetchMore = (page: number, pageSize: number) => {
@@ -57,8 +80,8 @@ export const StoryList = ({
 
   const loadLatest = () => {
     getMoreStories().then((res) => {
-      console.log('res', res);
-      setNewItems(res);
+      console.log('loadLatest res:// ', res);
+      setNewItems(res as Story[]);
     });
   };
   useEffect(() => {
@@ -118,11 +141,13 @@ export const StoryList = ({
               <StoryListItem
                 key={item.id + index}
                 story={item}
+                categories={categoryTitlesLookUpTable}
                 className={index < newItems.length ? 'new-item' : ''}
               /> // Add 'new-item' class to newly added items
             ))}
             {scrollInfinite && (
               <InfiniteScroll
+                totalPages={totalPages}
                 pageSize={pageSize}
                 onFetchMore={handleFetchMore}
               />

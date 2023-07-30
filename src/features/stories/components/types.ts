@@ -1,11 +1,13 @@
-import { StoryItem } from '@/testing';
+import { Story } from '../types';
 
 export type StoryListItemProps = {
-  story: StoryItem;
+  story: Story;
   className?: string;
+  categories: Record<string, string>;
 };
 export type StoryListProps = {
-  data?: StoryItem[];
+  data?: Story[];
   scrollInfinite?: boolean;
+  totalPages: number;
   isLoading?: boolean;
 };

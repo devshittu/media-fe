@@ -1,11 +1,10 @@
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
-import { DrawerSide } from '../nav';
 import MainMenu from '@/components/menus/main-menu';
 import { useScrollBehavior } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
 import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
-import Drawer from '../nav/drawer';
+import { Drawer, DrawerSide } from '../drawer';
 import { Button } from '@/components/button';
 import { useScrollSync } from '../../../hooks/useScrollSync';
 
@@ -143,7 +142,7 @@ export const StoriesPageHeader = ({
             <li className="mr-2" role="presentation">
               <button
                 className="inline-block p-4 border-b-4 rounded-t-lg border-slate-500 dark:border-slate-200  font-semibold text-slate-900 truncate dark:text-slate-200"
-                id="profile-tab"
+                id="profile-tab-mobile"
                 data-tabs-target="#profile"
                 type="button"
                 role="tab"
@@ -156,7 +155,7 @@ export const StoriesPageHeader = ({
             <li role="presentation">
               <button
                 className="inline-block p-4 border-b-4 border-transparent    hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300"
-                id="dashboard-tab"
+                id="dashboard-tab-mobile"
                 data-tabs-target="#dashboard"
                 type="button"
                 role="tab"

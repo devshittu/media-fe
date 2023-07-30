@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react';
 export type InfiniteScrollProps = {
   pageSize: number;
+  totalPages: number;
   onFetchMore: (page: number, pageSize: number) => void;
 };
 
 export const InfiniteScroll = ({
   pageSize,
+  totalPages,
   onFetchMore,
 }: InfiniteScrollProps) => {
   const page = useRef(1);
@@ -16,8 +18,10 @@ export const InfiniteScroll = ({
       (entries) => {
         const target = entries[0];
         if (target.isIntersecting) {
-          page.current++;
-          onFetchMore(page.current, pageSize);
+          if (page.current < totalPages) {
+            page.current++;
+            onFetchMore(page.current, pageSize);
+          }
         }
       },
       { threshold: 0.1, root: null, rootMargin: '20px' },
@@ -34,7 +38,8 @@ export const InfiniteScroll = ({
         observer.unobserve(currentLoaderRef);
       }
     };
-  }, [onFetchMore, pageSize]);
+  }, [onFetchMore, pageSize, totalPages]);
 
   return <div ref={loaderRef}></div>;
 };
+//Path: src/components/infinite-scroll/infinite-scroll.tsx

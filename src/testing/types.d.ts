@@ -9,8 +9,8 @@ export type StoryItem = {
   slug: string;
   body: string;
   categoryId: string;
-  createdAt: number;
-  updatedAt: number;
+  created_at: number;
+  updated_at: number;
   parent_stories: string[];
   children_stories: string[];
 };
@@ -20,4 +20,11 @@ export type CategoryItem = {
   title: string;
   description: string;
   title: string;
+};
+
+export type HashtagItem = {
+  id: string;
+  label: string;
+  count: number;
+  stories: string[];
 };

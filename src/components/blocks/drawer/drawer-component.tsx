@@ -1,9 +1,10 @@
 import React, { ReactElement, useContext, useEffect, useState } from 'react';
-import { DrawerProps, DrawerSide, NavContext } from './index';
+import { DrawerProps, DrawerSide } from './index';
 import { Icon, XIcon } from '@/components/illustrations';
 import { useKeyPress } from '@/hooks';
 import Portal from '@/hoc/Portal';
 import Overlay from '../overlay/overlay';
+import { NavContext } from '../nav';
 
 export const DrawerComponent = ({
   id,
@@ -149,4 +150,4 @@ export const DrawerComponent = ({
   );
 };
 
-//Path: src/components/blocks/nav/drawer-component.tsx
+//Path: src/components/blocks/drawer/drawer-component.tsx

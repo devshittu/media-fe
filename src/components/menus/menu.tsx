@@ -29,7 +29,7 @@ const Menu: React.FC<MenuProps> = forwardRef(
 
     return (
       <div
-        className="menu bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 dark:divide-slate-600"
+        className="menu bg-white divide-y divide-slate-100 shadow w-44 md:w-48 dark:bg-slate-800 dark:divide-slate-600"
         ref={ref}
         {...rest}
       >
@@ -58,7 +58,7 @@ const useMenuContext = (): MenuContextType => {
 type MenuItemProps = {
   label: string;
   url: string;
-  onClick?: (event?: React.MouseEvent) => void;
+  onClick?: React.MouseEventHandler;
   disabled?: boolean;
   icon?: ReactNode;
   tag?: ReactNode;
@@ -72,9 +72,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
   icon,
   tag,
 }) => {
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent) => {
     if (onClick) {
-      onClick();
+      onClick(event); // Pass the event parameter when calling onClick
     }
   };
 

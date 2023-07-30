@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef, use, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { InputField } from '@/components/form';
 import { useScrollBehavior, useScrollSpeed } from '@/hooks';
 import { AccountList } from '../account/list';
 import { SidePanelSection } from './side-panel-section';
-import { HashtagList } from '../hashtags';
-import { rangeLimit } from '@/utils';
-import { useScrollSync } from '../../../hooks/useScrollSync';
+import { HashtagList } from '@/features/hashtags/components';
+import { useScrollSync } from '@/hooks/useScrollSync';
 
 export const SidePanel = () => {
   const { screenHeight } = useScrollBehavior();
@@ -17,18 +16,18 @@ export const SidePanel = () => {
     // This effect will run after the content has updated
     if (sidePanelRef.current) {
       const sidePanelTop = sidePanelRef.current.getBoundingClientRect().top;
-      const sidePanelHeightIn = sidePanelRef.current.getBoundingClientRect().height;
-      setSidePanelHeight(Math.abs(screenHeight - (sidePanelHeightIn - sidePanelTop)));
+      const sidePanelHeightIn =
+        sidePanelRef.current.getBoundingClientRect().height;
+      setSidePanelHeight(
+        Math.abs(screenHeight - (sidePanelHeightIn - sidePanelTop)),
+      );
     }
   }, [sidePanelRef.current?.innerHTML, screenHeight]); // This effect will run whenever the content rendered by <HashtagList /> or <AccountList /> changes
 
   const { topPosition: sidebarTop } = useScrollSync(sidePanelHeight || 0); // top position set to 60
 
-
   return (
-    <div
-      className="flex-1 pb-0 hidden lg:block lg:sticky top-0 min-h-screen"
-    >
+    <div className="flex-1 pb-0 hidden lg:block lg:sticky top-0 min-h-screen">
       <div className={`sticky top-0 z-10 bg-white dark:bg-slate-900`}>
         <div className="py-4">
           <InputField

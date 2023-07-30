@@ -1,4 +1,8 @@
 export type Entity = {
   id: string;
-  createdAt: number;
+  created_at: number;
+};
+
+export type ObjectItem = {
+  id: string;
 };

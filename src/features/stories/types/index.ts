@@ -6,9 +6,15 @@ export type Story = Entity & {
   body: string;
   slug: string;
   categoryId: string;
-  updatedAt: string;
+  updated_at: string;
   parent_stories: string[];
   children_stories: string[];
+};
+export type StoryResponse = {
+  stories: Story[];
+  page: number;
+  total_pages: number;
+  total: number;
 };
 // export type CreateStoryData = Pick<
 //   Story,

@@ -1,61 +1,40 @@
 import React from 'react';
 
-type CustomCheckboxProps = {
-  id: string;
-  label: string;
-  description: string;
+type CustomCheckboxProps<T extends { id: string; label?: string }> = {
+  option: T;
   isChecked: boolean;
   onChange: (isChecked: boolean) => void;
-  className?: string;
-  DisplayComponent?: React.ComponentType<any>; // Update the prop type to accept any component type
-  displayComponentProps?: any; // Additional props for the DisplayComponent
+  renderDisplayComponent?: (option: T) => JSX.Element; // Custom render function for display
 };
 
-export const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
-  id,
-  label,
-  description,
+function CustomCheckbox<T extends { id: string; label?: string }>({
+  option,
   isChecked,
   onChange,
-  className = '',
-  DisplayComponent,
-  displayComponentProps, // Additional props for the DisplayComponent
-}) => {
+  renderDisplayComponent,
+}: CustomCheckboxProps<T>) {
   const handleCheckboxChange = () => {
     onChange(!isChecked);
   };
 
-  const DefaultDisplayComponent = (
-    <div className="block">
-      <div className="w-full text-lg font-semibold">{label}</div>
-      <div className="w-full text-sm">{description}</div>
-    </div>
-  );
-
-  const renderDisplayComponent = () => {
-    if (DisplayComponent) {
-      return <DisplayComponent {...displayComponentProps} />; // Pass displayComponentProps to the DisplayComponent
-    }
-    return DefaultDisplayComponent;
-  };
-
   return (
-    <li className={`w-full ${className}`}>
+    <li className="w-full">
       <input
         type="checkbox"
-        id={id}
+        id={option.id}
         className="hidden peer"
         checked={isChecked}
         onChange={handleCheckboxChange}
       />
       <label
-        htmlFor={id}
-        className="inline-flex items-center justify-between w-full p-5 text-slate-500 bg-white border-2 border-slate-200 cursor-pointer dark:hover:text-slate-300 dark:border-slate-700 peer-checked:border-cyan-600 hover:text-slate-600 dark:peer-checked:text-slate-300 peer-checked:text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+        htmlFor={option.id}
+        className="inline-flex items-center justify-between w-full p-2 md:p-5 text-slate-500 bg-white border-2 border-slate-200 cursor-pointer dark:hover:text-slate-300 dark:border-slate-700 peer-checked:border-cyan-600 hover:text-slate-600 dark:peer-checked:text-slate-300 peer-checked:text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
       >
-        {renderDisplayComponent()}
+        {renderDisplayComponent ? renderDisplayComponent(option) : null}
       </label>
     </li>
   );
-};
+}
 
-// export default CustomCheckbox;
+export default CustomCheckbox;
+//Path: src/components/form/custom-checkbox.tsx
