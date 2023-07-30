@@ -27,7 +27,7 @@ export const useCategories = ({ params }: GetCategoriesOptions) => {
       const cachedData = queryClient.getQueryData<Category[] | undefined>([
         GET_CATEGORIES,
       ]);
-      console.log('cachedData', cachedData);
+
       if (cachedData) {
         return cachedData;
       }
