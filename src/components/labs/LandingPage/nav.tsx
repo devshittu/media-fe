@@ -204,4 +204,5 @@ export const Nav = () => {
     </div>
   );
 };
-export default Nav;
+
+// Path: src/components/labs/LandingPage/nav.tsx
