@@ -15,7 +15,6 @@ type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 const StoriesByHashtagPage = ({ stories }: PublicStoriesPageProps) => {
-    // console.log('stories:// ',stories);
   const router = useRouter();
   const hashtagId = router.query.hashtagId as string;
   const storiesByHashtagFromUse = useStoriesByHashtag({
