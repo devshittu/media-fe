@@ -10,10 +10,14 @@ import { useScrollSync } from '../../../hooks/useScrollSync';
 
 export type StoriesPageHeaderProps = {
   pageTitle: string;
+  showTab?: boolean;
+  parallax?: boolean;
 };
 
 export const StoriesPageHeader = ({
   pageTitle = 'Home',
+  showTab = false,
+  parallax = false,
 }: StoriesPageHeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
 
@@ -55,7 +59,7 @@ export const StoriesPageHeader = ({
       <header
         ref={headerRef}
         className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
-        style={{ transform: `translateY(${topPosition}px)` }}
+        style={{ transform: (parallax)?`translateY(${topPosition}px)`:'none' }}
       >
         <div className={`transition-all duration-350 ease-out`}>
           <div
@@ -71,6 +75,7 @@ export const StoriesPageHeader = ({
             </h3>
           </div>
         </div>
+        {showTab && (
         <div>
           <ul
             className="flex justify-around -mb-px text-sm font-medium text-center"
@@ -106,6 +111,7 @@ export const StoriesPageHeader = ({
             </li>
           </ul>
         </div>
+        )}
       </header>
       {/* mobile */}
       {/*  
@@ -118,7 +124,7 @@ export const StoriesPageHeader = ({
         className={`lg:hidden fixed left-0 top-[-1.5px]x z-30
                w-full backdrop-blur flex-none transition-all duration-150 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
               transform translate-x-0 translate-z-0`}
-        style={{ transform: `translateY(${topPosition}px)` }}
+        style={{ transform: (parallax)?`translateY(${topPosition}px)`:'none' }}
       >
         <div className={`flex items-center p-4 lg:hidden `}>
           {/* Main Menu Trigger */}
@@ -132,6 +138,7 @@ export const StoriesPageHeader = ({
             </li>
           </ol>
         </div>
+        {showTab && (
         <div>
           <ul
             className="flex justify-around -mb-px text-sm font-medium text-center"
@@ -167,6 +174,7 @@ export const StoriesPageHeader = ({
             </li>
           </ul>
         </div>
+        )}
       </header>
     </>
   );
