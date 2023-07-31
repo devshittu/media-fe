@@ -4,7 +4,7 @@ import React from 'react';
 import { Copyright } from '../public-page/copyright';
 import { COPYRIGHT_TEXT } from '@/config/constants';
 
-const Footer = () => {
+export const Footer = () => {
   const copyrightText = COPYRIGHT_TEXT;
   const links = [
     { href: '/faq', label: 'F.A.Q' },
@@ -70,4 +70,3 @@ const Footer = () => {
   );
 };
 
-export default Footer;
