@@ -18,7 +18,7 @@ const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
   });
   return (
     <>
-        <StoriesPageHeader pageTitle="Home" />
+        <StoriesPageHeader pageTitle="Home" showTab parallax />
           <StoryList
             data={storiesFromUse.data?.stories}
             totalPages={storiesFromUse.data?.total_pages}
