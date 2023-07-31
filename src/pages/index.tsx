@@ -7,6 +7,7 @@ import {
   Marquee,
   Footer,
   Nav,
+  Explore,
 } from '@/components/labs/LandingPage/';
 import Image from 'next/image';
 import { Link } from '@/components/labs/typography';
@@ -35,7 +36,8 @@ export default function Home({ categories }: PublicHomePageProps) {
   return (
     <>
       <Seo title="New App" />
-      <Nav />
+      <Explore />
+      {/* <Nav />
       <Hero />
       <Feature />
       <Marquee play speed="slow" hoverToPause>
@@ -85,7 +87,7 @@ export default function Home({ categories }: PublicHomePageProps) {
             ))}
           </React.Fragment>
         ))}
-      </Marquee>
+      </Marquee> */}
       <Footer />
     </>
   );
