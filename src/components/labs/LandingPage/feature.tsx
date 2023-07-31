@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Feature = () => {
+export const Feature = () => {
   return (
     <div className="bg-slate-100 dark:bg-slate-900">
       <div className="relative px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
@@ -93,4 +93,3 @@ const Feature = () => {
   );
 };
 
-export default Feature;
