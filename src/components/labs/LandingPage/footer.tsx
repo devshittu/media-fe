@@ -13,10 +13,10 @@ export const Footer = () => {
   ];
   return (
     <>
-      <footer className="fixed bottom-0 left-0 z-20 w-full h-16x lg:h-48x bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
+      <footer className="relative md:fixed bottom-0 left-0 z-20 w-full bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
         <div className="flex h-full  mx-auto font-medium">
-          <div className="px-4 pt-4 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-            <div className="grid gap-10 row-gap-6 mb-2 sm:grid-cols-2 lg:grid-cols-4 justify-between">
+          <div className="px-4 pt-4 mx-auto w-full sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+            <div className="grid md:gap-10 md:row-gap-6 mb-2 sm:grid-cols-2 lg:grid-cols-4 justify-between">
               <div className="sm:col-span-2">
                 <Link
                   href="/"
@@ -24,12 +24,12 @@ export const Footer = () => {
                   title="Company"
                   className="inline-flex items-center"
                 >
-                  <h1 className="text-xl font-bold tracking-wide text-slate-800 ">
+                  <h1 className="text-xl font-bold tracking-wide text-slate-800 dark:text-slate-200 ">
                     Stay tuned and stay updated!
                   </h1>
                 </Link>
                 <div className="mt-1 lg:max-w-sm">
-                  <p className="text-sm text-slate-800">
+                  <p className="text-sm text-slate-800 dark:text-slate-200">
                     {" Don't miss out on the latest updates!"}
                   </p>
                 </div>
@@ -37,7 +37,7 @@ export const Footer = () => {
               <div></div>
               <div>
                 <div className="flex items-center mt-1 space-x-3">
-                  <ul className="flex items-center md:hidden ml-auto space-x-8 lg:flex">
+                  <ul className="flex items-center md:hidden md:ml-auto space-x-8 lg:flex">
                     <li>
                       <Link
                         href="/"
@@ -70,3 +70,4 @@ export const Footer = () => {
   );
 };
 
+// Path: src/components/labs/LandingPage/footer.tsx
