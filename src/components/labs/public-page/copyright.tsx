@@ -13,13 +13,13 @@ export const Copyright: React.FC<CopyrightProps> = ({
   themeComponent,
 }) => {
   return (
-    <div className="flex flex-col-reverse justify-between md:items-center py-5 border-t border-slate-300 dark:border-slate-700 lg:flex-row">
+    <div className="flex flex-col-reverse lg:flex-row justify-between md:items-center py-2 md:py-5 border-t border-slate-100 dark:border-slate-800">
       <p className="text-sm">{text}</p>
 
       {themeComponent && (
         <div className="hidden md:block">{themeComponent}</div>
       )}
-      <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row text-sm">
+      <ul className="flex flex-row space-x-2 justify-around sm:space-y-0 sm:space-x-5 sm:flex-row mb-3 lg:mb-0 text-sm">
         {links.map((link) => (
           <li key={link.href}>
             <Link
@@ -35,4 +35,4 @@ export const Copyright: React.FC<CopyrightProps> = ({
   );
 };
 
-// export default Copyright;
+//Path: src/components/labs/public-page/copyright.tsx
