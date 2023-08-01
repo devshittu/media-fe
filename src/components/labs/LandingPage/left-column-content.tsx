@@ -10,7 +10,7 @@ import { InputField } from '@/components/form';
 import { Link } from '@/components/labs/typography';
 import React, { useEffect, useState } from 'react';
 import { LinedBackgroundText } from '../typography';
-import Marquee from './marquee';
+import {Marquee} from './marquee';
 import { CategoryItem, getCategories } from '@/testing';
 import {} from '@/components/illustrations/icons/social';
 import TokenPinInputField, {
@@ -21,7 +21,7 @@ import Wizard from '@/components/blocks/wizard/wizard';
 import steps from '@/components/blocks/wizard/steps';
 import { useRouter } from 'next/router';
 
-const LeftColumnContent = () => {
+export const LeftColumnContent = () => {
   const router = useRouter();
 
   const [categories, setCategories] = useState<CategoryItem[]>([]);
@@ -96,7 +96,7 @@ const LeftColumnContent = () => {
               key={index}
               href="/"
               aria-label="View Item"
-              className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
+              className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800  dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
             >
               {item.title}
             </Link>
@@ -178,4 +178,5 @@ const LeftColumnContent = () => {
     </div>
   );
 };
-export default LeftColumnContent;
+
+// Path: src/components/labs/LandingPage/left-column-content.tsx
