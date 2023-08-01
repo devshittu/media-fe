@@ -20,7 +20,7 @@ export const Explore = ({hashtag = 'Sustainability'}: ExploreProps) => {
         <>
         <StoriesPageHeader pageTitle={`Explore:#${hashtag}`}  />
 
-        <section className='mb-36 flex justify-center w-full'>
+        <section className='md:mb-36 flex justify-center w-full'>
         <section className='max-w-xl md:max-w-2xl'>
           <StoryList
             data={storiesByHashtagFromUse.data?.stories}
