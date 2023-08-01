@@ -1,11 +1,8 @@
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import MainMenu from '@/components/menus/main-menu';
-import { useScrollBehavior } from '@/hooks';
-import { rangeLimit } from '@/utils/helpers';
 import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import { Drawer, DrawerSide } from '../drawer';
-import { Button } from '@/components/button';
 import { useScrollSync } from '../../../hooks/useScrollSync';
 
 export type StoriesPageHeaderProps = {
@@ -21,17 +18,28 @@ export const StoriesPageHeader = ({
 }: StoriesPageHeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
 
-  const [pageTitleBoxHeight, setPageTitleBoxHeight] = useState(0);
-  const pageTitleRef = useRef<HTMLDivElement>(null);
+  const [pageTitleBoxHeightDesktop, setPageTitleBoxHeightDesktop] = useState(0);
+  const [pageTitleBoxHeightMobile, setPageTitleBoxHeightMobile] = useState(0);
+  const pageTitleDesktopRef = useRef<HTMLDivElement>(null);
+  const pageTitleMobileRef = useRef<HTMLDivElement>(null);
 
   // Calculate the height of the element when the component mounts or when its content changes
   useEffect(() => {
-    if (pageTitleRef.current) {
-      const height = pageTitleRef.current.clientHeight;
-      setPageTitleBoxHeight(height);
+    if (pageTitleDesktopRef.current) {
+      const height = pageTitleDesktopRef.current.clientHeight;
+      setPageTitleBoxHeightDesktop(height);
     }
-  }, [pageTitleRef]);
-  const { topPosition } = useScrollSync(pageTitleBoxHeight); // top position set to 60
+  }, [pageTitleDesktopRef]);
+
+  // Calculate the height of the element when the component mounts or when its content changes
+  useEffect(() => {
+    if (pageTitleMobileRef.current) {
+      const height = pageTitleMobileRef.current.clientHeight;
+      setPageTitleBoxHeightMobile(height);
+    }
+  }, [pageTitleMobileRef]);
+  const { topPosition:topPositionDesktop } = useScrollSync(pageTitleBoxHeightDesktop); // top position set to 60
+  const { topPosition:topPositionMobile } = useScrollSync(pageTitleBoxHeightMobile); // top position set to 60
 
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
@@ -59,13 +67,13 @@ export const StoriesPageHeader = ({
       <header
         ref={headerRef}
         className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
-        style={{ transform: (parallax)?`translateY(${topPosition}px)`:'none' }}
+        style={{ transform: (parallax)?`translateY(${topPositionDesktop}px)`:'none' }}
       >
         <div className={`transition-all duration-350 ease-out`}>
           <div
             id="page-title-wrapper"
             className="text-xl p-4 pl-8 text-slate-900  dark:text-white"
-            ref={pageTitleRef}
+            ref={pageTitleDesktopRef}
           >
             <h3
               className=" inline-block font-extrabold leading-none tracking-tight"
@@ -120,13 +128,15 @@ export const StoriesPageHeader = ({
                   ? 'translate-y-0 '
                   : 'translate-y-[-53px]'
               } */}
+{/* hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75               */}
       <header
-        className={`lg:hidden fixed left-0 top-[-1.5px]x z-30
-               w-full backdrop-blur flex-none transition-all duration-150 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
-              transform translate-x-0 translate-z-0`}
-        style={{ transform: (parallax)?`translateY(${topPosition}px)`:'none' }}
+        className={`block lg:hidden sticky top-0 z-20
+               w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
+              `}
+        style={{ transform: (parallax)?`translateY(${topPositionMobile}px)`:'none' }}
       >
-        <div className={`flex items-center p-4 lg:hidden `}>
+        <div className={`flex items-center p-4 lg:hidden `} 
+            ref={pageTitleMobileRef}>
           {/* Main Menu Trigger */}
 
           <Link href="/" onClick={handleOpenDrawer}>
@@ -179,3 +189,5 @@ export const StoriesPageHeader = ({
     </>
   );
 };
+
+//Path: src/components/blocks/headers/stories-header.tsx
