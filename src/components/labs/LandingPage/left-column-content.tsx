@@ -10,7 +10,7 @@ import { InputField } from '@/components/form';
 import { Link } from '@/components/labs/typography';
 import React, { useEffect, useState } from 'react';
 import { LinedBackgroundText } from '../typography';
-import {Marquee} from './marquee';
+import { Marquee } from './marquee';
 import { CategoryItem, getCategories } from '@/testing';
 import {} from '@/components/illustrations/icons/social';
 import TokenPinInputField, {
@@ -132,7 +132,7 @@ export const LeftColumnContent = () => {
               <Button
                 type="primary"
                 nativeType="button"
-                className="justify-center font-semibold mt-4 w-full"
+                className="justify-center font-semibold mt-4 w-full md:h-12"
                 onClick={openModal}
               >
                 <span className="opacity-100 transition-opacity">Connect</span>{' '}

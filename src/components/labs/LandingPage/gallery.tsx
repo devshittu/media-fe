@@ -97,4 +97,3 @@ export const Gallery = () => {
     </div>
   );
 };
-

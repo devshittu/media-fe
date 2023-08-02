@@ -3,7 +3,7 @@ import MainMenu from '@/components/menus/main-menu';
 import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import { Drawer, DrawerSide } from '../drawer';
-import { useScrollSync } from '../../../hooks/useScrollSync';
+import { useScrollSync } from '@/hooks/useScrollSync';
 
 export type StoriesPageHeaderProps = {
   pageTitle: string;
@@ -38,8 +38,12 @@ export const StoriesPageHeader = ({
       setPageTitleBoxHeightMobile(height);
     }
   }, [pageTitleMobileRef]);
-  const { topPosition:topPositionDesktop } = useScrollSync(pageTitleBoxHeightDesktop); // top position set to 60
-  const { topPosition:topPositionMobile } = useScrollSync(pageTitleBoxHeightMobile); // top position set to 60
+  const { topPosition: topPositionDesktop } = useScrollSync(
+    pageTitleBoxHeightDesktop,
+  ); // top position set to 60
+  const { topPosition: topPositionMobile } = useScrollSync(
+    pageTitleBoxHeightMobile,
+  ); // top position set to 60
 
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
@@ -66,8 +70,10 @@ export const StoriesPageHeader = ({
       {/* Desktop */}
       <header
         ref={headerRef}
-        className={`hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
-        style={{ transform: (parallax)?`translateY(${topPositionDesktop}px)`:'none' }}
+        className={`will-change-transform hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75`}
+        style={{
+          transform: parallax ? `translateY(${topPositionDesktop}px)` : 'none',
+        }}
       >
         <div className={`transition-all duration-350 ease-out`}>
           <div
@@ -84,41 +90,41 @@ export const StoriesPageHeader = ({
           </div>
         </div>
         {showTab && (
-        <div>
-          <ul
-            className="flex justify-around -mb-px text-sm font-medium text-center"
-            id="myTab"
-            data-tabs-toggle="#myTabContent"
-            role="tablist"
-          >
-            <li className="mr-2" role="presentation">
-              <button
-                className="inline-block p-4 border-b-4 rounded-t-lg border-slate-500 dark:border-slate-200  font-semibold text-slate-900 truncate dark:text-slate-200"
-                id="profile-tab"
-                data-tabs-target="#profile"
-                type="button"
-                role="tab"
-                aria-controls="profile"
-                aria-selected="false"
-              >
-                For You
-              </button>
-            </li>
-            <li role="presentation">
-              <button
-                className="inline-block p-4 border-b-4 border-transparent    hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300"
-                id="dashboard-tab"
-                data-tabs-target="#dashboard"
-                type="button"
-                role="tab"
-                aria-controls="dashboard"
-                aria-selected="false"
-              >
-                Following
-              </button>
-            </li>
-          </ul>
-        </div>
+          <div>
+            <ul
+              className="flex justify-around -mb-px text-sm font-medium text-center"
+              id="myTab"
+              data-tabs-toggle="#myTabContent"
+              role="tablist"
+            >
+              <li className="mr-2" role="presentation">
+                <button
+                  className="inline-block p-4 border-b-4 rounded-t-lg border-slate-500 dark:border-slate-200  font-semibold text-slate-900 truncate dark:text-slate-200"
+                  id="profile-tab"
+                  data-tabs-target="#profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                >
+                  For You
+                </button>
+              </li>
+              <li role="presentation">
+                <button
+                  className="inline-block p-4 border-b-4 border-transparent    hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300"
+                  id="dashboard-tab"
+                  data-tabs-target="#dashboard"
+                  type="button"
+                  role="tab"
+                  aria-controls="dashboard"
+                  aria-selected="false"
+                >
+                  Following
+                </button>
+              </li>
+            </ul>
+          </div>
         )}
       </header>
       {/* mobile */}
@@ -128,15 +134,19 @@ export const StoriesPageHeader = ({
                   ? 'translate-y-0 '
                   : 'translate-y-[-53px]'
               } */}
-{/* hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75               */}
+      {/* hidden lg:block sticky top-0 w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75               */}
       <header
         className={`block lg:hidden sticky top-0 z-20
-               w-full backdrop-blur flex-none  transition-all  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
+               w-full backdrop-blur flex-none  transition-transform  duration-200 ease-out lg:z-20 lg:border-b lg:border-slate-900/10 dark:border-slate-500/40 bg-slate-50/75 dark:bg-slate-900/75 
               `}
-        style={{ transform: (parallax)?`translateY(${topPositionMobile}px)`:'none' }}
+        style={{
+          transform: parallax ? `translateY(${topPositionMobile}px)` : 'none',
+        }}
       >
-        <div className={`flex items-center p-4 lg:hidden `} 
-            ref={pageTitleMobileRef}>
+        <div
+          className={`flex items-center p-4 lg:hidden `}
+          ref={pageTitleMobileRef}
+        >
           {/* Main Menu Trigger */}
 
           <Link href="/" onClick={handleOpenDrawer}>
@@ -149,41 +159,41 @@ export const StoriesPageHeader = ({
           </ol>
         </div>
         {showTab && (
-        <div>
-          <ul
-            className="flex justify-around -mb-px text-sm font-medium text-center"
-            id="myTab"
-            data-tabs-toggle="#myTabContent"
-            role="tablist"
-          >
-            <li className="mr-2" role="presentation">
-              <button
-                className="inline-block p-4 border-b-4 rounded-t-lg border-slate-500 dark:border-slate-200  font-semibold text-slate-900 truncate dark:text-slate-200"
-                id="profile-tab-mobile"
-                data-tabs-target="#profile"
-                type="button"
-                role="tab"
-                aria-controls="profile"
-                aria-selected="false"
-              >
-                For You
-              </button>
-            </li>
-            <li role="presentation">
-              <button
-                className="inline-block p-4 border-b-4 border-transparent    hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300"
-                id="dashboard-tab-mobile"
-                data-tabs-target="#dashboard"
-                type="button"
-                role="tab"
-                aria-controls="dashboard"
-                aria-selected="false"
-              >
-                Following
-              </button>
-            </li>
-          </ul>
-        </div>
+          <div>
+            <ul
+              className="flex justify-around -mb-px text-sm font-medium text-center"
+              id="myTab"
+              data-tabs-toggle="#myTabContent"
+              role="tablist"
+            >
+              <li className="mr-2" role="presentation">
+                <button
+                  className="inline-block p-4 border-b-4 rounded-t-lg border-slate-500 dark:border-slate-200  font-semibold text-slate-900 truncate dark:text-slate-200"
+                  id="profile-tab-mobile"
+                  data-tabs-target="#profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                >
+                  For You
+                </button>
+              </li>
+              <li role="presentation">
+                <button
+                  className="inline-block p-4 border-b-4 border-transparent    hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300"
+                  id="dashboard-tab-mobile"
+                  data-tabs-target="#dashboard"
+                  type="button"
+                  role="tab"
+                  aria-controls="dashboard"
+                  aria-selected="false"
+                >
+                  Following
+                </button>
+              </li>
+            </ul>
+          </div>
         )}
       </header>
     </>
