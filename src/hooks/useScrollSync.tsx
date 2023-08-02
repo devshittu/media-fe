@@ -1,26 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useScrollSpeed } from '@/hooks';
 import { rangeLimit } from '@/utils/helpers';
 
 export const useScrollSync = (minTop = 53) => {
   const [topPosition, setTopPosition] = useState(0);
-  const scrollSpeed = useScrollSpeed({ delay: 40 }) || 0; // Initialize with a default value of 0
+  const scrollSpeed = useScrollSpeed({ delay: 40 }) || 0;
+  const animationFrame = useRef<number | null>(null); 
 
   useEffect(() => {
     function handleScroll() {
-      setTopPosition((prevTopPosition) => {
-        // Adjust the behavior based on the scroll speed and direction
-        const newTop = rangeLimit(prevTopPosition - scrollSpeed, -minTop, 0);
-        return newTop;
+      // Cancel the previous frame
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+
+      // Schedule the next frame
+      animationFrame.current = requestAnimationFrame(() => {
+        setTopPosition((prevTopPosition) => {
+          const newTop = rangeLimit(prevTopPosition - scrollSpeed, -minTop, 0);
+          return newTop;
+        });
       });
     }
 
-    // Attach the event listener to the scroll event
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
     };
   }, [minTop, scrollSpeed]);
 
