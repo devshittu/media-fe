@@ -5,7 +5,7 @@ import { rangeLimit } from '@/utils/helpers';
 export const useScrollSync = (minTop = 53) => {
   const [topPosition, setTopPosition] = useState(0);
   const scrollSpeed = useScrollSpeed({ delay: 40 }) || 0;
-  const animationFrame = useRef<number | null>(null); 
+  const animationFrame = useRef<number | null>(null);
 
   useEffect(() => {
     function handleScroll() {
