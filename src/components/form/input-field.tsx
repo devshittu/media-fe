@@ -1,16 +1,18 @@
 import React, { LabelHTMLAttributes } from 'react';
-export type FieldError = {
-  message: string;
-};
+import { FieldError, UseFormRegister } from 'react-hook-form';
+// export type FieldError = {
+//   message: string;
+// };
 
 export type InputFieldPropTypes = {
   type?: 'text' | 'email' | 'password' | 'textarea';
   size?: 'small' | 'base' | 'large';
   id?: string;
+  label?: string;
   showLabel?: boolean;
   name: string;
   required?: boolean | null;
-  error?: FieldError | null;
+  error?: FieldError;
   placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
@@ -18,7 +20,7 @@ export type InputFieldPropTypes = {
   rounded?: boolean;
   disabled?: boolean;
   className?: string;
-};
+} & Partial<ReturnType<UseFormRegister<Record<string, unknown>>>>;
 
 export const InputField = ({
   id,
