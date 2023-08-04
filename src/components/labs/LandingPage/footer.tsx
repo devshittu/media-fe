@@ -39,20 +39,21 @@ export const Footer = () => {
                 <div className="flex items-center mt-1 space-x-3">
                   <ul className="flex items-center md:hidden md:ml-auto space-x-8 lg:flex">
                     <li>
-                      <Link
-                        href="/"
+                      <Button
+                        // href="/"
                         aria-label="Sign in"
                         title="Sign in"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                        className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400"
                       >
                         Sign in
-                      </Link>
+                      </Button>
                     </li>
                     <li>
                       <Button
-                        className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                        className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-slate-100 dark:text-slate-900 transition duration-200 shadow-md bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none"
                         aria-label="Sign up"
                         outlined
+                        type="primary"
                       >
                         Sign up
                       </Button>
