@@ -118,7 +118,7 @@ export const LeftColumnContent = () => {
         <div className="w-full max-w-[500px]">
           <form className="flex flex-col justify-center overflow-hidden w-full relative">
             <div className="w-full p-6">
-              <h1 className="mb-6 text-3xl font-bold leading-tight text-center">
+              <h1 className="mb-6 text-3xl font-bold leading-tight text-center text-slate-900 dark:text-slate-100">
                 Connect with us
               </h1>
               <InputField
