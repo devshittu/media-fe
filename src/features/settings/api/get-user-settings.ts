@@ -22,7 +22,7 @@ export const useUserSettings = ({ params }: GetUserSettingsOptions) => {
   const { data, isFetching, isFetched } = useQuery<Setting>({
     queryKey: ['settings', params], // Updated queryKey type to string[]
     queryFn: () => getUserSettings({ params }),
-    // enabled: !!params?.categoryId,
+    // enabled: !!params?.category_id,
     initialData: {} as Setting, // Set initialData to an empty Setting object
   });
 

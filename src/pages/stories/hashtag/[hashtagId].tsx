@@ -8,7 +8,10 @@ import { StoryList } from '@/features/stories/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { getStoriesByHashtag, useStoriesByHashtag } from '@/features/stories/api/get-stories-by-hashtag';
+import {
+  getStoriesByHashtag,
+  useStoriesByHashtag,
+} from '@/features/stories/api/get-stories-by-hashtag';
 import { useRouter } from 'next/router';
 import StoriesPageContainer from '@/features/stories/components/stories-page-container/stories-page-container';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
@@ -21,25 +24,29 @@ const StoriesByHashtagPage = ({ stories }: PublicStoriesPageProps) => {
     params: {
       page: 1,
       per_page: PAGINATE_STORIES_LIMIT,
-      hashtag: hashtagId
+      hashtag: hashtagId,
     },
   });
 
   return (
-        <>
-        <StoriesPageHeader pageTitle="Home" />
-          <StoryList
-            data={storiesByHashtagFromUse.data?.stories}
-            totalPages={storiesByHashtagFromUse.data?.total_pages}
-            isLoading={storiesByHashtagFromUse.isLoading}
-            // scrollInfinite
-          />
-        </>
+    <>
+      <StoriesPageHeader pageTitle="Home" />
+      <StoryList
+        data={storiesByHashtagFromUse.data?.stories}
+        totalPages={storiesByHashtagFromUse.data?.total_pages}
+        isLoading={storiesByHashtagFromUse.isLoading}
+        // scrollInfinite
+      />
+    </>
   );
 };
 
 StoriesByHashtagPage.getLayout = function getLayout(page: ReactElement) {
-  return <UserLayout><StoriesPageContainer>{page}</StoriesPageContainer></UserLayout>;
+  return (
+    <UserLayout>
+      <StoriesPageContainer>{page}</StoriesPageContainer>
+    </UserLayout>
+  );
 };
 
 export const getServerSideProps = async ({
@@ -65,4 +72,3 @@ export const getServerSideProps = async ({
 export default StoriesByHashtagPage;
 
 //Path: src/pages/stories/hashtag/[hashtagId].tsx
-

@@ -7,6 +7,8 @@ export const seedDb = () => {
 
   if (userCount > 0) return;
 
+  testData.news_channels.forEach((nc) => db.news_channel.create(nc));
+
   testData.users.forEach((user) => db.user.create(user));
 
   testData.stories.forEach((story) => db.story.create(story));

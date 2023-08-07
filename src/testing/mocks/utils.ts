@@ -1,7 +1,7 @@
 import { RestRequest } from 'msw';
 
 import { IS_TEST } from '@/config/constants';
-// import { AuthUser } from '@/features/auth';
+import { AuthUser } from '@/features/auth';
 
 import { testData } from '../test-data';
 

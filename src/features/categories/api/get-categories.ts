@@ -6,7 +6,7 @@ import { DEFAULT_STALE_TIME, QUERY_KEYS } from '@/config/query';
 const { GET_CATEGORIES } = QUERY_KEYS;
 type GetCategoriesOptions = {
   params?: {
-    categoryId?: string | undefined;
+    category_id?: string | undefined;
   };
 };
 

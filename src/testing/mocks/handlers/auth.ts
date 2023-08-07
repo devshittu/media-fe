@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { API_URL } from '@/config/constants';
-import { authenticate, requireAuth, AUTH_COOKIE } from '@/utils';
+import { authenticate, requireAuth, AUTH_COOKIE } from '../utils';
 
 const loginHandler = rest.post(
   `${API_URL}/auth/login`,

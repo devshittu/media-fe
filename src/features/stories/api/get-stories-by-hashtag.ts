@@ -26,7 +26,7 @@ export const useStoriesByHashtag = ({ params }: GetStoriesByHashtagOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_STORIES, params],
     queryFn: () => getStoriesByHashtag({ params }),
-    // enabled: !!params?.categoryId,
+    // enabled: !!params?.category_id,
     initialData: {} as StoryResponse,
   });
 

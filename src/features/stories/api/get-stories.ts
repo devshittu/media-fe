@@ -8,7 +8,7 @@ const { GET_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
   params?: {
-    categoryId?: string | undefined;
+    category_id?: string | undefined;
     page?: number | undefined;
     per_page?: number | undefined;
     hashtag?: string | undefined;
@@ -27,7 +27,7 @@ export const useStories = ({ params }: GetStoriesOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_STORIES, params],
     queryFn: () => getStories({ params }),
-    // enabled: !!params?.categoryId,
+    // enabled: !!params?.category_id,
     initialData: {} as StoryResponse,
   });
 

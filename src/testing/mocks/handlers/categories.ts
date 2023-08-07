@@ -7,7 +7,7 @@ import { db } from '../db';
 const getCategoriesHandler = rest.get(
   `${API_URL}/categories`,
   (req, res, ctx) => {
-    const categoryId = req.params.categoryId as string;
+    const category_id = req.params.category_id as string;
 
     const page = 1;
     const pageSize = PAGINATE_STORIES_LIMIT;
@@ -28,14 +28,14 @@ const getCategoriesHandler = rest.get(
 );
 
 const getCategoryHandler = rest.get(
-  `${API_URL}/categories/:categoryId`,
+  `${API_URL}/categories/:category_id`,
   (req, res, ctx) => {
-    const categoryId = req.params.categoryId as string;
+    const category_id = req.params.category_id as string;
 
     const category = db.category.findFirst({
       where: {
         id: {
-          equals: categoryId,
+          equals: category_id,
         },
       },
     });

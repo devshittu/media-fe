@@ -6,7 +6,7 @@ import { Hashtag } from '../types';
 
 type GetHashtagsOptions = {
   params?: {
-    categoryId?: string | undefined;
+    category_id?: string | undefined;
   };
 };
 
@@ -22,7 +22,7 @@ export const useHashtags = ({ params }: GetHashtagsOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: ['hashtags', params],
     queryFn: () => getHashtags({ params }),
-    // enabled: !!params?.categoryId,
+    // enabled: !!params?.category_id,
     initialData: [],
   });
 

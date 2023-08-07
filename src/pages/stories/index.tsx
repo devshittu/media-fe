@@ -18,29 +18,33 @@ const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
   });
   return (
     <>
-        <StoriesPageHeader pageTitle="Home" showTab parallax />
-          <StoryList
-            data={storiesFromUse.data?.stories}
-            totalPages={storiesFromUse.data?.total_pages}
-            isLoading={storiesFromUse.isLoading}
-            scrollInfinite
-          />
-      </>
+      <StoriesPageHeader pageTitle="Home" showTab parallax />
+      <StoryList
+        data={storiesFromUse.data?.stories}
+        totalPages={storiesFromUse.data?.total_pages}
+        isLoading={storiesFromUse.isLoading}
+        scrollInfinite
+      />
+    </>
   );
 };
 
 StoriesPage.getLayout = function getLayout(page: ReactElement) {
-  return <UserLayout><StoriesPageContainer>{page}</StoriesPageContainer></UserLayout>;
+  return (
+    <UserLayout>
+      <StoriesPageContainer>{page}</StoriesPageContainer>
+    </UserLayout>
+  );
 };
 
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
-  const categoryId = params?.categoryId as string;
+  const category_id = params?.category_id as string;
   // const stories = await getAllStories().catch(() => [] as StoryItem[]);
   const stories = await getStories({
     params: {
-      categoryId: categoryId,
+      category_id: category_id,
       page: 1,
       per_page: PAGINATE_STORIES_LIMIT,
     },

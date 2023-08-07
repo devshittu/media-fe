@@ -57,7 +57,7 @@ export const StoryListItem = React.memo(
           className={`flex align-middle items-center justify-between w-full`}
         >
           <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest uppercase">
-            {`${categories[story.categoryId]}`}
+            {`${categories[story.category_id]}`}
           </div>
 
           {/* Context Menu Trigger */}
