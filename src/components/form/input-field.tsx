@@ -1,8 +1,5 @@
-import React, { LabelHTMLAttributes } from 'react';
-import { FieldError, UseFormRegister } from 'react-hook-form';
-// export type FieldError = {
-//   message: string;
-// };
+import React, { LabelHTMLAttributes, forwardRef } from 'react';
+import { ChangeHandler, FieldError, UseFormRegister } from 'react-hook-form';
 
 export type InputFieldPropTypes = {
   type?: 'text' | 'email' | 'password' | 'textarea';
@@ -15,14 +12,16 @@ export type InputFieldPropTypes = {
   error?: FieldError;
   placeholder?: string;
   value?: string;
-  onChange?: (value: string) => void;
+  // onChange?: (value: string) => void;
+  onChange?: ChangeHandler;
   outlined?: boolean;
   rounded?: boolean;
   disabled?: boolean;
   className?: string;
 } & Partial<ReturnType<UseFormRegister<Record<string, unknown>>>>;
 
-export const InputField = ({
+export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
+  ({
   id,
   type = 'text',
   size = 'base',
@@ -36,14 +35,31 @@ export const InputField = ({
   rounded = false,
   showLabel = false,
   className,
-}: InputFieldPropTypes) => {
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
-  };
+      ...inputProps
+}: InputFieldPropTypes, ref: React.Ref<HTMLInputElement>) => {
+//     ({
+//   id,
+//   type = 'text',
+//   size = 'base',
+//   name,
+//   error,
+//   placeholder,
+//   value,
+//   onChange,
+//   outlined = true,
+//   disabled = false,
+//   rounded = false,
+//   showLabel = false,
+//   className,
+// }: InputFieldPropTypes) => {
+
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  // ) => {
+  //   if (onChange) {
+  //     onChange(e.target.value);
+  //   }
+  // };
 
   //   ${outlined ? 'ring-blue-500 border-blue-500 ' : ''}
   //     ${rounded ? 'rounded-lg ' : ''}
@@ -99,23 +115,26 @@ export const InputField = ({
             name={name}
             placeholder={placeholder}
             value={value}
-            onChange={handleChange}
+            {...inputProps}
             disabled={disabled}
           />
         ) : (
-          <input
+            <input
             className={inputClasses}
-            type={type}
-            id={computedId}
             name={name}
             placeholder={placeholder}
             value={value}
-            onChange={handleChange}
             disabled={disabled}
+            id={computedId}
+            ref={ref}
+            type={type}
+            {...inputProps}
           />
         )}
         {error && <div className="text-red-500">{error.message}</div>}
       </div>
     </>
   );
-};
+ }
+);
+InputField.displayName = "InputField"
