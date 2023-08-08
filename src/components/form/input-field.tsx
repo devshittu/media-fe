@@ -21,54 +21,41 @@ export type InputFieldPropTypes = {
 } & Partial<ReturnType<UseFormRegister<Record<string, unknown>>>>;
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
-  ({
-  id,
-  type = 'text',
-  size = 'base',
-  name,
-  error,
-  placeholder,
-  value,
-  onChange,
-  outlined = true,
-  disabled = false,
-  rounded = false,
-  showLabel = false,
-  className,
+  (
+    {
+      id,
+      type = 'text',
+      size = 'base',
+      name,
+      error,
+      placeholder,
+      value,
+      onChange,
+      outlined = true,
+      disabled = false,
+      rounded = false,
+      showLabel = false,
+      className,
       ...inputProps
-}: InputFieldPropTypes, ref: React.Ref<HTMLInputElement>) => {
-//     ({
-//   id,
-//   type = 'text',
-//   size = 'base',
-//   name,
-//   error,
-//   placeholder,
-//   value,
-//   onChange,
-//   outlined = true,
-//   disabled = false,
-//   rounded = false,
-//   showLabel = false,
-//   className,
-// }: InputFieldPropTypes) => {
+    }: InputFieldPropTypes,
+    ref: React.Ref<HTMLInputElement>,
+  ) => {
+    // const handleChange = (
+    //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    // ) => {
+    //   if (onChange) {
+    //     onChange(e.target.value);
+    //   }
+    // };
 
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  // ) => {
-  //   if (onChange) {
-  //     onChange(e.target.value);
-  //   }
-  // };
+    //   ${outlined ? 'ring-blue-500 border-blue-500 ' : ''}
+    //     ${rounded ? 'rounded-lg ' : ''}
+    //     ${error ? 'ring-red-500 border-red-500' : 'ring-slate-300 border-slate-300'}
+    //     ${disabled ? 'bg-slate-100 opacity-50 cursor-not-allowed' : ''}
+    //     ${className ?? ''}
 
-  //   ${outlined ? 'ring-blue-500 border-blue-500 ' : ''}
-  //     ${rounded ? 'rounded-lg ' : ''}
-  //     ${error ? 'ring-red-500 border-red-500' : 'ring-slate-300 border-slate-300'}
-  //     ${disabled ? 'bg-slate-100 opacity-50 cursor-not-allowed' : ''}
-  //     ${className ?? ''}
-
-  //focus:ring-inset
-  const inputClasses = `
+    //focus:ring-inset
+    const inputClasses = `
   block  w-full font-bold
     bg-slate-50 text-slate-700 border-2 border-slate-700  dark:border-slate-300 placeholder-slate-400
     text-base
@@ -84,11 +71,11 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
     }
     ${rounded ? 'rounded-lg ' : 'rounded-none'}
     `
-    .trim()
-    .replace(/\s+/g, ' ');
+      .trim()
+      .replace(/\s+/g, ' ');
 
-  const labelClasses =
-    `block mb-2  uppercase tracking-wide text-slate-900 text-sm font-bold dark:text-slate-300
+    const labelClasses =
+      `block mb-2  uppercase tracking-wide text-slate-900 text-sm font-bold dark:text-slate-300
     ${
       size === 'large'
         ? 'md:text-xl'
@@ -96,45 +83,45 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
         ? 'md:text-base'
         : 'sm:text-sm'
     }`
-      .trim()
-      .replace(/\s+/g, ' ');
-  const computedId = id ? id : name.toLowerCase() + '-input';
+        .trim()
+        .replace(/\s+/g, ' ');
+    const computedId = id ? id : name.toLowerCase() + '-input';
 
-  return (
-    <>
-      <div className={className}>
-        {showLabel && (
-          <label htmlFor={computedId} className={labelClasses}>
-            {name}
-          </label>
-        )}
-        {type === 'textarea' ? (
-          <textarea
-            className={`${inputClasses}`}
-            id={computedId}
-            name={name}
-            placeholder={placeholder}
-            value={value}
-            {...inputProps}
-            disabled={disabled}
-          />
-        ) : (
+    return (
+      <>
+        <div className={className}>
+          {showLabel && (
+            <label htmlFor={computedId} className={labelClasses}>
+              {name}
+            </label>
+          )}
+          {type === 'textarea' ? (
+            <textarea
+              className={`${inputClasses}`}
+              id={computedId}
+              name={name}
+              placeholder={placeholder}
+              value={value}
+              {...inputProps}
+              disabled={disabled}
+            />
+          ) : (
             <input
-            className={inputClasses}
-            name={name}
-            placeholder={placeholder}
-            value={value}
-            disabled={disabled}
-            id={computedId}
-            ref={ref}
-            type={type}
-            {...inputProps}
-          />
-        )}
-        {error && <div className="text-red-500">{error.message}</div>}
-      </div>
-    </>
-  );
- }
+              className={inputClasses}
+              name={name}
+              placeholder={placeholder}
+              value={value}
+              disabled={disabled}
+              id={computedId}
+              ref={ref}
+              type={type}
+              {...inputProps}
+            />
+          )}
+          {error && <div className="text-red-500">{error.message}</div>}
+        </div>
+      </>
+    );
+  },
 );
-InputField.displayName = "InputField"
+InputField.displayName = 'InputField';
