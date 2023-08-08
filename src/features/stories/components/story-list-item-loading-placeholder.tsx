@@ -6,7 +6,7 @@ export const StoryListItemLoadingPlaceholder = () => {
   return (
     <>
       <article
-        className={`animate-pulse flex p-4 md:p-8 lg:p-12 flex-col w-full`}
+        className={`animate-pulse flex p-4 md:p-8 lg:p-12 flex-col w-full lg:min-w-[640px]`}
       >
         <div className="mb-4">
           <div className="h-2.5 bg-slate-200  dark:bg-slate-700 w-48 mb-4"></div>
