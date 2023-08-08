@@ -1,12 +1,4 @@
 export const users = [
-  // {
-  //   id: 'KV4Lv9yUHtNVB42V0ZrFf',
-  //   created_at: 1645628972465,
-  //   email: 'user1@test.com',
-  //   password: 'test@123',
-  //   category_id: 'amYXmIyT9mD9GyO6CCr',
-  // },
-
   {
     id: '1',
     username: 'testuser1',
