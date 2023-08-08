@@ -27,6 +27,22 @@ const models = {
     parent_stories: Array,
     children_stories: Array,
     // user: oneOf('user'),
+    user: {
+      id: String,
+      created_at: Date.now,
+      last_login: Date.now,
+      email: String,
+      password: String,
+      username: String,
+      name: String,
+      avatar_url: String,
+      news_channel: {
+        id: String,
+        name: String,
+        feedUrl: String,
+        logoUrl: String,
+      },
+    },
   },
   category: {
     id: primaryKey(uid),
