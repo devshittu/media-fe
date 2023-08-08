@@ -25,13 +25,6 @@ export const getObjectsByIds = <T extends ObjectItem>(
   return result;
 };
 
-export const formatDate = (date: number | string) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-    day: 'numeric',
-  });
-};
 export const slug = (title: string) =>
   title
     .toLowerCase()
