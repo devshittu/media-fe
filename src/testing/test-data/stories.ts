@@ -5,7 +5,7 @@ export const stories = [
     body: 'President Muhammadu Buhari announces a major infrastructure project to upgrade roads and transport across Nigeria, aiming to boost the economy and improve travel for citizens.',
     slug: 'president-buhari-announces-infrastructure-project',
     category_id: '1',
-    updated_at: '1609459200',
+    updated_at: 1691268703,
     parent_stories: [],
     children_stories: ['2'],
     user: {
@@ -32,7 +32,7 @@ export const stories = [
     body: 'Work commences on the infrastructure project announced by President Buhari. Local communities express excitement and high hopes for the improvements.',
     slug: 'infrastructure-project-begins-excites-local-communities',
     category_id: '1',
-    updated_at: '1609545600',
+    updated_at: 1691362303,
     parent_stories: ['1'],
     children_stories: ['3'],
     user: {
@@ -59,7 +59,7 @@ export const stories = [
     body: "President Buhari visits the ongoing infrastructure project and commends the rapid progress being made. He reiterates the government's commitment to national development.",
     slug: 'buhari-visits-infrastructure-project-commends-progress',
     category_id: '1',
-    updated_at: '1609632000',
+    updated_at: 1691423503, //'1609632000',
     parent_stories: ['2'],
     children_stories: ['4'],
     user: {
