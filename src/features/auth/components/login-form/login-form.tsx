@@ -16,29 +16,29 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   };
   return (
     <div>
-      
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <InputField
-        label="Email"
-        type="email"
-        {...register('email', { required: 'Required' })}
-        error={formState.errors['email']}
-      />
-      <InputField
-        label="Password"
-        type="password"
-        {...register('password', {
-          required: 'Required',
-        })}
-        error={formState.errors['password']}
-      />
-      <Button
-        loading={!!login.isLoading}
-        disabled={login.isLoading}
-        nativeType="submit"
-      >
-        Log in
-      </Button></form>
+        <InputField
+          label="Email"
+          type="email"
+          {...register('email', { required: 'Required' })}
+          error={formState.errors['email']}
+        />
+        <InputField
+          label="Password"
+          type="password"
+          {...register('password', {
+            required: 'Required',
+          })}
+          error={formState.errors['password']}
+        />
+        <Button
+          loading={!!login.isLoading}
+          disabled={login.isLoading}
+          nativeType="submit"
+        >
+          Log in
+        </Button>
+      </form>
     </div>
   );
 };
