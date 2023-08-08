@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 type ExploreProps = {
   hashtag?: string;
 };
-export const Explore = ({ hashtag = 'Sustainability' }: ExploreProps) => {
+export const Explore = ({ hashtag = 'Deforestation' }: ExploreProps) => {
   const storiesByHashtagFromUse = useStoriesByHashtag({
     params: {
       page: 1,
