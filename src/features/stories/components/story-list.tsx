@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
 import { StoryListProps } from './types';
-import { getAllStories, getMoreStories, useStories } from '@/testing/test-data';
+import { getMoreStories } from '@/testing/test-data';
 import { InfiniteScroll } from '@/components/infinite-scroll';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { useScrollSync } from '../../../hooks/useScrollSync';
@@ -18,33 +18,21 @@ export const StoryList = ({
   scrollInfinite = false,
   isLoading,
 }: StoryListProps) => {
-  const [existingItems, setExistingItems] = useState<Story[]>(data || []); // State for existing items
+  // the data prop is prefilled some stories however, it is returned from an async function i.e it is fetched from the server.
   const [newItems, setNewItems] = useState<Story[]>([]); // State for newly fetched items
-  const [moreItems, setMoreItems] = useState<Story[]>([]);
+  const { categoryTitlesLookUpTable } = useCategoryContext();
+  const { topPosition } = useScrollSync(53);
+  const [allStories, setAllStories] = useState<Story[]>(data);
+
   const [showLatestButton, setShowLatestButton] = useState(false);
   //Todo calculate the 53 which is the real height of the header
-  const { topPosition } = useScrollSync(53);
-  const { categoryTitlesLookUpTable } = useCategoryContext();
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLatestButton(true);
-    }, 10000);
+    }, 2000);
     return () => clearTimeout(timeout);
   }, []);
-  useEffect(() => {
-    if (data) {
-      setExistingItems(data);
-    }
-  }, [data]);
-  // const isExistingItemsInitialized = useRef(false);
 
-  // useEffect(() => {
-  //   // Initialize existingItems with data when the component mounts
-  //   if (!isExistingItemsInitialized.current) {
-  //     setExistingItems(data || []);
-  //     isExistingItemsInitialized.current = true;
-  //   }
-  // }, [data]);
   const pageSize = PAGINATE_STORIES_LIMIT;
 
   const fetchMoreStories = useCallback((page: number, pageSize: number) => {
@@ -55,11 +43,11 @@ export const StoryList = ({
       },
     }).then(({ stories }) => {
       console.log('fetchMoreStories:// ', stories);
-      setMoreItems(stories);
+      setAllStories((prevStories) => [...prevStories, ...stories]);
     });
   }, []);
   const handleFetchMore = (page: number, pageSize: number) => {
-    fetchMoreStories(page, pageSize);
+    fetchMoreStories(page, pageSize); // This loads more stories and we want to append them to the existing stories.
   };
 
   const ShowToast = () => {
@@ -78,46 +66,45 @@ export const StoryList = ({
     notify.open();
   };
 
-  const loadLatest = () => {
+  const loadNewStories = () => {
     getMoreStories().then((res) => {
-      console.log('loadLatest res:// ', res);
-      setNewItems(res as Story[]);
+      console.log('loadNewStories res:// ', res);
+      setNewItems(res as Story[]); // This loads newer stories and we want to prepend them to the existing stories.
     });
   };
-  useEffect(() => {
-    // Append moreItems to existingItems when moreItems state changes
-    const combinedItems = [...existingItems, ...moreItems];
-    setExistingItems(combinedItems);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moreItems]);
 
   useEffect(() => {
-    // Prepend newItems to existingItems when newItems state changes
-    const combinedItems = [...newItems, ...existingItems];
-    setExistingItems(combinedItems);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (newItems.length > 0) {
+      setAllStories((prevStories) => [...newItems, ...prevStories]);
+      adjustScrollForNewItems();
+      setNewItems([]);
+    }
   }, [newItems]);
 
-  useEffect(() => {
-    // Calculate the height of the new items
+  const adjustScrollForNewItems = () => {
     let newItemsHeight = 0;
     const newItemsElements = document.querySelectorAll(
       '.new-item',
-    ) as NodeListOf<HTMLDivElement>; // Add a CSS class 'new-item' to each postItem element
+    ) as NodeListOf<HTMLDivElement>;
 
-    newItemsElements?.forEach((item) => {
+    newItemsElements.forEach((item) => {
       newItemsHeight += item.offsetHeight;
     });
+
     // Adjust the scroll position to keep it on the same StoryListItem
     const { scrollTop } = document.documentElement || document.body;
     document.documentElement.scrollTop = scrollTop + newItemsHeight;
-    // document.body.scrollTop = scrollTop + newItemsHeight; // For older browser compatibility
-  }, [newItems]);
+    document.body.scrollTop = scrollTop + newItemsHeight; // For older browser compatibility
+  };
 
   return (
     <div id="stream" className={`mt-28 lg:mt-0 relative`}>
       {isLoading ? (
-        <StoryListItemLoadingPlaceholder />
+        <>
+          <StoryListItemLoadingPlaceholder />
+          <StoryListItemLoadingPlaceholder />
+          <StoryListItemLoadingPlaceholder />
+        </>
       ) : (
         <>
           {/* {showLatestButton && ( */}
@@ -130,14 +117,14 @@ export const StoryList = ({
             }`}
             style={{ transform: `translateY(${topPosition}px)` }}
           >
-            <Button onClick={loadLatest} type="primary">
+            <Button onClick={loadNewStories} type="primary">
               Load new feeds
             </Button>
             <Button onClick={ShowToast}>Show Toast</Button>
           </div>
           {/* )} */}
           <div>
-            {existingItems.map((item, index) => (
+            {allStories.map((item, index) => (
               <StoryListItem
                 key={item.id + index}
                 story={item}
