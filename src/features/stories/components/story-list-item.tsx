@@ -6,10 +6,14 @@ import { ContextMenu } from './context-menu/context-menu';
 import { UserDetails } from './user-details';
 import { StoryMedia } from './story-media';
 import { StoryStats } from './story-stats';
+import { formatDate } from '@/utils';
+import {
+  UserActivityMetrics,
+  useUserActivityTracking,
+} from '@/hooks/useUserActivityTracking';
 
 export const StoryListItem = React.memo(
   ({ story, className, categories }: StoryListItemProps) => {
-    // const [open, setOpen] = useState(false);
     const carouselItems: CarouselItem[] = [
       {
         id: '1',
@@ -44,10 +48,20 @@ export const StoryListItem = React.memo(
     // const carousel = CarouselComponent({ carouselItems, carouselOptions });
     // carousel.next(); // Invoke next slide
     // carousel.prev(); // Invoke previous slide
+    const options = {
+      saveMetrics: (metrics: UserActivityMetrics) => {
+        // Your saveMetrics logic here.
+        // For instance, you can send metrics to an API.
+        console.log('Metrics:', metrics, story.slug);
+      },
+    };
+
+    // const activityRef = useUserActivityTracking(options);
 
     return (
       <article
         className={`relative p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
+        // ref={activityRef}
       >
         <div
           id={`scroll-to-${story.slug}`}
@@ -79,7 +93,11 @@ export const StoryListItem = React.memo(
           carouselOptions={carouselOptions}
         />
         <StoryStats viewCount={1200} commentCount={6} />
-        <UserDetails name="John Doe" organization="Correspondence, Reuter" />
+        <UserDetails
+          name={story?.user.name}
+          organization={`Reporter, ${story?.user?.news_channel?.name}`}
+          pub_datetime={formatDate(story?.updated_at)}
+        />
       </article>
     );
   },
