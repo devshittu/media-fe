@@ -36,3 +36,5 @@ export const useStories = ({ params }: GetStoriesOptions) => {
     isLoading: isFetching && !isFetched,
   };
 };
+
+//Path: src/features/stories/api/get-stories.ts
