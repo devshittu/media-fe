@@ -1,4 +1,4 @@
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useMemo, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { StoryList } from '@/features/stories/components';
@@ -16,15 +16,23 @@ const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
       per_page: PAGINATE_STORIES_LIMIT,
     },
   });
+  const stableStories = useMemo(
+    () => storiesFromUse.data?.stories,
+    [storiesFromUse.data?.stories],
+  );
+
+  console.log('storiesFromUse.data?.stories:// ', storiesFromUse.data?.stories);
   return (
     <>
       <StoriesPageHeader pageTitle="Home" showTab parallax />
-      <StoryList
-        data={storiesFromUse.data?.stories}
-        totalPages={storiesFromUse.data?.total_pages}
-        isLoading={storiesFromUse.isLoading}
-        scrollInfinite
-      />
+      {stableStories?.length > 0 && (
+        <StoryList
+          data={stableStories}
+          totalPages={storiesFromUse.data?.total_pages}
+          isLoading={storiesFromUse.isLoading}
+          scrollInfinite
+        />
+      )}
     </>
   );
 };
