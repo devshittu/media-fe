@@ -25,6 +25,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1691268703,
   },
   {
     id: '2',
@@ -52,6 +53,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1691362303,
   },
   {
     id: '3',
@@ -59,7 +61,7 @@ export const stories = [
     body: "President Buhari visits the ongoing infrastructure project and commends the rapid progress being made. He reiterates the government's commitment to national development.",
     slug: 'buhari-visits-infrastructure-project-commends-progress',
     category_id: '1',
-    updated_at: 1691423503, //'1609632000',
+    updated_at: 1691423503,
     parent_stories: ['2'],
     children_stories: ['4'],
     user: {
@@ -79,6 +81,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1691423503,
   },
   {
     id: '4',
@@ -86,7 +89,7 @@ export const stories = [
     body: 'A review of the impact of the infrastructure project led by President Buhari. Experts weigh in on expectations and potential benefits for the Nigerian economy.',
     slug: 'infrastructure-project-impact-expectations',
     category_id: '1',
-    updated_at: '1609718400',
+    updated_at: 1609718400,
     parent_stories: ['3'],
     children_stories: [],
     user: {
@@ -106,6 +109,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1609718400,
   },
   {
     id: '5',
@@ -113,7 +117,7 @@ export const stories = [
     body: 'As the dry season sets in, local farmers discuss their preparations and the challenges they anticipate in the coming months.',
     slug: 'start-dry-season-preparations-challenges',
     category_id: '1',
-    updated_at: '1609804800',
+    updated_at: 1609804800,
     parent_stories: [],
     children_stories: ['6'],
     user: {
@@ -133,6 +137,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1609804800,
   },
   {
     id: '6',
@@ -140,7 +145,7 @@ export const stories = [
     body: 'Nigerian farmers are innovating to beat the challenges presented by the dry season. Find out how they are adapting and thriving in this special report.',
     slug: 'farmers-innovate-beat-dry-season-challenges',
     category_id: '1',
-    updated_at: '1609891200',
+    updated_at: 1609891200,
     parent_stories: ['5'],
     children_stories: ['7'],
     user: {
@@ -160,6 +165,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1609891200,
   },
   {
     id: '7',
@@ -167,7 +173,7 @@ export const stories = [
     body: 'The government announces subsidies to help farmers manage the challenges of the dry season, including support for innovative farming methods.',
     slug: 'government-supports-farmers-dry-season-subsidies',
     category_id: '1',
-    updated_at: '1609977600',
+    updated_at: 1609977600,
     parent_stories: ['6'],
     children_stories: ['8'],
     user: {
@@ -187,6 +193,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1609977600,
   },
   {
     id: '8',
@@ -194,7 +201,7 @@ export const stories = [
     body: "We take a closer look at the government's dry season subsidies. How will they impact farmers? And what does it mean for the future of farming in Nigeria?",
     slug: 'dry-season-farming-closer-look-government-subsidies',
     category_id: '1',
-    updated_at: '1610064000',
+    updated_at: 1610064000,
     parent_stories: ['7'],
     children_stories: [],
     user: {
@@ -214,15 +221,15 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1610064000,
   },
-
   {
     id: '10',
     title: 'Nollywood Celebrates New Record-Breaking Film',
     body: "Nollywood is celebrating as a new film breaks box office records across the country. The film, 'The Rising Sun', has surpassed expectations and drawn international attention.",
     slug: 'nollywood-celebrates-new-record-breaking-film',
     category_id: '2',
-    updated_at: '1610146800',
+    updated_at: 1610146800,
     parent_stories: [],
     children_stories: ['11'],
     user: {
@@ -242,6 +249,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1610146800,
   },
   {
     id: '11',
@@ -249,7 +257,7 @@ export const stories = [
     body: "A behind the scenes look at 'The Rising Sun', the record-breaking film that has taken Nollywood by storm. We speak with the director and cast about the making of the film.",
     slug: 'rising-sun-behind-scenes-record-breaking-film',
     category_id: '2',
-    updated_at: '1610233200',
+    updated_at: 1610233200,
     parent_stories: ['10'],
     children_stories: ['12'],
     user: {
@@ -269,6 +277,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1610233200,
   },
   {
     id: '12',
@@ -276,7 +285,7 @@ export const stories = [
     body: "An analysis of the impact of 'The Rising Sun' on the Nigerian film industry. Experts discuss how the film's success could change Nollywood for the better.",
     slug: 'impact-rising-sun-nollywood',
     category_id: '2',
-    updated_at: '1610319600',
+    updated_at: 1610319600,
     parent_stories: ['11'],
     children_stories: ['13'],
     user: {
@@ -296,6 +305,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1610319600,
   },
   {
     id: '13',
@@ -303,7 +313,7 @@ export const stories = [
     body: "The record-breaking Nollywood film, 'The Rising Sun', is set to be screened at several international film festivals, further establishing its global appeal.",
     slug: 'rising-sun-screened-international-film-festivals',
     category_id: '2',
-    updated_at: '1610406000',
+    updated_at: 1610406000,
     parent_stories: ['12'],
     children_stories: [],
     user: {
@@ -323,6 +333,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1610406000,
   },
   {
     id: '14',
@@ -330,7 +341,7 @@ export const stories = [
     body: 'Nigeria marks another year of independence with a grand ceremony attended by leaders and citizens alike. The day was filled with patriotic spirit and a recommitment to unity and progress.',
     slug: 'nigeria-celebrates-independence-day',
     category_id: '2',
-    updated_at: '1610492400',
+    updated_at: 1610492400,
     parent_stories: [],
     children_stories: ['15'],
     user: {
@@ -350,6 +361,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1610492400,
   },
   {
     id: '15',
@@ -357,7 +369,7 @@ export const stories = [
     body: "A detailed look at Nigeria's journey since independence. We explore the achievements, challenges, and hopes for the future as the nation celebrates another year of freedom.",
     slug: 'look-back-nigerias-journey-since-independence',
     category_id: '2',
-    updated_at: '1610578800',
+    updated_at: 1610578800,
     parent_stories: ['14'],
     children_stories: ['16'],
     user: {
@@ -377,6 +389,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1610578800,
   },
   {
     id: '16',
@@ -384,7 +397,7 @@ export const stories = [
     body: "On Independence Day, Nigerians across the country share their thoughts on the nation's progress since independence and their hopes for the future.",
     slug: 'independence-day-nigerians-reflect-nations-progress',
     category_id: '2',
-    updated_at: '1610665200',
+    updated_at: 1610665200,
     parent_stories: ['15'],
     children_stories: ['17'],
     user: {
@@ -404,6 +417,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1610665200,
   },
   {
     id: '17',
@@ -411,7 +425,7 @@ export const stories = [
     body: 'Experts weigh in on the future of Nigeria as the nation celebrates another year of independence. Their predictions cover various aspects, from the economy to societal issues.',
     slug: 'future-nigeria-independence-day-predictions',
     category_id: '2',
-    updated_at: '1610751600',
+    updated_at: 1610751600,
     parent_stories: ['16'],
     children_stories: ['18'],
     user: {
@@ -431,6 +445,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1610751600,
   },
   {
     id: '18',
@@ -438,7 +453,7 @@ export const stories = [
     body: 'As Nigeria celebrates Independence Day, we take a moment to celebrate the unity in diversity that defines this great nation. From culture to cuisine, Nigeria is a blend of many tribes and tongues, all working towards a common goal.',
     slug: 'independence-day-celebration-unity-diversity',
     category_id: '2',
-    updated_at: '1610838000',
+    updated_at: 1610838000,
     parent_stories: ['17'],
     children_stories: [],
     user: {
@@ -458,15 +473,15 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1610838000,
   },
-
   {
     id: '29',
     title: 'Nigeria Launches First Satellite into Space',
     body: "Nigeria made history today as it successfully launched its first satellite into space. The satellite, named NaijaSat-1, was launched from the international space station and is expected to revolutionize Nigeria's technology sector.",
     slug: 'nigeria-launches-first-satellite-into-space',
     category_id: '4',
-    updated_at: '1611615600',
+    updated_at: 1611615600,
     parent_stories: [],
     children_stories: ['30'],
     user: {
@@ -486,6 +501,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1611615600,
   },
   {
     id: '30',
@@ -493,7 +509,7 @@ export const stories = [
     body: "The launch of NaijaSat-1 is a game-changer for Nigeria's technology sector. The satellite will provide essential data for mapping, climate prediction, and communication technologies, paving the way for unprecedented innovation.",
     slug: 'how-naijasat-1-will-transform-nigeria-tech-sector',
     category_id: '4',
-    updated_at: '1611702000',
+    updated_at: 1611702000,
     parent_stories: ['29'],
     children_stories: ['31'],
     user: {
@@ -513,6 +529,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1611702000,
   },
   {
     id: '31',
@@ -520,7 +537,7 @@ export const stories = [
     body: "The success of NaijaSat-1 can be attributed to a dedicated team of Nigerian engineers and scientists. Today, we take a closer look at the team's journey, from conception to the successful launch of NaijaSat-1.",
     slug: 'the-team-behind-naijasat-1-closer-look',
     category_id: '4',
-    updated_at: '1611788400',
+    updated_at: 1611788400,
     parent_stories: ['30'],
     children_stories: ['32'],
     user: {
@@ -540,6 +557,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1611788400,
   },
   {
     id: '32',
@@ -547,7 +565,7 @@ export const stories = [
     body: 'In an exciting development, NaijaSat-1 has sent its first images back to earth. The images, which were received early this morning, show a clear view of Nigeria from space.',
     slug: 'naijasat-1-sends-first-images-back-earth',
     category_id: '4',
-    updated_at: '1611874800',
+    updated_at: 1611874800,
     parent_stories: ['31'],
     children_stories: [],
     user: {
@@ -567,6 +585,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1611874800,
   },
   {
     id: '33',
@@ -574,7 +593,7 @@ export const stories = [
     body: 'Lagos is set to host its first-ever tech startup summit next month. The summit will bring together tech entrepreneurs, investors, and industry leaders to discuss the future of technology in Nigeria.',
     slug: 'lagos-host-first-ever-tech-startup-summit',
     category_id: '4',
-    updated_at: '1611961200',
+    updated_at: 1611961200,
     parent_stories: [],
     children_stories: ['34'],
     user: {
@@ -594,6 +613,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1611961200,
   },
   {
     id: '34',
@@ -601,7 +621,7 @@ export const stories = [
     body: "With the Lagos Tech Startup Summit fast approaching, we delve into what participants can expect. From insightful panel discussions to networking opportunities, this event promises to be a pivotal moment for Nigeria's tech ecosystem.",
     slug: 'what-expect-lagos-tech-startup-summit',
     category_id: '4',
-    updated_at: '1612047600',
+    updated_at: 1612047600,
     parent_stories: ['33'],
     children_stories: ['35'],
     user: {
@@ -621,6 +641,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1612047600,
   },
   {
     id: '35',
@@ -628,7 +649,7 @@ export const stories = [
     body: "The Lagos Tech Startup Summit proved to be a successful event, with startups securing significant investments and industry leaders sharing invaluable insights. Here's a recap of the notable moments from the summit.",
     slug: 'lagos-tech-startup-summit-recap',
     category_id: '4',
-    updated_at: '1612134000',
+    updated_at: 1612134000,
     parent_stories: ['34'],
     children_stories: ['36'],
     user: {
@@ -648,6 +669,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1612134000,
   },
   {
     id: '36',
@@ -655,7 +677,7 @@ export const stories = [
     body: 'Following the Lagos Tech Startup Summit, the city has seen a surge in innovative startups. The summit not only facilitated funding for these startups, but it also created a supportive network for entrepreneurs to thrive.',
     slug: 'startup-summit-spurs-innovation-lagos',
     category_id: '4',
-    updated_at: '1612220400',
+    updated_at: 1612220400,
     parent_stories: ['35'],
     children_stories: [],
     user: {
@@ -675,15 +697,15 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1612220400,
   },
-
   {
     id: '37',
     title: 'Green Energy Initiatives Gaining Traction in Nigeria',
     body: "In an effort to reduce the country's carbon footprint, Nigeria has recently launched several green energy initiatives. These include solar panel installations and waste-to-energy projects.",
     slug: 'green-energy-initiatives-gaining-traction-nigeria',
     category_id: '5',
-    updated_at: '1612306800',
+    updated_at: 1612306800,
     parent_stories: [],
     children_stories: ['38'],
     user: {
@@ -703,6 +725,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1612306800,
   },
   {
     id: '38',
@@ -710,7 +733,7 @@ export const stories = [
     body: "Many rural communities in Nigeria are benefiting from the government's new solar energy initiative. These solar panel installations are providing a much-needed solution to the persistent issue of power cuts.",
     slug: 'how-solar-energy-lighting-up-rural-nigeria',
     category_id: '5',
-    updated_at: '1612393200',
+    updated_at: 1612393200,
     parent_stories: ['37'],
     children_stories: ['39'],
     user: {
@@ -730,6 +753,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1612393200,
   },
   {
     id: '39',
@@ -738,7 +762,7 @@ export const stories = [
     body: 'With schools in rural areas now powered by solar energy, students have more hours to study, and computer literacy is on the rise. This transformation shows the potential of renewable energy to improve education in Nigeria.',
     slug: 'brighter-future-impact-solar-energy-education-nigeria',
     category_id: '5',
-    updated_at: '1612479600',
+    updated_at: 1612479600,
     parent_stories: ['38'],
     children_stories: ['40'],
     user: {
@@ -758,6 +782,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1612479600,
   },
   {
     id: '40',
@@ -765,7 +790,7 @@ export const stories = [
     body: 'The shift to solar energy in Nigeria is not only improving lives but also protecting the environment. By reducing the reliance on fossil fuels, the country is making significant strides towards reducing its carbon emissions.',
     slug: 'environmental-benefits-nigeria-switch-solar-energy',
     category_id: '5',
-    updated_at: '1612566000',
+    updated_at: 1612566000,
     parent_stories: ['39'],
     children_stories: [],
     user: {
@@ -785,6 +810,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1612566000,
   },
   {
     id: '41',
@@ -792,7 +818,7 @@ export const stories = [
     body: "Nigeria's first waste-to-energy plant is set to start operations, converting the city's waste into electricity. This will not only solve the waste management issue but also provide a new energy source for homes.",
     slug: 'nigeria-new-waste-energy-plant-power-homes',
     category_id: '5',
-    updated_at: '1612652400',
+    updated_at: 1612652400,
     parent_stories: [],
     children_stories: ['42'],
     user: {
@@ -812,6 +838,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1612652400,
   },
   {
     id: '42',
@@ -820,7 +847,7 @@ export const stories = [
     body: "With the imminent launch of the waste-to-energy plant, we take a look at the journey so far. From the conception of the idea to its implementation, it's been a journey filled with challenges and victories.",
     slug: 'waste-power-journey-nigeria-first-waste-energy-plant',
     category_id: '5',
-    updated_at: '1612738800',
+    updated_at: 1612738800,
     parent_stories: ['41'],
     children_stories: ['43'],
     user: {
@@ -840,6 +867,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1612738800,
   },
   {
     id: '43',
@@ -848,7 +876,7 @@ export const stories = [
     body: 'The waste-to-energy plant is expected to provide numerous economic benefits. Besides creating jobs, the plant will also reduce expenditure on waste management and increase the supply of electricity, thereby spurring economic growth.',
     slug: 'step-towards-sustainability-impact-waste-energy-plant-nigeria-economy',
     category_id: '5',
-    updated_at: '1612825200',
+    updated_at: 1612825200,
     parent_stories: ['42'],
     children_stories: ['44'],
     user: {
@@ -868,6 +896,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1612825200,
   },
   {
     id: '44',
@@ -876,7 +905,7 @@ export const stories = [
     body: "With the successful launch of the waste-to-energy plant, we examine the potential of this technology in transforming waste management in Nigeria. Can this be the solution to the country's waste and energy problems?",
     slug: 'future-waste-management-nigeria-look-potential-waste-energy',
     category_id: '5',
-    updated_at: '1612911600',
+    updated_at: 1612911600,
     parent_stories: ['43'],
     children_stories: [],
     user: {
@@ -896,6 +925,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1612911600,
   },
   {
     id: '45',
@@ -903,7 +933,7 @@ export const stories = [
     body: "The Nigerian government has unveiled a new strategy to bolster the country's digital economy. The plan includes initiatives to promote digital literacy, infrastructure development, and investment in tech startups.",
     slug: 'unveiling-new-roadmap-nigeria-digital-economy',
     category_id: '6',
-    updated_at: '1612998000',
+    updated_at: 1612998000,
     parent_stories: [],
     children_stories: ['46'],
     user: {
@@ -923,6 +953,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1612998000,
   },
   {
     id: '46',
@@ -930,7 +961,7 @@ export const stories = [
     body: 'Digital literacy plays a pivotal role in the development of a robust digital economy. As Nigeria unveils its new digital economy strategy, we look at how improving digital literacy can empower individuals and spur economic growth.',
     slug: 'role-digital-literacy-nigeria-digital-economy',
     category_id: '6',
-    updated_at: '1613084400',
+    updated_at: 1613084400,
     parent_stories: ['45'],
     children_stories: ['47'],
     user: {
@@ -950,6 +981,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1613084400,
   },
   {
     id: '47',
@@ -957,7 +989,7 @@ export const stories = [
     body: 'With the new digital economy roadmap, Nigeria is poised to become a hub for tech startups. We explore the current state of tech startups in the country and how the new plan will influence their growth.',
     slug: 'investing-future-state-tech-startups-nigeria',
     category_id: '6',
-    updated_at: '1613170800',
+    updated_at: 1613170800,
     parent_stories: ['46'],
     children_stories: ['48'],
     user: {
@@ -977,6 +1009,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1613170800,
   },
   {
     id: '48',
@@ -985,7 +1018,7 @@ export const stories = [
     body: 'As part of its new digital economy plan, Nigeria is ramping up its infrastructure development efforts. This will not only improve connectivity but also create a conducive environment for the growth of tech startups.',
     slug: 'connected-nation-impact-infrastructure-development-nigeria-digital-economy',
     category_id: '6',
-    updated_at: '1613257200',
+    updated_at: 1613257200,
     parent_stories: ['47'],
     children_stories: [],
     user: {
@@ -1005,6 +1038,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1613257200,
   },
   {
     id: '49',
@@ -1012,7 +1046,7 @@ export const stories = [
     body: 'Despite the growth of the digital economy, a significant digital skills gap exists in Nigeria. In this report, we examine the challenges in bridging this gap and propose potential solutions.',
     slug: 'digital-skills-gap-nigeria-challenges-solutions',
     category_id: '6',
-    updated_at: '1613343600',
+    updated_at: 1613343600,
     parent_stories: [],
     children_stories: ['50'],
     user: {
@@ -1032,6 +1066,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1613343600,
   },
   {
     id: '50',
@@ -1040,7 +1075,7 @@ export const stories = [
     body: 'Digital inclusion is crucial for the success of the digital economy. This article explores how Nigeria can promote digital inclusion and ensure that everyone benefits from the digital revolution.',
     slug: 'digital-inclusion-pathway-robust-digital-economy-nigeria',
     category_id: '6',
-    updated_at: '1613430000',
+    updated_at: 1613430000,
     parent_stories: ['49'],
     children_stories: ['51'],
     user: {
@@ -1060,6 +1095,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1613430000,
   },
   {
     id: '51',
@@ -1068,7 +1104,7 @@ export const stories = [
     body: 'As Nigeria aims to become a leading digital economy, the role of digital technologies in education cannot be overstated. This article explores how these technologies can transform education and empower the next generation of digital leaders.',
     slug: 'harnessing-power-digital-technologies-education-nigeria',
     category_id: '6',
-    updated_at: '1613516400',
+    updated_at: 1613516400,
     parent_stories: ['50'],
     children_stories: ['52'],
     user: {
@@ -1088,6 +1124,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1613516400,
   },
   {
     id: '52',
@@ -1095,7 +1132,7 @@ export const stories = [
     body: "With a burgeoning youth population and a new digital economy roadmap, Nigeria is poised to reap the benefits of the digital revolution. But how ready is the country for this transition? This article explores Nigeria's readiness for a digital economy.",
     slug: 'future-digital-preparing-nigeria-digital-economy',
     category_id: '6',
-    updated_at: '1613602800',
+    updated_at: 1613602800,
     parent_stories: ['51'],
     children_stories: [],
     user: {
@@ -1115,6 +1152,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1613602800,
   },
   {
     id: '53',
@@ -1123,7 +1161,7 @@ export const stories = [
     body: 'Lagos State government has commenced the reconstruction of the Lagos-Badagry Expressway. This major road project is expected to ease the daily commute for thousands of Lagos residents and enhance economic activities in the region.',
     slug: 'breaking-ground-start-lagos-badagry-expressway-reconstruction',
     category_id: '7',
-    updated_at: '1613689200',
+    updated_at: 1613689200,
     parent_stories: [],
     children_stories: ['54'],
     user: {
@@ -1143,6 +1181,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1613689200,
   },
   {
     id: '54',
@@ -1150,7 +1189,7 @@ export const stories = [
     body: 'The reconstruction of the Lagos-Badagry Expressway promises a better commuting experience for Lagosians. However, during the reconstruction phase, commuters have to deal with temporary inconveniences and longer travel times. This article explores the impact of the reconstruction on daily commuters.',
     slug: 'lagos-badagry-expressway-reconstruction-impact-commuters',
     category_id: '7',
-    updated_at: '1613775600',
+    updated_at: 1613775600,
     parent_stories: ['53'],
     children_stories: ['55'],
     user: {
@@ -1170,6 +1209,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1613775600,
   },
   {
     id: '55',
@@ -1177,7 +1217,7 @@ export const stories = [
     body: 'The reconstruction of the Lagos-Badagry Expressway is expected to unlock numerous economic benefits by improving connectivity, reducing travel time, and facilitating the movement of goods. This article delves into the economic prospects of this important infrastructure project.',
     slug: 'lagos-badagry-expressway-reconstruction-economic-prospects',
     category_id: '7',
-    updated_at: '1613862000',
+    updated_at: 1613862000,
     parent_stories: ['54'],
     children_stories: ['56'],
     user: {
@@ -1197,6 +1237,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1613862000,
   },
   {
     id: '56',
@@ -1205,7 +1246,7 @@ export const stories = [
     body: "The reconstruction of the Lagos-Badagry Expressway is not just about improving transportation; it's a key part of urban development. In this article, we explore how improved road infrastructure can catalyze urban development in Lagos State.",
     slug: 'road-infrastructure-urban-development-case-lagos-badagry-expressway',
     category_id: '7',
-    updated_at: '1613948400',
+    updated_at: 1613948400,
     parent_stories: ['55'],
     children_stories: [],
     user: {
@@ -1225,6 +1266,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1613948400,
   },
   {
     id: '57',
@@ -1232,7 +1274,7 @@ export const stories = [
     body: 'With abundant sun and wind resources, Nigeria is positioned to harness renewable energy for its growing population. This report provides an overview of the current state of renewable energy in Nigeria and the opportunities it presents for the future.',
     slug: 'renewable-energy-nigeria-dawn-new-era',
     category_id: '7',
-    updated_at: '1614034800',
+    updated_at: 1614034800,
     parent_stories: [],
     children_stories: ['58'],
     user: {
@@ -1252,6 +1294,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1614034800,
   },
   {
     id: '58',
@@ -1259,7 +1302,7 @@ export const stories = [
     body: 'Renewable energy holds great potential for rural electrification in Nigeria. This article explores the challenges and opportunities in harnessing renewable energy sources to light up rural communities in Nigeria.',
     slug: 'renewable-energy-rural-electrification-nigeria',
     category_id: '7',
-    updated_at: '1614121200',
+    updated_at: 1614121200,
     parent_stories: ['57'],
     children_stories: ['59'],
     user: {
@@ -1279,6 +1322,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1614121200,
   },
   {
     id: '59',
@@ -1287,7 +1331,7 @@ export const stories = [
     body: "Investing in renewable energy in Nigeria offers promising returns but also comes with challenges. This report dives into the investment landscape of Nigeria's renewable energy sector.",
     slug: 'investing-renewable-energy-nigeria-opportunities-challenges',
     category_id: '7',
-    updated_at: '1614207600',
+    updated_at: 1614207600,
     parent_stories: ['58'],
     children_stories: ['60'],
     user: {
@@ -1307,6 +1351,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1614207600,
   },
   {
     id: '60',
@@ -1314,7 +1359,7 @@ export const stories = [
     body: "As the world gravitates towards cleaner energy sources, the future of renewable energy in Nigeria looks promising. This article looks into the future, highlighting the potential transformations in the country's energy landscape.",
     slug: 'future-renewable-energy-nigeria',
     category_id: '7',
-    updated_at: '1614294000',
+    updated_at: 1614294000,
     parent_stories: ['59'],
     children_stories: [],
     user: {
@@ -1334,6 +1379,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1614294000,
   },
   {
     id: '61',
@@ -1341,7 +1387,7 @@ export const stories = [
     body: 'The rise of digital technology has catalyzed the growth of eCommerce in Nigeria. More people are embracing online shopping due to its convenience and the broad range of products available.',
     slug: 'growth-ecommerce-nigeria',
     category_id: '8',
-    updated_at: '1614546000',
+    updated_at: 1614546000,
     parent_stories: [],
     children_stories: ['62'],
     user: {
@@ -1361,6 +1407,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1614546000,
   },
   {
     id: '62',
@@ -1368,7 +1415,7 @@ export const stories = [
     body: "This article compares Nigeria's top eCommerce platforms, discussing their strengths, weaknesses, and the unique features they offer.",
     slug: 'nigeria-top-ecommerce-platforms-comparative-analysis',
     category_id: '8',
-    updated_at: '1614632400',
+    updated_at: 1614632400,
     parent_stories: ['61'],
     children_stories: ['63'],
     user: {
@@ -1388,6 +1435,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1614632400,
   },
   {
     id: '63',
@@ -1395,7 +1443,7 @@ export const stories = [
     body: "eCommerce has significantly influenced Nigeria's economy. This article examines how online shopping has boosted economic growth, created jobs, and enhanced customer convenience.",
     slug: 'impact-ecommerce-nigeria-economy',
     category_id: '8',
-    updated_at: '1614718800',
+    updated_at: 1614718800,
     parent_stories: ['62'],
     children_stories: ['64'],
     user: {
@@ -1415,6 +1463,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1614718800,
   },
   {
     id: '64',
@@ -1422,7 +1471,7 @@ export const stories = [
     body: 'eCommerce in Nigeria is projected to grow exponentially in the coming years. This article presents key trends shaping the future of online shopping in the country.',
     slug: 'future-ecommerce-nigeria-trends-predictions',
     category_id: '8',
-    updated_at: '1614805200',
+    updated_at: 1614805200,
     parent_stories: ['63'],
     children_stories: [],
     user: {
@@ -1442,6 +1491,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1614805200,
   },
   {
     id: '65',
@@ -1449,7 +1499,7 @@ export const stories = [
     body: "As digital technology advances, so do cyber threats. This article discusses the current state of cybersecurity in Nigeria and why it's a growing concern.",
     slug: 'cybersecurity-nigeria-growing-concern',
     category_id: '8',
-    updated_at: '1614891600',
+    updated_at: 1614891600,
     parent_stories: [],
     children_stories: ['66'],
     user: {
@@ -1469,6 +1519,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1614891600,
   },
   {
     id: '66',
@@ -1476,7 +1527,7 @@ export const stories = [
     body: 'Nigeria has enacted a cybersecurity law to protect its digital space. This article provides a detailed overview of the law and its implications for Nigerians.',
     slug: 'nigeria-cybersecurity-law-detailed-overview',
     category_id: '8',
-    updated_at: '1614978000',
+    updated_at: 1614978000,
     parent_stories: ['65'],
     children_stories: ['67'],
     user: {
@@ -1496,6 +1547,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1614978000,
   },
   {
     id: '67',
@@ -1503,7 +1555,7 @@ export const stories = [
     body: 'Cyber threats pose a significant risk to individuals and organizations. This article explains different types of cyber threats and offers practical tips on how to protect yourself online.',
     slug: 'understanding-cyber-threats-protect-yourself-online',
     category_id: '8',
-    updated_at: '1615064400',
+    updated_at: 1615064400,
     parent_stories: ['66'],
     children_stories: ['68'],
     user: {
@@ -1523,6 +1575,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1615064400,
   },
   {
     id: '68',
@@ -1531,7 +1584,7 @@ export const stories = [
     body: 'Cybersecurity in Nigeria faces several challenges but also presents opportunities for growth. This article explores these issues and the future of cybersecurity in the country.',
     slug: 'future-cybersecurity-nigeria-challenges-opportunities',
     category_id: '8',
-    updated_at: '1615150800',
+    updated_at: 1615150800,
     parent_stories: ['67'],
     children_stories: [],
     user: {
@@ -1551,6 +1604,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1615150800,
   },
   {
     id: '69',
@@ -1558,7 +1612,7 @@ export const stories = [
     body: 'Digital banking is revolutionizing the financial industry in Nigeria. This article gives an overview of its rise, benefits, and challenges.',
     slug: 'digital-banking-nigeria-overview',
     category_id: '8',
-    updated_at: '1615237200',
+    updated_at: 1615237200,
     parent_stories: [],
     children_stories: ['70'],
     user: {
@@ -1578,6 +1632,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1615237200,
   },
   {
     id: '70',
@@ -1585,7 +1640,7 @@ export const stories = [
     body: "Digital banking has had a profound impact on Nigeria's economy. This article discusses how it has contributed to economic growth, financial inclusion, and more efficient transactions.",
     slug: 'impact-digital-banking-nigeria-economy',
     category_id: '8',
-    updated_at: '1615323600',
+    updated_at: 1615323600,
     parent_stories: ['69'],
     children_stories: [],
     user: {
@@ -1605,6 +1660,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1615323600,
   },
   {
     id: '71',
@@ -1612,7 +1668,7 @@ export const stories = [
     body: 'Mobile technology has transformed healthcare delivery, improving access to services, enhancing patient engagement, and facilitating remote patient monitoring.',
     slug: 'role-mobile-technology-healthcare',
     category_id: '9',
-    updated_at: '1615401000',
+    updated_at: 1615401000,
     parent_stories: [],
     children_stories: ['72'],
     user: {
@@ -1632,6 +1688,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1615401000,
   },
   {
     id: '72',
@@ -1639,7 +1696,7 @@ export const stories = [
     body: 'mHealth refers to the use of mobile devices for health services and information. This article provides an overview of mHealth in Nigeria, exploring its applications, benefits, and challenges.',
     slug: 'mhealth-nigeria-overview',
     category_id: '9',
-    updated_at: '1615487400',
+    updated_at: 1615487400,
     parent_stories: ['71'],
     children_stories: ['73'],
     user: {
@@ -1659,6 +1716,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1615487400,
   },
   {
     id: '73',
@@ -1666,7 +1724,7 @@ export const stories = [
     body: "mHealth has had a significant impact on Nigeria's healthcare system. It has improved healthcare delivery, increased health education, and enhanced disease surveillance.",
     slug: 'impact-mhealth-nigeria-healthcare-system',
     category_id: '9',
-    updated_at: '1615573800',
+    updated_at: 1615573800,
     parent_stories: ['72'],
     children_stories: ['74'],
     user: {
@@ -1686,6 +1744,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1615573800,
   },
   {
     id: '74',
@@ -1693,7 +1752,7 @@ export const stories = [
     body: 'mHealth in Nigeria has potential for significant growth. This article explores the opportunities it presents for healthcare delivery and the challenges that need to be addressed for its full potential to be realized.',
     slug: 'future-mhealth-nigeria-opportunities-challenges',
     category_id: '9',
-    updated_at: '1615660200',
+    updated_at: 1615660200,
     parent_stories: ['73'],
     children_stories: [],
     user: {
@@ -1713,6 +1772,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1615660200,
   },
   {
     id: '75',
@@ -1720,7 +1780,7 @@ export const stories = [
     body: 'Telemedicine involves the use of digital technologies to deliver healthcare services remotely. This article gives an overview of telemedicine in Nigeria, discussing its applications, benefits, and challenges.',
     slug: 'telemedicine-nigeria-overview',
     category_id: '9',
-    updated_at: '1615746600',
+    updated_at: 1615746600,
     parent_stories: [],
     children_stories: ['76'],
     user: {
@@ -1740,6 +1800,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1615746600,
   },
   {
     id: '76',
@@ -1747,7 +1808,7 @@ export const stories = [
     body: 'Telemedicine has revolutionized healthcare delivery in Nigeria, providing access to quality healthcare services in remote and underserved areas, improving patient engagement, and enhancing health outcomes.',
     slug: 'impact-telemedicine-nigeria-healthcare-system',
     category_id: '9',
-    updated_at: '1615833000',
+    updated_at: 1615833000,
     parent_stories: ['75'],
     children_stories: ['77'],
     user: {
@@ -1767,6 +1828,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1615833000,
   },
   {
     id: '77',
@@ -1775,7 +1837,7 @@ export const stories = [
     body: 'Telemedicine in Nigeria presents significant opportunities for improving healthcare delivery. This article explores these opportunities and the challenges that need to be addressed to harness the full potential of telemedicine.',
     slug: 'future-telemedicine-nigeria-opportunities-challenges',
     category_id: '9',
-    updated_at: '1615919400',
+    updated_at: 1615919400,
     parent_stories: ['76'],
     children_stories: [],
     user: {
@@ -1795,6 +1857,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1615919400,
   },
   {
     id: '78',
@@ -1802,7 +1865,7 @@ export const stories = [
     body: "Electronic health records (EHRs) are digital versions of patients' medical histories. This article provides an overview of EHRs in Nigeria, discussing their implementation, benefits, and challenges.",
     slug: 'electronic-health-records-nigeria-overview',
     category_id: '9',
-    updated_at: '1616005800',
+    updated_at: 1616005800,
     parent_stories: [],
     children_stories: ['79'],
     user: {
@@ -1822,6 +1885,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1616005800,
   },
   {
     id: '79',
@@ -1830,7 +1894,7 @@ export const stories = [
     body: "Electronic health records (EHRs) have had a significant impact on Nigeria's healthcare system. They have improved the efficiency of healthcare delivery, enhanced patient safety, and facilitated research and data analysis.",
     slug: 'impact-electronic-health-records-nigeria-healthcare-system',
     category_id: '9',
-    updated_at: '1616092200',
+    updated_at: 1616092200,
     parent_stories: ['78'],
     children_stories: ['80'],
     user: {
@@ -1850,6 +1914,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1616092200,
   },
   {
     id: '80',
@@ -1858,7 +1923,7 @@ export const stories = [
     body: 'EHRs in Nigeria have significant potential for growth. This article explores the opportunities and challenges that need to be addressed to maximize the benefits of EHRs for healthcare delivery in Nigeria.',
     slug: 'future-electronic-health-records-nigeria-opportunities-challenges',
     category_id: '9',
-    updated_at: '1616178600',
+    updated_at: 1616178600,
     parent_stories: ['79'],
     children_stories: [],
     user: {
@@ -1878,6 +1943,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1616178600,
   },
   {
     id: '81',
@@ -1885,7 +1951,7 @@ export const stories = [
     body: "The Nigerian music industry has experienced significant growth in recent years, becoming a beacon for African music on the global stage. This article provides an overview of the industry's evolution and its current state.",
     slug: 'nigerian-music-industry-overview',
     category_id: '10',
-    updated_at: '1616265000',
+    updated_at: 1616265000,
     parent_stories: [],
     children_stories: ['82'],
     user: {
@@ -1905,6 +1971,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1616265000,
   },
   {
     id: '82',
@@ -1912,7 +1979,7 @@ export const stories = [
     body: 'Digital streaming platforms have revolutionized the way music is consumed in Nigeria, offering artists greater visibility and fans more accessibility. This article explores the impact of these platforms on the Nigerian music industry.',
     slug: 'impact-digital-streaming-nigerian-music-industry',
     category_id: '10',
-    updated_at: '1616351400',
+    updated_at: 1616351400,
     parent_stories: ['81'],
     children_stories: ['83'],
     user: {
@@ -1932,6 +1999,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1616351400,
   },
   {
     id: '83',
@@ -1940,7 +2008,7 @@ export const stories = [
     body: 'The Nigerian music industry has immense potential for growth. This article examines the opportunities and challenges that the industry faces as it strives to become a dominant player in the global music scene.',
     slug: 'future-nigerian-music-industry-opportunities-challenges',
     category_id: '10',
-    updated_at: '1616437800',
+    updated_at: 1616437800,
     parent_stories: ['82'],
     children_stories: [],
     user: {
@@ -1960,6 +2028,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1616437800,
   },
   {
     id: '84',
@@ -1967,7 +2036,7 @@ export const stories = [
     body: "Nigeria's movie industry, also known as Nollywood, is one of the largest in the world in terms of output. This article provides an overview of the industry, discussing its history, growth, and current trends.",
     slug: 'nigerian-movie-industry-overview',
     category_id: '10',
-    updated_at: '1616524200',
+    updated_at: 1616524200,
     parent_stories: [],
     children_stories: ['85'],
     user: {
@@ -1987,6 +2056,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1616524200,
   },
   {
     id: '85',
@@ -1994,7 +2064,7 @@ export const stories = [
     body: 'Digital streaming platforms have significantly influenced Nollywood, enhancing global reach and transforming production standards. This article explores the impact of these platforms on the Nigerian movie industry.',
     slug: 'impact-digital-streaming-nigerian-movie-industry',
     category_id: '10',
-    updated_at: '1616610600',
+    updated_at: 1616610600,
     parent_stories: ['84'],
     children_stories: ['86'],
     user: {
@@ -2014,6 +2084,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1616610600,
   },
   {
     id: '86',
@@ -2022,7 +2093,7 @@ export const stories = [
     body: 'Nollywood has a bright future, but it faces challenges that must be overcome to maximize its potential. This article explores the opportunities and challenges ahead for the Nigerian movie industry.',
     slug: 'future-nigerian-movie-industry-opportunities-challenges',
     category_id: '10',
-    updated_at: '1616697000',
+    updated_at: 1616697000,
     parent_stories: ['85'],
     children_stories: [],
     user: {
@@ -2042,6 +2113,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1616697000,
   },
   {
     id: '87',
@@ -2049,7 +2121,7 @@ export const stories = [
     body: "Nigeria's football scene has seen a surge in recent years, both locally and internationally. This article provides an overview of the growth, achievements, and current state of Nigerian football.",
     slug: 'nigerian-football-scene-overview',
     category_id: '11',
-    updated_at: '1616783400',
+    updated_at: 1616783400,
     parent_stories: [],
     children_stories: ['88'],
     user: {
@@ -2069,6 +2141,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1616783400,
   },
   {
     id: '88',
@@ -2076,7 +2149,7 @@ export const stories = [
     body: "Youth development programs have been pivotal to the rise of many Nigerian football stars. This article explores how these initiatives have shaped Nigeria's football scene.",
     slug: 'impact-youth-development-programs-nigerian-football',
     category_id: '11',
-    updated_at: '1616869800',
+    updated_at: 1616869800,
     parent_stories: ['87'],
     children_stories: ['89'],
     user: {
@@ -2096,6 +2169,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1616869800,
   },
   {
     id: '89',
@@ -2103,7 +2177,7 @@ export const stories = [
     body: 'The future of Nigerian football looks promising with potential for growth, but several challenges need to be addressed. This article highlights the opportunities and challenges that lie ahead.',
     slug: 'future-football-nigeria-opportunities-challenges',
     category_id: '11',
-    updated_at: '1616956200',
+    updated_at: 1616956200,
     parent_stories: ['88'],
     children_stories: [],
     user: {
@@ -2123,6 +2197,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1616956200,
   },
   {
     id: '90',
@@ -2130,7 +2205,7 @@ export const stories = [
     body: "Athletics has been a significant part of Nigeria's sports culture. This article gives an overview of the history, growth, and current state of athletics in Nigeria.",
     slug: 'overview-athletics-nigeria',
     category_id: '11',
-    updated_at: '1617042600',
+    updated_at: 1617042600,
     parent_stories: [],
     children_stories: ['91'],
     user: {
@@ -2150,6 +2225,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1617042600,
   },
   {
     id: '91',
@@ -2157,7 +2233,7 @@ export const stories = [
     body: 'Training programs play a critical role in the development of Nigerian athletes. This article discusses how these initiatives have influenced athletics in Nigeria.',
     slug: 'impact-training-programs-nigerian-athletics',
     category_id: '11',
-    updated_at: '1617129000',
+    updated_at: 1617129000,
     parent_stories: ['90'],
     children_stories: ['92'],
     user: {
@@ -2177,6 +2253,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1617129000,
   },
   {
     id: '92',
@@ -2184,7 +2261,7 @@ export const stories = [
     body: 'The future of athletics in Nigeria holds significant potential. However, several challenges need to be addressed. This article provides an insight into the future of Nigerian athletics.',
     slug: 'future-athletics-nigeria-opportunities-challenges',
     category_id: '11',
-    updated_at: '1617215400',
+    updated_at: 1617215400,
     parent_stories: ['91'],
     children_stories: [],
     user: {
@@ -2204,6 +2281,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1617215400,
   },
   {
     id: '93',
@@ -2211,7 +2289,7 @@ export const stories = [
     body: "Over the past decade, e-commerce has seen a significant rise in Nigeria. This article explores the factors contributing to the sector's growth and its future prospects.",
     slug: 'rise-e-commerce-nigeria',
     category_id: '12',
-    updated_at: '1617301800',
+    updated_at: 1617301800,
     parent_stories: [],
     children_stories: ['94'],
     user: {
@@ -2231,6 +2309,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1617301800,
   },
   {
     id: '94',
@@ -2238,7 +2317,7 @@ export const stories = [
     body: 'Effective logistics are pivotal to the success of e-commerce in Nigeria. This article delves into the challenges and successes of logistics in the sector.',
     slug: 'role-logistics-e-commerce-success-nigeria',
     category_id: '12',
-    updated_at: '1617388200',
+    updated_at: 1617388200,
     parent_stories: ['93'],
     children_stories: ['95'],
     user: {
@@ -2258,6 +2337,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1617388200,
   },
   {
     id: '95',
@@ -2265,7 +2345,7 @@ export const stories = [
     body: 'While the future of e-commerce in Nigeria holds significant promise, there are also several challenges to overcome. This article provides an insight into what the future might hold for the sector.',
     slug: 'future-e-commerce-nigeria',
     category_id: '12',
-    updated_at: '1617474600',
+    updated_at: 1617474600,
     parent_stories: ['94'],
     children_stories: [],
     user: {
@@ -2285,6 +2365,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1617474600,
   },
   {
     id: '96',
@@ -2292,7 +2373,7 @@ export const stories = [
     body: 'The fintech sector in Nigeria is experiencing exponential growth, transforming the way Nigerians access financial services. This article gives an overview of the emergence and growth of fintech in Nigeria.',
     slug: 'emergence-fintech-nigeria',
     category_id: '12',
-    updated_at: '1617561000',
+    updated_at: 1617561000,
     parent_stories: [],
     children_stories: ['97'],
     user: {
@@ -2312,6 +2393,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1617561000,
   },
   {
     id: '97',
@@ -2319,7 +2401,7 @@ export const stories = [
     body: 'Regulatory policies play a critical role in shaping the fintech sector in Nigeria. This article discusses the impact of these policies and their implications for the future.',
     slug: 'impact-regulatory-policies-fintech-nigeria',
     category_id: '12',
-    updated_at: '1617647400',
+    updated_at: 1617647400,
     parent_stories: ['96'],
     children_stories: ['98'],
     user: {
@@ -2339,6 +2421,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1617647400,
   },
   {
     id: '98',
@@ -2346,7 +2429,7 @@ export const stories = [
     body: 'The future of fintech in Nigeria holds significant potential. However, several challenges need to be addressed. This article provides an insight into the future of Nigerian fintech.',
     slug: 'future-fintech-nigeria',
     category_id: '12',
-    updated_at: '1617733800',
+    updated_at: 1617733800,
     parent_stories: ['97'],
     children_stories: [],
     user: {
@@ -2366,6 +2449,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1617733800,
   },
   {
     id: '99',
@@ -2373,7 +2457,7 @@ export const stories = [
     body: 'This article explores the current state of public healthcare in Nigeria, focusing on the strengths and challenges of the system.',
     slug: 'state-public-healthcare-nigeria',
     category_id: '13',
-    updated_at: '1617820200',
+    updated_at: 1617820200,
     parent_stories: [],
     children_stories: ['100'],
     user: {
@@ -2393,6 +2477,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1617820200,
   },
   {
     id: '100',
@@ -2400,7 +2485,7 @@ export const stories = [
     body: 'Public hospitals in Nigeria are battling several challenges. This article delves into these challenges and their implications on the health sector.',
     slug: 'challenges-public-hospitals-nigeria',
     category_id: '13',
-    updated_at: '1617906600',
+    updated_at: 1617906600,
     parent_stories: ['99'],
     children_stories: ['101'],
     user: {
@@ -2420,6 +2505,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1617906600,
   },
   {
     id: '101',
@@ -2427,7 +2513,7 @@ export const stories = [
     body: 'Government policies have a significant impact on the state of public healthcare in Nigeria. This article examines these impacts and their implications.',
     slug: 'impact-government-policies-public-healthcare-nigeria',
     category_id: '13',
-    updated_at: '1617993000',
+    updated_at: 1617993000,
     parent_stories: ['100'],
     children_stories: [],
     user: {
@@ -2447,6 +2533,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1617993000,
   },
   {
     id: '102',
@@ -2454,7 +2541,7 @@ export const stories = [
     body: 'Malaria cases are on the rise in Nigeria. This article examines the factors contributing to this rise and efforts being made to curb the trend.',
     slug: 'rising-cases-malaria-nigeria',
     category_id: '13',
-    updated_at: '1618079400',
+    updated_at: 1618079400,
     parent_stories: [],
     children_stories: ['103'],
     user: {
@@ -2474,6 +2561,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1618079400,
   },
   {
     id: '103',
@@ -2481,7 +2569,7 @@ export const stories = [
     body: 'Malaria not only affects the health of individuals but also has a significant impact on the Nigerian economy. This article discusses these impacts.',
     slug: 'impact-malaria-nigerian-economy',
     category_id: '13',
-    updated_at: '1618165800',
+    updated_at: 1618165800,
     parent_stories: ['102'],
     children_stories: ['104'],
     user: {
@@ -2501,6 +2589,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1618165800,
   },
   {
     id: '104',
@@ -2508,7 +2597,7 @@ export const stories = [
     body: 'Combating malaria is a priority in Nigeria. This article discusses the measures being taken to tackle the disease and their effectiveness.',
     slug: 'efforts-combat-malaria-nigeria',
     category_id: '13',
-    updated_at: '1618252200',
+    updated_at: 1618252200,
     parent_stories: ['103'],
     children_stories: ['105'],
     user: {
@@ -2528,6 +2617,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1618252200,
   },
   {
     id: '105',
@@ -2535,7 +2625,7 @@ export const stories = [
     body: 'Prevention is a key component in the fight against malaria. This article outlines the most effective methods for preventing malaria in Nigeria.',
     slug: 'malaria-prevention-methods-nigeria',
     category_id: '13',
-    updated_at: '1618338600',
+    updated_at: 1618338600,
     parent_stories: ['104'],
     children_stories: [],
     user: {
@@ -2555,6 +2645,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1618338600,
   },
   {
     id: '106',
@@ -2562,7 +2653,7 @@ export const stories = [
     body: 'Nigeria faces a deforestation crisis, with thousands of acres of forest disappearing annually. The causes range from logging to urbanization. #Deforestation #Environment #Nigeria',
     slug: 'deforestation-crisis-nigeria',
     category_id: '14',
-    updated_at: '1618502400',
+    updated_at: 1618502400,
     parent_stories: [],
     children_stories: ['107'],
     user: {
@@ -2582,6 +2673,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1618502400,
   },
   {
     id: '107',
@@ -2589,7 +2681,7 @@ export const stories = [
     body: "Deforestation in Nigeria has led to the loss of numerous species. The dwindling biodiversity affects the ecosystem's balance. #Biodiversity #Deforestation #Ecosystem",
     slug: 'impact-deforestation-biodiversity',
     category_id: '14',
-    updated_at: '1618588800',
+    updated_at: 1618588800,
     parent_stories: ['106'],
     children_stories: ['108'],
     user: {
@@ -2609,6 +2701,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1618588800,
   },
   {
     id: '108',
@@ -2616,7 +2709,7 @@ export const stories = [
     body: 'Communities in Nigeria are adopting sustainable practices to combat deforestation, promoting agroforestry and afforestation. #SustainableLiving #Agroforestry #Afforestation',
     slug: 'community-solutions-deforestation',
     category_id: '14',
-    updated_at: '1618675200',
+    updated_at: 1618675200,
     parent_stories: ['107'],
     children_stories: ['109'],
     user: {
@@ -2636,6 +2729,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1618675200,
   },
   {
     id: '109',
@@ -2643,7 +2737,7 @@ export const stories = [
     body: 'Air pollution in Lagos is reaching alarming levels, primarily due to vehicle emissions and industrial activities. #AirPollution #Lagos #IndustrialEmissions',
     slug: 'rising-air-pollution-lagos',
     category_id: '14',
-    updated_at: '1618761600',
+    updated_at: 1618761600,
     parent_stories: ['108'],
     children_stories: ['110'],
     user: {
@@ -2663,6 +2757,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1618761600,
   },
   {
     id: '110',
@@ -2670,7 +2765,7 @@ export const stories = [
     body: 'Several initiatives are pushing for the adoption of clean energy in Nigeria to reduce environmental pollution and combat climate change. #CleanEnergy #ClimateChange #GreenInitiatives',
     slug: 'clean-energy-initiatives-nigeria',
     category_id: '14',
-    updated_at: '1618848000',
+    updated_at: 1618848000,
     parent_stories: ['109'],
     children_stories: [],
     user: {
@@ -2690,6 +2785,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1618848000,
   },
   {
     id: '111',
@@ -2697,7 +2793,7 @@ export const stories = [
     body: 'The Nigerian government announced a significant increase in the budget for primary education. This move is expected to enhance the quality of education in public schools. #EducationFunding #PrimaryEducation #NigeriaEducation',
     slug: 'government-increases-funding-primary-education',
     category_id: '16',
-    updated_at: '1622726400',
+    updated_at: 1622726400,
     parent_stories: [],
     children_stories: ['112'],
     user: {
@@ -2717,6 +2813,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1622726400,
   },
   {
     id: '112',
@@ -2724,7 +2821,7 @@ export const stories = [
     body: 'Teachers across Nigeria are praising the new training initiatives introduced to boost their skills and teaching methods. #TeacherTraining #EducationReform #TeachingMethods',
     slug: 'teachers-celebrate-training-initiatives',
     category_id: '16',
-    updated_at: '1622812800',
+    updated_at: 1622812800,
     parent_stories: ['111'],
     children_stories: ['113'],
     user: {
@@ -2744,6 +2841,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1622812800,
   },
   {
     id: '113',
@@ -2751,7 +2849,7 @@ export const stories = [
     body: 'Universities in Nigeria have seen a significant rise in applications this year, especially in science and technology fields. #UniversityApplications #HigherEducation #STEM',
     slug: 'rise-university-applications',
     category_id: '16',
-    updated_at: '1622899200',
+    updated_at: 1622899200,
     parent_stories: ['112'],
     children_stories: ['114'],
     user: {
@@ -2771,6 +2869,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1622899200,
   },
   {
     id: '114',
@@ -2778,7 +2877,7 @@ export const stories = [
     body: 'With the challenges of the pandemic, several e-learning platforms have emerged, providing students with more flexible learning options. #Elearning #DigitalEducation #NigeriaLearning',
     slug: 'new-elearning-platforms-emerge',
     category_id: '16',
-    updated_at: '1622985600',
+    updated_at: 1622985600,
     parent_stories: ['113'],
     children_stories: ['115'],
     user: {
@@ -2798,6 +2897,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1622985600,
   },
   {
     id: '115',
@@ -2805,7 +2905,7 @@ export const stories = [
     body: 'The annual National Spelling Bee has attracted a record number of participants this year, showcasing the linguistic talents of Nigerian students. #SpellingBee #EducationEvents #StudentTalents',
     slug: 'national-spelling-bee-attracts-thousands',
     category_id: '16',
-    updated_at: '1623072000',
+    updated_at: 1623072000,
     parent_stories: ['114'],
     children_stories: [],
     user: {
@@ -2825,6 +2925,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1623072000,
   },
   {
     id: '116',
@@ -2832,7 +2933,7 @@ export const stories = [
     body: 'The Nigerian national team, Super Eagles, have successfully qualified for the upcoming African Cup of Nations after a thrilling match against South Africa. #SuperEagles #AfricanCup #NigeriaFootball',
     slug: 'super-eagles-qualify-african-cup',
     category_id: '17',
-    updated_at: '1623158400',
+    updated_at: 1623158400,
     parent_stories: [],
     children_stories: ['117'],
     user: {
@@ -2852,6 +2953,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1623158400,
   },
   {
     id: '117',
@@ -2859,7 +2961,7 @@ export const stories = [
     body: "Nigerian striker Victor Osimhen has secured the Golden Boot award in one of Europe's top leagues, marking another milestone for Nigerian athletes abroad. #Osimhen #GoldenBoot #NigerianTalents",
     slug: 'osimhen-wins-golden-boot',
     category_id: '17',
-    updated_at: '1623244800',
+    updated_at: 1623244800,
     parent_stories: ['116'],
     children_stories: ['118'],
     user: {
@@ -2879,6 +2981,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1623244800,
   },
   {
     id: '118',
@@ -2886,7 +2989,7 @@ export const stories = [
     body: "Nigeria's national basketball team, D'Tigers, is gearing up for a promising performance in the upcoming Olympic Games. #DTigers #Olympics2022 #Basketball",
     slug: 'dtigers-prepare-olympic-basketball',
     category_id: '17',
-    updated_at: '1623331200',
+    updated_at: 1623331200,
     parent_stories: ['117'],
     children_stories: ['119'],
     user: {
@@ -2906,6 +3009,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1623331200,
   },
   {
     id: '119',
@@ -2913,7 +3017,7 @@ export const stories = [
     body: "Nigeria has been selected as the host nation for the upcoming West African Athletics Championship, a significant recognition of the country's contributions to African sports. #Athletics #WestAfrica #SportsEvents",
     slug: 'nigeria-host-west-african-athletics',
     category_id: '17',
-    updated_at: '1623417600',
+    updated_at: 1623417600,
     parent_stories: ['118'],
     children_stories: ['120'],
     user: {
@@ -2933,6 +3037,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1623417600,
   },
   {
     id: '120',
@@ -2940,7 +3045,7 @@ export const stories = [
     body: 'A nationwide hunt for young football talents has started in Lagos, aimed at finding and nurturing the next generation of Nigerian football stars. #FootballTalent #YouthSports #LagosSports',
     slug: 'youth-football-talent-hunt-lagos',
     category_id: '17',
-    updated_at: '1623504000',
+    updated_at: 1623504000,
     parent_stories: ['119'],
     children_stories: [],
     user: {
@@ -2960,6 +3065,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1623504000,
   },
   {
     id: '121',
@@ -2967,7 +3073,7 @@ export const stories = [
     body: "Nigeria's U-17 team, the Golden Eaglets, have clinched the title at the FIFA U-17 World Cup, marking their sixth championship win. #GoldenEaglets #FIFA #U17WorldCup",
     slug: 'golden-eaglets-champions-u17-world-cup',
     category_id: '17',
-    updated_at: '1623158400',
+    updated_at: 1623158400,
     parent_stories: [],
     children_stories: ['122'],
     user: {
@@ -2987,6 +3093,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1623158400,
   },
   {
     id: '122',
@@ -2994,7 +3101,7 @@ export const stories = [
     body: 'The talented Nigerian striker, Asisat Oshoala, has once again been named the best female footballer on the continent. #Oshoala #FemaleFootballer #AfricaAward',
     slug: 'osisat-oshoala-best-footballer',
     category_id: '17',
-    updated_at: '1623244800',
+    updated_at: 1623244800,
     parent_stories: ['121'],
     children_stories: ['123'],
     user: {
@@ -3014,6 +3121,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1623244800,
   },
   {
     id: '123',
@@ -3021,7 +3129,7 @@ export const stories = [
     body: 'Two of the biggest clubs in the Nigerian Professional Football League, Enyimba and Kano Pillars, will be going head-to-head this weekend in a match that could determine the league winner. #NPFL #Enyimba #KanoPillars',
     slug: 'npfl-enyimba-kano-pillars-match',
     category_id: '17',
-    updated_at: '1623331200',
+    updated_at: 1623331200,
     parent_stories: ['122'],
     children_stories: ['124'],
     user: {
@@ -3041,6 +3149,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1623331200,
   },
   {
     id: '124',
@@ -3048,7 +3157,7 @@ export const stories = [
     body: 'The national table tennis team has brought honor to Nigeria by securing a gold medal at the ongoing Commonwealth Games. #TableTennis #CommonwealthGames #GoldMedal',
     slug: 'nigeria-table-tennis-commonwealth',
     category_id: '17',
-    updated_at: '1623417600',
+    updated_at: 1623417600,
     parent_stories: ['123'],
     children_stories: ['125'],
     user: {
@@ -3068,6 +3177,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1623417600,
   },
   {
     id: '125',
@@ -3075,7 +3185,7 @@ export const stories = [
     body: 'The annual Lagos City Marathon has witnessed its highest ever turnout, with athletes from over 40 countries participating. #LagosMarathon #Athletics #InternationalEvent',
     slug: 'lagos-marathon-record-participation',
     category_id: '17',
-    updated_at: '1623504000',
+    updated_at: 1623504000,
     parent_stories: ['124'],
     children_stories: [],
     user: {
@@ -3095,15 +3205,15 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1623504000,
   },
-
   {
     id: '126',
     title: 'Nigeria Hosts West African Tech Summit',
     body: 'Lagos became the tech hub of West Africa as industry leaders, startups, and enthusiasts gathered for the annual West African Tech Summit. #TechSummit #WestAfrica #LagosTech',
     slug: 'west-african-tech-summit',
     category_id: '18',
-    updated_at: '1623830400',
+    updated_at: 1623830400,
     parent_stories: [],
     children_stories: ['127'],
     user: {
@@ -3123,6 +3233,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1623830400,
   },
   {
     id: '127',
@@ -3130,7 +3241,7 @@ export const stories = [
     body: 'In a move to boost technological infrastructure, a state-of-the-art data center was inaugurated in Abuja. #DataCenter #TechInfrastructure #Abuja',
     slug: 'new-data-center-abuja',
     category_id: '18',
-    updated_at: '1623916800',
+    updated_at: 1623916800,
     parent_stories: ['126'],
     children_stories: ['128'],
     user: {
@@ -3150,6 +3261,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1623916800,
   },
   {
     id: '128',
@@ -3157,7 +3269,7 @@ export const stories = [
     body: 'Innovative tech startup, NaijaSolutions, announced that it has successfully raised $5M in its latest seed funding round. The startup aims to revolutionize e-commerce in the region. #NaijaSolutions #SeedFunding #Ecommerce',
     slug: 'naijasolutions-raises-funding',
     category_id: '18',
-    updated_at: '1624003200',
+    updated_at: 1624003200,
     parent_stories: ['127'],
     children_stories: ['129'],
     user: {
@@ -3177,6 +3289,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1624003200,
   },
   {
     id: '129',
@@ -3184,7 +3297,7 @@ export const stories = [
     body: 'In an ambitious move, the Nigerian government has laid out plans to digitalize public services, aiming to make governance more efficient and accessible. #DigitalGovernance #TechPolicy #NigeriaDigital',
     slug: 'government-digitalize-public-services',
     category_id: '18',
-    updated_at: '1624089600',
+    updated_at: 1624089600,
     parent_stories: ['128'],
     children_stories: ['130'],
     user: {
@@ -3204,6 +3317,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1624089600,
   },
   {
     id: '130',
@@ -3211,7 +3325,7 @@ export const stories = [
     body: 'Several civic tech organizations have stepped forward to partner with the government in its mission to digitalize public services, promising robust solutions and community engagement. #CivicTech #GovernmentPartnerships',
     slug: 'civic-tech-partnership',
     category_id: '18',
-    updated_at: '1624176000',
+    updated_at: 1624176000,
     parent_stories: ['129'],
     children_stories: ['131'],
     user: {
@@ -3231,6 +3345,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1624176000,
   },
   {
     id: '131',
@@ -3238,7 +3353,7 @@ export const stories = [
     body: 'Tech hubs in Ibadan are witnessing an unprecedented spike in enrollments as more youths turn to technology to shape their future. #TechHubs #IbadanTech #ICT',
     slug: 'ict-hubs-ibadan-spike',
     category_id: '18',
-    updated_at: '1624262400',
+    updated_at: 1624262400,
     parent_stories: ['130'],
     children_stories: ['132'],
     user: {
@@ -3258,6 +3373,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1624262400,
   },
   {
     id: '132',
@@ -3265,7 +3381,7 @@ export const stories = [
     body: 'BrainBox, an AI startup from Lagos, has been recognized at an international tech event for its groundbreaking innovations in machine learning. #BrainBox #AI #MachineLearning',
     slug: 'brainbox-ai-international-recognition',
     category_id: '18',
-    updated_at: '1624348800',
+    updated_at: 1624348800,
     parent_stories: ['131'],
     children_stories: ['133'],
     user: {
@@ -3285,6 +3401,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1624348800,
   },
   {
     id: '133',
@@ -3292,7 +3409,7 @@ export const stories = [
     body: "The government's e-governance platforms, aimed at streamlining public services and enhancing transparency, are set to launch in the third quarter of 2023. #EGovernment #TechGovernance",
     slug: 'e-government-initiatives-launch',
     category_id: '18',
-    updated_at: '1624435200',
+    updated_at: 1624435200,
     parent_stories: ['132'],
     children_stories: ['134'],
     user: {
@@ -3312,6 +3429,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1624435200,
   },
   {
     id: '134',
@@ -3319,7 +3437,7 @@ export const stories = [
     body: 'Top tech innovators from Nigeria have been chosen to represent the country at a global tech summit. Their startups focus on solving real-world problems using technology. #GlobalTechSummit #NigeriaRepresent',
     slug: 'tech-innovators-global-summit',
     category_id: '18',
-    updated_at: '1624521600',
+    updated_at: 1624521600,
     parent_stories: ['133'],
     children_stories: ['135'],
     user: {
@@ -3339,6 +3457,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1624521600,
   },
   {
     id: '135',
@@ -3346,7 +3465,7 @@ export const stories = [
     body: 'Efforts to increase digital literacy in rural areas of Nigeria are showing positive results. Communities are embracing technology for education, health, and commerce. #DigitalLiteracy #RuralTech',
     slug: 'digital-literacy-rural-areas',
     category_id: '18',
-    updated_at: '1624608000',
+    updated_at: 1624608000,
     parent_stories: ['134'],
     children_stories: [],
     user: {
@@ -3366,15 +3485,15 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1624608000,
   },
-
   {
     id: '136',
     title: "Nollywood Film 'Legacy' Breaks Box Office Records",
     body: "The Nollywood film 'Legacy' has become the highest-grossing Nigerian movie of the year, showcasing the power of indigenous storytelling. The film revolves around a family's journey to protect their heritage. #Nollywood #Legacy #BoxOfficeHits",
     slug: 'legacy-nollywood-hit',
     category_id: '19',
-    updated_at: '1625263200',
+    updated_at: 1625263200,
     parent_stories: [],
     children_stories: ['137'],
     user: {
@@ -3394,6 +3513,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1625263200,
   },
   {
     id: '137',
@@ -3401,7 +3521,7 @@ export const stories = [
     body: "Lagos Fashion Week has commenced, and this year it's bigger than ever. Global celebrities and fashion icons have flocked to the city to witness the unveiling of the latest trends by African designers. #LagosFashionWeek #FashionTrends #AfricanDesigners",
     slug: 'lagos-fashion-week-annual',
     category_id: '19',
-    updated_at: '1625349600',
+    updated_at: 1625349600,
     parent_stories: ['136'],
     children_stories: ['138'],
     user: {
@@ -3421,6 +3541,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1625349600,
   },
   {
     id: '138',
@@ -3428,7 +3549,7 @@ export const stories = [
     body: "Afrobeat sensation, 'Femi Wave', has dropped his much-anticipated album 'Echoes of the Heart'. Critics have already hailed it as a masterpiece that beautifully melds traditional beats with contemporary sounds. #Afrobeat #FemiWave #NewAlbumRelease",
     slug: 'femi-wave-new-album',
     category_id: '19',
-    updated_at: '1625436000',
+    updated_at: 1625436000,
     parent_stories: ['137'],
     children_stories: ['139'],
     user: {
@@ -3448,6 +3569,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1625436000,
   },
   {
     id: '139',
@@ -3455,7 +3577,7 @@ export const stories = [
     body: "Nigeria's rich tapestry of dance forms was on display at the annual Traditional Dance Festival in Abuja. The event highlighted the importance of preserving cultural heritage in the modern age. #DanceFestival #NigerianCulture #TraditionalDance",
     slug: 'traditional-dance-festival',
     category_id: '19',
-    updated_at: '1625522400',
+    updated_at: 1625522400,
     parent_stories: ['138'],
     children_stories: ['140'],
     user: {
@@ -3475,6 +3597,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1625522400,
   },
   {
     id: '140',
@@ -3482,7 +3605,7 @@ export const stories = [
     body: "Award-winning pop star 'Ada' has launched her own fashion line, drawing inspiration from her Nigerian heritage. The vibrant collection showcases traditional patterns in modern designs. #FashionLaunch #Ada #NigerianInspired",
     slug: 'ada-fashion-line-launch',
     category_id: '19',
-    updated_at: '1625608800',
+    updated_at: 1625608800,
     parent_stories: ['139'],
     children_stories: [],
     user: {
@@ -3502,15 +3625,15 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
+    created_at: 1625608800,
   },
-
   {
     id: '141',
     title: 'Breakthrough in Malaria Research by Nigerian Scientists',
     body: 'A group of scientists from the University of Lagos have unveiled groundbreaking research into a potential cure for malaria. The team has identified a new compound that could revolutionize treatment methodologies. This discovery has received international recognition, shining a spotlight on the capabilities of Nigerian researchers. #MalariaResearch #HealthBreakthrough #NigerianScientists',
     slug: 'breakthrough-malaria-research',
     category_id: '20',
-    updated_at: '1625695200',
+    updated_at: 1625695200,
     parent_stories: [],
     children_stories: ['142'],
     user: {
@@ -3530,6 +3653,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo5.png',
       },
     },
+    created_at: 1625695200,
   },
   {
     id: '142',
@@ -3537,7 +3661,7 @@ export const stories = [
     body: 'The Nigerian Ministry of Health has launched a national fitness campaign to address rising cases of obesity and associated health risks. The campaign includes free community workouts, nutritional guidelines, and fitness challenges. #FitnessCampaign #HealthInitiative #CombatObesity',
     slug: 'national-fitness-campaign',
     category_id: '20',
-    updated_at: '1625781600',
+    updated_at: 1625781600,
     parent_stories: ['141'],
     children_stories: ['143'],
     user: {
@@ -3557,6 +3681,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo4.png',
       },
     },
+    created_at: 1625781600,
   },
   {
     id: '143',
@@ -3564,7 +3689,7 @@ export const stories = [
     body: 'A recent study has highlighted the benefits of incorporating yoga and meditation into mental health therapy in Nigeria. Traditional healing methods are being fused with these practices to offer a holistic approach. #YogaTherapy #MentalHealth #NigerianWellness',
     slug: 'yoga-mental-health-approach',
     category_id: '20',
-    updated_at: '1625868000',
+    updated_at: 1625868000,
     parent_stories: ['142'],
     children_stories: ['144'],
     user: {
@@ -3584,6 +3709,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo2.png',
       },
     },
+    created_at: 1625868000,
   },
   {
     id: '144',
@@ -3591,7 +3717,7 @@ export const stories = [
     body: 'A nationwide campaign to promote awareness on diabetes management has been launched. Early detection and proper diet are emphasized, with healthcare professionals offering free screenings in rural areas. #DiabetesAwareness #HealthCampaign #DiseaseManagement',
     slug: 'diabetes-awareness-drive',
     category_id: '20',
-    updated_at: '1625954400',
+    updated_at: 1625954400,
     parent_stories: ['143'],
     children_stories: ['145'],
     user: {
@@ -3611,6 +3737,7 @@ export const stories = [
         logoUrl: 'http://example.com/logo1.png',
       },
     },
+    created_at: 1625954400,
   },
   {
     id: '145',
@@ -3618,7 +3745,7 @@ export const stories = [
     body: 'With the recent technological advancements and increased internet penetration, telemedicine services are expanding rapidly in Nigeria. These services promise to revolutionize healthcare, especially in rural areas where medical facilities are scarce. #Telemedicine #HealthcareRevolution #DigitalHealth',
     slug: 'telemedicine-services-nigeria',
     category_id: '20',
-    updated_at: '1626040800',
+    updated_at: 1626040800,
     parent_stories: ['144'],
     children_stories: [],
     user: {
@@ -3638,518 +3765,6 @@ export const stories = [
         logoUrl: 'http://example.com/logo3.png',
       },
     },
-  },
-];
-const old = [
-  {
-    id: '1',
-    title: 'Climate Change Summit Held in Glasgow',
-    slug: 'climate-change-summit-glasgow',
-    body: 'World leaders and experts gather in Glasgow to discuss global strategies for combating climate change and achieving sustainable development. #ClimateChange #Sustainability',
-    category_id: '1',
-    created_at: 1679046000,
-    updated_at: 1679046000,
-    parent_stories: [],
-    children_stories: ['2', '3'],
-  },
-  {
-    id: '2',
-    title: 'Developing Nations Demand Climate Action Commitments',
-    slug: 'developing-nations-demand-climate-action-commitments',
-    body: 'Representatives from developing nations urge developed countries to fulfill their climate action commitments, including financial aid and technology transfer. #ClimateAction #DevelopingNations',
-    category_id: '1',
-    created_at: 1679218800,
-    updated_at: 1679218800,
-    parent_stories: ['1'],
-    children_stories: ['4'],
-  },
-  {
-    id: '3',
-    title: 'New Study Reveals Alarming Ocean Acidification Levels',
-    slug: 'new-study-ocean-acidification-levels',
-    body: 'A recent scientific study highlights the escalating levels of ocean acidification, underscoring the urgent need for marine conservation efforts. #OceanAcidification #MarineConservation',
-    category_id: '1',
-    created_at: 1679218800,
-    updated_at: 1679218800,
-    parent_stories: ['1'],
-    children_stories: [],
-  },
-  {
-    id: '4',
-    title: 'Election Results Announced, Marking a Historic Victory',
-    slug: 'election-results-announced-historic-victory',
-    body: 'The electoral commission officially declares the election results, signaling a historic victory for the newly elected leader. #ElectionResults #Victory',
-    category_id: '2',
-    created_at: 1679391600,
-    updated_at: 1679391600,
-    parent_stories: ['2'],
-    children_stories: ['5'],
-  },
-  {
-    id: '5',
-    title:
-      'Opposition Party Concedes Defeat, Pledges Support for New Government',
-    slug: 'opposition-party-concedes-defeat-pledges-support',
-    body: 'Following the election results, the opposition party gracefully concedes defeat and promises to work collaboratively with the newly elected government for the betterment of the nation. #OppositionParty #Unity',
-    category_id: '2',
-    created_at: 1679391600,
-    updated_at: 1679391600,
-    parent_stories: ['4'],
-    children_stories: ['6'],
-  },
-  {
-    id: '6',
-    title: 'Inauguration Ceremony Held, New Government Sworn In',
-    slug: 'inauguration-ceremony-new-government-sworn-in',
-    body: 'Amidst an atmosphere of celebration and optimism, the inauguration ceremony takes place, officially swearing in the new government. #Inauguration #NewGovernment',
-    category_id: '2',
-    created_at: 1679391600,
-    updated_at: 1679391600,
-    parent_stories: ['5'],
-    children_stories: ['8'],
-  },
-  {
-    id: '7',
-    title: 'Tech Startup Secures Major Investment, Plans Expansion',
-    slug: 'tech-startup-secures-major-investment-expansion',
-    body: 'A Nigerian tech startup successfully secures a significant investment, enabling them to expand their operations, innovate new products, and create employment opportunities. #TechStartup #Investment',
-    category_id: '3',
-    created_at: 1679391600,
-    updated_at: 1679391600,
-    parent_stories: ['6'],
-    children_stories: ['8', '9'],
-  },
-  {
-    id: '8',
-    title: 'Government Launches Initiative to Support Small Businesses',
-    slug: 'government-launches-initiative-support-small-businesses',
-    body: 'The government introduces a comprehensive support initiative aimed at assisting small businesses affected by the economic downturn, providing financial aid, training, and resources. #SmallBusinessSupport #GovernmentInitiative',
-    category_id: '3',
-    created_at: 1679650800,
-    updated_at: 1679650800,
-    parent_stories: ['7'],
-    children_stories: ['10'],
-  },
-  {
-    id: '9',
-    title: 'Inflation Rates Stabilize, Positive Economic Outlook Projected',
-    slug: 'inflation-rates-stabilize-positive-economic-outlook',
-    body: 'After a period of economic uncertainty, inflation rates stabilize, prompting experts to project a positive economic outlook with increased consumer spending and business growth. #InflationRates #EconomicOutlook',
-    category_id: '3',
-    created_at: 1679650800,
-    updated_at: 1679650800,
-    parent_stories: ['7'],
-    children_stories: ['11'],
-  },
-  {
-    id: '10',
-    title: 'New Infrastructure Projects Announced, Boosting Job Opportunities',
-    slug: 'new-infrastructure-projects-announced-job-opportunities',
-    body: 'The government unveils ambitious infrastructure projects aimed at enhancing transportation, energy, and telecommunications sectors, providing a significant number of job opportunities. #InfrastructureProjects #JobOpportunities',
-    category_id: '3',
-    created_at: 1679650800,
-    updated_at: 1679650800,
-    parent_stories: ['8'],
-    children_stories: ['12'],
-  },
-  {
-    id: '11',
-    title: 'Nigerian Startups Attract Global Attention at Tech Conference',
-    slug: 'nigerian-startups-attract-global-attention-tech-conference',
-    body: "Several Nigerian startups gain international recognition for their innovative solutions and entrepreneurial spirit at a prestigious tech conference, showcasing Nigeria's potential as a tech hub. #NigerianStartups #TechConference",
-    category_id: '3',
-    created_at: 1679650800,
-    updated_at: 1679650800,
-    parent_stories: ['9'],
-    children_stories: [],
-  },
-  {
-    id: '12',
-    title: 'Education Sector Reforms Aimed at Enhancing Learning Opportunities',
-    slug: 'education-sector-reforms-enhancing-learning-opportunities',
-    body: 'The Ministry of Education implements comprehensive reforms to improve the quality of education, including curriculum updates, teacher training programs, and infrastructure development. #EducationSector #Reforms',
-    category_id: '4',
-    created_at: 1679737200,
-    updated_at: 1679737200,
-    parent_stories: ['10'],
-    children_stories: ['13'],
-  },
-  {
-    id: '13',
-    title:
-      'STEM Education Initiatives Encourage Innovation and Critical Thinking',
-    slug: 'stem-education-initiatives-encourage-innovation',
-    body: 'In a bid to foster innovation and critical thinking skills, the government introduces STEM (Science, Technology, Engineering, and Mathematics) education initiatives across schools, promoting a future-ready workforce. #STEMEducation #Innovation',
-    category_id: '4',
-    created_at: 1679737200,
-    updated_at: 1679737200,
-    parent_stories: ['12'],
-    children_stories: ['14'],
-  },
-  {
-    id: '14',
-    title:
-      'Rural Education Centers Bridge the Gap in Access to Quality Education',
-    slug: 'rural-education-centers-bridge-gap-access-education',
-    body: 'To address the disparity in educational opportunities, rural education centers are established, providing access to quality education, resources, and mentorship to students in remote areas. #RuralEducation #AccessToEducation',
-    category_id: '4',
-    created_at: 1679737200,
-    updated_at: 1679737200,
-    parent_stories: ['13'],
-    children_stories: ['15'],
-  },
-  {
-    id: '15',
-    title:
-      'Youth Empowerment Programs Foster Entrepreneurship and Skills Development',
-    slug: 'youth-empowerment-programs-entrepreneurship-skills-development',
-    body: 'Government-led youth empowerment programs support entrepreneurship and skills development among young individuals, encouraging self-reliance, job creation, and economic growth. #YouthEmpowerment #SkillsDevelopment',
-    category_id: '4',
-    created_at: 1679737200,
-    updated_at: 1679737200,
-    parent_stories: ['14'],
-    children_stories: [],
-  },
-  {
-    id: '16',
-    title:
-      'New Medical Research Center Established to Combat Infectious Diseases',
-    slug: 'medical-research-center-combat-infectious-diseases',
-    body: 'A state-of-the-art medical research center is inaugurated, focusing on advanced research, treatments, and preventive measures for infectious diseases prevalent in the region. #MedicalResearch #InfectiousDiseases',
-    category_id: '5',
-    created_at: 1678973634000,
-    updated_at: 1678973634000,
-    parent_stories: [],
-    children_stories: ['17'],
-  },
-  {
-    id: '17',
-    title: 'Breakthrough Drug Shows Promise in Cancer Treatment',
-    slug: 'breakthrough-drug-shows-promise-cancer-treatment',
-    body: 'A newly developed drug demonstrates significant efficacy in cancer treatment, offering hope to patients and medical professionals alike. Clinical trials show promising results. #CancerTreatment #MedicalBreakthrough',
-    category_id: '5',
-    created_at: 1678974634000,
-    updated_at: 1678974634000,
-    parent_stories: ['16'],
-    children_stories: ['18'],
-  },
-  {
-    id: '18',
-    title: 'Mental Health Awareness Campaign Raises Public Consciousness',
-    slug: 'mental-health-awareness-campaign-raises-consciousness',
-    body: 'A nationwide mental health awareness campaign garners widespread attention, challenging stigmas, promoting open discussions, and encouraging individuals to seek help and support. #MentalHealthAwareness #Wellbeing',
-    category_id: '5',
-    created_at: 1678975634000,
-    updated_at: 1678975634000,
-    parent_stories: ['17'],
-    children_stories: ['19'],
-  },
-  {
-    id: '19',
-    title: 'Telemedicine Platforms Expand Access to Healthcare Services',
-    slug: 'telemedicine-platforms-expand-access-healthcare-services',
-    body: 'The rise of telemedicine platforms provides convenient and accessible healthcare services to individuals in remote areas, reducing barriers and improving healthcare outcomes. #Telemedicine #HealthcareServices',
-    category_id: '5',
-    created_at: 1678976634000,
-    updated_at: 1678976634000,
-    parent_stories: ['18'],
-    children_stories: ['20'],
-  },
-  {
-    id: '20',
-    title: 'Medical Tourism Boosts Economy, Attracts Global Patients',
-    slug: 'medical-tourism-boosts-economy-attracts-global-patients',
-    body: 'Nigeria emerges as a prominent destination for medical tourism, offering high-quality healthcare services, state-of-the-art facilities, and specialized treatments to patients from around the world. #MedicalTourism #HealthcareIndustry',
-    category_id: '5',
-    created_at: 1678977634000,
-    updated_at: 1678977634000,
-    parent_stories: ['19'],
-    children_stories: [],
-  },
-  {
-    id: '21',
-    title: 'New Solar Power Plant Inaugurated, Promoting Renewable Energy',
-    slug: 'new-solar-power-plant-inaugurated-renewable-energy',
-    body: "A state-of-the-art solar power plant is inaugurated, contributing to Nigeria's renewable energy goals and reducing reliance on fossil fuels. #SolarPower #RenewableEnergy",
-    category_id: '6',
-    created_at: 1678978634000,
-    updated_at: 1678978634000,
-    parent_stories: [],
-    children_stories: ['22', '23'],
-  },
-  {
-    id: '22',
-    title: 'Government Announces Subsidies for Electric Vehicles',
-    slug: 'government-announces-subsidies-electric-vehicles',
-    body: 'The government introduces subsidies and incentives to promote the adoption of electric vehicles, aiming to reduce carbon emissions and create a sustainable transportation system. #ElectricVehicles #Sustainability',
-    category_id: '6',
-    created_at: 1678979634000,
-    updated_at: 1678979634000,
-    parent_stories: ['21'],
-    children_stories: ['24'],
-  },
-  {
-    id: '23',
-    title: 'Nigeria Hosts International Renewable Energy Summit',
-    slug: 'nigeria-hosts-international-renewable-energy-summit',
-    body: 'Nigeria takes center stage in the global renewable energy community by hosting a prestigious summit, bringing together experts, policymakers, and industry leaders to discuss sustainable energy solutions. #RenewableEnergySummit #Sustainability',
-    category_id: '6',
-    created_at: 1678980634000,
-    updated_at: 1678980634000,
-    parent_stories: ['21'],
-    children_stories: ['25'],
-  },
-  {
-    id: '24',
-    title: 'Rapid Expansion of Green Initiatives in Urban Areas',
-    slug: 'rapid-expansion-green-initiatives-urban-areas',
-    body: 'Urban centers witness a rapid expansion of green initiatives, including the establishment of eco-friendly buildings, urban gardens, and efficient waste management systems, promoting sustainability in cities. #GreenInitiatives #UrbanSustainability',
-    category_id: '6',
-    created_at: 1678981634000,
-    updated_at: 1678981634000,
-    parent_stories: ['22'],
-    children_stories: ['26'],
-  },
-  {
-    id: '25',
-    title: 'Community-Led Conservation Efforts Preserve Wildlife Habitats',
-    slug: 'community-led-conservation-efforts-preserve-wildlife-habitats',
-    body: 'Communities across Nigeria take proactive measures to protect and preserve wildlife habitats, promoting biodiversity conservation and sustainable ecosystems. #ConservationEfforts #WildlifePreservation',
-    category_id: '6',
-    created_at: 1678982634000,
-    updated_at: 1678982634000,
-    parent_stories: ['23'],
-    children_stories: ['27'],
-  },
-  {
-    id: '26',
-    title: 'Tree Planting Campaign Restores Forest Cover',
-    slug: 'tree-planting-campaign-restores-forest-cover',
-    body: 'A nationwide tree planting campaign gains momentum, contributing to the restoration of forest cover, combating deforestation, and mitigating the impacts of climate change. #TreePlanting #ForestRestoration',
-    category_id: '6',
-    created_at: 1678983634000,
-    updated_at: 1678983634000,
-    parent_stories: ['24'],
-    children_stories: ['28'],
-  },
-  {
-    id: '27',
-    title: 'Sustainable Agriculture Practices Empower Farmers',
-    slug: 'sustainable-agriculture-practices-empower-farmers',
-    body: 'Farmers embrace sustainable agriculture practices, such as organic farming, crop rotation, and water conservation techniques, ensuring food security, environmental stewardship, and improved livelihoods. #SustainableAgriculture #FarmersEmpowerment',
-    category_id: '7',
-    created_at: 1678984634000,
-    updated_at: 1678984634000,
-    parent_stories: [],
-    children_stories: ['29', '30'],
-  },
-  {
-    id: '28',
-    title: 'Smart Irrigation Systems Enhance Crop Yields',
-    slug: 'smart-irrigation-systems-enhance-crop-yields',
-    body: 'The adoption of smart irrigation systems enables farmers to optimize water usage, minimize water wastage, and achieve higher crop yields, contributing to sustainable agriculture practices. #SmartIrrigation #CropYields',
-    category_id: '7',
-    created_at: 1678985634000,
-    updated_at: 1678985634000,
-    parent_stories: ['26'],
-    children_stories: ['31'],
-  },
-  {
-    id: '29',
-    title: 'Women Empowerment Programs Drive Agricultural Innovation',
-    slug: 'women-empowerment-programs-drive-agricultural-innovation',
-    body: 'Dedicated programs and initiatives empower women in rural areas to take on leadership roles in agriculture, driving innovation, promoting gender equality, and fostering inclusive rural development. #WomenEmpowerment #AgriculturalInnovation',
-    category_id: '7',
-    created_at: 1678986634000,
-    updated_at: 1678986634000,
-    parent_stories: ['27'],
-    children_stories: ['32'],
-  },
-  {
-    id: '30',
-    title: 'Youth-Led Cooperatives Revolutionize Farming Practices',
-    slug: 'youth-led-cooperatives-revolutionize-farming-practices',
-    body: 'Youth-led farming cooperatives harness technological advancements and sustainable farming techniques to revolutionize agricultural practices, creating employment opportunities and driving rural development. #YouthCooperatives #FarmingPractices',
-    category_id: '7',
-    created_at: 1678987634000,
-    updated_at: 1678987634000,
-    parent_stories: ['27'],
-    children_stories: ['33'],
-  },
-  {
-    id: '31',
-    title: 'Nigeria Becomes Leading Exporter of Agricultural Products',
-    slug: 'nigeria-leading-exporter-agricultural-products',
-    body: 'Through increased investment, improved productivity, and quality assurance measures, Nigeria emerges as a leading exporter of agricultural products, contributing to economic growth and international trade. #AgriculturalExports #EconomicGrowth',
-    category_id: '7',
-    created_at: 1678988634000,
-    updated_at: 1678988634000,
-    parent_stories: ['28'],
-    children_stories: ['34'],
-  },
-  {
-    id: '32',
-    title: 'Technological Innovations Transform Healthcare Delivery',
-    slug: 'technological-innovations-transform-healthcare-delivery',
-    body: 'Technological advancements, such as telemedicine, artificial intelligence, and wearable devices, revolutionize healthcare delivery, improving access to quality care, patient outcomes, and disease management. #HealthcareInnovation #TechnologicalAdvancements',
-    category_id: '8',
-    created_at: 1678989634000,
-    updated_at: 1678989634000,
-    parent_stories: [],
-    children_stories: ['35', '36'],
-  },
-  {
-    id: '33',
-    title: 'Mobile Health Apps Empower Individuals in Self-Care',
-    slug: 'mobile-health-apps-empower-individuals-self-care',
-    body: 'The proliferation of mobile health apps empowers individuals to take charge of their health through self-care practices, including fitness tracking, nutrition monitoring, and mental wellbeing support. #MobileHealthApps #SelfCare',
-    category_id: '8',
-    created_at: 1678990634000,
-    updated_at: 1678990634000,
-    parent_stories: ['32'],
-    children_stories: ['37'],
-  },
-  {
-    id: '34',
-    title: 'Data Analytics Enhance Healthcare Decision-Making',
-    slug: 'data-analytics-enhance-healthcare-decision-making',
-    body: 'The utilization of data analytics and big data in healthcare enables informed decision-making, personalized treatment plans, and improved patient outcomes, revolutionizing the healthcare industry. #DataAnalytics #HealthcareDecisionMaking',
-    category_id: '8',
-    created_at: 1678991634000,
-    updated_at: 1678991634000,
-    parent_stories: ['31'],
-    children_stories: ['38'],
-  },
-  {
-    id: '35',
-    title: 'Artificial Intelligence in Diagnostics and Disease Prevention',
-    slug: 'artificial-intelligence-diagnostics-disease-prevention',
-    body: 'Artificial intelligence algorithms and machine learning models play a pivotal role in diagnostics, early disease detection, and preventive healthcare strategies, revolutionizing medical practices. #AIinHealthcare #DiseasePrevention',
-    category_id: '8',
-    created_at: 1678992634000,
-    updated_at: 1678992634000,
-    parent_stories: ['32'],
-    children_stories: ['39'],
-  },
-  {
-    id: '36',
-    title: 'Robotics-Assisted Surgeries Ensure Precision and Efficiency',
-    slug: 'robotics-assisted-surgeries-precision-efficiency',
-    body: 'Robotic-assisted surgeries gain popularity in Nigerian hospitals, providing surgeons with enhanced precision, reduced invasiveness, and faster recovery times, leading to improved patient outcomes. #RoboticSurgery #MedicalAdvancements',
-    category_id: '8',
-    created_at: 1678993634000,
-    updated_at: 1678993634000,
-    parent_stories: ['32'],
-    children_stories: ['40'],
-  },
-  {
-    id: '37',
-    title: 'Emerging Biotechnology Solutions Address Health Challenges',
-    slug: 'emerging-biotechnology-solutions-address-health-challenges',
-    body: 'Cutting-edge biotechnology solutions, including gene editing, personalized medicine, and regenerative therapies, offer new possibilities in addressing complex health challenges and improving patient care. #Biotechnology #HealthcareInnovation',
-    category_id: '8',
-    created_at: 1678994634000,
-    updated_at: 1678994634000,
-    parent_stories: ['33'],
-    children_stories: ['41'],
-  },
-  {
-    id: '38',
-    title: 'Digital Health Records Improve Patient Management',
-    slug: 'digital-health-records-improve-patient-management',
-    body: 'The digitization of health records streamlines patient management, enabling secure access, efficient information exchange, and coordinated care among healthcare providers, leading to improved healthcare delivery. #DigitalHealthRecords #PatientManagement',
-    category_id: '8',
-    created_at: 1678995634000,
-    updated_at: 1678995634000,
-    parent_stories: ['34'],
-    children_stories: ['42'],
-  },
-  {
-    id: '39',
-    title: 'Telemedicine Expands Access to Healthcare Services',
-    slug: 'telemedicine-expands-access-healthcare-services',
-    body: 'Telemedicine platforms bridge the gap between healthcare providers and patients in remote areas, expanding access to essential healthcare services, consultations, and medical expertise. #Telemedicine #HealthcareAccessibility',
-    category_id: '8',
-    created_at: 1678996634000,
-    updated_at: 1678996634000,
-    parent_stories: ['35'],
-    children_stories: ['43'],
-  },
-  {
-    id: '40',
-    title: 'Innovative Partnerships Drive Health Technology Advancements',
-    slug: 'innovative-partnerships-drive-health-technology-advancements',
-    body: 'Collaborations between technology companies, healthcare institutions, and research organizations drive innovations in health technology, fostering breakthroughs in diagnostics, treatment, and disease prevention. #HealthTechAdvancements #Partnerships',
-    category_id: '8',
-    created_at: 1678997634000,
-    updated_at: 1678997634000,
-    parent_stories: ['36'],
-    children_stories: ['44'],
-  },
-  {
-    id: '41',
-    title: 'New Cultural Heritage Museum Celebrates Nigerian Art',
-    slug: 'new-cultural-heritage-museum-celebrates-nigerian-art',
-    body: 'A new cultural heritage museum dedicated to Nigerian art and artifacts is inaugurated, showcasing the rich history, diverse cultures, and artistic expressions of the nation, promoting cultural preservation and tourism. #CulturalHeritage #NigerianArt',
-    category_id: '9',
-    created_at: 1678998634000,
-    updated_at: 1678998634000,
-    parent_stories: [],
-    children_stories: ['45', '46'],
-  },
-  {
-    id: '42',
-    title: 'Nollywood Film Wins International Recognition',
-    slug: 'nollywood-film-wins-international-recognition',
-    body: "A Nigerian film produced by the Nollywood industry receives international acclaim, winning awards and accolades at prestigious film festivals, further establishing Nigeria's position in the global film industry. #Nollywood #FilmIndustry",
-    category_id: '9',
-    created_at: 1678999634000,
-    updated_at: 1678999634000,
-    parent_stories: ['41'],
-    children_stories: ['47'],
-  },
-  {
-    id: '43',
-    title: 'Literary Festival Promotes Nigerian Writers and Literature',
-    slug: 'literary-festival-promotes-nigerian-writers-literature',
-    body: 'A vibrant literary festival brings together Nigerian writers, authors, and book enthusiasts, showcasing the rich literary heritage, promoting reading culture, and fostering the growth of Nigerian literature. #LiteraryFestival #NigerianWriters',
-    category_id: '9',
-    created_at: 1679000634000,
-    updated_at: 1679000634000,
-    parent_stories: ['41'],
-    children_stories: ['48'],
-  },
-  {
-    id: '44',
-    title: 'Artists Transform Public Spaces with Murals and Street Art',
-    slug: 'artists-transform-public-spaces-murals-street-art',
-    body: 'Talented artists beautify public spaces across Nigeria with captivating murals and vibrant street art, revitalizing neighborhoods, promoting cultural expression, and attracting visitors. #StreetArt #PublicArt',
-    category_id: '9',
-    created_at: 1679001634000,
-    updated_at: 1679001634000,
-    parent_stories: ['40'],
-    children_stories: ['49'],
-  },
-  {
-    id: '45',
-    title: 'Fashion Designers Showcasing Nigerian Styles on Global Runways',
-    slug: 'fashion-designers-showcasing-nigerian-styles-global-runways',
-    body: 'Nigerian fashion designers gain international recognition, showcasing unique Nigerian styles, traditional fabrics, and innovative designs on prestigious global runways, contributing to the growth of the Nigerian fashion industry. #NigerianFashion #GlobalRunways',
-    category_id: '9',
-    created_at: 1679002634000,
-    updated_at: 1679002634000,
-    parent_stories: ['41'],
-    children_stories: ['50'],
-  },
-  {
-    id: '46',
-    title: 'Cultural Exchange Programs Strengthen International Ties',
-    slug: 'cultural-exchange-programs-strengthen-international-ties',
-    body: 'Through cultural exchange programs, Nigerian artists, musicians, and performers collaborate with international counterparts, fostering cross-cultural understanding, promoting diversity, and strengthening diplomatic ties. #CulturalExchange #InternationalRelations',
-    category_id: '9',
-    created_at: 1679003634000,
-    updated_at: 1679003634000,
-    parent_stories: ['41'],
-    children_stories: [],
+    created_at: 1626040800,
   },
 ];
