@@ -1,16 +1,7 @@
-export const formatDate = (unixTimestamp: string): string => {
-  const inputDate = new Date(parseInt(unixTimestamp, 10) * 1000); // Convert the UNIX timestamp to milliseconds
+export const formatDate = (unixTimestamp: number): string => {
+  const inputDate = new Date(unixTimestamp * 1000); // Convert the UNIX timestamp to milliseconds
   const now = new Date();
 
-  // const toUTCTimeString = (date: Date) => {
-  //   let hours = date.getUTCHours();
-  //   let minutes = date.getUTCMinutes();
-  //   const ampm = hours >= 12 ? 'pm' : 'am';
-  //   hours %= 12;
-  //   hours = hours || 12;
-  //   minutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-  //   return `${hours}:${minutes} ${ampm}`;
-  // };
   const toUTCTimeString = (date: Date) => {
     let hours = date.getUTCHours();
     const minutes = date.getUTCMinutes();
