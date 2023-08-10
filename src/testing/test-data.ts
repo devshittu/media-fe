@@ -9,6 +9,7 @@ import {
 } from './test-data/';
 import { StoryItem } from './types';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
+import { Story } from '@/features/stories';
 
 export const testData = {
   users,
@@ -58,7 +59,7 @@ export const getAllStories = delayedFn(
   },
   300,
 );
-export const getMoreStories = delayedFn(() => testData.stories.slice(-2), 300); // get last item and -2 for the last two items
+export const getMoreStories = delayedFn(() => testData.stories.slice(-2) as Story[], 300); // get last item and -2 for the last two items
 
 const findRelatedStories = (
   stories: StoryItem[],
