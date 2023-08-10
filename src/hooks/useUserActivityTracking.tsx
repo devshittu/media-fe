@@ -1,49 +1,57 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import useDebounce from './useDebounce';
+import { useEffect, useState, useRef, RefObject } from 'react';
 
-const DEBOUNCE_TIME = 1000;
-export type UserActivityMetrics = { timeInView: number; enterCount: number };
-export type UserActivityTrackingOptions = {
-  saveMetrics: (metrics: UserActivityMetrics) => void;
+export type UserActivityOptions = {
+  saveMetrics: (metrics: any) => void;
+  storyId: string; // assuming storyId is a string, change type if needed
 };
 
-export function useUserActivityTracking(options: UserActivityTrackingOptions) {
-  const ref = useRef<HTMLElement | null>(null);
-  const [timeInView, setTimeInView] = useState(0);
-  const [enterCount, setEnterCount] = useState(0);
-  const [startTime, setStartTime] = useState<number | null>(null);
-  const [hasLoggedMetrics, setHasLoggedMetrics] = useState(false);
+export type ActivityMetrics = {
+  [storyId: string]: {
+    enterCount: number;
+    timeInView: number;
+  };
+};
 
-  const debouncedTimeInView = useDebounce(timeInView, DEBOUNCE_TIME);
-
-  const handleVisibilityChange = useCallback(
-    (isIntersecting: boolean) => {
-      if (isIntersecting) {
-        setEnterCount((prevCount) => prevCount + 1);
-        setStartTime(Date.now());
-        setHasLoggedMetrics(false); // reset metric logging flag on visibility change
-      } else {
-        if (startTime) {
-          const timeSpent = Date.now() - startTime;
-          setTimeInView((prevTime) => prevTime + timeSpent);
-        }
-      }
-    },
-    [startTime],
-  );
+export function useUserActivityTracking(
+  options: UserActivityOptions,
+): RefObject<HTMLDivElement> {
+  const activityRef = useRef<HTMLDivElement>(null);
+  const [metrics, setMetrics] = useState<ActivityMetrics>({});
 
   useEffect(() => {
-    const currentRef = ref.current;
+    let startTime: number | null = null;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        handleVisibilityChange(entry.isIntersecting);
-      },
-      {
-        threshold: 0.5,
-      },
-    );
+    const handleVisibilityChange = (entries: IntersectionObserverEntry[]) => {
+      const entry = entries[0];
+
+      if (entry.isIntersecting) {
+        // Start the timer if item becomes visible
+        startTime = Date.now();
+      } else if (startTime) {
+        // If item becomes invisible, calculate the time spent
+        const timeSpent = Date.now() - startTime;
+
+        setMetrics((prevMetrics) => {
+          const prevTime = prevMetrics[options.storyId]?.timeInView || 0;
+          const prevEnterCount = prevMetrics[options.storyId]?.enterCount || 0;
+          return {
+            ...prevMetrics,
+            [options.storyId]: {
+              timeInView: prevTime + timeSpent,
+              enterCount: prevEnterCount + 1,
+            },
+          };
+        });
+
+        startTime = null;
+      }
+    };
+
+    const observer = new IntersectionObserver(handleVisibilityChange, {
+      threshold: 0.75, // Adjust this value as needed
+    });
+
+    const currentRef = activityRef.current; // Store the current ref value in a constant
 
     if (currentRef) {
       observer.observe(currentRef);
@@ -53,19 +61,16 @@ export function useUserActivityTracking(options: UserActivityTrackingOptions) {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
-      // Only log metrics once after the last visibility change event
-      if (debouncedTimeInView && !hasLoggedMetrics) {
-        options.saveMetrics({ timeInView: debouncedTimeInView, enterCount });
-        setHasLoggedMetrics(true); // mark metrics as logged
-      }
     };
-  }, [
-    debouncedTimeInView,
-    enterCount,
-    handleVisibilityChange,
-    options,
-    hasLoggedMetrics,
-  ]);
+  }, [activityRef, options.storyId]);
 
-  return ref;
+  useEffect(() => {
+    if (metrics[options.storyId]) {
+      // Call your saveMetrics or any other function with the updated metrics
+      options.saveMetrics({ [options.storyId]: metrics[options.storyId] });
+    }
+  }, [metrics, options]);
+
+  return activityRef;
 }
+//Path: src/hooks/useUserActivityTracking.tsx
