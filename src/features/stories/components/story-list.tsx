@@ -16,7 +16,6 @@ export const StoryList = ({
   data = [] as Story[],
   totalPages,
   scrollInfinite = false,
-  isLoading,
 }: StoryListProps) => {
   // the data prop is prefilled some stories however, it is returned from an async function i.e it is fetched from the server.
   const [newItems, setNewItems] = useState<Story[]>([]); // State for newly fetched items
@@ -69,7 +68,7 @@ export const StoryList = ({
   const loadNewStories = () => {
     getMoreStories().then((res) => {
       console.log('loadNewStories res:// ', res);
-      setNewItems(res as Story[]); // This loads newer stories and we want to prepend them to the existing stories.
+      setNewItems(res); // This loads newer stories and we want to prepend them to the existing stories.
     });
   };
 
@@ -99,49 +98,41 @@ export const StoryList = ({
 
   return (
     <div id="stream" className={`mt-28 lg:mt-0 relative`}>
-      {isLoading ? (
-        <>
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
-        </>
-      ) : (
-        <>
-          {/* {showLatestButton && ( */}
-          <div
-            id="refresh-set"
-            className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98  transition-all  duration-200 ease-out  ${
-              showLatestButton
-                ? 'transform-none opacity-100'
-                : '-translate-y-full  opacity-0'
-            }`}
-            style={{ transform: `translateY(${topPosition}px)` }}
-          >
-            <Button onClick={loadNewStories} type="primary">
-              Load new feeds
-            </Button>
-            <Button onClick={ShowToast}>Show Toast</Button>
-          </div>
-          {/* )} */}
-          <div>
-            {allStories.map((item, index) => (
-              <StoryListItem
-                key={item.id + index}
-                story={item}
-                categories={categoryTitlesLookUpTable}
-                className={index < newItems.length ? 'new-item' : ''}
-              /> // Add 'new-item' class to newly added items
-            ))}
-            {scrollInfinite && (
-              <InfiniteScroll
-                totalPages={totalPages}
-                pageSize={pageSize}
-                onFetchMore={handleFetchMore}
-              />
-            )}
-          </div>
-        </>
-      )}
+      <>
+        {/* {showLatestButton && ( */}
+        <div
+          id="refresh-set"
+          className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98  transition-all  duration-200 ease-out  ${
+            showLatestButton
+              ? 'transform-none opacity-100'
+              : '-translate-y-full  opacity-0'
+          }`}
+          style={{ transform: `translateY(${topPosition}px)` }}
+        >
+          <Button onClick={loadNewStories} type="primary">
+            Load new feeds
+          </Button>
+          <Button onClick={ShowToast}>Show Toast</Button>
+        </div>
+        {/* )} */}
+        <div>
+          {allStories.map((item, index) => (
+            <StoryListItem
+              key={item.id + index}
+              story={item}
+              categories={categoryTitlesLookUpTable}
+              className={index < newItems.length ? 'new-item' : ''}
+            /> // Add 'new-item' class to newly added items
+          ))}
+          {scrollInfinite && (
+            <InfiniteScroll
+              totalPages={totalPages}
+              pageSize={pageSize}
+              onFetchMore={handleFetchMore}
+            />
+          )}
+        </div>
+      </>
     </div>
   );
 };
