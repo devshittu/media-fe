@@ -8,7 +8,7 @@ import { StoryMedia } from './story-media';
 import { StoryStats } from './story-stats';
 import { formatDate } from '@/utils';
 import {
-  UserActivityMetrics,
+  ActivityMetrics,
   useUserActivityTracking,
 } from '@/hooks/useUserActivityTracking';
 
@@ -48,20 +48,27 @@ export const StoryListItem = React.memo(
     // const carousel = CarouselComponent({ carouselItems, carouselOptions });
     // carousel.next(); // Invoke next slide
     // carousel.prev(); // Invoke previous slide
+
     const options = {
-      saveMetrics: (metrics: UserActivityMetrics) => {
-        // Your saveMetrics logic here.
-        // For instance, you can send metrics to an API.
-        console.log('Metrics:', metrics, story.slug);
+      saveMetrics: (metrics: ActivityMetrics) => {
+        // console.log(metrics); // This will log the metrics for each individual story.
+        // You can add further logic to save or process the metrics here.
+        console.log(
+          `Story ${story.id} metrics:`,
+          `entered screen ${metrics[story.id].enterCount} time and spent ${
+            metrics[story.id].timeInView / 1000
+          }s in the viewport`,
+        );
       },
+      storyId: story.id,
     };
 
-    // const activityRef = useUserActivityTracking(options);
+    const activityRef = useUserActivityTracking(options);
 
     return (
       <article
         className={`relative p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
-        // ref={activityRef}
+        ref={activityRef}
       >
         <div
           id={`scroll-to-${story.slug}`}
