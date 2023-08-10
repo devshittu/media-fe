@@ -1,7 +1,10 @@
 import { ReactElement, useMemo, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import { StoryList } from '@/features/stories/components';
+import {
+  StoryList,
+  StoryListItemLoadingPlaceholder,
+} from '@/features/stories/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
@@ -25,11 +28,17 @@ const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
   return (
     <>
       <StoriesPageHeader pageTitle="Home" showTab parallax />
+      {storiesFromUse?.isLoading && (
+        <>
+          <StoryListItemLoadingPlaceholder />
+          <StoryListItemLoadingPlaceholder />
+          <StoryListItemLoadingPlaceholder />
+        </>
+      )}
       {stableStories?.length > 0 && (
         <StoryList
           data={stableStories}
           totalPages={storiesFromUse.data?.total_pages}
-          isLoading={storiesFromUse.isLoading}
           scrollInfinite
         />
       )}
@@ -49,7 +58,6 @@ export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
   const category_id = params?.category_id as string;
-  // const stories = await getAllStories().catch(() => [] as StoryItem[]);
   const stories = await getStories({
     params: {
       category_id: category_id,
