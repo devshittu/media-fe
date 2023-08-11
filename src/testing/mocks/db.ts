@@ -56,6 +56,19 @@ const models = {
     feedUrl: String,
     logoUrl: String,
   },
+  bookmark: {
+    id: primaryKey(uid),
+    title: String,
+    url: String,
+    thumbnail_url: String,
+    category: String, //  'Read Later'...
+    story_id: String,
+    excerpt: String,
+    note: String,
+    story_published_at: Date.now,
+    created_at: Date.now,
+    updated_at: Date.now,
+  },
   hashtag: {
     id: primaryKey(uid),
     label: String,
