@@ -4,7 +4,7 @@ type StoriesPageContainerProps = {
   children: React.ReactNode;
 };
 
-const StoriesPageContainer: React.FC<StoriesPageContainerProps> = ({
+export const StoriesPageContainer: React.FC<StoriesPageContainerProps> = ({
   children,
 }) => {
   return (
@@ -24,5 +24,3 @@ const StoriesPageContainer: React.FC<StoriesPageContainerProps> = ({
     </div>
   );
 };
-
-export default StoriesPageContainer;
