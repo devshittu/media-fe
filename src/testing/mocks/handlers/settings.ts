@@ -16,7 +16,12 @@ const getSettingsHandler = rest.get(
     });
     console.log('settings', settings);
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(settings));
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+      ctx.json(settings),
+    );
   },
 );
 

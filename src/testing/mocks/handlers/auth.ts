@@ -14,6 +14,7 @@ const loginHandler = rest.post(
         httpOnly: true,
       }),
       ctx.json({ user }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
@@ -27,11 +28,16 @@ const logoutHandler = rest.post(
         httpOnly: true,
       }),
       ctx.json({ success: true }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
 const meHandler = rest.get(`${API_URL}/auth/me`, async (req, res, ctx) => {
   const user = requireAuth({ req, shouldThrow: false });
-  return res(ctx.delay(300), ctx.json(user));
+  return res(
+    ctx.delay(300),
+    ctx.set('Access-Control-Allow-Origin', '*'),
+    ctx.json(user),
+  );
 });
 export const authHandlers = [loginHandler, logoutHandler, meHandler];

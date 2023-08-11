@@ -39,6 +39,7 @@ const getStoriesHandler = rest.get(
         total_pages: Math.ceil(db.story.count() / per_page),
         total: db.story.count(),
       }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
@@ -75,6 +76,7 @@ const getStoriesByHashtagHandler = rest.get(
         ctx.delay(300),
         ctx.status(404),
         ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
       );
     }
 
@@ -88,6 +90,7 @@ const getStoriesByHashtagHandler = rest.get(
         total_pages: Math.ceil(stories.length / per_page) || 0,
         total: stories.length,
       }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
@@ -109,10 +112,16 @@ const getStoryHandler = rest.get(
         ctx.delay(300),
         ctx.status(404),
         ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
       );
     }
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(story));
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.json(story),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+    );
   },
 );
 

@@ -18,7 +18,11 @@ const getCategoriesHandler = rest.get(
     const categories = db.category.getAll();
 
     if (!categories) {
-      return res(ctx.status(404), ctx.json({ message: 'Not found!' }));
+      return res(
+        ctx.status(404),
+        ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
+      );
     }
 
     //.slice(start, end)
@@ -41,10 +45,19 @@ const getCategoryHandler = rest.get(
     });
 
     if (!category) {
-      return res(ctx.status(404), ctx.json({ message: 'Not found!' }));
+      return res(
+        ctx.status(404),
+        ctx.set('Access-Control-Allow-Origin', '*'),
+        ctx.json({ message: 'Not found!' }),
+      );
     }
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(category));
+    return res(
+      ctx.delay(300),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+      ctx.status(200),
+      ctx.json(category),
+    );
   },
 );
 

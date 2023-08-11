@@ -53,6 +53,7 @@ const getHashtagsHandler = rest.get(
       ctx.delay(300),
       ctx.status(200),
       ctx.json(hashtagItems.slice(start, end)),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
@@ -75,10 +76,16 @@ const getHashtagHandler = rest.get(
         ctx.delay(300),
         ctx.status(404),
         ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
       );
     }
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(story));
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+      ctx.json(story),
+    );
   },
 );
 
