@@ -8,27 +8,26 @@ import {
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import StoriesPageContainer from '@/features/stories/components/stories-page-container/stories-page-container';
+import { StoriesPageContainer } from '@/features/stories';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
-  const storiesFromUse = useStories({
+  const { data: responseData, isLoading } = useStories({
     params: {
       page: 1,
       per_page: PAGINATE_STORIES_LIMIT,
     },
   });
   const stableStories = useMemo(
-    () => storiesFromUse.data?.stories,
-    [storiesFromUse.data?.stories],
+    () => responseData?.stories,
+    [responseData?.stories],
   );
 
-  console.log('storiesFromUse.data?.stories:// ', storiesFromUse.data?.stories);
   return (
     <>
       <StoriesPageHeader pageTitle="Home" showTab parallax />
-      {storiesFromUse?.isLoading && (
+      {isLoading && (
         <>
           <StoryListItemLoadingPlaceholder />
           <StoryListItemLoadingPlaceholder />
@@ -38,7 +37,7 @@ const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
       {stableStories?.length > 0 && (
         <StoryList
           data={stableStories}
-          totalPages={storiesFromUse.data?.total_pages}
+          totalPages={responseData?.total_pages}
           scrollInfinite
         />
       )}
