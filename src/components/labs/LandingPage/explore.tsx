@@ -5,29 +5,18 @@ import { useStoriesByHashtag } from '@/features/stories';
 import { StoryList } from '@/features/stories/components';
 import { useRouter } from 'next/router';
 type ExploreProps = {
+  children: React.ReactNode;
   hashtag?: string;
 };
-export const Explore = ({ hashtag = 'Deforestation' }: ExploreProps) => {
-  const storiesByHashtagFromUse = useStoriesByHashtag({
-    params: {
-      page: 1,
-      per_page: PAGINATE_STORIES_LIMIT,
-      hashtag: hashtag,
-    },
-  });
+export const Explore = ({ children, hashtag = 'Deforestation' }: ExploreProps) => {
 
   return (
     <>
-      <StoriesPageHeader pageTitle={`Explore:#${hashtag}`} />
+      <StoriesPageHeader pageTitle={`Explore: #${hashtag}`} />
 
       <section className="md:mb-36 flex justify-center w-full">
         <section className="max-w-xl md:max-w-2xl">
-          <StoryList
-            data={storiesByHashtagFromUse.data?.stories}
-            totalPages={storiesByHashtagFromUse.data?.total_pages}
-            isLoading={storiesByHashtagFromUse.isLoading}
-            // scrollInfinite
-          />
+          {children}
         </section>
       </section>
     </>
