@@ -3,7 +3,7 @@ import { ReactElement, useMemo, useState } from 'react';
 import { useBookmarks } from '@/features/bookmarks';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageContainer } from '@/features/stories';
-import { StoryListItemLoadingPlaceholder } from '@/features/stories/components';
+import { StoryListLoadingPlaceholder } from '@/features/stories/components';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { formatDate } from '@/utils';
 import { Seo } from '@/components';
@@ -53,9 +53,7 @@ const ExportPage = () => {
       <StoriesPageHeader pageTitle="Export Bookmarks" />
       {isLoading && (
         <>
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
+          <StoryListLoadingPlaceholder />
         </>
       )}
       {stableBookmarks?.length > 0 && (
