@@ -5,7 +5,9 @@ import { categoriesHandlers } from './categories';
 import { hashtagsHandlers } from './hashtags';
 import { settingsHandlers } from './settings';
 import { bookmarksHandlers } from './bookmarks';
+import { authHandlers } from './auth';
 export const handlers = [
+  ...authHandlers,
   ...storiesHandlers,
   ...categoriesHandlers,
   ...hashtagsHandlers,
