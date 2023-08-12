@@ -3,7 +3,7 @@ import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import {
   StoryList,
-  StoryListItemLoadingPlaceholder,
+  StoryListLoadingPlaceholder,
 } from '@/features/stories/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
@@ -29,9 +29,7 @@ const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
       <StoriesPageHeader pageTitle="Home" showTab parallax />
       {isLoading && (
         <>
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
+          <StoryListLoadingPlaceholder />
         </>
       )}
       {stableStories?.length > 0 && (
