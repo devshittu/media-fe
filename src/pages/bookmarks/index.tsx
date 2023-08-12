@@ -1,13 +1,15 @@
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import UserLayout from '@/layouts/user-layout';
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useMemo, useState } from 'react';
 import BookmarkMoment from './bookmark-moment';
 import { SidePanel } from '@/components/blocks/side-panel';
 import { Bookmark, useBookmarks } from '@/features/bookmarks';
 import { useListGrouping, useListSorting } from '@/hooks';
-import { StoryListItemLoadingPlaceholder } from '@/features/stories';
+import { StoriesPageContainer, StoryListLoadingPlaceholder } from '@/features/stories';
+import {BookmarkSorter} from '@/features/bookmarks/components/';
 
 const BookmarksPage = () => {
+  const [selected, setSelected] = useState<string>('dateAdded');
   const gender = Math.random() < 0.5 ? 'male' : 'female';
   const displayPhotoUrl = `https://xsgames.co/randomusers/avatar.php?g=${gender}`;
 
@@ -24,17 +26,23 @@ const BookmarksPage = () => {
       year: 'numeric',
     });
   };
+
+  // Group bookmarks by date
   const groupedItems = useListGrouping<Bookmark>(
     stableBookmarks,
     'created_at',
     formatDate,
   );
 
+  // Sort the grouped bookmarks
   const { sortedData, sortOrder, toggleSortOrder } = useListSorting(
     Object.entries(groupedItems),
     '0', // since the data is an array of [date, items], we sort by the date which is at index 0
-    'desc',
+    'desc'
   );
+
+  // const { sortedData, sortOrder, toggleSortOrder } = useListSorting(Object.entries(groupedItems), 'created_at', 'desc');
+
 
   return (
     <div
@@ -46,9 +54,7 @@ const BookmarksPage = () => {
         <StoriesPageHeader pageTitle="Bookmarks" />
         {isLoading && (
           <>
-            <StoryListItemLoadingPlaceholder />
-            <StoryListItemLoadingPlaceholder />
-            <StoryListItemLoadingPlaceholder />
+            <StoryListLoadingPlaceholder />
           </>
         )}
 
@@ -57,6 +63,10 @@ const BookmarksPage = () => {
             <button onClick={toggleSortOrder}>
               Sort by {sortOrder === 'desc' ? 'Earliest' : 'Latest'}
             </button>
+            <BookmarkSorter
+              selectedValue={selected}
+              onSelect={(value) => setSelected(value)}
+            />
             {sortedData.map(([date, items]) => (
               <React.Fragment key={date}>
                 <BookmarkMoment time={date} momentData={items} />
@@ -75,7 +85,7 @@ const BookmarksPage = () => {
 };
 
 BookmarksPage.getLayout = function getLayout(page: ReactElement) {
-  return <UserLayout>{page}</UserLayout>;
+  return <UserLayout><StoriesPageContainer>{page}</StoriesPageContainer></UserLayout>;
 };
 
 export default BookmarksPage;
