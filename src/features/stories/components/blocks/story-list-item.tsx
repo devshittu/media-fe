@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from '@/components/labs/typography';
-import { StoryListItemProps } from './types';
+import { StoryListItemProps } from '../types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
-import { ContextMenu } from './context-menu/context-menu';
-import { UserDetails } from './user-details';
-import { StoryMedia } from './story-media';
-import { StoryStats } from './story-stats';
+import { ContextMenu } from '../context-menu/context-menu';
+import { UserDetails } from '../user-details';
+import { StoryMedia } from '../story-media';
+import { StoryStats } from '../story-stats';
 import { formatDate } from '@/utils';
 import {
   ActivityMetrics,

@@ -2,15 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
 import { Toast } from '@/components/blocks/toast';
-import { StoryListProps } from './types';
+import { StoryListProps } from '../types';
 import { getMoreStories } from '@/testing/test-data';
 import { InfiniteScroll } from '@/components/infinite-scroll';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { useScrollSync } from '../../../hooks/useScrollSync';
-import { StoryListItemLoadingPlaceholder } from './story-list-item-loading-placeholder';
+import { useScrollSync } from '@/hooks/useScrollSync';
 import { useCategoryContext } from '@/features/categories/hooks';
-import { Story } from '../types';
-import { getStories } from '../api/get-stories';
+import { Story } from '../../types';
+import { getStories } from '../../api/get-stories';
 
 export const StoryList = ({
   data = [] as Story[],
@@ -45,9 +44,12 @@ export const StoryList = ({
       setAllStories((prevStories) => [...prevStories, ...stories]);
     });
   }, []);
-  const handleFetchMore = (page: number, pageSize: number) => {
-    fetchMoreStories(page, pageSize); // This loads more stories and we want to append them to the existing stories.
-  };
+  const handleFetchMore = useCallback(
+    (page: number, pageSize: number) => {
+      fetchMoreStories(page, pageSize); // This loads more stories and we want to append them to the existing stories.
+    },
+    [fetchMoreStories],
+  );
 
   const ShowToast = () => {
     const notify = new Toast({
@@ -129,6 +131,7 @@ export const StoryList = ({
               totalPages={totalPages}
               pageSize={pageSize}
               onFetchMore={handleFetchMore}
+              // LoadingComponent={StoryListItemLoadingPlaceholder}
             />
           )}
         </div>
