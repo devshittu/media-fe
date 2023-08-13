@@ -3,7 +3,7 @@ export const users = [
     id: '1',
     username: 'testuser1',
     email: 'user1@test.com',
-    password: 'user1@test.com',//'test@123',
+    password: 'user1@test.com', //'test@123',
     name: 'User One',
     created_at: 1679003634000,
     updated_at: 1679003634000,
