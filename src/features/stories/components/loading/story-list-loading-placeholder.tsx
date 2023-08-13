@@ -3,10 +3,10 @@ import { StoryListItemLoadingPlaceholder } from './story-list-item-loading-place
 
 export const StoryListLoadingPlaceholder = () => {
   return (
-        <>
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
-          <StoryListItemLoadingPlaceholder />
-        </>
+    <>
+      <StoryListItemLoadingPlaceholder />
+      <StoryListItemLoadingPlaceholder />
+      <StoryListItemLoadingPlaceholder />
+    </>
   );
 };
