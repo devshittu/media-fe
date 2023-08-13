@@ -14,23 +14,20 @@ export const useListSorting = <T extends { [key: string]: any }>(
   if (!Array.isArray(data) || data.length === 0 || !data[0][sortByField]) {
     return { sortedData: [], sortOrder, toggleSortOrder: () => {} };
   }
-  console.log('data', data);
-  // return;
   // Determine the type of the data
   const determineType = (item: any): SortType => {
-  if (typeof item === 'string') {
-    // Check if the string can be converted to a valid date
-    const date = new Date(item);
-    if (!isNaN(date.getTime())) {
-      return 'date';
+    if (typeof item === 'string') {
+      // Check if the string can be converted to a valid date
+      const date = new Date(item);
+      if (!isNaN(date.getTime())) {
+        return 'date';
+      }
+      return 'string';
+    } else if (typeof item === 'number') {
+      return 'number';
     }
-    return 'string';
-  } else if (typeof item === 'number') {
-    return 'number';
-  }
-  return 'string'; // default to string if type is not recognized
-};
-
+    return 'string'; // default to string if type is not recognized
+  };
 
   const dataType = determineType(data[0][sortByField]);
 
