@@ -10,6 +10,7 @@ import { StoryItem } from '@/testing';
 import Image from 'next/image';
 import { Link } from '@/components/labs/typography';
 import React from 'react';
+import { Bookmark } from '@/features/bookmarks';
 
 export type BookmarkMomentItem = {
   title: string;
@@ -22,10 +23,10 @@ export type BookmarkMomentItem = {
 };
 export type BookmarkMomentProps = {
   time: string;
-  momentData: StoryItem[] | BookmarkMomentItem[];
+  momentData: Bookmark[]; //| StoryItem[] | BookmarkMomentItem[];
 };
 
-const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
+export const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
   return (
     <section className="flex flex-col space-y-5">
       <div className="p-5x">
@@ -36,7 +37,7 @@ const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
           {momentData.map((moment) => (
             <li key={moment.id}>
               <Link
-                href={`/stories/${moment.slug}`}
+                href={`${moment.url}`}
                 className=" block hover:bg-slate-100 dark:hover:bg-slate-700"
               >
                 <div className="mx-4 items-center block p-3">
@@ -47,7 +48,7 @@ const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
                     {moment.title}
                   </h3>
                   <p className="mb-4 text-base font-normal text-slate-500 dark:text-slate-400">
-                    {moment?.body}
+                    {moment?.note}
                     <br></br>
                     Story overview and analytics and possibly buttons for
                     sharing.
@@ -95,5 +96,3 @@ const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
     </section>
   );
 };
-
-export default BookmarkMoment;
