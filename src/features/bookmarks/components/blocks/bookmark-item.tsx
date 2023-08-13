@@ -1,43 +1,16 @@
-import {
-  BarChartIcon,
-  EyeIcon,
-  FlagIcon,
-  GlobeIcon,
-  Icon,
-  ShareIcon,
-} from '@/components/illustrations';
-import { StoryItem } from '@/testing';
-import Image from 'next/image';
-import { Link } from '@/components/labs/typography';
-import React from 'react';
-import { Bookmark } from '@/features/bookmarks';
-
-export type BookmarkMomentItem = {
-  title: string;
-  channel?: string;
-  channelPhoto: string;
-  id: string;
-  time: string;
-  body: string; //Todo redesign this to bring the StoryItem.
-  slug: string;
+import React from 'react'
+import { Bookmark } from '../../types';
+import { Link } from '@/components/labs';
+import { BarChartIcon, EyeIcon, FlagIcon, Icon, ShareIcon } from '@/components/illustrations';
+type BookmarkBlockProps = {
+  bookmark: Bookmark;
 };
-export type BookmarkMomentProps = {
-  time: string;
-  momentData: Bookmark[]; //| StoryItem[] | BookmarkMomentItem[];
-};
-
-export const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
+export const BookmarkItem = ({bookmark}: BookmarkBlockProps) => {
   return (
-    <section className="flex flex-col space-y-5">
-      <div className="p-5x">
-        <time className="ml-4 text-lg font-semibold text-slate-900 dark:text-white">
-          {time}
-        </time>
-        <ol className="mt-3 divide-y divider-slate-200 dark:divide-slate-700">
-          {momentData.map((moment) => (
-            <li key={moment.id}>
+    
+            <li key={bookmark.id}>
               <Link
-                href={`${moment.url}`}
+                href={`${bookmark.url}`}
                 className=" block hover:bg-slate-100 dark:hover:bg-slate-700"
               >
                 <div className="mx-4 items-center block p-3">
@@ -45,10 +18,10 @@ export const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
                    //Todo redesign this content display. */}
 
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-                    {moment.title}
+                    {bookmark.title}
                   </h3>
                   <p className="mb-4 text-base font-normal text-slate-500 dark:text-slate-400">
-                    {moment?.note}
+                    {bookmark?.note}
                     <br></br>
                     Story overview and analytics and possibly buttons for
                     sharing.
@@ -90,9 +63,5 @@ export const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
                 </div>
               </Link>
             </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-};
+  )
+}
