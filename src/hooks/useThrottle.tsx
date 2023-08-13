@@ -7,28 +7,34 @@ import { useRef, useEffect, useCallback } from 'react';
  * @param limit - The minimum delay between function calls.
  * @returns A throttled version of `func`.
  */
-function useThrottle<F extends (...args: any[]) => void>(func: F, limit: number): F {
+function useThrottle<F extends (...args: any[]) => void>(
+  func: F,
+  limit: number,
+): F {
   const lastRan = useRef<Date | null>(null);
   const pending = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  return useCallback((...args: Parameters<F>) => {
-    if (!lastRan.current) {
-      func(...args);
-      lastRan.current = new Date();
-    } else {
-      const now = new Date();
-      const nextAt = new Date(lastRan.current.getTime() + limit);
-      const delay = nextAt.getTime() - now.getTime();
+  return useCallback(
+    (...args: Parameters<F>) => {
+      if (!lastRan.current) {
+        func(...args);
+        lastRan.current = new Date();
+      } else {
+        const now = new Date();
+        const nextAt = new Date(lastRan.current.getTime() + limit);
+        const delay = nextAt.getTime() - now.getTime();
 
-      if (!pending.current) {
-        pending.current = setTimeout(() => {
-          func(...args);
-          lastRan.current = new Date();
-          pending.current = null;
-        }, delay);
+        if (!pending.current) {
+          pending.current = setTimeout(() => {
+            func(...args);
+            lastRan.current = new Date();
+            pending.current = null;
+          }, delay);
+        }
       }
-    }
-  }, [func, limit]) as F;
+    },
+    [func, limit],
+  ) as F;
 }
 
 export default useThrottle;
