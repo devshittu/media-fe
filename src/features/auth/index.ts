@@ -3,8 +3,7 @@ export * from './api/get-auth-user';
 export * from './api/logout';
 
 // components:
-export * from './components/login-form';
-export * from './components/protected';
+export * from './components';
 
 // types:
 export * from './types';
