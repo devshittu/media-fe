@@ -14,7 +14,7 @@ export const Explore = ({
 }: ExploreProps) => {
   return (
     <>
-      <StoriesPageHeader pageTitle={`Explore: #${hashtag}`} />
+      <StoriesPageHeader pageTitle={`Explore: ${hashtag ? `#${hashtag}`: ''}`} />
 
       <section className="md:mb-36 flex justify-center w-full">
         <section className="max-w-xl md:max-w-2xl">{children}</section>
