@@ -82,9 +82,6 @@
 //   );
 // };
 
-
-
-
 import { useEffect, useRef, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 
@@ -101,7 +98,7 @@ export const InfiniteScroll = ({
   totalPages,
   onFetchMore,
   LoadingComponent,
-  onError
+  onError,
 }: InfiniteScrollProps) => {
   const page = useRef(1);
   const loaderRef = useRef<HTMLDivElement>(null);
@@ -159,7 +156,7 @@ export const InfiniteScroll = ({
     if (isLoading) {
       const timeoutId = setTimeout(() => {
         setIsLoading(false);
-      }, 10000);  // Reset after 10 seconds
+      }, 10000); // Reset after 10 seconds
 
       return () => clearTimeout(timeoutId);
     }
@@ -182,6 +179,4 @@ export const InfiniteScroll = ({
   );
 };
 
-
 //Path: src/components/infinite-scroll/infinite-scroll.tsx
-
