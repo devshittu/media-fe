@@ -1,9 +1,9 @@
 import { SidePanel } from '@/components/blocks/side-panel';
 import { Toast } from '@/components/blocks/toast';
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useMemo, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import { StoryList } from '@/features/stories/components';
+import { StoryList, StoryListLoadingPlaceholder } from '@/features/stories/components';
 
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
@@ -13,31 +13,41 @@ import {
   useStoriesByHashtag,
 } from '@/features/stories/api/get-stories-by-hashtag';
 import { useRouter } from 'next/router';
-import StoriesPageContainer from '@/features/stories/components/stories-page-container/stories-page-container';
+import { StoriesPageContainer } from '@/features/stories';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 const StoriesByHashtagPage = ({ stories }: PublicStoriesPageProps) => {
   const router = useRouter();
   const hashtagId = router.query.hashtagId as string;
-  const storiesByHashtagFromUse = useStoriesByHashtag({
+  const { data:responseData, isLoading } = useStoriesByHashtag({
     params: {
       page: 1,
       per_page: PAGINATE_STORIES_LIMIT,
       hashtag: hashtagId,
     },
-  });
+  }); // Use data and isLoading directly from the hook
+
+  const stableHashtags = useMemo(
+    () => responseData?.stories,
+    [responseData?.stories],
+  );
 
   return (
     <>
-      <StoriesPageHeader pageTitle="Home" />
+      <StoriesPageHeader pageTitle="Home" />{isLoading && (
+        <>
+          <StoryListLoadingPlaceholder />
+        </>
+      )}
+      {stableHashtags?.length > 0 && (
       <StoryList
-        data={storiesByHashtagFromUse.data?.stories}
-        totalPages={storiesByHashtagFromUse.data?.total_pages}
-        isLoading={storiesByHashtagFromUse.isLoading}
+        data={stableHashtags}
+        totalPages={responseData?.total_pages}
         // scrollInfinite
       />
-    </>
+    
+        )}  </>
   );
 };
 
