@@ -11,6 +11,7 @@ export type Bookmark = {
   created_at: number;
   updated_at: number;
 };
+
 export type BookmarkResponse = {
   bookmarks: Bookmark[];
   page: number;

@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { API_URL } from '@/config/constants';
+import { usersHandlers } from './users';
 import { storiesHandlers } from './stories';
 import { categoriesHandlers } from './categories';
 import { hashtagsHandlers } from './hashtags';
@@ -8,6 +9,7 @@ import { bookmarksHandlers } from './bookmarks';
 import { authHandlers } from './auth';
 export const handlers = [
   ...authHandlers,
+  ...usersHandlers,
   ...storiesHandlers,
   ...categoriesHandlers,
   ...hashtagsHandlers,

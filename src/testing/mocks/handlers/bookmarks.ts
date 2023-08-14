@@ -44,17 +44,54 @@ const getBookmarksHandler = rest.get(
     );
   },
 );
+const addBookmark = rest.post(`${API_URL}/bookmarks`, async (req, res, ctx) => {
+  // Sample analytics data
+  // The data
+  const reqData = (await req.json()) as FormData;
+  console.log('addBookmark: data in json', reqData);
+
+  // return res(
+  //   // Send a valid HTTP status code
+  //   ctx.status(403),
+  //   // And a response body, if necessary
+  //   ctx.json({
+  //     errorMessage: `User '${reqData}' not found`,
+  //   }),
+  // )
+  return res(
+    ctx.delay(300),
+    ctx.status(200),
+    ctx.json({ success: true }),
+    ctx.set('Access-Control-Allow-Origin', '*'),
+  );
+});
+const deleteBookmark = rest.delete(
+  `${API_URL}/bookmarks`,
+  async (req, res, ctx) => {
+    const reqData = (await req.json()) as FormData;
+    console.log('deleteBookmark: data in json', reqData);
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.json({ success: true }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+    );
+  },
+);
 const bookmarkAnalytics = rest.get(
-  '/bookmarks/analytics',
+  `${API_URL}/bookmarks/analytics`,
   async (req, res, ctx) => {
     // Sample analytics data
     return res(ctx.json({ totalBookmarks: db.bookmark.count() }));
   },
 );
-const exportBookmark = rest.get('/bookmarks/export', async (req, res, ctx) => {
-  // Sample analytics data
-  return res(ctx.json({ bookmarks: db.bookmark.getAll() }));
-});
+const exportBookmark = rest.get(
+  `${API_URL}/bookmarks/export`,
+  async (req, res, ctx) => {
+    // Sample analytics data
+    return res(ctx.json({ bookmarks: db.bookmark.getAll() }));
+  },
+);
 const deleteBookmarkBulk = rest.post(
   `${API_URL}/bookmarks/bulk-delete`,
   async (req, res, ctx) => {
@@ -101,4 +138,6 @@ export const bookmarksHandlers = [
   deleteBookmarkBulk,
   exportBookmark,
   bookmarkAnalytics,
+  addBookmark,
+  deleteBookmark,
 ];

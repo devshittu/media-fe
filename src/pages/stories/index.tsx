@@ -8,7 +8,7 @@ import {
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { StoriesPageContainer } from '@/features/stories';
+import { StoriesPageFrame } from '@/components/frames';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
@@ -46,7 +46,7 @@ const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
 StoriesPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <UserLayout>
-      <StoriesPageContainer>{page}</StoriesPageContainer>
+      <StoriesPageFrame>{page}</StoriesPageFrame>
     </UserLayout>
   );
 };

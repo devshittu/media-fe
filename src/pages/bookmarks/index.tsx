@@ -2,24 +2,21 @@ import { StoriesPageHeader } from '@/components/blocks/headers';
 import UserLayout from '@/layouts/user-layout';
 import React, { ReactElement, useMemo, useState } from 'react';
 import { SidePanel } from '@/components/blocks/side-panel';
-import { Bookmark, useBookmarks } from '@/features/bookmarks';
+import { Bookmark, useGetBookmarks } from '@/features/bookmarks';
 import { useListGrouping, useListSorting } from '@/hooks';
-import {
-  StoriesPageContainer,
-  StoryListLoadingPlaceholder,
-} from '@/features/stories';
 import {
   BookmarkSorter,
   BookmarkMoment,
   BookmarkMomentLoadingPlaceholder,
 } from '@/features/bookmarks/components/';
+import { StoriesPageFrame } from '@/components/frames';
 
 const BookmarksPage = () => {
   const [selected, setSelected] = useState<string>('dateAdded');
   const gender = Math.random() < 0.5 ? 'male' : 'female';
   const displayPhotoUrl = `https://xsgames.co/randomusers/avatar.php?g=${gender}`;
 
-  const { data: responseData, isLoading } = useBookmarks({});
+  const { data: responseData, isLoading } = useGetBookmarks({});
   const stableBookmarks = useMemo(
     () => responseData?.bookmarks,
     [responseData?.bookmarks],
@@ -81,7 +78,7 @@ const BookmarksPage = () => {
 BookmarksPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <UserLayout>
-      <StoriesPageContainer>{page}</StoriesPageContainer>
+      <StoriesPageFrame>{page}</StoriesPageFrame>
     </UserLayout>
   );
 };

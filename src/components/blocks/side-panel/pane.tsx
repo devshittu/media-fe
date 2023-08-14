@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from '@/components/labs/typography';
-import { SidePanelSectionProps } from './types';
+import { PaneProps } from './types';
 
-export const SidePanelSection = ({
+export const Pane = ({
   id,
   title,
   children,
-}: SidePanelSectionProps) => {
+  linkHref = "#",               // Default value if not provided
+  linkText = "View all",        // Default value if not provided
+  showLink = true,
+}: PaneProps) => {
   return (
     <section className="w-full max-w-md font-inter" id={id}>
       <div className="flex items-center justify-between mb-4">
@@ -16,15 +19,18 @@ export const SidePanelSection = ({
         >
           {title}
         </h5>
+        {showLink && (
         <Link
-          href="#"
+          href={linkHref}
           className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
           id={`${id}LinkToAll`}
         >
-          View all
-        </Link>
+          {linkText}
+        </Link>)}
       </div>
-      <div className="flow-root">{children}</div>
+      <div className="flow-root min-h-[260px]">{children}</div>
     </section>
   );
 };
+
+// Path: src/components/blocks/side-panel/side-panel-section.tsx

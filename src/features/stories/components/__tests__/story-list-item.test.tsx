@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { StoryListItem } from '@/features/stories/components/story-list-item';
+import { StoryListItem } from '@/features/stories/components/blocks';
 import userEvent from '@testing-library/user-event';
 import { Story } from '../../types';
 

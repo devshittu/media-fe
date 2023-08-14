@@ -1,15 +1,15 @@
 // pages/exportBookmarks.tsx
 import { ReactElement, useMemo, useState } from 'react';
-import { useBookmarks } from '@/features/bookmarks';
+import { useGetBookmarks } from '@/features/bookmarks';
 import UserLayout from '@/layouts/user-layout';
-import { StoriesPageContainer } from '@/features/stories';
 import { StoryListLoadingPlaceholder } from '@/features/stories/components';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { formatDate } from '@/utils';
 import { Seo } from '@/components';
+import { StoriesPageFrame } from '@/components/frames';
 
 const ExportPage = () => {
-  const { data: responseData, isLoading } = useBookmarks({});
+  const { data: responseData, isLoading } = useGetBookmarks({});
   const stableBookmarks = useMemo(
     () => responseData?.bookmarks,
     [responseData?.bookmarks],
@@ -96,7 +96,7 @@ const ExportPage = () => {
 ExportPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <UserLayout>
-      <StoriesPageContainer>{page}</StoriesPageContainer>
+      <StoriesPageFrame>{page}</StoriesPageFrame>
     </UserLayout>
   );
 };

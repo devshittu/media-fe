@@ -24,7 +24,7 @@ export const useHashtags = ({ params }: GetHashtagsOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_HASHTAGS, params],
     queryFn: () => getHashtags({ params }),
-    initialData:  {} as HashtagResponse,
+    initialData: {} as HashtagResponse,
   });
 
   return {

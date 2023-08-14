@@ -1,12 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { InputField } from '@/components/form';
 import { useScrollBehavior, useScrollSpeed } from '@/hooks';
-import { AccountList } from '../account/list';
-import { SidePanelSection } from './side-panel-section';
+import { AccountList } from '../../../features/users/components/blocks/list';
+import { Pane } from './pane';
 import { HashtagList } from '@/features/hashtags/components';
 import { useScrollSync } from '@/hooks/useScrollSync';
+import { PaneConfig } from './types';
 
-export const SidePanel = () => {
+type SidePanelProps = {
+  sections: PaneConfig[];
+};
+
+export const SidePanel = ({ sections }: SidePanelProps) => {
   const { screenHeight } = useScrollBehavior();
   const sidePanelRef = useRef<HTMLDivElement>(null);
   const [sidePanelHeight, setSidePanelHeight] = useState<number>(0);
@@ -26,6 +31,20 @@ export const SidePanel = () => {
 
   const { topPosition: sidebarTop } = useScrollSync(sidePanelHeight || 0); // top position set to 60
 
+  const renderedSections = useMemo(
+    () =>
+      sections.map((section) => (
+        <Pane
+          key={section.id}
+          id={section.id}
+          title={section.title}
+        >
+          {section.component}
+        </Pane>
+      )),
+    [sections],
+  );
+
   return (
     <div className="flex-1 pb-0 hidden lg:block lg:sticky top-0 min-h-screen">
       <div className={`sticky top-0 z-10 bg-white dark:bg-slate-900`}>
@@ -43,13 +62,10 @@ export const SidePanel = () => {
         ref={sidePanelRef}
         style={{ transform: `translateY(${sidebarTop}px)` }}
       >
-        <SidePanelSection id="trendsForYou" title="Trending">
-          <HashtagList />
-        </SidePanelSection>
-        <SidePanelSection id="channelSubscriptions" title="Latest Channels">
-          <AccountList />
-        </SidePanelSection>
+        {renderedSections}
       </div>
     </div>
   );
 };
+
+// Path: src/components/blocks/side-panel/side-panel.tsx

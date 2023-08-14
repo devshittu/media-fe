@@ -1,7 +1,6 @@
 import React from 'react';
 import { Bookmark, BookmarkList } from '@/features/bookmarks';
 
-
 export type BookmarkMomentItem = {
   title: string;
   channel?: string;

@@ -1,1 +1,1 @@
-export * from './bookmark-moment-loading-placeholder'
+export * from './bookmark-moment-loading-placeholder';

@@ -22,8 +22,7 @@ const getHashtagsHandler = rest.get(
       ? parseInt(perPageParam, 10)
       : PAGINATE_STORIES_LIMIT;
 
-
-      per_page = 15;
+    per_page = 15;
     const stories = db.story.getAll();
 
     const start = (page - 1) * per_page;

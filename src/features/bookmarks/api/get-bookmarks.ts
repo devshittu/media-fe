@@ -23,7 +23,7 @@ export const getBookmarks = ({
   });
 };
 
-export const useBookmarks = ({ params }: GetBookmarksOptions) => {
+export const useGetBookmarks = ({ params }: GetBookmarksOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_BOOKMARKS, params],
     queryFn: () => getBookmarks({ params }),

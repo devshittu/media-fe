@@ -21,12 +21,17 @@ import { Toast } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
 import { Modal } from '@/components/blocks/modal';
 import { Story } from '../../types';
+import { useBookmark } from '@/features/bookmarks/hooks/useBookmark';
 
 type ContextMenuProps = {
   story: Story;
+  initialBookmarkState: boolean;
 };
 
-export const ContextMenu = ({ story }: ContextMenuProps) => {
+export const ContextMenu = ({
+  story,
+  initialBookmarkState,
+}: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
   const ShowToast = () => {
     const notify = new Toast({
@@ -43,9 +48,19 @@ export const ContextMenu = ({ story }: ContextMenuProps) => {
     notify.open();
   };
 
+  const { isBookmarked, handleBookmark, handleUnbookmark } = useBookmark(
+    story.id,
+    (initialBookmarkState = false),
+  );
+
   const addBookmark = (event: React.MouseEvent) => {
     if (event) {
       event.preventDefault();
+    }
+    if (isBookmarked) {
+      handleUnbookmark();
+    } else {
+      handleBookmark();
     }
     const drawer = new Drawer({
       title: 'Add Bookmark!',
@@ -109,13 +124,13 @@ export const ContextMenu = ({ story }: ContextMenuProps) => {
             onClick={openModal}
           />
           <MenuItem
-            label="Add Bookmark"
+            label={isBookmarked ? 'Unbookmark' : 'Bookmark'}
             url="#"
             onClick={addBookmark}
             icon={
               <Icon
                 icon={<BookmarkIcon />}
-                className="w-6 text-slate-900"
+                className="w-6 text-slate-900 dark:text-slate-100"
                 strokeWidth={2.5}
               />
             }

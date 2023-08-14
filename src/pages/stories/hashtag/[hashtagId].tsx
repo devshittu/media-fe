@@ -3,7 +3,10 @@ import { Toast } from '@/components/blocks/toast';
 import { ReactElement, useMemo, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import { StoryList, StoryListLoadingPlaceholder } from '@/features/stories/components';
+import {
+  StoryList,
+  StoryListLoadingPlaceholder,
+} from '@/features/stories/components';
 
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
@@ -13,14 +16,14 @@ import {
   useStoriesByHashtag,
 } from '@/features/stories/api/get-stories-by-hashtag';
 import { useRouter } from 'next/router';
-import { StoriesPageContainer } from '@/features/stories';
+import { StoriesPageFrame } from '@/components/frames';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 const StoriesByHashtagPage = ({ stories }: PublicStoriesPageProps) => {
   const router = useRouter();
   const hashtagId = router.query.hashtagId as string;
-  const { data:responseData, isLoading } = useStoriesByHashtag({
+  const { data: responseData, isLoading } = useStoriesByHashtag({
     params: {
       page: 1,
       per_page: PAGINATE_STORIES_LIMIT,
@@ -35,26 +38,27 @@ const StoriesByHashtagPage = ({ stories }: PublicStoriesPageProps) => {
 
   return (
     <>
-      <StoriesPageHeader pageTitle="Home" />{isLoading && (
+      <StoriesPageHeader pageTitle="Home" />
+      {isLoading && (
         <>
           <StoryListLoadingPlaceholder />
         </>
       )}
       {stableHashtags?.length > 0 && (
-      <StoryList
-        data={stableHashtags}
-        totalPages={responseData?.total_pages}
-        // scrollInfinite
-      />
-    
-        )}  </>
+        <StoryList
+          data={stableHashtags}
+          totalPages={responseData?.total_pages}
+          // scrollInfinite
+        />
+      )}{' '}
+    </>
   );
 };
 
 StoriesByHashtagPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <UserLayout>
-      <StoriesPageContainer>{page}</StoriesPageContainer>
+      <StoriesPageFrame>{page}</StoriesPageFrame>
     </UserLayout>
   );
 };
