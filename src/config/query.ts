@@ -9,6 +9,8 @@ export const QUERY_KEYS = {
   ADD_BOOKMARKS: 'add-bookmark',
   DELETE_BOOKMARK: 'delete-bookmark',
   GET_HASHTAGS: 'get-hashtags',
+  GET_USER_SETTINGS: 'get-settings',
+  UPDATE_USER_SETTINGS: 'get-settings',
 };
 
 //Path: src/config/query.ts
