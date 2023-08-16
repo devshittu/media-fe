@@ -3,7 +3,7 @@ import { Button } from '@/components/button';
 import { ReactElement, Suspense, useRef, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import MainMenu from '@/components/menus/main-menu';
-import { FieldError, InputField } from '@/components/form';
+// import { FieldError, InputField } from '@/components/form';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import { Drawer, DrawerSide } from '@/components/blocks/drawer';
 import {
@@ -15,6 +15,7 @@ import { Loading } from '@/components/loading';
 import { Category } from '@/features/categories';
 import dynamic from 'next/dynamic'; // Import next/dynamic
 import { useUserSettings } from '@/features/settings/api/get-user-settings';
+import { StoriesPageHeader } from '@/components/blocks/headers';
 
 // Rest of the code remains the same...
 const PersonalPreferencesLazy = dynamic(
@@ -25,11 +26,8 @@ const PersonalPreferencesLazy = dynamic(
   { loading: () => <Loading /> }, // Optional loading indicator while the component is loading
 );
 
-const Index = () => {
+const SettingsPage = () => {
   const headerRef = useRef<HTMLElement>(null);
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState<FieldError | null>(null);
-
   const dataFromUseSettings = useUserSettings({ params: { user_id: '1' } });
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
@@ -46,26 +44,6 @@ const Index = () => {
     });
 
     drawer.open();
-  };
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
-
-    // Example validation
-    if (value.trim() === '') {
-      setEmailError({ message: 'Email is required' });
-    } else {
-      setEmailError(null);
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Example form submission
-    if (!emailError && email.trim() !== '') {
-      // Perform further actions, such as API requests or form submission
-      console.log('Form submitted');
-    }
   };
   if (dataFromUseSettings.isLoading) {
     return <Loading />;
@@ -147,10 +125,14 @@ const Index = () => {
             </ul>
           </div>
         </header>
+        {/* TODO: Placeholder */}
+        <StoriesPageHeader pageTitle="Settings" />
         <section>
           <div className={`mt-28 lg:mt-7`}>
             <div className={`flex flex-col space-y-10`}>
-              <AccountSettings />
+              <AccountSettings
+                initialSettingValues={dataFromUseSettings.data}
+              />
               {/* <PersonalPreferences categories={dataFromUseSettings.data.favorite_categories as Category[]} /> */}
 
               <Suspense fallback={<Loading />}>
@@ -169,10 +151,10 @@ const Index = () => {
   );
 };
 
-Index.getLayout = function getLayout(page: ReactElement) {
+SettingsPage.getLayout = function getLayout(page: ReactElement) {
   return <UserLayout>{page}</UserLayout>;
 };
 
-export default Index;
+export default SettingsPage;
 
 //Path: src/pages/settings/index.tsx
