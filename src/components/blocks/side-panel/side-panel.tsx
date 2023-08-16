@@ -34,11 +34,7 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
   const renderedSections = useMemo(
     () =>
       sections.map((section) => (
-        <Pane
-          key={section.id}
-          id={section.id}
-          title={section.title}
-        >
+        <Pane key={section.id} id={section.id} title={section.title}>
           {section.component}
         </Pane>
       )),
