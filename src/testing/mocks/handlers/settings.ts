@@ -25,4 +25,29 @@ const getSettingsHandler = rest.get(
   },
 );
 
-export const settingsHandlers = [getSettingsHandler];
+const updateUserSettings = rest.put(
+  `${API_URL}/settings`,
+  async (req, res, ctx) => {
+    // Sample analytics data
+    // The data
+    const reqData = (await req.json()) as FormData;
+    console.log('updateUserSettings: data in json', reqData);
+
+    // return res(
+    //   // Send a valid HTTP status code
+    //   ctx.status(403),
+    //   // And a response body, if necessary
+    //   ctx.json({
+    //     status: 'failure',
+    //     errorMessage: `User '${reqData}' not found`,
+    //   }),
+    // )
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.json({ success: true }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+    );
+  },
+);
+export const settingsHandlers = [getSettingsHandler, updateUserSettings];
