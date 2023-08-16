@@ -6,8 +6,8 @@ export const Pane = ({
   id,
   title,
   children,
-  linkHref = "#",               // Default value if not provided
-  linkText = "View all",        // Default value if not provided
+  linkHref = '#', // Default value if not provided
+  linkText = 'View all', // Default value if not provided
   showLink = true,
 }: PaneProps) => {
   return (
@@ -20,13 +20,14 @@ export const Pane = ({
           {title}
         </h5>
         {showLink && (
-        <Link
-          href={linkHref}
-          className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
-          id={`${id}LinkToAll`}
-        >
-          {linkText}
-        </Link>)}
+          <Link
+            href={linkHref}
+            className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+            id={`${id}LinkToAll`}
+          >
+            {linkText}
+          </Link>
+        )}
       </div>
       <div className="flow-root min-h-[260px]">{children}</div>
     </section>
