@@ -52,7 +52,13 @@ type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-export const updateDeep = <T>(obj: T, update: DeepPartial<T>): T => {
+export const updateDeep = <T>(
+  obj: T | undefined,
+  update: DeepPartial<T>,
+): T => {
+  if (!obj) {
+    throw new Error('The provided object is undefined.');
+  }
   for (const key in update) {
     if (typeof update[key] === 'object' && !Array.isArray(update[key])) {
       if (typeof obj[key] !== 'object' || Array.isArray(obj[key])) {
