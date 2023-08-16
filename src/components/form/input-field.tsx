@@ -12,7 +12,6 @@ export type InputFieldPropTypes = {
   error?: FieldError;
   placeholder?: string;
   value?: string;
-  // onChange?: (value: string) => void;
   onChange?: ChangeHandler;
   outlined?: boolean;
   rounded?: boolean;
@@ -125,3 +124,5 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
   },
 );
 InputField.displayName = 'InputField';
+
+//Path src/components/form/input-field.tsx
