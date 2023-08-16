@@ -1,7 +1,7 @@
 export type ToastProps = {
   id?: string;
   isActive: boolean;
-  type: 'success' | 'danger' | 'warning';
+  type: 'success' | 'error' | 'warning' | 'info';
   position?:
     | 'top-left'
     | 'top-center'

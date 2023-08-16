@@ -42,7 +42,7 @@ export const ToastComponent = ({
 
     if (type === 'success') {
       className += ' bg-green-50';
-    } else if (type === 'danger') {
+    } else if (type === 'error') {
       className += ' bg-red-50';
     } else if (type === 'warning') {
       className += ' bg-orange-50';
@@ -58,7 +58,7 @@ export const ToastComponent = ({
     if (type === 'success') {
       className +=
         ' text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200';
-    } else if (type === 'danger') {
+    } else if (type === 'error') {
       className += ' text-red-500 bg-red-100 dark:bg-red-800 dark:text-red-200';
     } else if (type === 'warning') {
       className +=
@@ -119,7 +119,7 @@ export const ToastComponent = ({
             {type === 'success' && (
               <CheckIcon className="w-5 h-5" strokeWidth={3} />
             )}
-            {type === 'danger' && <XIcon className="w-5 h-5" strokeWidth={3} />}
+            {type === 'error' && <XIcon className="w-5 h-5" strokeWidth={3} />}
             {type === 'warning' && (
               <AlertTriangleIcon className="w-5 h-5" strokeWidth={3} />
             )}
