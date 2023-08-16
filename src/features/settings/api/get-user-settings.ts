@@ -4,6 +4,9 @@ import { apiClient } from '@/lib/api-client';
 
 import { Setting } from '../types';
 
+import { ApiResponse } from '@/types';
+import { QUERY_KEYS } from '@/config/query';
+const { GET_USER_SETTINGS } = QUERY_KEYS;
 type GetUserSettingsOptions = {
   params?: {
     user_id?: string | undefined;
@@ -20,7 +23,7 @@ export const getUserSettings = ({
 
 export const useUserSettings = ({ params }: GetUserSettingsOptions) => {
   const { data, isFetching, isFetched } = useQuery<Setting>({
-    queryKey: ['settings', params], // Updated queryKey type to string[]
+    queryKey: [GET_USER_SETTINGS, params], // Updated queryKey type to string[]
     queryFn: () => getUserSettings({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as Setting, // Set initialData to an empty Setting object
