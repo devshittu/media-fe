@@ -78,12 +78,15 @@ const models = {
   settings: {
     id: primaryKey(uid),
     user_id: String,
-    theme: String,
-    account_details: {
+    system_settings: {
+      theme: String,
+      language: String,
+    },
+    account_settings: {
       display_name: String,
       email: String,
     },
-    notifications: {
+    notification_settings: {
       email: {
         account: Number, // email about the user's account
         marketing: Number, // email about the marketing, products and promotions
