@@ -1,6 +1,6 @@
 import React from 'react';
 import SettingsStyles from './settings.module.css';
-import { SettingsFieldsetProps } from './types';
+import { SettingsFieldsetProps } from '../types';
 
 export const SettingsFieldset = ({
   id,
@@ -36,3 +36,5 @@ export const SettingsFieldset = ({
     </div>
   );
 };
+
+//Path: src/features/settings/components/blocks/settings-fieldset.tsx
