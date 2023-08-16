@@ -2,13 +2,18 @@ export const settings = [
   {
     id: '1',
     user_id: '1',
-    theme: 'system',
-    language: 'en',
-    account_details: {
-      display_name: 'John Doe',
-      email: 'john.doe@example.com',
+    system_settings: { theme: 'system', language: 'en' },
+    account_settings: {
+      display_name: 'testuser1',
+      email: 'user1@test.com',
     },
-    notifications: { email: { account: 1, marketing: 1, updates: 0 } },
+    notification_settings: {
+      email: {
+        account: 1,
+        marketing: 1,
+        updates: 1,
+      },
+    },
     favorite_categories: [
       '1',
       '2',
@@ -29,13 +34,21 @@ export const settings = [
   {
     id: '2',
     user_id: '2',
-    theme: 'system',
-    language: 'en',
-    account_details: {
-      display_name: 'Jane Smith',
-      email: 'jane.smith@example.com',
+    system_settings: {
+      theme: 'light',
+      language: 'en',
     },
-    notifications: { email: { account: 1, marketing: 1, updates: 0 } },
+    account_settings: {
+      display_name: 'testuser2',
+      email: 'user2@test.com',
+    },
+    notification_settings: {
+      email: {
+        account: 1,
+        marketing: 1,
+        updates: 1,
+      },
+    },
     favorite_categories: [
       '10',
       '11',
@@ -53,30 +66,17 @@ export const settings = [
     created_at: 1690123521,
     updated_at: 1690123521,
   },
-  {
-    id: '3',
-    user_id: '3',
-    theme: 'system',
-    language: 'en',
-    account_details: {
-      display_name: 'Michael Johnson',
-      email: 'michael.johnson@example.com',
-    },
-    notifications: { email: { account: 1, marketing: 0, updates: 0 } },
-    favorite_categories: [
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-    ],
-    last_updated: 1690123521,
-    created_at: 1690123521,
-    updated_at: 1690123521,
-  },
 ];
+
+//[
+//   '6',
+//   '7',
+//   '8',
+//   '9',
+//   '10',
+//   '11',
+//   '12',
+//   '13',
+//   '14',
+//   '15',
+// ],
