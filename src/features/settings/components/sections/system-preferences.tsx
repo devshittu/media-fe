@@ -1,6 +1,5 @@
 import React from 'react';
-import { SettingsFieldset } from '../settings-fieldset';
-import { SettingsField } from '../settings-field';
+import { SettingsField, SettingsFieldset } from '../blocks/';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 
 export const SystemPreferences = () => {
