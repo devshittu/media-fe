@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
 import { SettingsField, SettingsFieldset } from '../blocks';
 import { InputField } from '@/components';
+import { useNotifications, NotificationType } from '@/stores/notifications';
 import { AccountSettingsData, Setting } from '../../types';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/button';
 import { useUpdateUserSettings } from '../../api/update-user-settings';
 import { updateDeep } from '@/utils';
+
 type AccountSettingsProps = {
   initialSettingValues?: Setting;
-  onSuccess?: () => void;
+  // onSuccess?: () => void;
 };
 export const AccountSettings = ({
   initialSettingValues,
-  onSuccess,
-}: AccountSettingsProps) => {
+  // onSuccess,
+}: 
+AccountSettingsProps) => {
   // if (!initialSettingValues) return;
+  const { showNotification } = useNotifications();
   const defaultSettings: AccountSettingsData = { display_name: '', email: '' };
 
   const [localSettings, setLocalSettings] = useState<AccountSettingsData>(
     initialSettingValues?.account_settings || defaultSettings,
   );
+
+  const onSuccess = () => {
+    showNotification({
+      type: NotificationType.SUCCESS,
+      title: 'Success',
+      duration: 120000, // duration
+      message: 'Settings updated!',
+    });
+  };
 
   const updateSettings = useUpdateUserSettings({ onSuccess });
   const { register, handleSubmit, formState } = useForm<AccountSettingsData>({
