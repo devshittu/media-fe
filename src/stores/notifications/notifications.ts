@@ -1,12 +1,27 @@
 import { createStore, useStore } from 'zustand';
 
 import { uid } from '@/utils/uid';
+import { ToastPosition, ToastType } from '@/components/blocks/toast';
 
-export type NotificationType = 'info' | 'warning' | 'success' | 'error';
+export enum NotificationType {
+  SUCCESS = ToastType.SUCCESS,
+  ERROR = ToastType.ERROR,
+  WARNING = ToastType.WARNING,
+  INFO = ToastType.INFO,
+}
 
+export enum NotificationPosition {
+  TOP_LEFT = ToastPosition.TOP_LEFT,
+  TOP_CENTER = ToastPosition.TOP_CENTER,
+  TOP_RIGHT = ToastPosition.TOP_RIGHT,
+  BOTTOM_RIGHT = ToastPosition.BOTTOM_RIGHT,
+  BOTTOM_CENTER = ToastPosition.BOTTOM_CENTER,
+  BOTTOM_LEFT = ToastPosition.BOTTOM_LEFT,
+}
 export type Notification = {
   id: string;
   type: NotificationType;
+  position?: NotificationPosition;
   title: string;
   duration?: number;
   message?: string;
@@ -43,3 +58,5 @@ export const notificationsStore = createStore<NotificationsStore>(
 );
 
 export const useNotifications = () => useStore(notificationsStore);
+
+//Path: src/stores/notifications/notifications.ts
