@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ToastProps } from './types';
+import { ToastPosition, ToastProps, ToastType } from './types';
 import { useKeyPress } from '@/hooks';
 import Portal from '@/hoc/Portal';
 import {
@@ -11,9 +11,9 @@ import {
 export const ToastComponent = ({
   id,
   isActive = false,
-  type = 'success',
+  type = ToastType.SUCCESS,
   message,
-  position = 'bottom-center',
+  position = ToastPosition.BOTTOM_CENTER,
   duration = 3000,
   onClose,
 }: ToastProps) => {
@@ -116,11 +116,13 @@ export const ToastComponent = ({
       >
         <div className="flex justify-normal items-center">
           <div className={getIconClassName()}>
-            {type === 'success' && (
+            {type === ToastType.SUCCESS && (
               <CheckIcon className="w-5 h-5" strokeWidth={3} />
             )}
-            {type === 'error' && <XIcon className="w-5 h-5" strokeWidth={3} />}
-            {type === 'warning' && (
+            {type === ToastType.ERROR && (
+              <XIcon className="w-5 h-5" strokeWidth={3} />
+            )}
+            {type === ToastType.WARNING && (
               <AlertTriangleIcon className="w-5 h-5" strokeWidth={3} />
             )}
             <span className="sr-only">{type} icon</span>
