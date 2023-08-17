@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 
 import { Seo } from '@/components/seo';
 import { LoginForm } from '@/features/auth';
-import { useNotifications } from '@/stores/notifications';
+import { NotificationType, useNotifications } from '@/stores/notifications';
 // import { AuthLayout } from '@/layouts/auth-layout';
 
 const LoginPage = () => {
@@ -12,7 +12,7 @@ const LoginPage = () => {
 
   const onSuccess = () => {
     showNotification({
-      type: 'success',
+      type: NotificationType.SUCCESS,
       title: 'Success',
       duration: 5000,
       message: 'Job Created!',
