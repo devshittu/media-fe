@@ -9,7 +9,9 @@ export type LoginFormProps = {
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const login = useLogin({ onSuccess });
-  const { register, handleSubmit, formState } = useForm<LoginData>();
+  const { register, handleSubmit, formState } = useForm<LoginData>({
+    defaultValues: { email: 'user1@test.com' },
+  });
   const onSubmit = (data: LoginData) => {
     console.log(data);
     login.submit(data);
