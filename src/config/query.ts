@@ -11,6 +11,7 @@ export const QUERY_KEYS = {
   GET_HASHTAGS: 'get-hashtags',
   GET_USER_SETTINGS: 'get-settings',
   UPDATE_USER_SETTINGS: 'get-settings',
+  SYNC_ANALYTICS: 'analytics-sync',
 };
 
 //Path: src/config/query.ts
