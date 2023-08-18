@@ -21,25 +21,36 @@ export enum NotificationPosition {
 export type Notification = {
   id: string;
   type: NotificationType;
-  position?: NotificationPosition;
   title: string;
   duration?: number;
   message?: string;
 };
+export type NotificationOptions = {
+  position?: NotificationPosition;
+};
 
 export type NotificationsStore = {
   notifications: Notification[];
-  showNotification: (notification: Omit<Notification, 'id'>) => void;
+  options: NotificationOptions;
+  showNotification: (
+    notification: Omit<Notification, 'id'>,
+    options?: NotificationOptions,
+  ) => void;
   dismissNotification: (id: string) => void;
 };
 
 export const notificationsStore = createStore<NotificationsStore>(
   (set, get) => ({
     notifications: [],
-    showNotification: (notification) => {
+    options: { position: NotificationPosition.BOTTOM_CENTER }, // Default options
+    showNotification: (
+      notification: Omit<Notification, 'id'>,
+      options?: NotificationOptions,
+    ) => {
       const id = uid();
       set((state) => ({
-        notifications: [...state.notifications, { id, ...notification }],
+        notifications: [...state.notifications, { ...notification, id }],
+        options: options || state.options, // Update the options
       }));
       if (notification.duration) {
         setTimeout(() => {
