@@ -9,29 +9,29 @@ import Portal from '@/hoc/Portal';
 import { AlertTriangleIcon, CheckIcon, XIcon } from '../illustrations';
 import { useKeyPress } from '@/hooks';
 
-const getPositionClassName = (
-  position: NotificationPosition = NotificationPosition.BOTTOM_CENTER,
-) => {
-  let className = '';
-  if (position === NotificationPosition.TOP_LEFT) {
-    className += ' top-5 left-5';
-  } else if (position === NotificationPosition.TOP_CENTER) {
-    className += ' top-5 left-[50%] transform translate-x-[-50%]';
-  } else if (position === NotificationPosition.TOP_RIGHT) {
-    className += ' top-5 right-5';
-  } else if (position === NotificationPosition.BOTTOM_LEFT) {
-    className += ' bottom-5 left-5';
-  } else if (position === NotificationPosition.BOTTOM_CENTER) {
-    className += ' bottom-5  left-[50%] transform translate-x-[-50%]';
-  } else if (position === NotificationPosition.BOTTOM_RIGHT) {
-    className += ' bottom-5 right-5';
-  }
-
-  return className;
-};
 export const Notifications = () => {
-  const { notifications, dismissNotification } = useNotifications();
+  const { notifications, dismissNotification, options } = useNotifications();
 
+  const getPositionClassName = (
+    position: NotificationPosition = NotificationPosition.BOTTOM_CENTER,
+  ) => {
+    let className = '';
+    if (position === NotificationPosition.TOP_LEFT) {
+      className += ' top-5 left-5';
+    } else if (position === NotificationPosition.TOP_CENTER) {
+      className += ' top-5 left-[50%] transform translate-x-[-50%]';
+    } else if (position === NotificationPosition.TOP_RIGHT) {
+      className += ' top-5 right-5';
+    } else if (position === NotificationPosition.BOTTOM_LEFT) {
+      className += ' bottom-5 left-5';
+    } else if (position === NotificationPosition.BOTTOM_CENTER) {
+      className += ' bottom-5  left-[50%] transform translate-x-[-50%]';
+    } else if (position === NotificationPosition.BOTTOM_RIGHT) {
+      className += ' bottom-5 right-5';
+    }
+
+    return className;
+  };
   // const escapePressed = useKeyPress('Escape');
 
   // useEffect(() => {
@@ -48,7 +48,9 @@ export const Notifications = () => {
   return (
     <Portal wrapperId="toast-wrapper">
       <div
-        className={`gap-4 flex-col-reverse flex fixed  w-full max-w-xs lg:max-w-lg z-50  ${getPositionClassName()}`}
+        className={`gap-4 flex-col-reverse flex fixed  w-full max-w-xs lg:max-w-lg z-50  ${getPositionClassName(
+          options.position,
+        )}`}
       >
         {notifications.map((notification) => (
           <NotificationComponent
@@ -110,14 +112,12 @@ export const NotificationComponent = ({
       id={notification.id}
       className={`${getToastClassName(
         notification.type,
-      )} ${getPositionClassName(
-        notification.position,
       )} dark:text-slate-400 dark:divide-slate-700 space-x-4 divide-x divide-slate-200 dark:bg-slate-800  
         `}
       role="alert"
     >
       <div className="flex justify-normal items-center">
-        <div className={getIconClassName()}>
+        <div className={getIconClassName(notification.type)}>
           {notification.type === NotificationType.SUCCESS && (
             <CheckIcon className="w-5 h-5" strokeWidth={3} />
           )}
