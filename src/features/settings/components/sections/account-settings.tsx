@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { SettingsField, SettingsFieldset } from '../blocks';
+import {
+  SettingsField,
+  SettingsFieldset,
+  SettingsFieldsetFooter,
+} from '../blocks';
 import { InputField } from '@/components';
-import { useNotifications, NotificationType } from '@/stores/notifications';
+import {
+  useNotifications,
+  NotificationType,
+  NotificationPosition,
+} from '@/stores/notifications';
 import { AccountSettingsData, Setting } from '../../types';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/button';
 import { useUpdateUserSettings } from '../../api/update-user-settings';
 import { updateDeep } from '@/utils';
+import { SettingsSectionProps } from '../types';
 
-type AccountSettingsProps = {
-  initialSettingValues?: Setting;
-  // onSuccess?: () => void;
-};
 export const AccountSettings = ({
   initialSettingValues,
-  // onSuccess,
-}: 
-AccountSettingsProps) => {
+}: // onSuccess,
+SettingsSectionProps) => {
   // if (!initialSettingValues) return;
   const { showNotification } = useNotifications();
   const defaultSettings: AccountSettingsData = { display_name: '', email: '' };
@@ -26,12 +30,15 @@ AccountSettingsProps) => {
   );
 
   const onSuccess = () => {
-    showNotification({
-      type: NotificationType.SUCCESS,
-      title: 'Success',
-      duration: 120000, // duration
-      message: 'Settings updated!',
-    });
+    showNotification(
+      {
+        type: NotificationType.SUCCESS,
+        title: 'Success',
+        duration: 6000, // duration
+        message: 'Settings updated!',
+      },
+      { position: NotificationPosition.BOTTOM_RIGHT },
+    );
   };
 
   const updateSettings = useUpdateUserSettings({ onSuccess });
@@ -40,12 +47,6 @@ AccountSettingsProps) => {
   });
   const onSubmit = (data: AccountSettingsData) => {
     console.log('data:', data);
-
-    // if (!initialSettingValues) {
-    //     console.error('initialSettingValues is not defined.');
-    //     return;
-    // }
-
     const updatedData = updateDeep(initialSettingValues, {
       account_settings: data,
     });
@@ -83,15 +84,17 @@ AccountSettingsProps) => {
               error={formState.errors['display_name']}
             />
           </SettingsField>
-          <Button
-            loading={!!updateSettings.isLoading}
-            disabled={updateSettings.isLoading}
-            nativeType="submit"
-            size="large"
-            type="primary"
-          >
-            Update settings
-          </Button>
+          <SettingsFieldsetFooter>
+            <Button
+              loading={!!updateSettings.isLoading}
+              disabled={updateSettings.isLoading}
+              nativeType="submit"
+              size="large"
+              type="primary"
+            >
+              Update settings
+            </Button>
+          </SettingsFieldsetFooter>
         </SettingsFieldset>
       </form>
     </div>
