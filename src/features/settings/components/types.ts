@@ -1,3 +1,5 @@
+import { Setting } from '../types';
+
 export type SettingsFieldProps = {
   id: string;
   title: string;
@@ -19,4 +21,9 @@ export type SettingsFieldsetProps = {
   title: string;
   description?: string | React.ReactNode;
   children: React.ReactNode;
+};
+
+export type SettingsSectionProps = {
+  initialSettingValues?: Setting;
+  // onSuccess?: () => void;
 };
