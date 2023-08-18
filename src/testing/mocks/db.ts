@@ -93,7 +93,9 @@ const models = {
         updates: Number, // newly on-boarded features/announcements
       },
     },
-    favorite_categories: nullable(Array),
+    personal_settings: {
+      favorite_categories: nullable(Array),
+    },
     last_updated: Date.now,
     created_at: Date.now,
     updated_at: Date.now,
