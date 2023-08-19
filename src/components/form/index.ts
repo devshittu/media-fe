@@ -4,3 +4,4 @@ export * from './custom-checkbox';
 export * from './radio-group';
 export * from './token-pin-digit';
 export * from './toggle-switch';
+export * from './select-field';
