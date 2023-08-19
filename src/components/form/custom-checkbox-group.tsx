@@ -11,7 +11,6 @@ type CustomCheckboxGroupProps<T, P> = {
   options: Option<T>[];
   initialSelectedOptions?: Option<T>[]; // Make initialSelectedOptions optional
   onChange: (selectedOptions: Option<T>[]) => void;
-  // onChange?: ChangeHandler;
   renderDisplayComponent?: (option: T) => JSX.Element; // Custom render function for display
   error?: FieldError | null;
 };
