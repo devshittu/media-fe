@@ -32,6 +32,8 @@ export const Notifications = () => {
 
     return className;
   };
+
+  // TODO:
   // const escapePressed = useKeyPress('Escape');
 
   // useEffect(() => {
@@ -42,9 +44,6 @@ export const Notifications = () => {
   // }, [escapePressed]);
 
   if (notifications.length < 1) return null;
-  // TODO:
-
-  console.log('notifications', notifications);
   return (
     <Portal wrapperId="toast-wrapper">
       <div
