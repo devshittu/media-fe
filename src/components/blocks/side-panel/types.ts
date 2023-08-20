@@ -11,4 +11,7 @@ export type PaneConfig = {
   id: string;
   title: string;
   component: React.ReactNode;
+  linkHref?: string;
+  linkText?: string;
+  showLink?: boolean;
 };
