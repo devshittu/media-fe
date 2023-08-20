@@ -3,7 +3,7 @@ import {
   SettingsField,
   SettingsFieldset,
   SettingsFieldsetFooter,
-} from '../blocks/';
+} from '../blocks';
 import { Category, useCategories } from '@/features/categories';
 import CustomCheckboxGroup, {
   Option,
@@ -17,9 +17,10 @@ import {
   NotificationType,
   useNotifications,
 } from '@/stores/notifications';
-import { PersonalSettingsData } from '../../types';
+import { PersonalSettingsData, Setting } from '../../types';
 import { SettingsSectionProps } from '../types';
 import { useUpdateUserSettings } from '../../api/update-user-settings';
+import { useSettingsForm } from '../../hooks';
 // Moved to a separate (function) component for clarity and reusability
 
 const CategoryDisplay = (option: Category) => (
@@ -31,7 +32,7 @@ const CategoryDisplay = (option: Category) => (
   </div>
 );
 
-export const PersonalPreferences = ({
+export const PersonalSettings = ({
   initialSettingValues,
 }: SettingsSectionProps) => {
   const { showNotification } = useNotifications();
@@ -105,12 +106,12 @@ export const PersonalPreferences = ({
       <SettingsFieldset
         id="UserPreferences"
         title="Personal Preferences"
-        description="Customize your experience! Set your preferred theme, language, and notification preferences in the Settings section."
+        description="Customize your experience based on your interests."
       >
         <SettingsField
           id="fav_categories"
           title="Favorite Categories"
-          description="Personalize your news feed! Choose from various topics like World News, Technology, Sports, and more to get updates tailored to your interests. Settings made easy!"
+          description="Your favorite categories or topics of interest."
         >
           <Controller
             name="favorite_categories"
