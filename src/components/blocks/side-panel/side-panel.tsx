@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { InputField } from '@/components/form';
-import { useScrollBehavior, useScrollSpeed } from '@/hooks';
-import { AccountList } from '../../../features/users/components/blocks/list';
+import { useScrollBehavior } from '@/hooks';
 import { Pane } from './pane';
-import { HashtagList } from '@/features/hashtags/components';
 import { useScrollSync } from '@/hooks/useScrollSync';
 import { PaneConfig } from './types';
 
@@ -34,7 +32,12 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
   const renderedSections = useMemo(
     () =>
       sections.map((section) => (
-        <Pane key={section.id} id={section.id} title={section.title}>
+        <Pane
+          key={section.id}
+          id={section.id}
+          title={section.title}
+          showLink={section.showLink}
+        >
           {section.component}
         </Pane>
       )),
