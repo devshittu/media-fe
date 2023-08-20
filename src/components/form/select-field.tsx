@@ -34,6 +34,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
       onChange,
       placeholder,
       className,
+      ...selectProps
     }: SelectFieldProps,
     ref: React.Ref<HTMLSelectElement>,
   ) => {
@@ -63,6 +64,8 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
         ${disabled ? 'cursor-not-allowed' : ''} ${
             error ? 'border-red-500' : ''
           }`}
+          ref={ref}
+          {...selectProps}
           disabled={disabled}
           {...(error
             ? { 'aria-invalid': 'true', 'aria-describedby': `${id}-error` }
