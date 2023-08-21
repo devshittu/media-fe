@@ -50,6 +50,7 @@ SettingsSectionProps) => {
     const updatedData = updateDeep(initialSettingValues, {
       account_settings: data,
     });
+    console.log('updatedData:', JSON.stringify(updatedData));
     updateSettings.submit(updatedData);
   };
   return (
@@ -58,12 +59,12 @@ SettingsSectionProps) => {
         <SettingsFieldset
           id="AccountDetailsSettings"
           title="Account Settings"
-          description="Set your display name, change your account email and secure your account change passwords."
+          description="Personal details and contact information associated with the user's account."
         >
           <SettingsField
             id="account_email"
             title="Change your account email"
-            description="When you change your account, your email will reflect after a period of 24 hours."
+            description="The email address associated with your account."
           >
             <InputField
               label="Email"
@@ -75,7 +76,7 @@ SettingsSectionProps) => {
           <SettingsField
             id="account_display_name"
             title="Change your display name"
-            description="When you change your account, your email will reflect after a period of 24 hours."
+            description="Your public username or display name."
           >
             <InputField
               label="Display name"
