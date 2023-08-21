@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { StoryListItem } from './story-list-item';
 import { Button } from '@/components/button';
-import { Toast } from '@/components/blocks/toast';
+import { Toast, ToastPosition, ToastType } from '@/components/blocks/toast';
 import { StoryListProps } from '../types';
 import { getMoreStories } from '@/testing/test-data';
 import { InfiniteScroll } from '@/components/infinite-scroll';
@@ -54,8 +54,8 @@ export const StoryList = ({
   const ShowToast = () => {
     const notify = new Toast({
       message: 'Hello, world!',
-      position: 'bottom-center',
-      type: 'success',
+      position: ToastPosition.BOTTOM_CENTER,
+      type: ToastType.SUCCESS,
       onClose: () => {
         // Handle close event
         // handleToastClose();
