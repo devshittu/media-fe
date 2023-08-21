@@ -65,13 +65,13 @@ SettingsSectionProps) => {
         <SettingsFieldset
           id="Notifications"
           title="Notification"
-          description="Select the kinds of notifications you get about your activities, interests, and recommendations."
+          description="Choose which types of notifications you'd like to receive and how."
         >
           <SettingsField
             id="accountField"
             // fieldType="checkbox"
             title="Account notifications"
-            description="Get notifications about your activities, interests, and recommendations"
+            description="Preferences for email notifications, including account-related, marketing, and update emails."
           >
             <Controller
               name="account"
