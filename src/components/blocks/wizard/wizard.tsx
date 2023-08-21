@@ -1,107 +1,36 @@
-import { useReducer, useMemo } from 'react';
+import React from 'react';
 import WizardStep from './wizard-step';
 import { Card, CardHeader, CardBody, CardFooter } from '../card';
 import { Button } from '@/components/button';
+import useWizard from './hook/useWizard'; // Assuming the useWizard hook is in the same directory
 
 type Step = {
   id: string;
+  title?: string;
+  subtitle?: string;
   component: React.ReactNode;
   isMandatory?: boolean;
 };
 
-type WizardProps = {
+export type WizardProps = {
   steps: Step[];
   onFinish?: () => void;
 };
 
-type WizardState = {
-  currentStep: number;
-  skippedSteps: string[];
-};
-
-type WizardAction =
-  | { type: 'NEXT_STEP' }
-  | { type: 'PREVIOUS_STEP' }
-  | { type: 'SKIP_STEP'; stepId: string }
-  | { type: 'FINISH' };
-
-const wizardReducer = (
-  state: WizardState,
-  action: WizardAction,
-): WizardState => {
-  switch (action.type) {
-    case 'NEXT_STEP':
-      return {
-        ...state,
-        currentStep: state.currentStep + 1,
-      };
-    case 'PREVIOUS_STEP':
-      return {
-        ...state,
-        currentStep: state.currentStep - 1,
-      };
-    case 'SKIP_STEP':
-      return {
-        ...state,
-        currentStep: state.currentStep + 1,
-        skippedSteps: [...state.skippedSteps, action.stepId],
-      };
-    case 'FINISH':
-      return state; // No state changes needed for finishing
-    default:
-      return state;
-  }
-};
-
 const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
-  const initialState: WizardState = {
-    currentStep: 0,
-    skippedSteps: [],
-  };
-
-  const [state, dispatch] = useReducer(wizardReducer, initialState);
-
-  const goToNextStep = () => {
-    dispatch({ type: 'NEXT_STEP' });
-  };
-
-  const goToPreviousStep = () => {
-    dispatch({ type: 'PREVIOUS_STEP' });
-  };
-
-  const skipStep = (stepId: string) => {
-    dispatch({ type: 'SKIP_STEP', stepId });
-  };
-
-  const finishWizard = () => {
-    if (onFinish) {
-      onFinish();
-    }
-  };
-
-  const isCurrentStepMandatory = useMemo(
-    () => steps[state.currentStep]?.isMandatory ?? false,
-    [steps, state.currentStep],
-  );
-
-  const isNextStepDisabled = () => {
-    if (isCurrentStepMandatory) {
-      // Check if mandatory step conditions are fulfilled
-      // Replace this condition with your specific logic
-      return false; // Allow proceeding to the next step
-    }
-    return false; // Allow skipping the step
-  };
-
-  const isLastStep = state.currentStep === steps.length - 1;
-
-  const renderCurrentStep = () => {
-    if (state.currentStep < steps.length) {
-      const currentStepInfo = steps[state.currentStep];
-      return currentStepInfo.component;
-    }
-    return null;
-  };
+  const {
+    state,
+    currentStep,
+    totalSteps,
+    goToNextStep,
+    goToPreviousStep,
+    skipStep,
+    finishWizard,
+    isCurrentStepMandatory,
+    isNextStepDisabled,
+    isLastStep,
+    renderCurrentStep,
+  } = useWizard(steps, onFinish);
 
   return (
     <Card
@@ -109,7 +38,9 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
       description="This is a reusable card component."
       className=" !h-[calc(100%-1rem)]"
     >
-      <CardHeader>hi</CardHeader>
+      <CardHeader>
+        Step {currentStep} of {totalSteps}
+      </CardHeader>
       <CardBody>
         <WizardStep>
           <div>{renderCurrentStep()}</div>
@@ -125,7 +56,6 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
           {isLastStep ? (
             <Button onClick={finishWizard}>Finish</Button>
           ) : (
-            // {state.currentStep < steps.length - 1 && (
             <>
               {!isNextStepDisabled() && (
                 <Button onClick={goToNextStep}>Next</Button>
@@ -136,7 +66,6 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
                 </Button>
               )}
             </>
-            // )}
           )}
           {isLastStep && (
             <div>
