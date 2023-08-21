@@ -191,18 +191,14 @@ const step6Config = {
   isMandatory: true,
 };
 
-// Step7.tsx
-export const Step7: React.FC = () => {
-  return <div>Step 7: Take them to the home page</div>;
-};
-
-const step7Config = {
-  isMandatory: true,
-};
-
 // Step8.tsx
-export const Step8: React.FC = () => {
-  return <div>Step 8: Show them around using the tour feature in the app</div>;
+export const Step7: React.FC = () => {
+  return (
+    <div>
+      Step 7: Load to the home pageShow them around using the tour feature in
+      the app
+    </div>
+  );
 };
 
 const step8Config = {
@@ -210,9 +206,18 @@ const step8Config = {
 };
 
 const steps = [
-  { id: 'step1', component: <Step1 />, ...step1Config },
+  {
+    id: 'step1',
+    title: 'Categories of your choice',
+    subtitle:
+      'Lets customize your experience by making choice of your favorite categories',
+    component: <Step1 />,
+    ...step1Config,
+  },
   {
     id: 'step2',
+    title: 'Email Confirmation',
+    subtitle: 'Confirm your email using the token sent to your account',
     component: (
       <TokenPinInputField
         id="token"
@@ -222,12 +227,43 @@ const steps = [
     ),
     ...step2Config,
   },
-  { id: 'step3', component: <Step3 />, ...step3Config },
-  { id: 'step4', component: <Step4 />, ...step4Config },
-  { id: 'step5', component: <Step5 />, ...step5Config },
-  { id: 'step6', component: <Step6 />, ...step6Config },
-  { id: 'step7', component: <Step7 />, ...step7Config },
-  { id: 'step8', component: <Step8 />, ...step8Config },
+  {
+    id: 'step3',
+    title: 'Hi Full Name',
+    subtitle: 'You are welcome to the world of endless opportunities',
+    component: <Step3 />,
+    ...step3Config,
+  },
+  {
+    id: 'step4',
+    title: 'Categories of your choice',
+    subtitle:
+      'Lets customize your experience by making choice of your favorite categories',
+    component: <Step4 />,
+    ...step4Config,
+  },
+  {
+    id: 'step5',
+    title: 'Follow some of your favorite channels',
+    subtitle: 'Set favorite channels to follow',
+    component: <Step5 />,
+    ...step5Config,
+  },
+  {
+    id: 'step6',
+    title: 'Theme',
+    subtitle: ' Choose the visual theme for the interface',
+    component: <Step6 />,
+    ...step6Config,
+  },
+
+  {
+    id: 'step7',
+    title: 'Take a tour',
+    subtitle: 'Lets show you around',
+    component: <Step7 />,
+    ...step8Config,
+  },
 ];
 
 export default steps;
