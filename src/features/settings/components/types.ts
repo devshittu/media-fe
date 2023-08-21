@@ -1,4 +1,10 @@
 import { Setting } from '../types';
+export type SettingsFieldLinkProps = {
+  id: string;
+  title: string;
+  description?: string;
+  linkHref?: string;
+};
 
 export type SettingsFieldProps = {
   id: string;
