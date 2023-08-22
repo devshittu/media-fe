@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from '@/components/labs/typography';
 import { StoryListItemProps } from '../types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
@@ -11,9 +11,12 @@ import {
   ActivityMetrics,
   useUserActivityTracking,
 } from '@/hooks/useUserActivityTracking';
+import { AnalyticsData, useAnalytics } from '@/stores/analytics/analytics';
 
 export const StoryListItem = React.memo(
   ({ story, className, categories }: StoryListItemProps) => {
+    const { addData } = useAnalytics();
+    const [localBatch, setLocalBatch] = useState<AnalyticsData[]>([]);
     const carouselItems: CarouselItem[] = [
       {
         id: '1',
@@ -48,11 +51,19 @@ export const StoryListItem = React.memo(
     // const carousel = CarouselComponent({ carouselItems, carouselOptions });
     // carousel.next(); // Invoke next slide
     // carousel.prev(); // Invoke previous slide
-
-    const options = {
-      saveMetrics: (metrics: ActivityMetrics) => {
-        // console.log(metrics); // This will log the metrics for each individual story.
-        // You can add further logic to save or process the metrics here.
+    const saveMetrics = useCallback(
+      (metrics: ActivityMetrics) => {
+        // const newData = {
+        //   event: 'storyViewed',
+        //   timestamp: Date.now(),
+        //   storyId: story.id,
+        // };
+        // setLocalBatch((prevBatch) => [...prevBatch, newData]);
+        // addData({
+        //   event: 'storyViewed',
+        //   timestamp: Date.now(),
+        //   storyId: story.id,
+        // });
         console.log(
           `Story ${story.id} metrics:`,
           `entered screen ${metrics[story.id].enterCount} time and spent ${
@@ -60,8 +71,24 @@ export const StoryListItem = React.memo(
           }s in the viewport`,
         );
       },
+      [story.id],
+      // [story.id, addData],
+    );
+
+    const options = {
+      saveMetrics,
       storyId: story.id,
     };
+    // useEffect(() => {
+    //   const interval = setInterval(() => {
+    //     if (localBatch.length > 0) {
+    //       addData(localBatch);
+    //       setLocalBatch([]); // Clear the local batch
+    //     }
+    //   }, 5000); // Update the Zustand store every 5 seconds
+
+    //   return () => clearInterval(interval);
+    // }, [addData, localBatch]);
 
     const activityRef = useUserActivityTracking(options);
 
@@ -82,7 +109,7 @@ export const StoryListItem = React.memo(
           </div>
 
           {/* Context Menu Trigger */}
-          <ContextMenu story={story} />
+          <ContextMenu story={story} initialBookmarkState={true} />
         </div>
 
         <Link href={`/stories/${story?.slug}`}>
