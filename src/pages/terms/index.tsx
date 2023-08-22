@@ -12,10 +12,10 @@ import MoreArticles from '@/components/labs/public-page/more-articles';
 import { Accordion } from '@/components/blocks/accordion/';
 import { ContentSection } from '@/components/labs/public-page';
 
-type PublicFAQPageProps = InferGetServerSidePropsType<
+type PublicTermsPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
-export default function Index({ categories }: PublicFAQPageProps) {
+export default function Index({ categories }: PublicTermsPageProps) {
   const breadcrumbTrail = [
     { href: '/parent1', label: 'Parent 1' },
     { href: '/parent2', label: 'Parent 2' },
@@ -122,7 +122,7 @@ export default function Index({ categories }: PublicFAQPageProps) {
             <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
               <img
                 className="mr-4 w-16 h-16 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                src="https://example.com/docs/images/people/profile-picture-2.jpg"
                 alt="Jese Leos"
               />
               <div>
@@ -157,7 +157,7 @@ export default function Index({ categories }: PublicFAQPageProps) {
         </p>
         <p>
           But then I found a{' '}
-          <a href="https://flowbite.com">
+          <a href="https://example.com">
             component library based on Tailwind CSS called Flowbite
           </a>
           . It comes with the most commonly used UI components, such as buttons,
