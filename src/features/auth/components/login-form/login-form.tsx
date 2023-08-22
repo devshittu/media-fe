@@ -3,17 +3,13 @@ import { useLogin } from '../../api/login';
 import { useForm } from 'react-hook-form';
 import { LoginData } from '../../types';
 import { InputField } from '@/components';
-import {
-  ControlledPopup,
-  Dialog,
-  DialogFlow,
-  DialogSampleUsage,
-  UncontrolledPopup,
-  // PopupDialog,
-} from '../../../../components/blocks/dialog/dialog-components';
 import { useRouter } from 'next/router';
-
-import steps from '@/components/blocks/wizard/steps';
+import {
+  ControlledPopper,
+  UncontrolledPopper,
+} from '@/components/blocks/popup';
+import { SignupFlowSteps } from '../signup-flow';
+import Wizard from '@/components/blocks/wizard/wizard';
 export type LoginFormProps = {
   onSuccess: () => void;
 };
@@ -62,12 +58,12 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
           Log in
         </Button>
       </form>
-      <ControlledPopup>
-        <DialogFlow steps={steps} onFinish={handleFinish} />
-      </ControlledPopup>
-      <UncontrolledPopup>
-        <DialogFlow steps={steps} onFinish={handleFinish} />
-      </UncontrolledPopup>
+      <ControlledPopper>
+        <Wizard steps={SignupFlowSteps} onFinish={handleFinish} />
+      </ControlledPopper>
+      {/* <UncontrolledPopper>
+        <Wizard steps={SignupFlowSteps} onFinish={handleFinish} />
+      </UncontrolledPopper> */}
     </div>
   );
 };
