@@ -2,7 +2,6 @@ export * from './dialog-components';
 export * from './dialog-body';
 export * from './dialog-close-button';
 export * from './dialog-container';
-export * from './dialog-flow';
 export * from './dialog-header';
 export * from './dialog-overlay';
 export * from './dialog';
