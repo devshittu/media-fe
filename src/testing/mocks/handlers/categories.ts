@@ -26,8 +26,14 @@ const getCategoriesHandler = rest.get(
     }
 
     //.slice(start, end)
+    const result = {
+      categories: categories.slice(start, end),
+      page,
+      total_pages: Math.ceil(db.category.count() / pageSize),
+      total: db.category.count(),
+    };
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(categories));
+    return res(ctx.delay(300), ctx.status(200), ctx.json(result));
   },
 );
 
