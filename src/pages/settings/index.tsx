@@ -9,7 +9,6 @@ import { StoriesPageHeader } from '@/components/blocks/headers';
 import { StoriesPageFrame } from '@/components/frames';
 import { SettingsFieldLink } from '@/features/settings/components/blocks/settings-field-link';
 
-
 const SettingsPage = () => {
   const headerRef = useRef<HTMLElement>(null);
   const { data: userSettings, isLoading } = useUserSettings({
@@ -69,7 +68,7 @@ const SettingsPage = () => {
                 linkHref={`/settings/system`}
                 description={`Settings related to the system's appearance and language.`}
               />
-              </div>
+            </div>
           </div>
         </section>
       </div>
