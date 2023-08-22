@@ -3,19 +3,7 @@ import WizardStep from './wizard-step';
 import { Card, CardHeader, CardBody, CardFooter } from '../card';
 import { Button } from '@/components/button';
 import useWizard from './hook/useWizard'; // Assuming the useWizard hook is in the same directory
-
-type Step = {
-  id: string;
-  title?: string;
-  subtitle?: string;
-  component: React.ReactNode;
-  isMandatory?: boolean;
-};
-
-export type WizardProps = {
-  steps: Step[];
-  onFinish?: () => void;
-};
+import { WizardProps } from './types';
 
 const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
   const {
