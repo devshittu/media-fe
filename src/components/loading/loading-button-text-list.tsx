@@ -1,7 +1,7 @@
 import { LoadingButtonText } from '@/components/loading';
 import React from 'react';
 
-export const HashtagsLoadingPlaceholder = () => {
+export const LoadingButtonTextList = () => {
   return (
     <div className="animate-pulse flex gap-4 flex-wrap">
       <LoadingButtonText width="w-14" />

@@ -1,4 +1,4 @@
-import { CategoriesLoadingPlaceholder } from './categories-loading-placeholder';
+import { LoadingButtonTextList } from '@/components/loading/';
 import { CategoryListItem } from './category-list-item';
 import React, { useMemo } from 'react';
 import { Category } from '../types';
@@ -16,7 +16,7 @@ export const CategoryList = React.memo(
     );
     return (
       <>
-        {isLoading && <CategoriesLoadingPlaceholder />}
+        {isLoading && <LoadingButtonTextList />}
         {stableCategories?.length > 0 && (
           <div className="flex gap-4 flex-wrap">
             {stableCategories.map((category: Category) => (

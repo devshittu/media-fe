@@ -3,7 +3,7 @@ import { HashtagListItem } from './list-item';
 import { HashtagListProps } from './types';
 import { HashtagItem } from '@/testing';
 import { useHashtags } from '@/features/hashtags';
-import { HashtagsLoadingPlaceholder } from './hashtags-loading-placeholder';
+import { LoadingButtonTextList } from '@/components/loading/loading-button-text-list';
 
 export const HashtagList = React.memo(
   ({ dataItems = [] }: HashtagListProps) => {
@@ -15,7 +15,7 @@ export const HashtagList = React.memo(
     );
     return (
       <>
-        {isLoading && <HashtagsLoadingPlaceholder />}
+        {isLoading && <LoadingButtonTextList />}
         {stableHashtags?.length > 0 && (
           <div className="flex gap-4 flex-wrap">
             {stableHashtags.map((hashtag: HashtagItem) => (
