@@ -154,7 +154,7 @@ const CheckboxField: React.FC<FieldProps> = ({
       required: 'Required',
     })}
     name={fieldName}
-    error={formState.errors[fieldName]?.message}
+    // error={formState.errors[fieldName]?.message}
   />
 );
 
@@ -174,7 +174,7 @@ const TextField: React.FC<FieldProps> = ({
         required: 'Required',
       })}
       name={fieldName}
-      error={formState.errors[fieldName]?.message}
+      // error={formState.errors[fieldName]?.message}
     />
   </div>
 );
@@ -196,7 +196,7 @@ const TextareaField: React.FC<FieldProps> = ({
         required: 'Required',
       })}
       name={fieldName}
-      error={formState.errors[fieldName]?.message}
+      // error={formState.errors[fieldName]?.message}
     />
   </div>
 );
