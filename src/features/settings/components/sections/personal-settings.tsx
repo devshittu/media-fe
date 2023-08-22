@@ -82,7 +82,7 @@ export const PersonalSettings = ({
   };
 
   const categoriesData = useCategories({});
-  const allCategories = categoriesData.data as Option<Category>[];
+  const allCategories = categoriesData.data.categories as Option<Category>[];
 
   const userSelectedCategoriesId = useMemo(() => {
     return initialSettingValues?.personal_settings
