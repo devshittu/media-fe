@@ -1,5 +1,5 @@
-// useWizard.ts
-import { useReducer, useMemo } from 'react';
+import { useReducer, useEffect, useState } from 'react';
+import { Step } from '../types';
 
 enum WizardActionType {
   NEXT_STEP = 'NEXT_STEP',
@@ -7,12 +7,6 @@ enum WizardActionType {
   SKIP_STEP = 'SKIP_STEP',
   FINISH = 'FINISH',
 }
-
-type Step = {
-  id: string;
-  component: React.ReactNode;
-  isMandatory?: boolean;
-};
 
 type WizardState = {
   currentStep: number;
@@ -58,19 +52,26 @@ const useWizard = (steps: Step[], onFinish?: () => void) => {
     currentStep: 0,
     skippedSteps: [],
   };
+  const [skippedStepId, setSkippedStepId] = useState<string | null>(null);
 
   const [state, dispatch] = useReducer(wizardReducer, initialState);
+  const [action, setAction] = useState<null | 'next' | 'previous' | 'skip'>(
+    null,
+  );
+  const [loading, setLoading] = useState(false);
 
   const goToNextStep = () => {
-    dispatch({ type: WizardActionType.NEXT_STEP });
+    setAction('next');
   };
 
   const goToPreviousStep = () => {
-    dispatch({ type: WizardActionType.PREVIOUS_STEP });
+    setAction('previous');
   };
 
   const skipStep = (stepId: string) => {
-    dispatch({ type: WizardActionType.SKIP_STEP, stepId });
+    setAction('skip');
+    // You can store the stepId in a state variable to access it in the useEffect
+    setSkippedStepId(stepId);
   };
 
   const finishWizard = () => {
@@ -79,10 +80,38 @@ const useWizard = (steps: Step[], onFinish?: () => void) => {
     }
   };
 
-  const isCurrentStepMandatory = useMemo(
-    () => steps[state.currentStep]?.isMandatory ?? false,
-    [steps, state.currentStep],
-  );
+  useEffect(() => {
+    const performAction = async () => {
+      if (action) {
+        setLoading(true);
+        const currentStep = steps[state.currentStep];
+        if (action === 'next') {
+          if (currentStep.onNext) {
+            await currentStep.onNext();
+          }
+          dispatch({ type: WizardActionType.NEXT_STEP });
+        } else if (action === 'previous') {
+          if (currentStep.onPrevious) {
+            await currentStep.onPrevious();
+          }
+          dispatch({ type: WizardActionType.PREVIOUS_STEP });
+        } else if (action === 'skip' && skippedStepId) {
+          if (currentStep.onSkip) {
+            await currentStep.onSkip();
+          }
+          dispatch({ type: WizardActionType.SKIP_STEP, stepId: skippedStepId });
+          setSkippedStepId(null); // Reset the skippedStepId
+        }
+        setAction(null); // Reset the action
+        setLoading(false);
+      }
+    };
+
+    performAction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [action, state.currentStep, skippedStepId]);
+
+  const isCurrentStepMandatory = steps[state.currentStep]?.isMandatory ?? false;
 
   const isNextStepDisabled = () => {
     if (isCurrentStepMandatory) {
@@ -113,7 +142,10 @@ const useWizard = (steps: Step[], onFinish?: () => void) => {
     isNextStepDisabled,
     isLastStep,
     renderCurrentStep,
+    loading, // Added loading state
   };
 };
 
 export default useWizard;
+
+//Path: src/components/blocks/wizard/hook/useWizard.ts
