@@ -286,3 +286,5 @@ export const Button = ({
     </button>
   );
 };
+
+//Path src/components/button/button.tsx
