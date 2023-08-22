@@ -1,12 +1,21 @@
 import React from 'react';
 import WizardStep from './wizard-step';
-import { Card, CardHeader, CardBody, CardFooter } from '../card';
 import { Button } from '@/components/button';
 import useWizard from './hook/useWizard'; // Assuming the useWizard hook is in the same directory
 import { WizardProps } from './types';
+import { usePopupContext } from '../popup';
+import {
+  Dialog,
+  DialogBody,
+  DialogCloseButton,
+  DialogContainer,
+  DialogHeader,
+  DialogOverlay,
+} from '../dialog';
 
 const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
   const {
+    loading,
     state,
     currentStep,
     totalSteps,
@@ -20,57 +29,95 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
     renderCurrentStep,
   } = useWizard(steps, onFinish);
 
+  const { setOpen } = usePopupContext();
+  const canGoBack =
+    steps[state.currentStep - 1 < 0 ? 0 : state.currentStep - 1]?.canComeBack ??
+    true;
+  const onClose = () => {
+    return setOpen(false);
+  };
   return (
-    <Card
-      heading="My Card"
-      description="This is a reusable card component."
-      className=" !h-[calc(100%-1rem)]"
-    >
-      <CardHeader>
-        Step {currentStep} of {totalSteps}
-      </CardHeader>
-      <CardBody>
-        <WizardStep>
-          <div>{renderCurrentStep()}</div>
-        </WizardStep>
-      </CardBody>
-      <CardFooter className="absolute bottom-0 left-0 px-4 py-3 border-t border-gray-200 w-full flex justify-end items-center gap-3">
-        <div></div>
-        <div className="flex gap-4">
-          {state.currentStep > 0 && (
-            <Button onClick={goToPreviousStep}>Previous</Button>
-          )}
+    <Dialog>
+      <DialogOverlay />
+      <DialogContainer>
+        <DialogHeader>
+          <>
+            <div className="flex justify-between items-center">
+              <nav className="flex items-center space-x-2 md:space-x-4">
+                <>
+                  {/* {state.currentStep > 0 && ( */}
+                  <Button
+                    type="primary"
+                    size="small"
+                    rounded
+                    disabled={!canGoBack || state.currentStep === 0}
+                    onClick={goToPreviousStep}
+                  >
+                    Previous
+                  </Button>
+                  {/* )} */}
 
-          {isLastStep ? (
-            <Button onClick={finishWizard}>Finish</Button>
-          ) : (
-            <>
-              {!isNextStepDisabled() && (
-                <Button onClick={goToNextStep}>Next</Button>
-              )}
-              {!isCurrentStepMandatory && (
-                <Button onClick={() => skipStep(state.currentStep.toString())}>
-                  Skip
-                </Button>
-              )}
-            </>
-          )}
-          {isLastStep && (
-            <div>
-              <h2>Skipped Steps:</h2>
-              <ul>
-                {state.skippedSteps.map((stepId) => (
-                  <li key={stepId}>
-                    Step {parseInt(stepId) + 1}{' '}
-                    <Button onClick={() => skipStep(stepId)}>Skip</Button>
-                  </li>
-                ))}
-              </ul>
+                  {isLastStep ? (
+                    <Button
+                      type="primary"
+                      size="small"
+                      rounded
+                      disabled={!isLastStep}
+                      onClick={finishWizard}
+                    >
+                      Finish
+                    </Button>
+                  ) : (
+                    <>
+                      {!isNextStepDisabled() && (
+                        <Button
+                          type="primary"
+                          size="small"
+                          rounded
+                          disabled={
+                            isNextStepDisabled() || isLastStep || loading
+                          }
+                          onClick={goToNextStep}
+                          loading={loading}
+                        >
+                          Next
+                        </Button>
+                      )}
+                      {!isCurrentStepMandatory && (
+                        <Button
+                          type="primary"
+                          size="small"
+                          rounded
+                          disabled={isCurrentStepMandatory || isLastStep}
+                          onClick={() => skipStep(state.currentStep.toString())}
+                        >
+                          Skip
+                        </Button>
+                      )}
+                    </>
+                  )}
+                </>
+                <small className="ml-4 text-slate-600 dark:text-slate-400">
+                  <span>{currentStep}</span> of <span>{totalSteps}</span> steps
+                </small>
+              </nav>
+              <DialogCloseButton onClose={onClose} />
             </div>
-          )}
-        </div>
-      </CardFooter>
-    </Card>
+            <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 mt-5 text-slate-900 dark:text-slate-100">
+              {steps[state.currentStep].title}
+            </h1>
+            <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
+              {steps[state.currentStep].subtitle}
+            </p>
+          </>
+        </DialogHeader>
+        <DialogBody>
+          <WizardStep>
+            <div>{renderCurrentStep()}</div>
+          </WizardStep>
+        </DialogBody>
+      </DialogContainer>
+    </Dialog>
   );
 };
 
