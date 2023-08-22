@@ -82,7 +82,12 @@ export const PersonalSettings = ({
   };
 
   const categoriesData = useCategories({});
-  const allCategories = categoriesData.data.categories as Option<Category>[];
+  const allCategories = (categoriesData.data.categories as Category[]).map(
+    (category) => ({
+      ...category,
+      label: category.title,
+    })
+  ) as Option<Category>[];
 
   const userSelectedCategoriesId = useMemo(() => {
     return initialSettingValues?.personal_settings
@@ -135,6 +140,7 @@ export const PersonalSettings = ({
                   initialSelectedOptions={selectedCategories} // Use the converted array here
                   onChange={onChange}
                   renderDisplayComponent={CategoryDisplay}
+                  renderAs='custom'
                   error={
                     formState.errors.favorite_categories?.message
                       ? (formState.errors.favorite_categories as FieldError)
