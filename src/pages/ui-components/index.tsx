@@ -268,7 +268,7 @@ export default function Home() {
             official{' '}
             <a
               className="text-blue-600 hover:underline"
-              href="https://flowbite.com/docs/getting-started/introduction/"
+              href="https://example.com/docs/getting-started/introduction/"
               target="_blank"
             >
               Flowbite Documentation
