@@ -76,7 +76,7 @@ export const NotificationComponent = ({
     type: NotificationType = NotificationType.INFO,
   ) => {
     let className =
-      'relative flex items-center justify-between p-4 mb-4 dark:text-slate-500 dark:bg-white shadow text-slate-400 bg-slate-800 ';
+      'relative flex items-center justify-between p-4 mb-4 dark:text-slate-500 dark:bg-white shadow text-slate-400 bg-slate-950 ';
 
     if (type === NotificationType.SUCCESS) {
       className += ' bg-green-50';
