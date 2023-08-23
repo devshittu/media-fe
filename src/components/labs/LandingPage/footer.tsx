@@ -25,12 +25,14 @@ export const Footer = () => {
                   className="inline-flex items-center"
                 >
                   <h1 className="text-xl font-bold tracking-wide text-slate-800 dark:text-slate-200 ">
-                    Stay tuned and stay updated!
+                    {"Stay tuned and stay updated!"}
+                    {/* {"Your news, your way, starts now!"} */}
                   </h1>
                 </Link>
                 <div className="mt-1 lg:max-w-sm">
                   <p className="text-sm text-slate-800 dark:text-slate-200">
                     {" Don't miss out on the latest updates!"}
+                    {/* {"Join Media-Fe's vibrant community and immerse yourself in Storylines that evolve with the news. Bookmark, personalize, and stay updated. Your news, your way, starts now!"} */}
                   </p>
                 </div>
               </div>
