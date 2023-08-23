@@ -18,7 +18,7 @@ import {
 } from './';
 import { Button } from '@/components/button';
 import { useId } from '@floating-ui/react';
-import useWizard from '../wizard/hook/useWizard';
+import useWizard from '../wizard/hooks/useWizard';
 import WizardStep from '../wizard/wizard-step';
 import { Navigation } from './types';
 
