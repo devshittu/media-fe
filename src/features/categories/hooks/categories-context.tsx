@@ -48,3 +48,5 @@ export const CategoriesProvider = ({ children }: CategoriesProviderProps) => {
 export const useCategoryContext = () => {
   return useContext(CategoriesContext);
 };
+
+//Path: src/features/categories/hooks/categories-context.tsx
