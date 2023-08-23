@@ -5,11 +5,6 @@ import {
   useDismiss,
   useRole,
   useInteractions,
-  useMergeRefs,
-  FloatingPortal,
-  FloatingFocusManager,
-  FloatingOverlay,
-  useId,
 } from '@floating-ui/react';
 import { PopupOptions } from '../types';
 
@@ -37,7 +32,11 @@ export const usePopup = ({
   const click = useClick(context, {
     enabled: controlledOpen == null,
   });
-  const dismiss = useDismiss(context, { outsidePressEvent: 'mousedown' });
+  const dismiss = useDismiss(context, {
+    outsidePress: false,
+    // outsidePressEvent: 'mousedown',
+    escapeKey: false,
+  });
   const role = useRole(context);
 
   const interactions = useInteractions([click, dismiss, role]);
