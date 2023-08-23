@@ -104,7 +104,7 @@ export const StoryList = ({
         {/* {showLatestButton && ( */}
         <div
           id="refresh-set"
-          className={`flex items-center justify-around min-h-[56px] sticky top-32 z-50 w-98  transition-all  duration-200 ease-out  ${
+          className={`flex items-center justify-around min-h-[56px] sticky top-32 z-30 w-98  transition-all  duration-200 ease-out  ${
             showLatestButton
               ? 'transform-none opacity-100'
               : '-translate-y-full  opacity-0'
