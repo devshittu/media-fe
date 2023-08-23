@@ -33,7 +33,7 @@ const mockBackendCall = () => {
       // You can resolve or reject the promise here to simulate success or failure
       resolve(); // Simulates a successful response
       // reject(new Error('Something went wrong')); // Uncomment to simulate an error response
-    }, 1000);
+    }, 500);
   });
 };
 export const SignupFlowSteps: Step[] = [
@@ -90,3 +90,5 @@ export const SignupFlowSteps: Step[] = [
     isMandatory: true,
   },
 ];
+
+//Path: src/features/auth/components/signup-flow/flow-steps.tsx
