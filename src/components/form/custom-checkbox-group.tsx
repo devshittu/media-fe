@@ -14,7 +14,7 @@ type CustomCheckboxGroupProps<T, P> = {
   renderDisplayComponent?: (option: T) => JSX.Element; // Custom render function for display
   error?: FieldError | null;
   className?: string;
-  renderAs?: RenderAs
+  renderAs?: RenderAs;
 };
 
 function CustomCheckboxGroup<T, P>({

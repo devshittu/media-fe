@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '../button';
-export 
-type RenderAs = 'default' | 'button' | 'custom';
+export type RenderAs = 'default' | 'button' | 'custom';
 
 type CustomCheckboxProps<T extends { id: string; label?: string }> = {
   option: T;
@@ -16,7 +15,7 @@ function CustomCheckbox<T extends { id: string; label?: string }>({
   isChecked,
   onChange,
   renderDisplayComponent,
-  renderAs = 'default'
+  renderAs = 'default',
 }: CustomCheckboxProps<T>) {
   const handleCheckboxChange = () => {
     onChange(!isChecked);
@@ -24,7 +23,7 @@ function CustomCheckbox<T extends { id: string; label?: string }>({
 
   if (renderAs === 'button') {
     return (
-      <li >
+      <li>
         <input
           type="checkbox"
           id={option.id}
@@ -32,15 +31,15 @@ function CustomCheckbox<T extends { id: string; label?: string }>({
           checked={isChecked}
           onChange={handleCheckboxChange}
         />
-          <Button
-            type={isChecked ? 'dark' : 'dark'}
-            outlined={!isChecked}
-            size="medium"
-            onClick={handleCheckboxChange}
-            className='font-serif text-xl text-slate-700 !py-2'
-          >
-            {option.label}
-          </Button>
+        <Button
+          type={isChecked ? 'adaptive' : 'adaptive'}
+          outlined={!isChecked}
+          size="medium"
+          onClick={handleCheckboxChange}
+          className="font-serif text-xl text-slate-700 !py-2"
+        >
+          {option.label}
+        </Button>
       </li>
     );
   }
