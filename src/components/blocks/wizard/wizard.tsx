@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import WizardStep from './wizard-step';
 import { Button } from '@/components/button';
-import useWizard from './hook/useWizard'; // Assuming the useWizard hook is in the same directory
+import useWizard from './hooks/useWizard'; // Assuming the useWizard hook is in the same directory
 import { WizardProps } from './types';
 import { usePopupContext } from '../popup';
 import {
@@ -13,7 +13,7 @@ import {
   DialogOverlay,
 } from '../dialog';
 
-const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
+const Wizard = ({ steps, onFinish, onClose }: WizardProps) => {
   const {
     loading,
     state,
@@ -27,14 +27,19 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
     isNextStepDisabled,
     isLastStep,
     renderCurrentStep,
-  } = useWizard(steps, onFinish);
+  } = useWizard(steps, onFinish, onClose);
+
+  // const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
 
   const { setOpen } = usePopupContext();
   const canGoBack =
     steps[state.currentStep - 1 < 0 ? 0 : state.currentStep - 1]?.canComeBack ??
     true;
-  const onClose = () => {
-    return setOpen(false);
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+    return setOpen(false); //close the popup from the usePopupContext which is the floating-ui/react library.
   };
   return (
     <Dialog>
@@ -45,7 +50,6 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
             <div className="flex justify-between items-center">
               <nav className="flex items-center space-x-2 md:space-x-4">
                 <>
-                  {/* {state.currentStep > 0 && ( */}
                   <Button
                     type="primary"
                     size="small"
@@ -55,7 +59,6 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
                   >
                     Previous
                   </Button>
-                  {/* )} */}
 
                   {isLastStep ? (
                     <Button
@@ -77,6 +80,7 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
                           disabled={
                             isNextStepDisabled() || isLastStep || loading
                           }
+                          // disabled={!isCurrentStepValid || isLastStep || loading}
                           onClick={goToNextStep}
                           loading={loading}
                         >
@@ -101,7 +105,7 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
                   <span>{currentStep}</span> of <span>{totalSteps}</span> steps
                 </small>
               </nav>
-              <DialogCloseButton onClose={onClose} />
+              <DialogCloseButton onClose={handleClose} />
             </div>
             <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 mt-5 text-slate-900 dark:text-slate-100">
               {steps[state.currentStep].title}
@@ -113,7 +117,12 @@ const Wizard: React.FC<WizardProps> = ({ steps, onFinish }) => {
         </DialogHeader>
         <DialogBody>
           <WizardStep>
-            <div>{renderCurrentStep()}</div>
+            <div>
+              {
+                renderCurrentStep()
+                // {onValidationStatusChange: setIsCurrentStepValid,}
+              }
+            </div>
           </WizardStep>
         </DialogBody>
       </DialogContainer>
