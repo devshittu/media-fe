@@ -1,6 +1,12 @@
-import React from 'react';
+import { useStepValidation } from '@/components/blocks/wizard/hooks';
+import { StepProps } from '@/components/blocks/wizard/types';
+import React, { useEffect } from 'react';
 
-export const Finish = () => {
+export const Finish = ({ onValidationStatusChange }: StepProps) => {
+  const validate = () => true;
+
+  // const isValid = useStepValidation(validate, [], onValidationStatusChange);
+
   return (
     <div>
       Thanks and show loader and tell them you will be taking them to the
@@ -10,3 +16,5 @@ export const Finish = () => {
     </div>
   );
 };
+
+//Path: src/features/auth/components/signup-flow/finish.tsx
