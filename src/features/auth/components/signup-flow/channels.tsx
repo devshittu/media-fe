@@ -1,8 +1,13 @@
+import { useStepValidation } from '@/components/blocks/wizard/hooks';
+import { StepProps } from '@/components/blocks/wizard/types';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-// Step5.tsx
-export const Channels: React.FC = () => {
+export const Channels = ({ onValidationStatusChange }: StepProps) => {
+  const validate = () => true;
+
+  // const isValid = useStepValidation(validate, [], onValidationStatusChange);
+
   return (
     <div>
       Step 5: Set favorite channels to follow (skippable)
@@ -63,3 +68,5 @@ export const Channels: React.FC = () => {
     </div>
   );
 };
+
+//Path: src/features/auth/components/signup-flow/channels.tsx
