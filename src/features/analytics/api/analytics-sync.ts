@@ -89,7 +89,7 @@ export const useAnalyticsSync = ({
     }, interval);
 
     return () => clearInterval(intervalId);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataBatch, syncData]);
 
   const addData = (newData: AnalyticsData) => {
