@@ -18,18 +18,22 @@ export const PopupContent = React.forwardRef<
 
   return (
     <FloatingPortal>
-      <FloatingOverlay lockScroll>
-        <FloatingFocusManager context={floatingContext}>
-          <div
-            ref={ref}
-            aria-labelledby={context.labelId}
-            aria-describedby={context.descriptionId}
-            {...context.getFloatingProps(props)}
-          >
-            {props.children}
-          </div>
-        </FloatingFocusManager>
-      </FloatingOverlay>
+      <div
+        style={{ zIndex: 30, position: 'fixed', overflow: 'auto', inset: 0 }}
+      >
+        <FloatingOverlay lockScroll>
+          <FloatingFocusManager context={floatingContext}>
+            <div
+              ref={ref}
+              aria-labelledby={context.labelId}
+              aria-describedby={context.descriptionId}
+              {...context.getFloatingProps(props)}
+            >
+              {props.children}
+            </div>
+          </FloatingFocusManager>
+        </FloatingOverlay>
+      </div>
     </FloatingPortal>
   );
 });
