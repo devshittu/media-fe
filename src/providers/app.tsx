@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { IS_DEVELOPMENT } from '@/config/constants';
 import { CategoriesProvider } from '@/features/categories/hooks';
 import { Notifications } from '@/components/notifications';
+import { GlobalPopup } from '@/components/blocks/popup';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -25,7 +26,10 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
           <QueryClientProvider client={queryClient}>
             {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
 
-            <CategoriesProvider>{children}</CategoriesProvider>
+            <CategoriesProvider>
+              {children}
+              <GlobalPopup />
+            </CategoriesProvider>
           </QueryClientProvider>
           {/* </RootLayout> */}
         </NavProvider>
