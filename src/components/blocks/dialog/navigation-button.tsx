@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Icon,
-} from '@/components/illustrations';
+import { Icon } from '@/components/illustrations';
 import { NavigationButtonProps } from './types';
 
 export const NavigationButton: React.FC<NavigationButtonProps> = ({
