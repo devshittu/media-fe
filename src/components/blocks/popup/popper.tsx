@@ -20,20 +20,20 @@ export const ControlledPopper = ({ children }: PopperProps) => {
 type PopperProps = {
   children: React.ReactNode;
 };
-type PopperControlledProps = PopperProps & {
+type PopperUncontrolledProps = PopperProps & {
   initOpen?: boolean;
 };
 export const UncontrolledPopper = ({
   initOpen = false,
   children,
-}: PopperControlledProps) => {
+}: PopperUncontrolledProps) => {
   const [open, setOpen] = useState(initOpen);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setOpen(true);
-    }, 2000);
-    return () => clearTimeout(timeout);
+    // const timeout = setTimeout(() => {
+    setOpen(true);
+    // }, 2000);
+    // return () => clearTimeout(timeout);
   }, []);
   return (
     <Popup open={open} onOpenChange={setOpen}>
@@ -41,3 +41,5 @@ export const UncontrolledPopper = ({
     </Popup>
   );
 };
+
+//Path: src/components/blocks/popup/popper.tsx
