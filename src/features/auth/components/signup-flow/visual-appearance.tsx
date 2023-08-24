@@ -2,12 +2,25 @@ import { useStepValidation } from '@/components/blocks/wizard/hooks';
 import { StepProps } from '@/components/blocks/wizard/types';
 import { ThemeSelection } from '@/components/form/theme-selection';
 import { Icon, MonitorIcon, MoonIcon, SunIcon } from '@/components/illustrations';
+import { useThemeChanger } from '@/components/theme-switch/hooks';
 import React, { useEffect } from 'react';
 
 export const VisualAppearance = ({ onValidationStatusChange }: StepProps) => {
   const validate = () => true;
 
   // const isValid = useStepValidation(validate, [], onValidationStatusChange);
+ 
+  // Function to perform server synchronization
+  const serverSync = async (theme: string) => {
+    // Perform the server sync logic here
+  };
+
+  const { handleThemeChange } = useThemeChanger({
+    onChange: (theme) => {
+      // Handle the theme change here if needed
+    },
+    onServerSync: serverSync, // Pass the server sync function
+  });
 
 const themeOptions = [
   {
@@ -32,7 +45,7 @@ const themeOptions = [
 
   return (
     <div>
-      <ThemeSelection options={themeOptions} />
+      <ThemeSelection options={themeOptions}  onSelect={(option) => handleThemeChange(option.id as any)} />
     </div>
   );
 };

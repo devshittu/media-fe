@@ -9,6 +9,9 @@ import {
 } from '@/components/illustrations';
 import { AnalogSwitch, AnalogSwitchItem } from '../blocks';
 import { FieldError } from 'react-hook-form';
+import { useThemeChanger } from './hooks';
+import { Theme } from './types';
+
 
 type ThemeSwitchProps = {
   onChange?: (value: string) => void; // This is the type for onChange
@@ -24,24 +27,14 @@ const ThemeSwitch = ({
   className,
   showLabel = false,
 }: ThemeSwitchProps) => {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme, systemTheme, forcedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { currentTheme, handleThemeChange, mounted, disabled } = useThemeChanger({
+    onChange: (theme) => {
+      // Handle the theme change here if needed
+    },
+    // onServerSync: serverSync, // Pass the server sync function
+  });
 
   if (!mounted) return null;
-
-  const currentTheme = theme === systemTheme ? systemTheme : theme;
-  const disabled = !!forcedTheme;
-
-  const handleThemeChange = (newTheme: string) => {
-    setTheme(newTheme);
-    if (onChange) {
-      onChange(newTheme); // Notify react-hook-form of the change
-    }
-  };
   return (
     <>
       <AnalogSwitch className={className}>
@@ -49,7 +42,7 @@ const ThemeSwitch = ({
           title="Light"
           isSelected={currentTheme === THEME_LIGHT}
           // onClick={() => setTheme(THEME_LIGHT)}
-          onClick={() => handleThemeChange(THEME_LIGHT)}
+          onClick={() => handleThemeChange(Theme.LIGHT)}
           icon={<SunIcon />}
           disabled={disabled}
           ariaLabel="Light Theme"
@@ -58,7 +51,7 @@ const ThemeSwitch = ({
           title="System"
           isSelected={currentTheme === THEME_SYSTEM}
           // onClick={() => setTheme(THEME_SYSTEM)}
-          onClick={() => handleThemeChange(THEME_SYSTEM)}
+          onClick={() => handleThemeChange(Theme.SYSTEM)}
           icon={<MonitorIcon />}
           disabled={disabled}
           ariaLabel="System Theme"
@@ -67,7 +60,7 @@ const ThemeSwitch = ({
           title="Dark"
           isSelected={currentTheme === THEME_DARK}
           // onClick={() => setTheme(THEME_DARK)}
-          onClick={() => handleThemeChange(THEME_DARK)}
+          onClick={() => handleThemeChange(Theme.DARK)}
           icon={<MoonIcon />}
           disabled={disabled}
           ariaLabel="Dark Theme"
