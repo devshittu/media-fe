@@ -1,6 +1,4 @@
-import TokenPinInputField, {
-  UserLoginStatus,
-} from '@/components/form/token-pin-digit';
+
 import Image from 'next/image';
 import { useState } from 'react';
 import CustomCheckboxGroup, {
@@ -219,11 +217,7 @@ const steps = [
     title: 'Email Confirmation',
     subtitle: 'Confirm your email using the token sent to your account',
     component: (
-      <TokenPinInputField
-        id="token"
-        pinLength={4}
-        userLoginStatus={UserLoginStatus.LOGGED_OUT}
-      />
+      <Step2/>
     ),
     ...step2Config,
   },
