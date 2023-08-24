@@ -147,8 +147,8 @@ export const Button = ({
         classes += ` 
         ${
           !outlined
-            ? `bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-950 dark:hover:bg-neutral-150 dark:text-black text-white`
-            : `border dark:border-neutral-100 border-neutral-900 dark:hover:bg-neutral-100 hover:bg-neutral-900 text-neutral-700  dark:text-neutral-300 dark:hover:text-black hover:text-white ${
+            ? `bg-neutral-900 dark:bg-neutral-300 hover:bg-neutral-950 dark:hover:bg-neutral-200 dark:text-black text-white`
+            : `border dark:border-neutral-400 border-neutral-600 dark:hover:bg-neutral-300 hover:bg-neutral-700 text-neutral-800  dark:text-neutral-300 dark:hover:text-black hover:text-white ${
                 size == 'large'
                   ? 'border-4'
                   : size == 'medium'
