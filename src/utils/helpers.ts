@@ -92,4 +92,17 @@ export const updateDeep = <T>(
   return obj;
 };
 
+export const pluralize = (count: number, singular: string, plural: string) =>
+  count === 1 ? singular : plural;
+
+// Helper function to create a delay with cancellation
+export const delayWithCancel = (ms: number) => {
+  let timeoutId: NodeJS.Timeout;
+  const promise = new Promise((resolve) => {
+    timeoutId = setTimeout(resolve, ms);
+  });
+  const cancel = () => clearTimeout(timeoutId);
+  return { promise, cancel };
+};
+
 // Path: src/utils/helper.ts
