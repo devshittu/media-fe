@@ -21,6 +21,9 @@ export type PinInputProps = {
   pinLength: number;
   onSuccess?: () => void;
   onVerify: (pin: string) => Promise<boolean>;
+  maxAttempts?: number;
+  warningThreshold?: number; // New prop for magic number
+  onNotify: (remainingAttempts: number) => void; // Renamed prop for notification event
 };
 
 export type PinProps = {
