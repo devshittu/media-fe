@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AuthStatus, PinInputProps } from './types';
 import { Pin } from './pin';
 import { usePinVerification } from './hooks/usePinVerification';
@@ -9,13 +9,49 @@ export const PinInput = ({
   id = 'app-pin-hidden-input',
   onSuccess,
   onVerify,
+  maxAttempts = 3,
+  warningThreshold, // Magic number prop
+  onNotify, // Notification event handler
 }: PinInputProps) => {
+  if (warningThreshold && !onNotify) {
+    throw new Error('onNotify must be provided if warningThreshold is set');
+  }
+
   const [pin, setPin] = useState('');
+  const [attempts, setAttempts] = useState(0);
   const pinInputRef = useRef<HTMLInputElement>(null);
   const [rememberMe, setRememberMe] = useState(false);
+  // Focus the input field when the component mounts
+  useEffect(() => {
+    pinInputRef.current?.focus();
+  }, []);
 
+  // Focus the input field when the pin is wiped
+  useEffect(() => {
+    if (pin === '') {
+      pinInputRef.current?.focus();
+    }
+  }, [pin]);
   const { loading, error, userLoginState, setUserLoginState } =
-    usePinVerification(pin, pinLength, authStatus, onVerify, setPin, onSuccess);
+    usePinVerification(
+      pin,
+      pinLength,
+      authStatus,
+      async () => {
+        if (onVerify) {
+          const isVerified = await onVerify(pin);
+          if (isVerified) {
+            setAttempts(0); // Reset attempts on successful verification
+          } else {
+            setAttempts((prev) => prev + 1); // Increment attempts on failed verification
+          }
+          return isVerified; // Return the verification result
+        }
+        return false; // Return false if onVerify is not provided
+      },
+      setPin,
+      onSuccess,
+    );
 
   const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= pinLength) {
@@ -24,9 +60,14 @@ export const PinInput = ({
     }
   };
 
-  const handleRememberMeChange = () => {
-    setRememberMe(!rememberMe);
-  };
+  useEffect(() => {
+    if (attempts > 0 && attempts < maxAttempts) {
+      onNotify?.(maxAttempts - attempts);
+    }
+  }, [attempts, maxAttempts, onNotify]);
+  // const handleRememberMeChange = () => {
+  //   setRememberMe(!rememberMe);
+  // };
 
   const handlePinClick = () => {
     pinInputRef.current?.focus();
@@ -73,7 +114,7 @@ export const PinInput = ({
 
       {loading && <div className="text-blue-500">Verifying...</div>}
       {error && <div className="text-red-500">{error.message}</div>}
-      <h1>
+      {/* <h1>
         {'Enter the "1234" '}
         <button
           onClick={handleCancelClick}
@@ -81,8 +122,8 @@ export const PinInput = ({
         >
           Cancel
         </button>
-      </h1>
-      <div className="flex items-center">
+      </h1> */}
+      {/* <div className="flex items-center">
         <input
           id="remember-checkbox"
           type="checkbox"
@@ -93,7 +134,7 @@ export const PinInput = ({
         <label htmlFor="remember-checkbox" className="ml-2 font-medium">
           Remember me
         </label>
-      </div>
+      </div> */}
     </div>
   );
 };
