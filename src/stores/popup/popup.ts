@@ -27,3 +27,5 @@ export const popupStore = createStore<PopupStore>((set) => ({
 }));
 
 export const usePopup = () => useStore(popupStore);
+
+//path: src/stores/popup/popup.ts
