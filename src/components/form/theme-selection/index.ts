@@ -1,1 +1,1 @@
-export * from './theme-selection'
+export * from './theme-selection';
