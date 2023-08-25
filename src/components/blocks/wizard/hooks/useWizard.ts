@@ -78,9 +78,9 @@ const useWizard = (
     setSkippedStepId(stepId);
   };
 
-  const finishWizard = () => {
+  const finishWizard = async () => {
     if (onFinish) {
-      onFinish();
+      await onFinish();
     }
     if (onClose) {
       onClose();

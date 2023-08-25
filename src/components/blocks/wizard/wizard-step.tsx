@@ -7,7 +7,7 @@ type WizardStepProps = {
 
 const WizardStep = ({ children }: WizardStepProps) => {
   return (
-    <section className="flex items-center justify-center w-full py-10">
+    <section className="flex items-center justify-center w-full py-10 text-slate-800 dark:text-slate-400 ">
       {children}
     </section>
   );

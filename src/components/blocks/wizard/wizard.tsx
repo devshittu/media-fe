@@ -1,7 +1,4 @@
-import React, { useContext, useState } from 'react';
-import WizardStep from './wizard-step';
-import { Button } from '@/components/button';
-import useWizard from './hooks/useWizard'; // Assuming the useWizard hook is in the same directory
+import React from 'react';
 import { WizardProps } from './types';
 import { usePopupContext } from '../popup';
 import {
@@ -12,121 +9,17 @@ import {
   DialogHeader,
   DialogOverlay,
 } from '../dialog';
+import { WizardProvider, useWizardContext } from './wizard-context';
+import WizardComponent from './wizard-component';
 
 const Wizard = ({ steps, onFinish, onClose }: WizardProps) => {
-  const {
-    loading,
-    state,
-    currentStep,
-    totalSteps,
-    goToNextStep,
-    goToPreviousStep,
-    skipStep,
-    finishWizard,
-    isCurrentStepMandatory,
-    isNextStepDisabled,
-    isLastStep,
-    renderCurrentStep,
-  } = useWizard(steps, onFinish, onClose);
-
-  // const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
-
-  const { setOpen } = usePopupContext();
-  const canGoBack =
-    steps[state.currentStep - 1 < 0 ? 0 : state.currentStep - 1]?.canComeBack ??
-    true;
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
-    }
-    return setOpen(false); //close the popup from the usePopupContext which is the floating-ui/react library.
+  const customAction = () => {
+    console.log('onStepValid action is being run');
   };
   return (
-    <Dialog>
-      <DialogOverlay />
-      <DialogContainer>
-        <DialogHeader>
-          <>
-            <div className="flex justify-between items-center">
-              <nav className="flex items-center space-x-2 md:space-x-4">
-                <>
-                  <Button
-                    type="primary"
-                    size="small"
-                    rounded
-                    disabled={!canGoBack || state.currentStep === 0}
-                    onClick={goToPreviousStep}
-                  >
-                    Previous
-                  </Button>
-
-                  {isLastStep ? (
-                    <Button
-                      type="primary"
-                      size="small"
-                      rounded
-                      disabled={!isLastStep}
-                      onClick={finishWizard}
-                    >
-                      Finish
-                    </Button>
-                  ) : (
-                    <>
-                      {!isNextStepDisabled() && (
-                        <Button
-                          type="primary"
-                          size="small"
-                          rounded
-                          disabled={
-                            isNextStepDisabled() || isLastStep || loading
-                          }
-                          // disabled={!isCurrentStepValid || isLastStep || loading}
-                          onClick={goToNextStep}
-                          loading={loading}
-                        >
-                          Next
-                        </Button>
-                      )}
-                      {!isCurrentStepMandatory && (
-                        <Button
-                          type="primary"
-                          size="small"
-                          rounded
-                          disabled={isCurrentStepMandatory || isLastStep}
-                          onClick={() => skipStep(state.currentStep.toString())}
-                        >
-                          Skip
-                        </Button>
-                      )}
-                    </>
-                  )}
-                </>
-                <small className="ml-4 text-slate-600 dark:text-slate-400">
-                  <span>{currentStep}</span> of <span>{totalSteps}</span> steps
-                </small>
-              </nav>
-              <DialogCloseButton onClose={handleClose} />
-            </div>
-            <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 mt-5 text-slate-900 dark:text-slate-100">
-              {steps[state.currentStep].title}
-            </h1>
-            <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
-              {steps[state.currentStep].subtitle}
-            </p>
-          </>
-        </DialogHeader>
-        <DialogBody>
-          <WizardStep>
-            <div>
-              {
-                renderCurrentStep()
-                // {onValidationStatusChange: setIsCurrentStepValid,}
-              }
-            </div>
-          </WizardStep>
-        </DialogBody>
-      </DialogContainer>
-    </Dialog>
+    <WizardProvider handleNextClick={customAction}>
+      <WizardComponent steps={steps} onFinish={onFinish} onClose={onClose} />
+    </WizardProvider>
   );
 };
 
