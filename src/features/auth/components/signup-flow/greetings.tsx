@@ -12,7 +12,7 @@ export const Greetings = ({ onValidationStatusChange }: StepProps) => {
   // Call useStepValidation with a dummy validation function that always returns true
   // useStepValidation(() => true, []);
   return (
-    <div className="w-full max-w-6xl bg-whitex p-0 lg:p-2 mx-auto text-gray-800 dark:text-slate-400 relative md:text-left">
+    <div className="w-full max-w-6xl p-0 lg:p-2 mx-auto relative md:text-left">
       <div className="md:flex items-center -mx-10x">
         <div className="w-full md:w-1/2 px-10x mb-10 md:mb-0">
           <div className="relative">
@@ -37,7 +37,9 @@ export const Greetings = ({ onValidationStatusChange }: StepProps) => {
               the stories that matter most to you. 
               `}
             </p>
-            <p className="text-base md:text-lg">Your news, your way, starts now!</p>
+            <p className="text-base md:text-lg">
+              Your news, your way, starts now!
+            </p>
           </div>
           <div>
             <div className="inline-block align-bottom">
