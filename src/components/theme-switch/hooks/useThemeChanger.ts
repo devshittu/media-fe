@@ -7,7 +7,10 @@ type UseThemeChangerProps = {
   onServerSync?: (value: Theme) => Promise<void>;
 };
 
-export const useThemeChanger = ({ onChange, onServerSync }: UseThemeChangerProps) => {
+export const useThemeChanger = ({
+  onChange,
+  onServerSync,
+}: UseThemeChangerProps) => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, systemTheme, forcedTheme } = useTheme();
 
