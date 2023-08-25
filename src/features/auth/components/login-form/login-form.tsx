@@ -47,11 +47,15 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             <InputField
               required
               placeholder="Enter your email to continue..."
-              id="candidate_email"
+              id="email"
               label="Email"
               type="email"
               {...register('email', {
                 required: 'Your email is required to continue',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: 'Invalid email address',
+                },
               })}
               error={formState.errors['email']}
             />
