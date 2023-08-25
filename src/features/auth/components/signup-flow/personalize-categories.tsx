@@ -40,7 +40,6 @@ export const PersonalizeCategories = ({
     label: category.title, // Map the title to the label property
   })) as Option<Category>[];
 
-
   return (
     <div>
       <CustomCheckboxGroup<Category, Category>
