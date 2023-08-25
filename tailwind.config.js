@@ -12,17 +12,21 @@ module.exports = {
       },
       keyframes: {
         scroll: {
-          'from': {
+          from: {
             transform: 'translateX(0);',
           },
-          'to': {
+          to: {
             transform: 'translateX(calc(-100% - 1rem));',
           },
         },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
-        'scroll':
-          'scroll 10s linear infinite',
+        scroll: 'scroll 10s linear infinite',
+        'fade-in': 'fade-in 10s',
       },
     },
   },
