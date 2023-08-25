@@ -25,7 +25,7 @@ export const Footer = () => {
                   className="inline-flex items-center"
                 >
                   <h1 className="text-xl font-bold tracking-wide text-slate-800 dark:text-slate-200 ">
-                    {"Stay tuned and stay updated!"}
+                    {'Stay tuned and stay updated!'}
                     {/* {"Your news, your way, starts now!"} */}
                   </h1>
                 </Link>
