@@ -21,12 +21,12 @@ export const Pin = ({ focused, value }: PinProps) => {
     }
   }, [value]);
 
-  const digitClasses = `app-pin-digit focused items-center h-20 w-14 inline-flex relative border-white/50x border-2 bg-white-600x rounded justify-center after:content-[''] after:shadow-md after:z-20 after:absolute before:content-[''] before:shadow-md before:z-20 before:absolute ${
-    focused ? 'focused' : ''
-  } ${hidden ? 'hidden' : ''}`;
-
   return (
-    <div className={digitClasses}>
+    <div
+      className={`app-pin-digit focused items-center h-16 w-12 md:h-20 md:w-14 inline-flex relative border-white/50x border-slate-600 dark:border-slate-400 border-2 md:border-4 justify-center after:content-[''] after:shadow-md after:z-20 after:absolute before:content-[''] before:shadow-md before:z-20 before:absolute ${
+        focused ? 'focused' : ''
+      } ${hidden ? 'hidden' : ''}`}
+    >
       <span className="app-pin-digit-value text-5xl m-0 p-0">
         {value || ''}
       </span>
