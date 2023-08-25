@@ -8,7 +8,7 @@ import { db } from '../db';
 const getStoriesHandler = rest.get(
   `${API_URL}/stories`,
   async (req, res, ctx) => {
-    const categoryId = req.url.searchParams.get('categoryId') as string;
+    const category_id = req.url.searchParams.get('category_id') as string;
     const hashtag = req.url.searchParams.get('hashtag') as string;
 
     // Parse page and per_page values with fallback to default values
@@ -24,8 +24,8 @@ const getStoriesHandler = rest.get(
       take: per_page,
       skip: Math.max(per_page * (page - 1), 0),
       // where: {
-      //   categoryId: {
-      //     equals: categoryId,
+      //   category_id: {
+      //     equals: category_id,
       //   },
       // },
     });
@@ -39,6 +39,7 @@ const getStoriesHandler = rest.get(
         total_pages: Math.ceil(db.story.count() / per_page),
         total: db.story.count(),
       }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
@@ -47,7 +48,9 @@ const getStoriesByHashtag = (hashtag: string, store: any[]): any[] => {
   const hashtagRegex = new RegExp(`#${hashtag}\\b`, 'i'); // Case-insensitive regex for the hashtag
 
   // Filter the stories array based on whether the 'body' contains the given hashtag
-  const storiesWithHashtag = store.filter((story) => hashtagRegex.test(story.body));
+  const storiesWithHashtag = store.filter((story) =>
+    hashtagRegex.test(story.body),
+  );
 
   return storiesWithHashtag;
 };
@@ -55,7 +58,6 @@ const getStoriesByHashtag = (hashtag: string, store: any[]): any[] => {
 const getStoriesByHashtagHandler = rest.get(
   `${API_URL}/stories/hashtag`,
   async (req, res, ctx) => {
-
     // Parse page and per_page values with fallback to default values
     const pageParam = req.url.searchParams.get('page') || '';
     const page = !isNaN(parseInt(pageParam, 10)) ? parseInt(pageParam, 10) : 1;
@@ -67,13 +69,14 @@ const getStoriesByHashtagHandler = rest.get(
 
     const hashtag = req.url.searchParams.get('hashtag') as string;
     const allStories = db.story.getAll();
-    const stories = getStoriesByHashtag(hashtag, allStories)
+    const stories = getStoriesByHashtag(hashtag, allStories);
 
     if (stories.length === 0) {
       return res(
         ctx.delay(300),
         ctx.status(404),
         ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
       );
     }
 
@@ -87,6 +90,7 @@ const getStoriesByHashtagHandler = rest.get(
         total_pages: Math.ceil(stories.length / per_page) || 0,
         total: stories.length,
       }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
@@ -108,10 +112,16 @@ const getStoryHandler = rest.get(
         ctx.delay(300),
         ctx.status(404),
         ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
       );
     }
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(story));
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.json(story),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+    );
   },
 );
 
@@ -124,7 +134,7 @@ const getStoryHandler = rest.get(
 
 //     const story = db.story.create({
 //       ...storyData,
-//       categoryId: user?.categoryId,
+//       category_id: user?.category_id,
 //     });
 
 //     return res(ctx.delay(300), ctx.status(200), ctx.json(story));

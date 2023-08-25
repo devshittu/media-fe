@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ToastProps } from './types';
+import { ToastPosition, ToastProps, ToastType } from './types';
 import { useKeyPress } from '@/hooks';
 import Portal from '@/hoc/Portal';
 import {
@@ -11,9 +11,9 @@ import {
 export const ToastComponent = ({
   id,
   isActive = false,
-  type = 'success',
+  type = ToastType.SUCCESS,
   message,
-  position = 'bottom-center',
+  position = ToastPosition.BOTTOM_CENTER,
   duration = 3000,
   onClose,
 }: ToastProps) => {
@@ -42,7 +42,7 @@ export const ToastComponent = ({
 
     if (type === 'success') {
       className += ' bg-green-50';
-    } else if (type === 'danger') {
+    } else if (type === 'error') {
       className += ' bg-red-50';
     } else if (type === 'warning') {
       className += ' bg-orange-50';
@@ -58,7 +58,7 @@ export const ToastComponent = ({
     if (type === 'success') {
       className +=
         ' text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200';
-    } else if (type === 'danger') {
+    } else if (type === 'error') {
       className += ' text-red-500 bg-red-100 dark:bg-red-800 dark:text-red-200';
     } else if (type === 'warning') {
       className +=
@@ -116,11 +116,13 @@ export const ToastComponent = ({
       >
         <div className="flex justify-normal items-center">
           <div className={getIconClassName()}>
-            {type === 'success' && (
+            {type === ToastType.SUCCESS && (
               <CheckIcon className="w-5 h-5" strokeWidth={3} />
             )}
-            {type === 'danger' && <XIcon className="w-5 h-5" strokeWidth={3} />}
-            {type === 'warning' && (
+            {type === ToastType.ERROR && (
+              <XIcon className="w-5 h-5" strokeWidth={3} />
+            )}
+            {type === ToastType.WARNING && (
               <AlertTriangleIcon className="w-5 h-5" strokeWidth={3} />
             )}
             <span className="sr-only">{type} icon</span>

@@ -1,2 +1,2 @@
 export * from './side-panel';
-export * from './side-panel-section';
+export * from './pane';

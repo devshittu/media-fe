@@ -1,8 +1,4 @@
-import TokenPinInputField, {
-  UserLoginStatus,
-} from '@/components/form/token-pin-digit';
 import Image from 'next/image';
-import { useState } from 'react';
 import CustomCheckboxGroup, {
   Option,
 } from '@/components/form/custom-checkbox-group';
@@ -135,7 +131,7 @@ export const Step5: React.FC = () => {
                 Neil Sims
               </p>
               <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                email@flowbite.com
+                email@example.com
               </p>
             </div>
             <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
@@ -161,7 +157,7 @@ export const Step5: React.FC = () => {
                 Bonnie Green
               </p>
               <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                email@flowbite.com
+                email@example.com
               </p>
             </div>
             <span className="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
@@ -191,18 +187,14 @@ const step6Config = {
   isMandatory: true,
 };
 
-// Step7.tsx
-export const Step7: React.FC = () => {
-  return <div>Step 7: Take them to the home page</div>;
-};
-
-const step7Config = {
-  isMandatory: true,
-};
-
 // Step8.tsx
-export const Step8: React.FC = () => {
-  return <div>Step 8: Show them around using the tour feature in the app</div>;
+export const Step7: React.FC = () => {
+  return (
+    <div>
+      Step 7: Load to the home pageShow them around using the tour feature in
+      the app
+    </div>
+  );
 };
 
 const step8Config = {
@@ -210,24 +202,58 @@ const step8Config = {
 };
 
 const steps = [
-  { id: 'step1', component: <Step1 />, ...step1Config },
+  {
+    id: 'step1',
+    title: 'Categories of your choice',
+    subtitle:
+      'Lets customize your experience by making choice of your favorite categories',
+    component: <Step1 />,
+    ...step1Config,
+  },
   {
     id: 'step2',
-    component: (
-      <TokenPinInputField
-        id="token"
-        pinLength={4}
-        userLoginStatus={UserLoginStatus.LOGGED_OUT}
-      />
-    ),
+    title: 'Email Confirmation',
+    subtitle: 'Confirm your email using the token sent to your account',
+    component: <Step2 />,
     ...step2Config,
   },
-  { id: 'step3', component: <Step3 />, ...step3Config },
-  { id: 'step4', component: <Step4 />, ...step4Config },
-  { id: 'step5', component: <Step5 />, ...step5Config },
-  { id: 'step6', component: <Step6 />, ...step6Config },
-  { id: 'step7', component: <Step7 />, ...step7Config },
-  { id: 'step8', component: <Step8 />, ...step8Config },
+  {
+    id: 'step3',
+    title: 'Hi Full Name',
+    subtitle: 'You are welcome to the world of endless opportunities',
+    component: <Step3 />,
+    ...step3Config,
+  },
+  {
+    id: 'step4',
+    title: 'Categories of your choice',
+    subtitle:
+      'Lets customize your experience by making choice of your favorite categories',
+    component: <Step4 />,
+    ...step4Config,
+  },
+  {
+    id: 'step5',
+    title: 'Follow some of your favorite channels',
+    subtitle: 'Set favorite channels to follow',
+    component: <Step5 />,
+    ...step5Config,
+  },
+  {
+    id: 'step6',
+    title: 'Theme',
+    subtitle: ' Choose the visual theme for the interface',
+    component: <Step6 />,
+    ...step6Config,
+  },
+
+  {
+    id: 'step7',
+    title: 'Take a tour',
+    subtitle: 'Lets show you around',
+    component: <Step7 />,
+    ...step8Config,
+  },
 ];
 
 export default steps;

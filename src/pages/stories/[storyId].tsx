@@ -37,7 +37,7 @@ const Index = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const relatedStories = await getRelatedStories(storyId)  as Story[];
+      const relatedStories = (await getRelatedStories(storyId)) as Story[];
       if (relatedStories) {
         setStories(relatedStories);
       }

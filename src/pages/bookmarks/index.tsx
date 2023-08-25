@@ -1,108 +1,86 @@
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import UserLayout from '@/layouts/user-layout';
-import React, { ReactElement, useEffect, useState } from 'react';
-import BookmarkMoment, { BookmarkMomentItem } from './bookmark-moment';
+import React, { ReactElement, useMemo, useState } from 'react';
 import { SidePanel } from '@/components/blocks/side-panel';
-import { StoryItem, getAllStories } from '@/testing';
-import { SplashLoaderComponent } from '@/components/blocks/splash-loader/splash-loader-component';
+import { Bookmark, useGetBookmarks } from '@/features/bookmarks';
+import { useListGrouping, useListSorting } from '@/hooks';
+import {
+  BookmarkSorter,
+  BookmarkMoment,
+  BookmarkMomentLoadingPlaceholder,
+} from '@/features/bookmarks/components/';
+import { StoriesPageFrame } from '@/components/frames';
 
-const Index = () => {
+const BookmarksPage = () => {
+  const [selected, setSelected] = useState<string>('dateAdded');
   const gender = Math.random() < 0.5 ? 'male' : 'female';
   const displayPhotoUrl = `https://xsgames.co/randomusers/avatar.php?g=${gender}`;
-  const [groupedItems, setGroupedItems] = useState<{
-    [key: string]: StoryItem[];
-  }>({});
-  const [sortOrder, setSortOrder] = useState<'latest' | 'earliest'>('latest');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getAllStories();
-      const data = await response;
+  const { data: responseData, isLoading } = useGetBookmarks({});
+  const stableBookmarks = useMemo(
+    () => responseData?.bookmarks,
+    [responseData?.bookmarks],
+  );
 
-      // Group the items by date
-      const grouped = data.reduce(
-        (acc: { [key: string]: StoryItem[] }, item: StoryItem) => {
-          const date = new Date(item.created_at * 1000).toLocaleDateString(
-            'en-US',
-            {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            },
-          );
-
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-
-          acc[date].push(item);
-
-          return acc;
-        },
-        {},
-      );
-
-      // Sort the grouped items by date
-      const sortedGrouped = Object.entries(grouped).sort(([a], [b]) => {
-        const dateA = new Date(a).getTime();
-        const dateB = new Date(b).getTime();
-
-        if (sortOrder === 'latest') {
-          return dateB - dateA;
-        } else {
-          return dateA - dateB;
-        }
-      });
-
-      // Update the state with the grouped and sorted items
-      setGroupedItems(Object.fromEntries(sortedGrouped));
-    };
-
-    fetchData();
-  }, [sortOrder]);
-
-  const handleToggleSort = () => {
-    setSortOrder((prevSortOrder) =>
-      prevSortOrder === 'latest' ? 'earliest' : 'latest',
-    );
+  const formatDate = (timestamp: number) => {
+    return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
   };
+
+  // Group bookmarks by date
+  const groupedItems = useListGrouping<Bookmark>(
+    stableBookmarks,
+    'created_at',
+    formatDate,
+  );
+
+  // Sort the grouped bookmarks
+  const { sortedData, sortOrder, toggleSortOrder } = useListSorting(
+    Object.entries(groupedItems),
+    '0', // since the data is an array of [date, items], we sort by the date which is at index 0
+    'desc',
+  );
+
+  // const { sortedData, sortOrder, toggleSortOrder } = useListSorting(Object.entries(groupedItems), 'created_at', 'desc');
+
   return (
-    <div
-      className={`flex relative min-h-full w-full min-w-0 m-0 items-stretch grow flex-row p-0 justify-between shrink-0 basis-auto `}
-    >
-      <div
-        className={`flex flex-col flex-shrink-0 basis-auto flex-grow relative p-0 min-w-0 min-h-0 m-0 border-x max-w-full lg:max-w-[640px] box-border border-slate-100 dark:border-slate-800`}
-      >
-        <StoriesPageHeader pageTitle="Bookmarks" />
+    <>
+      <StoriesPageHeader pageTitle="Bookmarks" />
+      {isLoading && (
+        <>
+          <BookmarkMomentLoadingPlaceholder />
+        </>
+      )}
+
+      {sortedData?.length > 0 && (
         <section className="space-y-8">
-          <button onClick={handleToggleSort}>
-            Sort by {sortOrder === 'latest' ? 'Earliest' : 'Latest'}
+          <button onClick={toggleSortOrder}>
+            Sort by {sortOrder === 'desc' ? 'Earliest' : 'Latest'}
           </button>
-          {Object.entries(groupedItems).map(([date, items]) => (
+          <BookmarkSorter
+            selectedValue={selected}
+            onSelect={(value) => setSelected(value)}
+          />
+          {sortedData.map(([date, items]) => (
             <React.Fragment key={date}>
-              {/* <h2>{date}</h2> 
-              {items.map((item) => (*/}
-
               <BookmarkMoment time={date} momentData={items} />
-
-              {/* // <div key={item.id}>{item.title}</div>
-              ))} */}
             </React.Fragment>
           ))}
-          {/* <SplashLoaderComponent isActive /> */}
         </section>
-      </div>
-      <div
-        className={`relative hidden lg:flex p-0 z-0 min-w-0 min-h-0 box-border my-0 ml-0 flex-shrink-0 basis-auto flex-col border-0 w-[350px] items-stretch`}
-      >
-        <SidePanel />
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
-Index.getLayout = function getLayout(page: ReactElement) {
-  return <UserLayout>{page}</UserLayout>;
+BookmarksPage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <UserLayout>
+      <StoriesPageFrame>{page}</StoriesPageFrame>
+    </UserLayout>
+  );
 };
 
-export default Index;
+export default BookmarksPage;

@@ -4,3 +4,10 @@ export type Hashtag = {
   count: number;
   stories: string[];
 };
+
+export type HashtagResponse = {
+  hashtags: Hashtag[];
+  page: number;
+  total_pages: number;
+  total: number;
+};

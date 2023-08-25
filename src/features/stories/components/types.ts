@@ -9,5 +9,4 @@ export type StoryListProps = {
   data?: Story[];
   scrollInfinite?: boolean;
   totalPages: number;
-  isLoading?: boolean;
 };

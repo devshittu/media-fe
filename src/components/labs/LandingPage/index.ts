@@ -1,8 +1,9 @@
-export { default as Footer } from './footer';
-export { default as Nav } from './nav';
-export { default as Hero } from './hero';
-export { default as Gallery } from './gallery';
-export { default as Marquee } from './marquee';
-export { default as Feature } from './feature';
-export { default as LeftColumn } from './left-column';
-export { default as LeftColumnContent } from './left-column-content';
+export * from './explore';
+export * from './footer';
+export * from './nav';
+export * from './hero';
+export * from './gallery';
+export * from './marquee';
+export * from './feature';
+export * from './left-column';
+export * from './left-column-content';

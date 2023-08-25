@@ -5,19 +5,19 @@ import { apiClient } from '@/lib/api-client';
 import { Category } from '../types';
 
 type GetCategoryOptions = {
-  categoryId: string;
+  category_id: string;
 };
 
 export const getCategory = ({
-  categoryId,
+  category_id,
 }: GetCategoryOptions): Promise<Category> => {
-  return apiClient.get(`/categories/${categoryId}`);
+  return apiClient.get(`/categories/${category_id}`);
 };
 
-export const useCategory = ({ categoryId }: GetCategoryOptions) => {
+export const useCategory = ({ category_id }: GetCategoryOptions) => {
   const { data, isLoading } = useQuery({
-    queryKey: ['categories', categoryId],
-    queryFn: () => getCategory({ categoryId }),
+    queryKey: ['categories', category_id],
+    queryFn: () => getCategory({ category_id }),
   });
 
   return { data, isLoading };

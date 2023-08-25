@@ -4,12 +4,17 @@ import Image from 'next/image';
 export type UserDetailsProps = {
   name: string;
   organization: string;
+  pub_datetime: string;
 };
 
-export const UserDetails = ({ name, organization }: UserDetailsProps) => {
+export const UserDetails = ({
+  name,
+  organization,
+  pub_datetime,
+}: UserDetailsProps) => {
   return (
-    <div className="inline-flex items-center">
-      <div className="flex items-center space-x-4">
+    <div className="inline-flex items-center w-full">
+      <div className="flex items-center space-x-4 w-full">
         <div className="flex-shrink-0">
           <Image
             width="48"
@@ -28,9 +33,9 @@ export const UserDetails = ({ name, organization }: UserDetailsProps) => {
             {organization || `Correspondence, Reuter`}
           </p>
         </div>
-        {/* <div className="inline-flex items-center text-base font-semibold text-slate-900 dark:text-white">
-          <Button className="rounded-lg">Subscribe</Button>
-        </div> */}
+        <div className="inline-flex items-center text-base font-medium text-slate-700 dark:text-slate-400">
+          <time className="rounded-lg">{pub_datetime}</time>
+        </div>
       </div>
     </div>
   );

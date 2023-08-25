@@ -1,7 +1,7 @@
 import { RestRequest } from 'msw';
 
 import { IS_TEST } from '@/config/constants';
-// import { AuthUser } from '@/features/auth';
+import { AuthUser, LoginData } from '@/features/auth';
 
 import { testData } from '../test-data';
 
@@ -22,11 +22,8 @@ export const getUser = () => sanitizeUser(testData.users[0]);
 // returns the user object and auth token if the provided credentials are valid
 export const authenticate = ({
   email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
+}: // password,
+LoginData) => {
   const user = db.user.findFirst({
     where: {
       email: {
@@ -35,13 +32,13 @@ export const authenticate = ({
     },
   });
 
-  if (user?.password === password) {
-    const sanitizedUser = sanitizeUser(user);
-    const encodedToken = AUTH_TOKEN;
-    return { user: sanitizedUser, jwt: encodedToken };
-  }
+  // if (user?.password === password) {
+  const sanitizedUser = sanitizeUser(user);
+  const encodedToken = AUTH_TOKEN;
+  return { user: sanitizedUser, jwt: encodedToken };
+  // }
 
-  throw new Error('Invalid username or password');
+  // throw new Error('Invalid username or password');
 };
 
 // extract the token and return the user if exists

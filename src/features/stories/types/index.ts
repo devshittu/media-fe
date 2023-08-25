@@ -1,14 +1,16 @@
-import { Entity } from '@/types';
+import { Entity, NewsChannel, User } from '@/types';
 
 export type Story = Entity & {
   id: string;
   title: string;
   body: string;
   slug: string;
-  categoryId: string;
-  updated_at: string;
+  category_id: string;
+  updated_at: number;
+  created_at: number;
   parent_stories: string[];
   children_stories: string[];
+  user: User;
 };
 export type StoryResponse = {
   stories: Story[];

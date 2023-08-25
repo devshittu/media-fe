@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import CustomCheckbox from './custom-checkbox';
+import CustomCheckbox, { RenderAs } from './custom-checkbox';
+import { ChangeHandler, FieldError, UseFormRegister } from 'react-hook-form';
 
 export type Option<T> = T & {
   id: string;
@@ -11,6 +12,9 @@ type CustomCheckboxGroupProps<T, P> = {
   initialSelectedOptions?: Option<T>[]; // Make initialSelectedOptions optional
   onChange: (selectedOptions: Option<T>[]) => void;
   renderDisplayComponent?: (option: T) => JSX.Element; // Custom render function for display
+  error?: FieldError | null;
+  className?: string;
+  renderAs?: RenderAs;
 };
 
 function CustomCheckboxGroup<T, P>({
@@ -18,6 +22,9 @@ function CustomCheckboxGroup<T, P>({
   initialSelectedOptions = [],
   onChange,
   renderDisplayComponent,
+  error,
+  className,
+  renderAs = 'default',
 }: CustomCheckboxGroupProps<T, P>) {
   const [selectedOptions, setSelectedOptions] = useState<Option<T>[]>(
     initialSelectedOptions,
@@ -35,19 +42,32 @@ function CustomCheckboxGroup<T, P>({
   };
 
   return (
-    <ul className="grid w-full gap-2 grid-cols-2 md:gap-6  md:grid-cols-3">
-      {options.map((option) => (
-        <CustomCheckbox
-          key={option.id}
-          option={option}
-          isChecked={selectedOptions.some(
-            (selectedOption) => selectedOption.id === option.id,
-          )}
-          onChange={(isChecked) => handleCheckboxChange(option, isChecked)}
-          renderDisplayComponent={renderDisplayComponent}
-        />
-      ))}
-    </ul>
+    <>
+      <ul
+        className={`${
+          className
+            ? className
+            : 'grid w-full gap-2 grid-cols-2 md:gap-6  md:grid-cols-3 '
+        }`}
+      >
+        {options.map((option) => (
+          <CustomCheckbox
+            key={option.id}
+            option={option}
+            isChecked={selectedOptions.some(
+              (selectedOption) => selectedOption.id === option.id,
+            )}
+            onChange={(isChecked) => handleCheckboxChange(option, isChecked)}
+            renderDisplayComponent={
+              renderAs === 'custom' ? renderDisplayComponent : undefined
+            }
+            renderAs={renderAs}
+          />
+        ))}
+      </ul>
+
+      {error && <div className="text-red-500">{error.message}</div>}
+    </>
   );
 }
 

@@ -13,9 +13,9 @@ import {
   HelpCircleIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
-import TourSequence from '../blocks/tour/tour-sequence';
 import { TourPopperType } from '../blocks/tour/tour-popper';
 import { FlashCard } from '../blocks/flash-card';
+import { useTour } from '@/stores/tour';
 const MainMenu = () => {
   const mainMenuList: MenuItem[] = [
     {
@@ -49,12 +49,12 @@ const MainMenu = () => {
       url: '/bookmarks',
       id: 'bookmarks-page',
     },
-    {
-      name: 'Hashtags',
-      icon: <HashIcon />,
-      url: '/hashtags',
-      id: 'hashtags-page',
-    },
+    // {
+    //   name: 'Hashtags',
+    //   icon: <HashIcon />,
+    //   url: '/hashtags',
+    //   id: 'hashtags-page',
+    // },
     // {
     //   name: 'Music',
     //   icon: <MusicIcon />,
@@ -67,21 +67,33 @@ const MainMenu = () => {
       url: '/auth/signup',
       id: 'music-page',
     },
+    // {
+    //   name: 'UI/UX Components',
+    //   icon: <LayoutIcon />,
+    //   url: '/ui-components',
+    //   id: 'ui-components-page',
+    // },
+  ];
+  const { showTour } = useTour();
+
+  const tourSequence = [
     {
-      name: 'UI/UX Components',
-      icon: <LayoutIcon />,
-      url: '/ui-components',
-      id: 'ui-components-page',
+      forElement: '#page-title',
+      text: 'This is where you will find the page title for the current page.',
+    },
+    {
+      forElement: '#app-search',
+      text: 'Search stories here...',
+    },
+    {
+      forElement: '#trendsForYouTitle',
+      text: 'This is where you will find some trends for you',
+    },
+    {
+      forElement: '.App-nowhere',
+      text: 'This help text will never appear',
     },
   ];
-
-  const [showHelp, setShowHelp] = useState(false);
-  const closeHelp = () => {
-    setShowHelp(false);
-  };
-  const openHelp = () => {
-    setShowHelp(true);
-  };
 
   return (
     <>
@@ -94,34 +106,13 @@ const MainMenu = () => {
           seamless navigation in just a few clicks!"
         actionText="Show Help"
         actionIcon={<HelpCircleIcon />}
-        onClickAction={openHelp}
+        onClickAction={() =>
+          showTour({
+            sequence: tourSequence,
+            type: TourPopperType.INFO,
+          })
+        }
       />
-
-      {showHelp && (
-        <TourSequence
-          sequence={[
-            {
-              forElement: '#page-title',
-              text: 'This is where you will find the page title for the current page.',
-            },
-            {
-              forElement: '#app-search',
-              text: 'Search stories here...',
-            },
-            {
-              forElement: '#trendsForYouTitle',
-              text: 'This is where you will find some trends for you',
-            },
-            {
-              forElement: '.App-nowhere',
-              text: 'This help text will never appear',
-            },
-          ]}
-          open={showHelp}
-          onClose={closeHelp}
-          type={TourPopperType.WARNING}
-        />
-      )}
     </>
   );
 };

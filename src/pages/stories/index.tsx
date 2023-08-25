@@ -1,46 +1,63 @@
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useMemo, useRef } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import { StoryList } from '@/features/stories/components';
+import {
+  StoryList,
+  StoryListLoadingPlaceholder,
+} from '@/features/stories/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Story, getStories, useStories } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import StoriesPageContainer from '@/features/stories/components/stories-page-container/stories-page-container';
+import { StoriesPageFrame } from '@/components/frames';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 const StoriesPage = ({ stories }: PublicStoriesPageProps) => {
-  const storiesFromUse = useStories({
+  const { data: responseData, isLoading } = useStories({
     params: {
       page: 1,
       per_page: PAGINATE_STORIES_LIMIT,
     },
   });
+  const stableStories = useMemo(
+    () => responseData?.stories,
+    [responseData?.stories],
+  );
+
   return (
     <>
-        <StoriesPageHeader pageTitle="Home" />
-          <StoryList
-            data={storiesFromUse.data?.stories}
-            totalPages={storiesFromUse.data?.total_pages}
-            isLoading={storiesFromUse.isLoading}
-            scrollInfinite
-          />
-      </>
+      <StoriesPageHeader pageTitle="Home" showTab parallax />
+      {isLoading && (
+        <>
+          <StoryListLoadingPlaceholder />
+        </>
+      )}
+      {stableStories?.length > 0 && (
+        <StoryList
+          data={stableStories}
+          totalPages={responseData?.total_pages}
+          scrollInfinite
+        />
+      )}
+    </>
   );
 };
 
 StoriesPage.getLayout = function getLayout(page: ReactElement) {
-  return <UserLayout><StoriesPageContainer>{page}</StoriesPageContainer></UserLayout>;
+  return (
+    <UserLayout>
+      <StoriesPageFrame>{page}</StoriesPageFrame>
+    </UserLayout>
+  );
 };
 
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
-  const categoryId = params?.categoryId as string;
-  // const stories = await getAllStories().catch(() => [] as StoryItem[]);
+  const category_id = params?.category_id as string;
   const stories = await getStories({
     params: {
-      categoryId: categoryId,
+      category_id: category_id,
       page: 1,
       per_page: PAGINATE_STORIES_LIMIT,
     },

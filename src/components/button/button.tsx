@@ -15,6 +15,7 @@ export type ButtonProps = {
     | 'warning'
     | 'dark'
     | 'light'
+    | 'adaptive'
     | null;
   icon?: JSX.Element;
   iconPosition?: 'left' | 'right';
@@ -140,6 +141,21 @@ export const Button = ({
                   : 'border'
               }`
         } focus:ring-neutral-300 `;
+        break;
+
+      case 'adaptive':
+        classes += ` 
+        ${
+          !outlined
+            ? `bg-neutral-900 dark:bg-neutral-300 hover:bg-neutral-950 dark:hover:bg-neutral-200 dark:text-black text-white`
+            : `border dark:border-neutral-400 border-neutral-600 dark:hover:bg-neutral-300 hover:bg-neutral-700 text-neutral-800  dark:text-neutral-300 dark:hover:text-black hover:text-white ${
+                size == 'large'
+                  ? 'border-4'
+                  : size == 'medium'
+                  ? 'border-2'
+                  : 'border'
+              }`
+        } dark:focus:ring-neutral-300 focus:ring-neutral-700  `;
         break;
 
       case 'primary':
@@ -286,3 +302,5 @@ export const Button = ({
     </button>
   );
 };
+
+//Path src/components/button/button.tsx

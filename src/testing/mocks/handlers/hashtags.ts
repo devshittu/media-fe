@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-import { API_URL } from '@/config/constants';
+import { API_URL, PAGINATE_STORIES_LIMIT } from '@/config/constants';
 
 import { db } from '../db';
 import { HashtagItem } from '@/testing/types';
@@ -10,13 +10,23 @@ import { removeHashFromHashtag } from '@/utils';
 const getHashtagsHandler = rest.get(
   `${API_URL}/hashtags`,
   async (req, res, ctx) => {
+    const category_id = req.url.searchParams.get('category_id') as string;
+    const hashtag = req.url.searchParams.get('hashtag') as string;
+
+    // Parse page and per_page values with fallback to default values
+    const pageParam = req.url.searchParams.get('page') || '';
+    const page = !isNaN(parseInt(pageParam, 10)) ? parseInt(pageParam, 10) : 1;
+
+    const perPageParam = req.url.searchParams.get('per_page') || '';
+    let per_page = !isNaN(parseInt(perPageParam, 10))
+      ? parseInt(perPageParam, 10)
+      : PAGINATE_STORIES_LIMIT;
+
+    per_page = 15;
     const stories = db.story.getAll();
 
-    const page = 1;
-    const pageSize = 15;
-
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
+    const start = (page - 1) * per_page;
+    const end = start + per_page;
 
     const hashtagMap: { [hashtag: string]: HashtagItem } = {}; // Use hashtagMap to track each hashtag item
 
@@ -52,7 +62,13 @@ const getHashtagsHandler = rest.get(
     return res(
       ctx.delay(300),
       ctx.status(200),
-      ctx.json(hashtagItems.slice(start, end)),
+      ctx.json({
+        hashtags: hashtagItems.slice(start, end),
+        page,
+        total_pages: Math.ceil(db.story.count() / per_page),
+        total: db.story.count(),
+      }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
     );
   },
 );
@@ -75,10 +91,16 @@ const getHashtagHandler = rest.get(
         ctx.delay(300),
         ctx.status(404),
         ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
       );
     }
 
-    return res(ctx.delay(300), ctx.status(200), ctx.json(story));
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+      ctx.json(story),
+    );
   },
 );
 

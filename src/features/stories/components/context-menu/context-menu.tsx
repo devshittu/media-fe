@@ -4,7 +4,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/blocks/popover';
-import {} from '@/components/illustrations';
 import {
   WhatsappColoredIcon,
   TwitterColoredIcon,
@@ -17,22 +16,27 @@ import {
 import { Tag } from '@/components/blocks/tag';
 import { Drawer, DrawerSide } from '@/components/blocks/drawer';
 import Menu, { MenuHeader, MenuItem } from '@/components/menus/menu';
-import { Toast } from '@/components/blocks/toast';
+import { Toast, ToastPosition, ToastType } from '@/components/blocks/toast';
 import { Button } from '@/components/button';
 import { Modal } from '@/components/blocks/modal';
 import { Story } from '../../types';
+import { useBookmark } from '@/features/bookmarks/hooks/useBookmark';
 
 type ContextMenuProps = {
   story: Story;
+  initialBookmarkState: boolean;
 };
 
-export const ContextMenu = ({ story }: ContextMenuProps) => {
+export const ContextMenu = ({
+  story,
+  initialBookmarkState,
+}: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
   const ShowToast = () => {
     const notify = new Toast({
       message: 'Hello, world!',
-      position: 'bottom-center',
-      type: 'success',
+      position: ToastPosition.BOTTOM_CENTER, // 'bottom-center',
+      type: ToastType.SUCCESS, //'success',
       onClose: () => {
         // Handle close event
         console.log('toast closed');
@@ -43,9 +47,19 @@ export const ContextMenu = ({ story }: ContextMenuProps) => {
     notify.open();
   };
 
+  const { isBookmarked, handleBookmark, handleUnbookmark } = useBookmark(
+    story.id,
+    (initialBookmarkState = false),
+  );
+
   const addBookmark = (event: React.MouseEvent) => {
     if (event) {
       event.preventDefault();
+    }
+    if (isBookmarked) {
+      handleUnbookmark();
+    } else {
+      handleBookmark();
     }
     const drawer = new Drawer({
       title: 'Add Bookmark!',
@@ -86,7 +100,7 @@ export const ContextMenu = ({ story }: ContextMenuProps) => {
       <PopoverTrigger onClick={() => setOpen((v) => !v)}>
         <Icon icon={<MoreHorizontalIcon />} className="w-6" />
       </PopoverTrigger>
-      <PopoverContent className="Popover z-20">
+      <PopoverContent className="Popover z-20 w-44 md:w-48 bg-slate-50 dark:bg-slate-800">
         <Menu>
           <MenuHeader>
             <h3 className="text-lg font-bold">Share</h3>
@@ -109,13 +123,13 @@ export const ContextMenu = ({ story }: ContextMenuProps) => {
             onClick={openModal}
           />
           <MenuItem
-            label="Add Bookmark"
+            label={isBookmarked ? 'Unbookmark' : 'Bookmark'}
             url="#"
             onClick={addBookmark}
             icon={
               <Icon
                 icon={<BookmarkIcon />}
-                className="w-6 text-slate-900"
+                className="w-6 text-slate-900 dark:text-slate-100"
                 strokeWidth={2.5}
               />
             }

@@ -25,13 +25,6 @@ export const getObjectsByIds = <T extends ObjectItem>(
   return result;
 };
 
-export const formatDate = (date: number | string) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-    day: 'numeric',
-  });
-};
 export const slug = (title: string) =>
   title
     .toLowerCase()
@@ -55,11 +48,17 @@ export const slug = (title: string) =>
 
 //   return str;
 // };
-type DeepPartial<T> = {
+export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-export const updateDeep = <T>(obj: T, update: DeepPartial<T>): T => {
+export const updateDeep = <T>(
+  obj: T | undefined,
+  update: DeepPartial<T>,
+): T => {
+  if (!obj) {
+    throw new Error('The provided object is undefined.');
+  }
   for (const key in update) {
     if (typeof update[key] === 'object' && !Array.isArray(update[key])) {
       if (typeof obj[key] !== 'object' || Array.isArray(obj[key])) {
@@ -91,6 +90,19 @@ export const updateDeep = <T>(obj: T, update: DeepPartial<T>): T => {
     }
   }
   return obj;
+};
+
+export const pluralize = (count: number, singular: string, plural: string) =>
+  count === 1 ? singular : plural;
+
+// Helper function to create a delay with cancellation
+export const delayWithCancel = (ms: number) => {
+  let timeoutId: NodeJS.Timeout;
+  const promise = new Promise((resolve) => {
+    timeoutId = setTimeout(resolve, ms);
+  });
+  const cancel = () => clearTimeout(timeoutId);
+  return { promise, cancel };
 };
 
 // Path: src/utils/helper.ts

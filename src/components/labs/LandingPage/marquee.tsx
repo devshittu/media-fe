@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MarqueeProps } from './types';
 
-const Marquee = ({
+export const Marquee = ({
   children,
   items = [],
   play = true,
@@ -35,7 +35,7 @@ const Marquee = ({
             aria-hidden={index === 1 ? 'true' : 'false'}
             className={`${
               hoverToPause ? ` group-hover:paused ` : ''
-            } motion-reduce:paused shrink-0 flex justify-around items-center gap-4 my-2 min-w-full  ${
+            } motion-reduce:paused shrink-0 flex justify-around items-center gap-4 my-2 mx-2 min-w-full  ${
               play ? ` ${getSpeedClass()} ${reverse ? `reverse ` : ''} ` : ''
             }`}
           >
@@ -59,7 +59,5 @@ const Marquee = ({
     </section>
   );
 };
-
-export default Marquee;
 
 // Path: src/components/labs/LandingPage/Marquee.tsx

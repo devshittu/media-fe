@@ -7,3 +7,10 @@ export type Category = {
   description: string;
   slug: string;
 };
+
+export type CategoryResponse = {
+  categories: Category[];
+  page: number;
+  total_pages: number;
+  total: number;
+};
