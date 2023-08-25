@@ -1,1 +1,1 @@
-export * from './useThemeChanger'
+export * from './useThemeChanger';

@@ -12,7 +12,6 @@ import { FieldError } from 'react-hook-form';
 import { useThemeChanger } from './hooks';
 import { Theme } from './types';
 
-
 type ThemeSwitchProps = {
   onChange?: (value: string) => void; // This is the type for onChange
   value?: string;
@@ -27,12 +26,13 @@ const ThemeSwitch = ({
   className,
   showLabel = false,
 }: ThemeSwitchProps) => {
-  const { currentTheme, handleThemeChange, mounted, disabled } = useThemeChanger({
-    onChange: (theme) => {
-      // Handle the theme change here if needed
-    },
-    // onServerSync: serverSync, // Pass the server sync function
-  });
+  const { currentTheme, handleThemeChange, mounted, disabled } =
+    useThemeChanger({
+      onChange: (theme) => {
+        // Handle the theme change here if needed
+      },
+      // onServerSync: serverSync, // Pass the server sync function
+    });
 
   if (!mounted) return null;
   return (

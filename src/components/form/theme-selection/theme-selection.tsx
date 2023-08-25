@@ -12,7 +12,10 @@ type ThemeSelectionProps = {
   onSelect?: (selectedOption: ThemeOption) => void;
 };
 
-export const ThemeSelection: React.FC<ThemeSelectionProps> = ({ options, onSelect }) => {
+export const ThemeSelection: React.FC<ThemeSelectionProps> = ({
+  options,
+  onSelect,
+}) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleSelection = (option: ThemeOption) => {
@@ -21,8 +24,7 @@ export const ThemeSelection: React.FC<ThemeSelectionProps> = ({ options, onSelec
   };
 
   return (
-    <div className='font-sansx'>
-      
+    <div className="font-sansx">
       <ul className="grid w-full gap-6 md:grid-cols-4">
         {options.map((option) => (
           <li key={option.id}>
@@ -37,11 +39,13 @@ export const ThemeSelection: React.FC<ThemeSelectionProps> = ({ options, onSelec
             />
             <label
               htmlFor={option.id}
-              className="inline-flex items-center justify-between w-full p-5 text-slate-500 bg-white border-2 border-slate-200 rounded-lg cursor-pointer dark:hover:text-slate-300 dark:border-slate-700 peer-checked:border-cyan-600 hover:text-slate-600 dark:peer-checked:text-slate-300 peer-checked:text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+              className="inline-flex items-center justify-between w-full p-5 bg-white border-2 border-slate-200 rounded-lg cursor-pointer dark:hover:text-slate-300 dark:border-slate-700 peer-checked:border-cyan-600 hover:text-slate-600 dark:peer-checked:text-slate-300 peer-checked:text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
             >
               <div className="block">
                 {option.svg}
-                <h3 className="w-full text-lg font-semibold tracking-wide">{option.label}</h3>
+                <h3 className="w-full text-lg font-semibold tracking-wide">
+                  {option.label}
+                </h3>
                 <div className="w-full text-sm">{option.description}</div>
               </div>
             </label>
