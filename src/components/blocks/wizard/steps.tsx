@@ -1,6 +1,4 @@
-
 import Image from 'next/image';
-import { useState } from 'react';
 import CustomCheckboxGroup, {
   Option,
 } from '@/components/form/custom-checkbox-group';
@@ -216,9 +214,7 @@ const steps = [
     id: 'step2',
     title: 'Email Confirmation',
     subtitle: 'Confirm your email using the token sent to your account',
-    component: (
-      <Step2/>
-    ),
+    component: <Step2 />,
     ...step2Config,
   },
   {
