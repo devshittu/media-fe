@@ -4,13 +4,20 @@ import Wizard from '@/components/blocks/wizard/wizard';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 import { usePopup } from '@/stores/popup';
 import { SignupFlowSteps } from '@/features/auth/components/signup-flow';
-import { useRouter } from 'next/router';
+import { useTour } from '@/stores/tour';
+import { useAuthRedirect } from '../../hooks';
+import { beginnerTourSequence } from '../signup-flow/beginner-tour-sequence';
+import { TourPopperType } from '@/components/blocks/tour/tour-popper';
+import { useConfetti } from '@/stores/confetti';
 
 export const LoginSection = () => {
-  const router = useRouter();
   const { showNotification } = useNotifications();
+  const { showPopup, closePopup } = usePopup();
+  const { showTour } = useTour();
+  const { playConfetti } = useConfetti();
 
-  const { showPopup } = usePopup();
+  const { handleFinish } = useAuthRedirect();
+
   const onSuccess = () => {
     showNotification({
       type: NotificationType.SUCCESS,
@@ -18,20 +25,22 @@ export const LoginSection = () => {
       duration: 5000,
       message: 'Job Created!',
     });
-    showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleFinish} />);
+    showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleWizardFinish} />);
   };
 
-  const handleFinish = async () => {
-    // Handle logic when the user finishes the wizard
-    console.log('Wizard finished!');
-    // const redirect = router.query.redirect as string;
-    // router.replace(redirect || '/stories');
-    // goto the landing page
-    await router.push('/stories');
-
-    //Todo: can I await the router.push or replace Start the tour from here
-
-    console.log('Wizard finished!');
+  const handleWizardFinish = async () => {
+    await handleFinish('/stories');
+    // Show confetti with a 5-second duration and 0-second delay
+    await playConfetti({ duration: 5000, delay: 0 });
+    closePopup();
+    await showTour({
+      sequence: beginnerTourSequence,
+      type: TourPopperType.INFO,
+      delay: 2000, // milliseconds
+    });
   };
+
   return <LoginForm onSuccess={onSuccess} />;
 };
+
+//Path: src/features/auth/components/login-form/login-section.tsx
