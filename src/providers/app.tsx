@@ -13,6 +13,7 @@ import { Tour } from '@/components/blocks/tour';
 import { ConfettiEffect } from '@/components/confetti';
 import SplashLoader from '@/components/blocks/splash-loader/splash-loader';
 import { useInitialSplashLoader } from '@/components/blocks/splash-loader/hooks/useInitialSplashLoader';
+import { useInitializeStore } from '@/hooks';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -21,6 +22,9 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children, theme }: AppProviderProps) => {
   useInitialSplashLoader();
+  // Initialize the Zustand store with default settings when the App component mounts
+  useInitializeStore();
+
   return (
     <>
       <ThemeProvider attribute="class" forcedTheme={theme || undefined}>
