@@ -26,7 +26,10 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
   const login = useLogin({ onSuccess });
   const { register, handleSubmit, formState } = useForm<LoginData>({
     defaultValues: { email: 'user1@test.com' },
+    // mode: 'onChange',
+    mode: 'onBlur',
   });
+  // console.log('formState:// ',formState.isValid);
   const onSubmit = (data: LoginData) => {
     console.log(data);
     login.submit(data);
@@ -57,7 +60,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
                   message: 'Invalid email address',
                 },
               })}
-              error={formState.errors['email']}
+              error={formState.errors.email}
             />
 
             <Button
