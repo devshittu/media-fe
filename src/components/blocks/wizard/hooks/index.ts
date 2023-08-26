@@ -1,2 +1,2 @@
-export * from './useStepValidation';
+export * from './useWizardStepValidation';
 export * from './useWizard';
