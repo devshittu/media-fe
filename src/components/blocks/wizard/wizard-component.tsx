@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import WizardStep from './wizard-step';
 import { Button } from '@/components/button';
 import useWizard from './hooks/useWizard'; // Assuming the useWizard hook is in the same directory
@@ -30,9 +30,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
     renderCurrentStep,
   } = useWizard(steps, onFinish, onClose);
 
-  // const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
-
-  const { isCurrentStepValid, handleNextClick } = useWizardContext();
+  const { isCurrentStepValid } = useWizardContext();
 
   const { setOpen } = usePopupContext();
   const canGoBack =
@@ -80,10 +78,12 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
                           type="primary"
                           size="small"
                           rounded
+                          // disabled={
+                          //   isNextStepDisabled() || isLastStep || loading
+                          // }
                           disabled={
-                            isNextStepDisabled() || isLastStep || loading
+                            !isCurrentStepValid || isLastStep || loading
                           }
-                          // disabled={!isCurrentStepValid || isLastStep || loading}
                           onClick={goToNextStep}
                           loading={loading}
                         >
@@ -120,12 +120,12 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
         </DialogHeader>
         <DialogBody>
           <WizardStep>
-            <div>
+            <>
               {
                 renderCurrentStep()
                 // {onValidationStatusChange: setIsCurrentStepValid,}
               }
-            </div>
+            </>
           </WizardStep>
         </DialogBody>
       </DialogContainer>
@@ -135,4 +135,4 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
 
 export default WizardComponent;
 
-//path: src/components/blocks/wizard/wizard.tsx
+//path: src/components/blocks/wizard/wizard-component.tsx
