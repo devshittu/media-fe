@@ -2,17 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AuthStatus, PinInputProps } from './types';
 import { Pin } from './pin';
 import { usePinVerification } from './hooks/usePinVerification';
+import { ErrorText } from '@/components/labs';
 
-export const PinInput = ({
+const PinInput: React.FC<PinInputProps> = ({
   authStatus,
   pinLength = 4,
   id = 'app-pin-hidden-input',
   onSuccess,
   onVerify,
   maxAttempts = 3,
-  warningThreshold, // Magic number prop
-  onNotify, // Notification event handler
-}: PinInputProps) => {
+  warningThreshold,
+  onNotify,
+}) => {
   if (warningThreshold && !onNotify) {
     throw new Error('onNotify must be provided if warningThreshold is set');
   }
@@ -20,62 +21,64 @@ export const PinInput = ({
   const [pin, setPin] = useState('');
   const [attempts, setAttempts] = useState(0);
   const pinInputRef = useRef<HTMLInputElement>(null);
-  const [rememberMe, setRememberMe] = useState(false);
-  // Focus the input field when the component mounts
-  useEffect(() => {
-    pinInputRef.current?.focus();
-  }, []);
+  const [isFocused, setIsFocused] = useState(false);
 
-  // Focus the input field when the pin is wiped
-  useEffect(() => {
-    if (pin === '') {
-      pinInputRef.current?.focus();
-    }
-  }, [pin]);
   const { loading, error, userLoginState, setUserLoginState } =
     usePinVerification(
       pin,
       pinLength,
       authStatus,
-      async () => {
-        if (onVerify) {
-          const isVerified = await onVerify(pin);
-          if (isVerified) {
-            setAttempts(0); // Reset attempts on successful verification
-          } else {
-            setAttempts((prev) => prev + 1); // Increment attempts on failed verification
-          }
-          return isVerified; // Return the verification result
-        }
-        return false; // Return false if onVerify is not provided
-      },
+      async () => await handleVerify(),
       setPin,
       onSuccess,
     );
 
-  const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= pinLength) {
-      const newPin = e.target.value.substring(0, pinLength);
-      setPin(newPin);
-    }
-  };
+  // Handle focus and blur events
+  useEffect(() => handleFocusBlur(), []);
 
+  // Focus the input field when the component mounts and when the pin is wiped
+  useEffect(() => {
+    if (!pin || pin === '') {
+      pinInputRef.current?.focus();
+    }
+  }, [pin]);
+
+  // Notify when attempts are made
   useEffect(() => {
     if (attempts > 0 && attempts < maxAttempts) {
       onNotify?.(maxAttempts - attempts);
     }
   }, [attempts, maxAttempts, onNotify]);
-  // const handleRememberMeChange = () => {
-  //   setRememberMe(!rememberMe);
-  // };
 
-  const handlePinClick = () => {
-    pinInputRef.current?.focus();
+  const handleFocusBlur = () => {
+    const inputElement = pinInputRef.current;
+    if (inputElement) {
+      inputElement.addEventListener('focus', () => setIsFocused(true));
+      inputElement.addEventListener('blur', () => setIsFocused(false));
+      return () => {
+        inputElement.removeEventListener('focus', () => setIsFocused(true));
+        inputElement.removeEventListener('blur', () => setIsFocused(false));
+      };
+    }
   };
 
-  const handleCancelClick = () => {
-    setUserLoginState(AuthStatus.LOGGED_OUT);
+  const handleVerify = async () => {
+    if (onVerify) {
+      const isVerified = await onVerify(pin);
+      setAttempts(isVerified ? 0 : attempts + 1);
+      return isVerified;
+    }
+    return false;
   };
+
+  const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPin = e.target.value.substring(0, pinLength);
+    if (newPin.length <= pinLength) {
+      setPin(newPin);
+    }
+  };
+
+  const handlePinClick = () => pinInputRef.current?.focus();
 
   return (
     <div className="pin-wrapper">
@@ -108,12 +111,15 @@ export const PinInput = ({
         }}
       >
         {[...Array(pinLength)].map((_, index) => (
-          <Pin key={index} focused={pin.length === index} value={pin[index]} />
+          <Pin
+            key={index}
+            focused={isFocused && pin.length === index}
+            value={pin[index]}
+          />
         ))}
       </div>
-
       {loading && <div className="text-blue-500">Verifying...</div>}
-      {error && <div className="text-red-500">{error.message}</div>}
+      {error && <ErrorText>{error.message}</ErrorText>}
       {/* <h1>
         {'Enter the "1234" '}
         <button
@@ -122,8 +128,8 @@ export const PinInput = ({
         >
           Cancel
         </button>
-      </h1> */}
-      {/* <div className="flex items-center">
+      </h1>
+     <div className="flex items-center">
         <input
           id="remember-checkbox"
           type="checkbox"
