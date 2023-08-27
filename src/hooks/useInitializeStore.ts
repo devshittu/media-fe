@@ -4,7 +4,7 @@ import {
   accountSettingsStore,
   defaultSettings,
   settingsCleanSheet,
-} from '@/stores/wizard/useAccountSettingsStore';
+} from '@/stores/app-settings/';
 
 export const useInitializeStore = () => {
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { Setting } from '@/features/settings';
-import { createAppSettingsStore } from './app-settings';
+import { createAppSettingsStore } from '../app-settings';
 import { useStore } from 'zustand';
 
 export const defaultSettings = {

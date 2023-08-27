@@ -1,1 +1,1 @@
-export * from './useAccountSettingsStore';
+export * from './hooks/useAccountSettingsStore';
