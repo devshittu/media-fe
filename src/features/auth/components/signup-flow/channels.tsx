@@ -1,13 +1,10 @@
-import { useStepValidation } from '@/components/blocks/wizard/hooks';
+import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { StepProps } from '@/components/blocks/wizard/types';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export const Channels = ({ onValidationStatusChange }: StepProps) => {
-  const validate = () => true;
-
-  // const isValid = useStepValidation(validate, [], onValidationStatusChange);
-
+  useWizardStepValidation();
   return (
     <div>
       Step 5: Set favorite channels to follow (skippable)
