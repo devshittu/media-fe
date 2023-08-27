@@ -1,5 +1,6 @@
 import { useReducer, useEffect, useState } from 'react';
 import { Step, StepProps } from '../types';
+import { useWizardContext } from '../wizard-context';
 
 enum WizardActionType {
   NEXT_STEP = 'NEXT_STEP',
@@ -93,10 +94,18 @@ const useWizard = (
         setLoading(true);
         const currentStep = steps[state.currentStep];
         if (action === 'next') {
-          if (currentStep.onNext) {
-            await currentStep.onNext();
+          try {
+            // if (beforeNext) {
+            //   await beforeNext();
+            // }
+            // logic for moving to the next step
+            if (currentStep.onNext) {
+              await currentStep.onNext();
+            }
+            dispatch({ type: WizardActionType.NEXT_STEP });
+          } catch (e: any) {
+            // setWizardError(new Error(e));
           }
-          dispatch({ type: WizardActionType.NEXT_STEP });
         } else if (action === 'previous') {
           if (currentStep.onPrevious) {
             await currentStep.onPrevious();
