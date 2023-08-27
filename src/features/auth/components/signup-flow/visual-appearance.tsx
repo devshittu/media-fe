@@ -1,4 +1,4 @@
-import { useStepValidation } from '@/components/blocks/wizard/hooks';
+import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { StepProps } from '@/components/blocks/wizard/types';
 import { ThemeSelection } from '@/components/form/theme-selection';
 import {
@@ -8,13 +8,10 @@ import {
   SunIcon,
 } from '@/components/illustrations';
 import { useThemeChanger } from '@/components/theme-switch/hooks';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export const VisualAppearance = ({ onValidationStatusChange }: StepProps) => {
-  const validate = () => true;
-
-  // const isValid = useStepValidation(validate, [], onValidationStatusChange);
-
+  useWizardStepValidation();
   // Function to perform server synchronization
   const serverSync = async (theme: string) => {
     // Perform the server sync logic here

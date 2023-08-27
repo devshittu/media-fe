@@ -3,7 +3,6 @@ import React, { createContext, useContext, useState } from 'react';
 type WizardContextType = {
   isCurrentStepValid: boolean;
   setValidationStatus: (status: boolean) => void;
-  handleNextClick: () => void;
 };
 
 const WizardContext = createContext<WizardContextType | undefined>(undefined);
@@ -17,23 +16,23 @@ export const useWizardContext = () => {
 };
 type WizardProviderProps = {
   children: React.ReactNode;
-  handleNextClick: () => void;
 };
-export const WizardProvider = ({
-  children,
-  handleNextClick,
-}: WizardProviderProps) => {
-  const [isCurrentStepValid, setIsCurrentStepValid] = useState(false);
+export const WizardProvider = ({ children }: WizardProviderProps) => {
+  const [isCurrentStepValid, setIsCurrentStepValid] = useState<boolean>(false);
+
+  const setValidationStatus = (status: boolean) => {
+    setIsCurrentStepValid(status);
+  };
 
   return (
     <WizardContext.Provider
       value={{
         isCurrentStepValid,
-        setValidationStatus: setIsCurrentStepValid,
-        handleNextClick,
+        setValidationStatus,
       }}
     >
       {children}
     </WizardContext.Provider>
   );
 };
+// Path: src/components/blocks/wizard/wizard-context.tsx

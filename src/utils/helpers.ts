@@ -48,10 +48,26 @@ export const slug = (title: string) =>
 
 //   return str;
 // };
+
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
-
+/**
+ * Recursively updates properties within an object, including nested objects and arrays.
+ *
+ * @param {T | undefined} obj - The object to update.
+ * @param {DeepPartial<T>} update - An object representing the properties to update.
+ *
+ * @returns {T} - The updated object.
+ *
+ * @throws Will throw an error if the provided object is undefined.
+ *
+ * @example
+ *
+ * const obj = { a: { b: 1 }, c: [1, 2] };
+ * const updatedObj = updateDeep(obj, { a: { b: 2 }, c: [3, 4] });
+ * // updatedObj will be { a: { b: 2 }, c: [3, 4] }
+ */
 export const updateDeep = <T>(
   obj: T | undefined,
   update: DeepPartial<T>,

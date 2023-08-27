@@ -1,16 +1,13 @@
-import { useStepValidation } from '@/components/blocks/wizard/hooks';
-import { StepProps } from '@/components/blocks/wizard/types';
+import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
+import { useWizardContext } from '@/components/blocks/wizard/wizard-context';
 import { Button } from '@/components/button';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 
-export const Greetings = ({ onValidationStatusChange }: StepProps) => {
-  const validate = () => true;
+export const Greetings = () => {
+  // No validation function passed, so it assumes isValid is true
+  useWizardStepValidation();
 
-  // const isValid = useStepValidation(validate, [], onValidationStatusChange);
-
-  // Call useStepValidation with a dummy validation function that always returns true
-  // useStepValidation(() => true, []);
   return (
     <div className="w-full max-w-6xl p-0 lg:p-2 mx-auto relative md:text-left">
       <div className="md:flex items-center -mx-10x">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CustomCheckbox, { RenderAs } from './custom-checkbox';
 import { ChangeHandler, FieldError, UseFormRegister } from 'react-hook-form';
+import { ErrorText } from '../labs';
 
 export type Option<T> = T & {
   id: string;
@@ -65,8 +66,10 @@ function CustomCheckboxGroup<T, P>({
           />
         ))}
       </ul>
-
-      {error && <div className="text-red-500">{error.message}</div>}
+      <div className="flex items-center min-h-[3rem]">
+        {' '}
+        {error && <ErrorText>{error.message}</ErrorText>}
+      </div>
     </>
   );
 }
