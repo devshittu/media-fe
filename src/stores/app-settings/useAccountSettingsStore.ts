@@ -1,5 +1,5 @@
 import { Setting } from '@/features/settings';
-import { createWizardStore } from './wizard';
+import { createAppSettingsStore } from './app-settings';
 import { useStore } from 'zustand';
 
 export const defaultSettings = {
@@ -43,7 +43,7 @@ export const settingsCleanSheet = {
   },
 };
 
-export const accountSettingsStore = createWizardStore<Setting>();
+export const accountSettingsStore = createAppSettingsStore<Setting>();
 
 export const useAccountSettingsStore = () => useStore(accountSettingsStore);
 
