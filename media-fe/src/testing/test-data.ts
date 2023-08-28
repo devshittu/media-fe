@@ -66,12 +66,12 @@ export const getMoreStories = delayedFn(
   300,
 ); // get last item and -2 for the last two items
 
-const findRelatedStories = (
-  stories: StoryItem[],
+export const findRelatedStories = (
+  stories: Story[],
   storyId: string,
   property: 'parent_stories' | 'children_stories',
-): StoryItem[] => {
-  const relatedStories: StoryItem[] = [];
+): Story[] => {
+  const relatedStories: Story[] = [];
 
   const findStories = (currentStoryId: string) => {
     stories.forEach((story) => {
