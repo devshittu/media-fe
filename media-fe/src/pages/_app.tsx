@@ -11,15 +11,17 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'true') {
 }
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (page: ReactElement, layoutProps?: Record<string, any>) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+
   const getLayout = Component.getLayout ?? ((page) => page);
-  const pageContent = getLayout(<Component {...pageProps} />);
+  // const layoutProps = pageProps.stories ? { stories: pageProps.stories } : {};
+  const pageContent = getLayout(<Component {...pageProps} />, pageProps);
 
   return (
     <>
@@ -45,3 +47,5 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   );
 };
 export default App;
+
+// Path: media-fe/src/pages/_app.tsx
