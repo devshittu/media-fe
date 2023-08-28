@@ -3,6 +3,8 @@ import { rest } from 'msw';
 import { API_URL, PAGINATE_STORIES_LIMIT } from '@/config/constants';
 
 import { db } from '../db';
+import { findRelatedStories } from '@/testing/test-data';
+import { Story } from '@/features/stories';
 // import { requireAuth } from '../utils';
 
 const getStoriesHandler = rest.get(
@@ -38,6 +40,80 @@ const getStoriesHandler = rest.get(
         page,
         total_pages: Math.ceil(db.story.count() / per_page),
         total: db.story.count(),
+      }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+    );
+  },
+);
+
+const getStorylineHandler = rest.get(
+  `${API_URL}/stories/:storySlug`,
+  async (req, res, ctx) => {
+    const slug = req.url.searchParams.get('slug') as string;
+
+    const storySlug = req.params.storySlug as string;
+    // Parse page and per_page values with fallback to default values
+    const pageParam = req.url.searchParams.get('page') || '';
+    const page = !isNaN(parseInt(pageParam, 10)) ? parseInt(pageParam, 10) : 1;
+
+    const perPageParam = req.url.searchParams.get('per_page') || '';
+    const per_page = !isNaN(parseInt(perPageParam, 10))
+      ? parseInt(perPageParam, 10)
+      : PAGINATE_STORIES_LIMIT;
+
+    const story = db.story.findFirst({
+      where: {
+        slug: {
+          equals: storySlug,
+        },
+      },
+    });
+
+    if (!story) {
+      return res(
+        ctx.delay(300),
+        ctx.status(404),
+        ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
+      );
+    }
+
+    const stories = db.story.findMany({
+    })  as unknown as Story[];;
+
+    //Todo: load storylines
+    let relatedStories: any[] = [];
+    const theStory = stories.find((j) => j.slug === storySlug) || null;
+    const parentStories = findRelatedStories(
+      stories,
+      storySlug,
+      'parent_stories',
+    );
+    // console.log('parentStories', parentStories);
+    const childrenStories = findRelatedStories(
+      stories,
+      storySlug,
+      'children_stories',
+    );
+    // console.log('childrenStories', childrenStories);
+    // if (!theStory) return relatedStories;
+
+    relatedStories = [
+      ...parentStories,
+      theStory,
+      ...childrenStories,
+    ] as Story[];
+    //Todo: load storylines
+
+
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.json({
+        stories: relatedStories,
+        page,
+        total_pages: Math.ceil(relatedStories.length / per_page),
+        total: relatedStories.length,
       }),
       ctx.set('Access-Control-Allow-Origin', '*'),
     );
@@ -94,36 +170,36 @@ const getStoriesByHashtagHandler = rest.get(
     );
   },
 );
-const getStoryHandler = rest.get(
-  `${API_URL}/stories/:storyId`,
-  async (req, res, ctx) => {
-    const storyId = req.params.storyId as string;
+// const getStoryHandler = rest.get(
+//   `${API_URL}/stories/:storyId`,
+//   async (req, res, ctx) => {
+//     const storyId = req.params.storyId as string;
 
-    const story = db.story.findFirst({
-      where: {
-        id: {
-          equals: storyId,
-        },
-      },
-    });
+//     const story = db.story.findFirst({
+//       where: {
+//         id: {
+//           equals: storyId,
+//         },
+//       },
+//     });
 
-    if (!story) {
-      return res(
-        ctx.delay(300),
-        ctx.status(404),
-        ctx.json({ message: 'Not found!' }),
-        ctx.set('Access-Control-Allow-Origin', '*'),
-      );
-    }
+//     if (!story) {
+//       return res(
+//         ctx.delay(300),
+//         ctx.status(404),
+//         ctx.json({ message: 'Not found!' }),
+//         ctx.set('Access-Control-Allow-Origin', '*'),
+//       );
+//     }
 
-    return res(
-      ctx.delay(300),
-      ctx.status(200),
-      ctx.json(story),
-      ctx.set('Access-Control-Allow-Origin', '*'),
-    );
-  },
-);
+//     return res(
+//       ctx.delay(300),
+//       ctx.status(200),
+//       ctx.json(story),
+//       ctx.set('Access-Control-Allow-Origin', '*'),
+//     );
+//   },
+// );
 
 // const createStoryHandler = rest.post(
 //   `${API_URL}/stories`,
@@ -144,6 +220,7 @@ const getStoryHandler = rest.get(
 export const storiesHandlers = [
   getStoriesByHashtagHandler,
   getStoriesHandler,
-  getStoryHandler,
+  getStorylineHandler,
+  // getStoryHandler,
   // createStoryHandler,
 ];
