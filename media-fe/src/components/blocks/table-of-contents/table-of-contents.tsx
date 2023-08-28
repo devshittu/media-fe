@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import Headings from './headings';
+import {Headings} from './headings';
 import useHeadingsData from '@/components/blocks/table-of-contents/hooks/useHeadingsData';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
-import { StoryItem } from '@/testing';
 import { HeadingsLoadingPlaceholder } from './headings-loading-placeholder';
+import { Story } from '@/features/stories';
 
 export type TableOfContentsProps = {
-  data: StoryItem[] | null;
+  data?: Story[];
 };
 
-const TableOfContents = ({ data }: TableOfContentsProps) => {
+export const TableOfContents = ({ data }: TableOfContentsProps) => {
   const [activeId, setActiveId] = useState<string>();
   const { nestedHeadings } = useHeadingsData();
   useIntersectionObserver(setActiveId);
@@ -20,11 +20,11 @@ const TableOfContents = ({ data }: TableOfContentsProps) => {
   return (
     <nav
       aria-label="Table of contents"
-      className="sticky top-6 overflow-auto max-h-[calc(100vh-40px)]"
+      className="overflow-auto max-h-[calc(100vh-40px)]"
     >
       <Headings headings={nestedHeadings} activeId={activeId || ''} />
     </nav>
   );
 };
 
-export default TableOfContents;
+// Path: media-fe/src/components/blocks/table-of-contents/table-of-contents.tsx
