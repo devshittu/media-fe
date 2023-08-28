@@ -1,6 +1,4 @@
-import { SidePanel } from '@/components/blocks/side-panel';
-import { Toast } from '@/components/blocks/toast';
-import { ReactElement, useMemo, useRef } from 'react';
+import { ReactElement, useMemo } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import {
