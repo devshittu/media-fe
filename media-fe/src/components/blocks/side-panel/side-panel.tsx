@@ -27,7 +27,7 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
     }
   }, [sidePanelRef.current?.innerHTML, screenHeight]); // This effect will run whenever the content rendered by <HashtagList /> or <AccountList /> changes
 
-  const { topPosition: sidebarTop } = useScrollSync(sidePanelHeight || 0); // top position set to 60
+  const { topPosition: sidebarTop } = useScrollSync({contentHeight: sidePanelHeight || 0}); // top position set to 60
 
   const renderedSections = useMemo(
     () =>
@@ -57,7 +57,7 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
         </div>
       </div>
       <div
-        className=" space-y-16 min-h-screen sticky top-28 overflow-hidden pb-60  transition-all  duration-100 ease-out"
+        className=" space-y-16 min-h-fit sticky top-28 overflow-hidden pb-60  transition-all  duration-100 ease-out"
         ref={sidePanelRef}
         style={{ transform: `translateY(${sidebarTop}px)` }}
       >
