@@ -29,7 +29,7 @@ export const Pane = ({
           </Link>
         )}
       </div>
-      <div className="flow-root min-h-[260px]">{children}</div>
+      <div className="flow-root">{children}</div>
     </section>
   );
 };
