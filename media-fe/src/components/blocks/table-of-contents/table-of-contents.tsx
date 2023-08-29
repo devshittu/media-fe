@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Headings} from './headings';
+import { Headings } from './headings';
 import useHeadingsData from '@/components/blocks/table-of-contents/hooks/useHeadingsData';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
 import { HeadingsLoadingPlaceholder } from './headings-loading-placeholder';
