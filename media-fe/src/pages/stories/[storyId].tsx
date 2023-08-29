@@ -1,14 +1,20 @@
 import React, { ReactElement, useMemo } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import { StoryList, StoryListLoadingPlaceholder } from '@/features/stories/components';
-import { getStorylines, useStorylines } from '@/features/stories/api/get-storylines';
+import {
+  StoryList,
+  StoryListLoadingPlaceholder,
+} from '@/features/stories/components';
+import {
+  getStorylines,
+  useStorylines,
+} from '@/features/stories/api/get-storylines';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { Story } from '@/features/stories';
 import { NotFound } from '@/components/not-found';
 import { StoriesPageFrame } from '@/components/frames';
 import { PaneConfig } from '@/components/blocks/side-panel/types';
-import { AccountList } from '@/features/users/components';
+import { UserSuggestionList } from '@/features/users/components';
 import { TableOfContents } from '@/components/blocks/table-of-contents/';
 import { useRouter } from 'next/router';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
@@ -18,7 +24,7 @@ type PublicStoryPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 
-const StorylinePage = ({stories}: PublicStoryPageProps) => {
+const StorylinePage = ({ stories }: PublicStoryPageProps) => {
   const router = useRouter();
   const storyId = router.query.storyId as string;
   const { data: responseData, isLoading } = useStorylines({
@@ -29,7 +35,10 @@ const StorylinePage = ({stories}: PublicStoryPageProps) => {
     },
   });
 
-  const stableStories = useMemo(() => responseData?.stories, [responseData?.stories]);
+  const stableStories = useMemo(
+    () => responseData?.stories,
+    [responseData?.stories],
+  );
 
   return (
     <>
@@ -47,7 +56,10 @@ const StorylinePage = ({stories}: PublicStoryPageProps) => {
     // ,{ stableStories }
   );
 };
-StorylinePage.getLayout = function getLayout(page: ReactElement, layoutProps?: Record<string, any>) {
+StorylinePage.getLayout = function getLayout(
+  page: ReactElement,
+  layoutProps?: Record<string, any>,
+) {
   const sidePanelSections: PaneConfig[] = [
     {
       id: 'relatedStories',
@@ -59,7 +71,7 @@ StorylinePage.getLayout = function getLayout(page: ReactElement, layoutProps?: R
     {
       id: 'channelSubscriptions',
       title: 'Suggestions',
-      component: <AccountList />,
+      component: <UserSuggestionList />,
     },
   ];
 
@@ -72,16 +84,15 @@ StorylinePage.getLayout = function getLayout(page: ReactElement, layoutProps?: R
   );
 };
 
-export  const getServerSideProps = async(context: GetServerSidePropsContext) => {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
   const storyId = context.params?.storyId as string;
-  const stories = await getStorylines({storyId});  
+  const stories = await getStorylines({ storyId });
   return {
     props: { stories },
   };
-}
+};
 export default StorylinePage;
-
-
-
 
 // Path: pages/stories/[storyId]
