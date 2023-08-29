@@ -19,3 +19,14 @@ export type UserResponse = {
   total_pages: number;
   total: number;
 };
+
+export type UserListProps = {
+  data?: User[];
+};
+
+export type UserListItemProps = {
+  user: User;
+  onDelete?: (id: string) => void;
+  onFollowSuccess?: (id: string) => void;
+  onFollowFailure?: (id: string) => void;
+};
