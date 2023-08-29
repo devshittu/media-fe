@@ -5,14 +5,14 @@ export type Heading = {
   id: string;
   title: string;
   items: Heading[];
-}
+};
 
 type HeadingProps = {
   heading: Heading;
   activeId: string;
-}
+};
 
-export const Heading  = ({ heading, activeId }:HeadingProps) => (
+export const Heading = ({ heading, activeId }: HeadingProps) => (
   <li
     className={`group text-base ${
       heading.id === activeId ? 'active text-slate-950 dark:text-slate-50' : ''
