@@ -20,7 +20,7 @@ export const getUsers = ({
   });
 };
 
-export const useUsers = ({ params }: GetUsersOptions) => {
+export const useGetUsers = ({ params }: GetUsersOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_USERS, params],
     queryFn: () => getUsers({ params }),
