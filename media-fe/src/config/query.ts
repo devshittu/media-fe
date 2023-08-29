@@ -11,6 +11,7 @@ export const QUERY_KEYS = {
   DELETE_BOOKMARK: 'delete-bookmark',
   GET_HASHTAGS: 'get-hashtags',
   GET_USER_SETTINGS: 'get-settings',
+  FOLLOW_USER: 'follow-user',
   UPDATE_USER_SETTINGS: 'get-settings',
   SYNC_ANALYTICS: 'analytics-sync',
 };
