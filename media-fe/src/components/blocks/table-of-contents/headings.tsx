@@ -1,10 +1,10 @@
 import React from 'react';
-import {Heading} from './heading';
+import { Heading } from './heading';
 
 type HeadingsProps = {
   headings: Heading[];
   activeId: string;
-}
+};
 
 export const Headings = ({ headings, activeId }: HeadingsProps) => (
   <ul>
