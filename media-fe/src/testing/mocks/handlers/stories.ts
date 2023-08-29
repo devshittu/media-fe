@@ -78,8 +78,7 @@ const getStorylineHandler = rest.get(
       );
     }
 
-    const stories = db.story.findMany({
-    })  as unknown as Story[];;
+    const stories = db.story.findMany({}) as unknown as Story[];
 
     //Todo: load storylines
     let relatedStories: any[] = [];
@@ -104,7 +103,6 @@ const getStorylineHandler = rest.get(
       ...childrenStories,
     ] as Story[];
     //Todo: load storylines
-
 
     return res(
       ctx.delay(300),
