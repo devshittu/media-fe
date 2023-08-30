@@ -54,6 +54,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.3",
+    "@types/lodash.debounce": "^4.0.7",
     "@types/lodash.throttle": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "autoprefixer": "^10.4.14",
