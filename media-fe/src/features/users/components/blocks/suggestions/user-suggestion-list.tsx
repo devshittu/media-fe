@@ -74,3 +74,5 @@ export const UserSuggestionList = () => {
     </>
   );
 };
+
+// path: media-fe/src/features/users/components/blocks/suggestions/user-suggestion-list.tsx
