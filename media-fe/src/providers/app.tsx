@@ -14,6 +14,8 @@ import { ConfettiEffect } from '@/components/confetti';
 import SplashLoader from '@/components/blocks/splash-loader/splash-loader';
 import { useInitialSplashLoader } from '@/components/blocks/splash-loader/hooks/useInitialSplashLoader';
 import { useInitializeStore } from '@/hooks';
+import { CookieConsent } from '@/components/blocks/cookie-consent';
+import { GlobalBanner } from '@/components/blocks/banner';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -24,6 +26,7 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
   useInitialSplashLoader();
   // Initialize the Zustand store with default settings when the App component mounts
   useInitializeStore();
+  // useAppInitialize();
 
   return (
     <>
@@ -36,10 +39,12 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
             {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
 
             <CategoriesProvider>
+              <GlobalBanner />
               {children}
               <GlobalPopup />
 
               <Tour />
+              <CookieConsent />
             </CategoriesProvider>
           </QueryClientProvider>
 
