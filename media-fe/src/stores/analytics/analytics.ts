@@ -7,24 +7,24 @@ export type AnalyticsData = {
   event: string;
   timestamp: number;
   storyId: string;
-  // ... other fields
+  timeInView?: number;
 };
 
 type AnalyticsStore = {
-  dataBatch: AnalyticsData[];
+  data: AnalyticsData[];
   addData: (newData: AnalyticsData) => void;
   clearData: () => void;
 };
 
 export const analyticsStore = createStore<AnalyticsStore>((set) => ({
-  dataBatch: [],
+  data: [],
   addData: (newData) => {
     set((state) => ({
-      dataBatch: [...state.dataBatch, newData],
+      data: [...state.data, newData],
     }));
   },
   clearData: () => {
-    set({ dataBatch: [] });
+    set({ data: [] });
   },
 }));
 
