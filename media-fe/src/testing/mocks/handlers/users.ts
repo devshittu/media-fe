@@ -6,7 +6,6 @@ import { db } from '../db';
 // import { requireAuth } from '../utils';
 
 const getUsersHandler = rest.get(`${API_URL}/users`, async (req, res, ctx) => {
-
   // Parse page and per_page values with fallback to default values
   const pageParam = req.url.searchParams.get('page') || '';
   const page = !isNaN(parseInt(pageParam, 10)) ? parseInt(pageParam, 10) : 1;
