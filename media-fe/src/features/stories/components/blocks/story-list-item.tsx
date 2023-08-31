@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from '@/components/labs/typography';
 import { StoryListItemProps } from '../types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
@@ -7,16 +7,11 @@ import { UserDetails } from '../user-details';
 import { StoryMedia } from '../story-media';
 import { StoryStats } from '../story-stats';
 import { formatDate } from '@/utils';
-import {
-  ActivityMetrics,
-  useUserActivityTracking,
-} from '@/hooks/useUserActivityTracking';
+import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { AnalyticsData, useAnalytics } from '@/stores/analytics/analytics';
 
 export const StoryListItem = React.memo(
   ({ story, className, categories }: StoryListItemProps) => {
-    const { addData } = useAnalytics();
-    const [localBatch, setLocalBatch] = useState<AnalyticsData[]>([]);
     const carouselItems: CarouselItem[] = [
       {
         id: '1',
@@ -48,50 +43,19 @@ export const StoryListItem = React.memo(
         console.log('Active slide changed');
       },
     };
-    // const carousel = CarouselComponent({ carouselItems, carouselOptions });
-    // carousel.next(); // Invoke next slide
-    // carousel.prev(); // Invoke previous slide
+
+    const { addData } = useAnalytics();
+
     const saveMetrics = useCallback(
-      (metrics: ActivityMetrics) => {
-        // const newData = {
-        //   event: 'storyViewed',
-        //   timestamp: Date.now(),
-        //   storyId: story.id,
-        // };
-        // setLocalBatch((prevBatch) => [...prevBatch, newData]);
-        // addData({
-        //   event: 'storyViewed',
-        //   timestamp: Date.now(),
-        //   storyId: story.id,
-        // });
-        console.log(
-          `Story ${story.id} metrics:`,
-          `entered screen ${metrics[story.id].enterCount} time and spent ${
-            metrics[story.id].timeInView / 1000
-          }s in the viewport`,
-        );
+      (metrics: AnalyticsData) => {
+        console.log('metrics://', metrics);
+        addData(metrics);
       },
-      [story.id],
-      // [story.id, addData],
+      [addData],
     );
+    const activityRef = useUserActivityTracking(story.id, saveMetrics);
 
-    const options = {
-      saveMetrics,
-      storyId: story.id,
-    };
-    // useEffect(() => {
-    //   const interval = setInterval(() => {
-    //     if (localBatch.length > 0) {
-    //       addData(localBatch);
-    //       setLocalBatch([]); // Clear the local batch
-    //     }
-    //   }, 5000); // Update the Zustand store every 5 seconds
-
-    //   return () => clearInterval(interval);
-    // }, [addData, localBatch]);
-
-    const activityRef = useUserActivityTracking(options);
-
+ 
     return (
       <article
         className={`relative p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
