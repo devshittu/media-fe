@@ -3,14 +3,7 @@ import { useLogin } from '../../api/login';
 import { useForm } from 'react-hook-form';
 import { LoginData } from '../../types';
 import { InputField } from '@/components';
-import { useRouter } from 'next/router';
-import {
-  ControlledPopper,
-  UncontrolledPopper,
-} from '@/components/blocks/popup';
-import { SignupFlowSteps } from '../signup-flow';
-import Wizard from '@/components/blocks/wizard/wizard';
-import { usePopup } from '@/stores/popup';
+
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
 import {
@@ -105,15 +98,6 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
           </div>
         </form>
 
-        {/* <button type="button" onClick={handleShowPopup}>
-        Show Popup
-      </button>
-      <ControlledPopper>
-        <Wizard steps={SignupFlowSteps} onFinish={handleFinish} />
-      </ControlledPopper> */}
-        {/* <UncontrolledPopper>
-        <Wizard steps={SignupFlowSteps} onFinish={handleFinish} />
-      </UncontrolledPopper> */}
       </div>
       <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
         Already registered? <Link href="/en-GB/auth/login">Sign in</Link>.
