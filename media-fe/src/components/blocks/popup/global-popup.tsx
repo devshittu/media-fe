@@ -1,9 +1,9 @@
 import React from 'react';
-import { usePopup } from '@/stores/popup/popup';
+import { usePopup } from '@/stores/ui/popup';
 import { UncontrolledPopper } from './popper';
 
 export const GlobalPopup = () => {
-  const { content, isOpen, closePopup } = usePopup();
+  const { content, isOpen, close: closePopup } = usePopup();
 
   if (!isOpen || !content) return null;
 
