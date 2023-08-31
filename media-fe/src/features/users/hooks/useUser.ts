@@ -1,44 +1,39 @@
-import { useState } from 'react';
 import { useFollowUser } from '../api/follow-user';
-import { NotificationType, useNotifications } from '@/stores/notifications';
 
-export const useUser = (userId: string, initialUserState: boolean) => {
-  const { showNotification } = useNotifications();
-  const [isUserFollowed, setIsUserFollowed] = useState(initialUserState);
-  const data = { user_id: userId };
-  const followUser = useFollowUser({
-    data,
-    onSuccess: (response) => {
-      console.log('success', response);
-      setIsUserFollowed(response.status);
-      return response.status;
-    },
-    onError: (response) => {
-      console.log('error', response.status);
-      setIsUserFollowed(false);
-      showNotification({
-        type: NotificationType.ERROR,
-        title: 'Failed',
-        duration: 5000,
-        message: 'Unable to follow user at this time. Please try again later',
-      });
-    },
-  });
-  //Todo: block and unfollow user
+export const useUser = (userId: string) => {
+  // const followUser = useFollowUser();
+  const { submit: followUserSubmit, isFollowLoading } = useFollowUser();
 
-  const handleFollowUser = async () => {
-    const submit = await followUser.submit({ data });
-    console.log('handleFollowUser:// ', JSON.stringify(submit));
-    return submit;
+  //   //Todo: block and unfollow user
+  const handleFollowUser = async (
+    onSuccess: () => void,
+    onFailure: () => void,
+  ): Promise<void> => {
+    try {
+      await followUserSubmit(
+        { user_id: userId },
+        {
+          onSuccess: (data) => {
+            if (data && data.status) {
+              onSuccess();
+            } else {
+              onFailure();
+            }
+          },
+          onError: () => {
+            onFailure();
+          },
+        },
+      );
+    } catch (error) {
+      onFailure();
+    }
   };
-
-  //   const handleUnfollowUser = () => {
-  //     deleteUser.submit({ data });
-  //   };
 
   return {
-    isUserFollowed, // This should be derived from your data, e.g., check if the post ID exists in the user's bookmarked posts.
     handleFollowUser,
-    // handleUnfollowUser,
+    isFollowLoading,
   };
 };
+
+// Path: media-fe/src/features/users/hooks/useUser.ts
