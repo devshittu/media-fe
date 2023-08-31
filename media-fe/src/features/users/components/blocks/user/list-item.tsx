@@ -10,27 +10,22 @@ export const UserListItem = ({
   onFollowSuccess,
   onFollowFailure,
 }: UserListItemProps) => {
-  const { handleFollowUser, isUserFollowed } = useUser(user.id, false);
+  const { handleFollowUser, isFollowLoading } = useUser(user.id);
+  const handleIgnoreClick = async () => onDelete?.(user.id);
   const handleFollowClick = async () => {
-    try {
-      // Your logic to follow the user
-      // ...
-      const isFollowSuccessful = await handleFollowUser();
-
-      console.log(isFollowSuccessful, isUserFollowed);
-      if (isUserFollowed) {
+    await handleFollowUser(
+      () => {
         onFollowSuccess?.(user.id);
-      } else {
+      },
+      () => {
         onFollowFailure?.(user.id);
-      }
-    } catch (error) {
-      onFollowFailure?.(user.id);
-    }
+      },
+    );
   };
 
   return (
-    <li className="py-3 sm:py-4">
-      <div className="flex items-center space-x-4">
+    <div className="py-3 sm:py-4">
+      <div className="relative flex items-center space-x-4">
         <div className="flex-shrink-0">
           <Image
             width="48"
@@ -42,20 +37,27 @@ export const UserListItem = ({
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
+          <h2 className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
             {user.name}
-          </p>
-          <p className="text-sm text-slate-500 truncate dark:text-slate-400">
+          </h2>
+          <h3 className="text-sm text-slate-500 truncate dark:text-slate-400">
             {`@` + user.username}
-          </p>
+          </h3>
         </div>
-        <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-          {/* onClick={() => onDelete?.(user.id)} */}
-          <Button className="rounded-lg" onClick={handleFollowClick}>
-            Subscribe
+        <div className="inline-flex space-x-3 items-center text-base font-semibold text-gray-900 dark:text-white">
+          <Button
+            className=""
+            loading={isFollowLoading}
+            onClick={handleFollowClick}
+          >
+            {'Follow'}
+          </Button>
+          <Button className="" onClick={handleIgnoreClick}>
+            Ignore
           </Button>
         </div>
       </div>
-    </li>
+    </div>
   );
 };
+// Path: media-fe/src/features/users/components/blocks/user/list-item.tsx
