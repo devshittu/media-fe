@@ -39,7 +39,6 @@ const MenuList = ({ menu }: MenuProps) => {
                 {tag && (
                   <>
                     <Tag variant="green">{tag}</Tag>
-                    
                   </>
                 )}
               </Link>
