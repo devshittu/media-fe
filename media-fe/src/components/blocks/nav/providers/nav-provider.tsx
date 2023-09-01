@@ -3,6 +3,8 @@ import React, { createContext, useState } from 'react';
 type NavContextProps = {
   isNavOpen: boolean;
   setIsNavOpen: (isNavOpen: boolean) => void;
+  lockScroll: boolean;
+  setLockScroll: (lockScroll: boolean) => void;
   value?: string;
   bodyClass?: string;
   setBodyClass: (bodyClass: string) => void;
@@ -15,6 +17,8 @@ export const NavContext = createContext<NavContextProps>({
   value: '',
   bodyClass: '',
   setBodyClass: () => {},
+  lockScroll: false,
+  setLockScroll: () => {},
 });
 
 export type NavProviderProps = {
@@ -23,6 +27,7 @@ export type NavProviderProps = {
 
 export const NavProvider = ({ children }: NavProviderProps) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [lockScroll, setLockScroll] = useState(false);
   const [value, setValue] = useState('');
   const [bodyClass, setBodyClass] = useState('');
 
@@ -34,6 +39,8 @@ export const NavProvider = ({ children }: NavProviderProps) => {
         value,
         bodyClass,
         setBodyClass,
+        lockScroll,
+        setLockScroll,
       }}
     >
       {children}
