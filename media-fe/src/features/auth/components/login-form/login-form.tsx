@@ -97,7 +97,6 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             </div>
           </div>
         </form>
-
       </div>
       <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
         Already registered? <Link href="/en-GB/auth/login">Sign in</Link>.
