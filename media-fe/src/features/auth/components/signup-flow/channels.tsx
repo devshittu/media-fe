@@ -13,7 +13,6 @@ export const Channels = ({ onValidationStatusChange }: StepProps) => {
           numSuggestions={4}
           className="grid h-full max-w-2xl gap-x-4 md:gap-x-10 lg:gap-x-14 grid-cols-1  md:grid-cols-2 mx-auto "
         />
-        
       </div>
     </>
   );
