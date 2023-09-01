@@ -55,7 +55,6 @@ export const StoryListItem = React.memo(
     );
     const activityRef = useUserActivityTracking(story.id, saveMetrics);
 
- 
     return (
       <article
         className={`relative p-4 md:p-8 lg:p-12 flex flex-col items-start  border-b-2 border-slate-100 dark:border-slate-800 ${className}`}
