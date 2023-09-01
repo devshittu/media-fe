@@ -15,12 +15,14 @@ export const DrawerComponent = ({
   showAppLogo = false,
   children,
   onClose,
+  showOverlay = true,
+  lockScroll = false,
 }: DrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [isMounted, setIsMounted] = useState(false);
 
-  const { setIsNavOpen } = useContext(NavContext);
+  const { setIsNavOpen, setLockScroll } = useContext(NavContext);
 
   const escapePressed = useKeyPress('Escape');
 
@@ -52,19 +54,28 @@ export const DrawerComponent = ({
     return classes;
   };
 
+  // useEffect(() => {
+  //   if (isOpen && lockScroll) {
+  //     document.documentElement.style.overflow = 'hidden';
+  //   }
+  //   return () => {
+  //     document.documentElement.style.overflow = '';
+  //   };
+  // }, [isOpen, lockScroll]);
+
   const openDrawer = () => {
     setIsOpen(true);
+    setLockScroll(lockScroll);
     setIsNavOpen(true);
-    document.documentElement.style.overflow = 'hidden';
   };
 
   const closeDrawer = () => {
     setIsOpen(false);
+    setLockScroll(false);
     setIsNavOpen(false);
     if (onClose) {
       onClose();
     }
-    document.documentElement.style.overflow = '';
   };
 
   useEffect(() => {
@@ -98,8 +109,14 @@ export const DrawerComponent = ({
     <>
       <Portal wrapperId="drawer-wrapper">
         {/* Overlay background */}
-        <Overlay id={id} isActive={isOpen} closeOnClick onClick={closeDrawer} />
-
+        {showOverlay && (
+          <Overlay
+            id={id}
+            isActive={isOpen}
+            closeOnClick
+            onClick={closeDrawer}
+          />
+        )}
         {/* The drawer body */}
 
         <section
@@ -119,11 +136,15 @@ export const DrawerComponent = ({
                 showAppLogo ? 'text-xl uppercase ' : 'text-base'
               } font-semibold text-slate-800 dark:text-slate-200 `}
             >
-              <Icon
-                icon={titleIcon as ReactElement}
-                className={` ${showAppLogo ? 'w-8 h-8 mr-4' : 'w-6 h-6 mr-2'}`}
-                strokeWidth={2.5}
-              />
+              {titleIcon && (
+                <Icon
+                  icon={titleIcon as ReactElement}
+                  className={` ${
+                    showAppLogo ? 'w-8 h-8 mr-4' : 'w-6 h-6 mr-2'
+                  }`}
+                  strokeWidth={2.5}
+                />
+              )}
               {title ? title : ''}
             </h5>
             <button
@@ -140,7 +161,7 @@ export const DrawerComponent = ({
               />
             </button>
           </header>
-          <section className="max-w-lg mb-6 text-sm text-slate-500 dark:text-slate-400">
+          <section className="max-w-lgx mb-6 text-smx text-slate-500 dark:text-slate-400">
             {children ? children : <p>Drawer body undefined</p>}
           </section>
           <footer></footer>
