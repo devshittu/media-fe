@@ -1,4 +1,4 @@
-import { Story } from '../types';
+import { Story, StoryResponse } from '../types';
 
 export type StoryListItemProps = {
   story: Story;
@@ -6,7 +6,7 @@ export type StoryListItemProps = {
   categories: Record<string, string>;
 };
 export type StoryListProps = {
-  data?: Story[];
+  data?: StoryResponse;
   scrollInfinite?: boolean;
   totalPages: number;
 };
