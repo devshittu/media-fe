@@ -1,4 +1,5 @@
-import { Entity, NewsChannel, User } from '@/types';
+import { User } from '@/features/auth';
+import { Entity, NewsChannel } from '@/types';
 
 export type Story = Entity & {
   id: string;
