@@ -120,5 +120,9 @@ export const delayWithCancel = (ms: number) => {
   const cancel = () => clearTimeout(timeoutId);
   return { promise, cancel };
 };
+export const cleanObject = (obj: any) =>
+  Object.fromEntries(
+    Object.entries(obj).filter(([_, value]) => value !== undefined),
+  );
 
 // Path: src/utils/helper.ts
