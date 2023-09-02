@@ -68,7 +68,9 @@ export const StoryListItem = React.memo(
           className={`flex align-middle items-center justify-between w-full`}
         >
           <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest uppercase">
-            {`${categories[story.category_id]}`}
+            <Link href={`/stories/category/${story.category_id}`}>
+              {`${categories[story.category_id]}`}
+            </Link>
           </div>
 
           {/* Context Menu Trigger */}
@@ -92,7 +94,7 @@ export const StoryListItem = React.memo(
         <StoryStats viewCount={1200} commentCount={6} />
         <UserDetails
           name={story?.user.name}
-          organization={`Reporter, ${story?.user?.news_channel?.name}`}
+          organization={`Reporter, ${'Default Team'}`}
           pub_datetime={formatDate(story?.updated_at)}
         />
       </article>
