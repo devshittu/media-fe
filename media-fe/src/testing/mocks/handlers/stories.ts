@@ -80,7 +80,6 @@ const getStorylineHandler = rest.get(
 
     const stories = db.story.findMany({}) as unknown as Story[];
 
-    //Todo: load storylines
     let relatedStories: any[] = [];
     const theStory = stories.find((j) => j.slug === storySlug) || null;
     const parentStories = findRelatedStories(
@@ -94,15 +93,11 @@ const getStorylineHandler = rest.get(
       storySlug,
       'children_stories',
     );
-    // console.log('childrenStories', childrenStories);
-    // if (!theStory) return relatedStories;
-
     relatedStories = [
       ...parentStories,
       theStory,
       ...childrenStories,
     ] as Story[];
-    //Todo: load storylines
 
     return res(
       ctx.delay(300),
@@ -168,6 +163,74 @@ const getStoriesByHashtagHandler = rest.get(
     );
   },
 );
+
+const getStoriesByCategoryHandler = rest.get(
+  `${API_URL}/stories/category`,
+  async (req, res, ctx) => {
+    console.log('MSW Request:', req);
+    const categoryId = req.url.searchParams.get('categoryId') as string;
+
+    // const hashtag = req.url.searchParams.get('hashtag') as string;
+
+    // Parse page and per_page values with fallback to default values
+    const pageParam = req.url.searchParams.get('page') || '';
+    const page = !isNaN(parseInt(pageParam, 10)) ? parseInt(pageParam, 10) : 1;
+
+    const perPageParam = req.url.searchParams.get('per_page') || '';
+    const per_page = !isNaN(parseInt(perPageParam, 10))
+      ? parseInt(perPageParam, 10)
+      : PAGINATE_STORIES_LIMIT;
+
+    const theCategory = db.category.findFirst({
+      where: {
+        id: {
+          equals: categoryId,
+        },
+      },
+    });
+    if (!theCategory) {
+      return res(
+        ctx.delay(300),
+        ctx.status(404),
+        ctx.json({ message: 'Not found!' }),
+        ctx.set('Access-Control-Allow-Origin', '*'),
+      );
+    }
+    const stories = db.story.findMany({
+      take: per_page,
+      skip: Math.max(per_page * (page - 1), 0),
+      where: {
+        category_id: {
+          equals: categoryId,
+        },
+      },
+    });
+
+    console.log('MSW Stories:', stories);
+
+    return res(
+      ctx.delay(300),
+      ctx.status(200),
+      ctx.json({
+        stories,
+        page,
+        total_pages: Math.ceil(db.story.count() / per_page),
+        total: db.story.count(),
+      }),
+      ctx.set('Access-Control-Allow-Origin', '*'),
+    );
+  },
+);
+
+export const storiesHandlers = [
+  getStoriesByHashtagHandler,
+  getStoriesHandler,
+  getStorylineHandler,
+  getStoriesByCategoryHandler,
+  // getStoryHandler,
+  // createStoryHandler,
+];
+
 // const getStoryHandler = rest.get(
 //   `${API_URL}/stories/:storyId`,
 //   async (req, res, ctx) => {
@@ -181,14 +244,14 @@ const getStoriesByHashtagHandler = rest.get(
 //       },
 //     });
 
-//     if (!story) {
-//       return res(
-//         ctx.delay(300),
-//         ctx.status(404),
-//         ctx.json({ message: 'Not found!' }),
-//         ctx.set('Access-Control-Allow-Origin', '*'),
-//       );
-//     }
+// if (!story) {
+//   return res(
+//     ctx.delay(300),
+//     ctx.status(404),
+//     ctx.json({ message: 'Not found!' }),
+//     ctx.set('Access-Control-Allow-Origin', '*'),
+//   );
+// }
 
 //     return res(
 //       ctx.delay(300),
@@ -214,11 +277,3 @@ const getStoriesByHashtagHandler = rest.get(
 //     return res(ctx.delay(300), ctx.status(200), ctx.json(story));
 //   },
 // );
-
-export const storiesHandlers = [
-  getStoriesByHashtagHandler,
-  getStoriesHandler,
-  getStorylineHandler,
-  // getStoryHandler,
-  // createStoryHandler,
-];
