@@ -1,18 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { Story, StoryResponse } from '../types';
+import { StoriesQueryParams, StoryResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 const { GET_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
-  params?: {
-    category_id?: string | undefined;
-    page?: number | undefined;
-    per_page?: number | undefined;
-    hashtag?: string | undefined;
-  };
+  params?: StoriesQueryParams;
+  initialData?: any;
 };
 
 export const getStories = ({
@@ -34,6 +30,42 @@ export const useStories = ({ params }: GetStoriesOptions) => {
   return {
     data,
     isLoading: isFetching && !isFetched,
+  };
+};
+
+export const useInfiniteStories = ({
+  params,
+  initialData,
+}: GetStoriesOptions) => {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      [GET_STORIES, 'all'],
+      async ({ pageParam = 2 }) => {
+        const response = await getStories({
+          params: { ...params, page: pageParam },
+        });
+        return response;
+      },
+      {
+        getNextPageParam: (lastPage) => {
+          return lastPage.page < lastPage.total_pages
+            ? lastPage.page + 1
+            : undefined;
+        },
+
+        initialData: { pages: [initialData], pageParams: [1] },
+        //TODO: Keep data fresh for 5 minutes
+        staleTime: 1000 * 60 * 5,
+        // Keep data in cache for 10 minutes
+        cacheTime: 1000 * 60 * 10,
+      },
+    );
+
+  return {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   };
 };
 
