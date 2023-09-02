@@ -39,7 +39,7 @@ export const StoriesPageHeader = ({
     }
   }, [pageTitleMobileRef]);
   const { topPosition: topPositionDesktop } = useScrollSync({
-    contentHeight: pageTitleBoxHeightDesktop,
+  contentHeight: pageTitleBoxHeightDesktop,
   }); // top position set to 60
   const { topPosition: topPositionMobile } = useScrollSync({
     contentHeight: pageTitleBoxHeightMobile,
