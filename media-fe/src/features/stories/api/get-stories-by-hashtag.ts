@@ -1,17 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { Story, StoryResponse } from '../types';
+import { StoriesQueryParams, Story, StoryResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
-const { GET_STORIES } = QUERY_KEYS;
+const { GET_STORIES_BY_HASHTAG } = QUERY_KEYS;
 
 type GetStoriesByHashtagOptions = {
-  params?: {
-    page?: number | undefined;
-    per_page?: number | undefined;
-    hashtag: string | undefined;
-  };
+  params?: StoriesQueryParams;
+  initialData?: any;
 };
 
 export const getStoriesByHashtag = ({
@@ -24,7 +21,7 @@ export const getStoriesByHashtag = ({
 
 export const useStoriesByHashtag = ({ params }: GetStoriesByHashtagOptions) => {
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_STORIES, params],
+    queryKey: [GET_STORIES_BY_HASHTAG, params],
     queryFn: () => getStoriesByHashtag({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as StoryResponse,
@@ -33,6 +30,42 @@ export const useStoriesByHashtag = ({ params }: GetStoriesByHashtagOptions) => {
   return {
     data,
     isLoading: isFetching && !isFetched,
+  };
+};
+
+export const useInfiniteStoriesByHashtag = ({
+  params,
+  initialData,
+}: GetStoriesByHashtagOptions) => {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      [GET_STORIES_BY_HASHTAG, params?.hashtag],
+      async ({ pageParam = 2 }) => {
+        const response = await getStoriesByHashtag({
+          params: { ...params, page: pageParam },
+        });
+        return response;
+      },
+      {
+        getNextPageParam: (lastPage) => {
+          return lastPage.page < lastPage.total_pages
+            ? lastPage.page + 1
+            : undefined;
+        },
+
+        initialData: { pages: [initialData], pageParams: [1] },
+        //TODO: Keep data fresh for 5 minutes
+        staleTime: 1000 * 60 * 5,
+        // Keep data in cache for 10 minutes
+        cacheTime: 1000 * 60 * 10,
+      },
+    );
+
+  return {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   };
 };
 //Path: src/features/stories/api/get-stories-by-hashtag.ts
