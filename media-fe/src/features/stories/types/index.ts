@@ -13,6 +13,15 @@ export type Story = Entity & {
   children_stories: string[];
   user: User;
 };
+
+export type StoriesQueryParams = {
+  categoryId?: string | undefined;
+  page?: number | undefined;
+  per_page?: number | undefined;
+  hashtag?: string | undefined;
+  story_id?: string | undefined;
+};
+
 export type StoryResponse = {
   stories: Story[];
   page: number;
@@ -23,3 +32,5 @@ export type StoryResponse = {
 //   Story,
 //   'position' | 'department' | 'location' | 'info'
 // >;
+
+// Path: media-fe/src/features/stories/types/index.ts
