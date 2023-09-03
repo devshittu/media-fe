@@ -14,25 +14,18 @@ type GetStoriesByCategoryOptions = {
 export const getStoriesByCategory = async ({
   params,
 }: GetStoriesByCategoryOptions): Promise<StoryResponse> => {
-  try {
-    const response = await apiClient.get('/stories/category', {
-      params,
-    });
-    console.log('API Response:', response.data);
-    return response.data;
-  } catch (error) {
-    console.log('API Error:', error);
-    throw error;
-  }
+  return apiClient.get(`/stories/category/${params?.categoryId}`, {
+    params,
+  });
 };
 
 export const useStoriesByCategory = ({
   params,
 }: GetStoriesByCategoryOptions) => {
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_STORIES_BY_CATEGORY, params],
+    queryKey: [GET_STORIES_BY_CATEGORY, params?.categoryId],
     queryFn: () => getStoriesByCategory({ params }),
-    // enabled: !!params?.category_id,
+    enabled: !!params?.categoryId,
     initialData: {} as StoryResponse,
   });
 
