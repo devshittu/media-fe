@@ -8,6 +8,9 @@ export const Greetings = () => {
   // No validation function passed, so it assumes isValid is true
   useWizardStepValidation();
 
+  const { goToNextStep } = useWizardContext();
+console.log('goToNextStep',goToNextStep);
+
   return (
     <div className="w-full max-w-6xl p-0 lg:p-2 mx-auto relative md:text-left">
       <div className="md:flex items-center -mx-10x">
@@ -43,6 +46,7 @@ export const Greetings = () => {
               <Button className="font-bold" type={'adaptive'} outlined>
                 DISCOVER MORE
               </Button>
+      <Button onClick={goToNextStep}  type={'adaptive'}>Next</Button>
             </div>
           </div>
         </div>
