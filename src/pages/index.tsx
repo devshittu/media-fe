@@ -4,11 +4,7 @@ import LandingLayout from '@/layouts/landing-layout';
 import { Footer, Explore } from '@/components/labs/LandingPage/';
 
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import {
-  StoriesQueryParams,
-  Story,
-  getStories,
-} from '@/features/stories';
+import { StoriesQueryParams, Story, getStories } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { cleanObject } from '@/utils';
 import { Category, getCategories } from '@/features/categories';
@@ -18,16 +14,20 @@ import { HashtaggedStoryList } from '@/features/stories/components/blocks/hashta
 type PublicHomePageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
-export default function Home({ stories, hashtag, categories, queryParams }: PublicHomePageProps) {
+export default function Home({
+  stories,
+  hashtag,
+  categories,
+  queryParams,
+}: PublicHomePageProps) {
   return (
     <>
       <Seo title="Home" />
       <Explore hashtag={hashtag}>
-
-      {!stories.stories && <NotFound />}
-      {stories.stories?.length > 0 && (
-        <HashtaggedStoryList data={stories} queryParams={queryParams} />
-      )}{' '}
+        {!stories.stories && <NotFound />}
+        {stories.stories?.length > 0 && (
+          <HashtaggedStoryList data={stories} queryParams={queryParams} />
+        )}{' '}
       </Explore>
 
       <Footer />
