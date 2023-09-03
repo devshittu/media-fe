@@ -16,7 +16,6 @@ const StoriesByCategoryPage = ({
   stories,
   queryParams,
 }: PublicStoriesPageProps) => {
-  console.log('StoriesByCategoryPage:// ', stories, queryParams);
   return (
     <>
       <StoriesPageHeader pageTitle={`#${queryParams.categoryId}`} />
@@ -46,14 +45,28 @@ export const getServerSideProps = async ({
     page: 1,
     per_page: PAGINATE_STORIES_LIMIT,
   });
+  console.log('queryParams://', queryParams);
+
   try {
     const stories = await getStoriesByCategory({ params: queryParams });
 
+    // Check for potential undefined values in stories
+    const sanitizedStories = {
+      ...stories,
+      stories: stories.stories || [], // Replace undefined with an empty array
+    };
+
     return {
       props: {
-        stories,
+        stories: sanitizedStories,
         queryParams, // Pass queryParams as a prop
       },
+    };
+    return {
+      // props: {
+      //   stories,
+      //   queryParams, // Pass queryParams as a prop
+      // },
     };
   } catch (error) {
     return {
