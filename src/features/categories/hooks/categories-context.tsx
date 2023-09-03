@@ -3,13 +3,15 @@ import { Category } from '../types';
 import { useCategories } from '../api/get-categories';
 
 type CategoriesContextProps = {
-  categoryTitlesLookUpTable: Record<string, string>;
+  categoryLookupTable: Record<string, { title: string; slug: string }>;
   categories: Category[];
+  isLoading: boolean; // Add isLoading property
 };
 
 export const CategoriesContext = createContext<CategoriesContextProps>({
-  categoryTitlesLookUpTable: {},
+  categoryLookupTable: {},
   categories: [],
+  isLoading: false, // Initialize isLoading as false
 });
 
 export type CategoriesProviderProps = {
@@ -17,28 +19,36 @@ export type CategoriesProviderProps = {
 };
 
 export const CategoriesProvider = ({ children }: CategoriesProviderProps) => {
-  const [categoryTitlesLookUpTable, setCategoryTitlesLookUpTable] = useState<
-    Record<string, string>
+  const [categoryLookupTable, setCategoryLookupTable] = useState<
+    Record<string, { title: string; slug: string }>
   >({});
   const [categories, setCategories] = useState<Category[]>([]);
-  const { data: categoriesData } = useCategories({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories(
+    {},
+  );
 
   useEffect(() => {
     if (categoriesData) {
-      const categoriesMap: Record<string, string> = {};
+      const lookupTable: Record<string, { title: string; slug: string }> = {};
       for (const category of categoriesData?.categories) {
-        categoriesMap[category.id] = category.title;
+        lookupTable[category.id] = {
+          title: category.title,
+          slug: category.slug,
+        };
       }
-      setCategoryTitlesLookUpTable(categoriesMap);
+      setCategoryLookupTable(lookupTable);
       setCategories(categoriesData?.categories);
     }
-  }, [categoriesData]);
+    setIsLoading(categoriesLoading);
+  }, [categoriesData, categoriesLoading]);
 
   return (
     <CategoriesContext.Provider
       value={{
         categories,
-        categoryTitlesLookUpTable,
+        categoryLookupTable,
+        isLoading,
       }}
     >
       {children}
