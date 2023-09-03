@@ -17,7 +17,7 @@ export const StorylineStoryList = ({
 }: StorylineStoryListProps) => {
   const { ref, inView } = useInView();
   const { scrollPosition, setScrollPosition } = useUserFeedsStore();
-  const { categoryTitlesLookUpTable } = useCategoryContext();
+  const { categoryLookupTable } = useCategoryContext();
 
   const {
     data: dataFromStories,
@@ -54,7 +54,7 @@ export const StorylineStoryList = ({
             <StoryListItem
               key={story.id}
               story={story}
-              categories={categoryTitlesLookUpTable}
+              categories={categoryLookupTable}
             />
           ))}
         </React.Fragment>
@@ -77,4 +77,4 @@ export const StorylineStoryList = ({
   );
 };
 
-// Path: src/components/blocks/stories/story-list.tsx
+// Path: src/features/stories/components/blocks/storyline-story-list.tsx

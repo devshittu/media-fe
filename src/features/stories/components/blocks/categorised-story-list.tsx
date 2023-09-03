@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import {
-  Story,
-  StoryListProps,
-  StoryResponse,
-  useInfiniteStoriesByHashtag,
-} from '@/features/stories';
+import { Story, StoryListProps, StoryResponse } from '@/features/stories';
 import { StoryListItem } from './story-list-item';
 import { useUserFeedsStore } from '@/stores/feeds/user-feeds';
 import { useCategoryContext } from '@/features/categories/hooks';
@@ -17,7 +12,7 @@ export const CategorizedStoryList = ({
 }: StoryListProps) => {
   const { ref, inView } = useInView();
   const { scrollPosition, setScrollPosition } = useUserFeedsStore();
-  const { categoryTitlesLookUpTable } = useCategoryContext();
+  const { categoryLookupTable } = useCategoryContext();
 
   const {
     data: dataFromStories,
@@ -50,7 +45,7 @@ export const CategorizedStoryList = ({
             <StoryListItem
               key={story.id}
               story={story}
-              categories={categoryTitlesLookUpTable}
+              categories={categoryLookupTable}
             />
           ))}
         </React.Fragment>
@@ -73,4 +68,4 @@ export const CategorizedStoryList = ({
   );
 };
 
-// Path: src/components/blocks/stories/story-list.tsx
+// Path: src/features/stories/components/blocks/categorised-story-list.tsx

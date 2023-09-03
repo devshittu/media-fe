@@ -13,8 +13,7 @@ export const StoryList = ({
 }: StoryListProps) => {
   const { ref, inView } = useInView();
   const { scrollPosition, setScrollPosition } = useUserFeedsStore();
-  const { categoryTitlesLookUpTable } = useCategoryContext();
-
+  const { categoryLookupTable, categories } = useCategoryContext();
   const {
     data: dataFromStories,
     fetchNextPage,
@@ -46,7 +45,7 @@ export const StoryList = ({
             <StoryListItem
               key={story.id}
               story={story}
-              categories={categoryTitlesLookUpTable}
+              categories={categoryLookupTable}
             />
           ))}
         </React.Fragment>
@@ -58,12 +57,14 @@ export const StoryList = ({
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || isFetchingNextPage}
         >
-          {isFetchingNextPage
-            ? (<StoryListLoadingPlaceholder />)
-            : hasNextPage
-            ? 'Load Newer'
-            : 'Nothing more to load'}
-            {/* {isFetchingNextPage
+          {isFetchingNextPage ? (
+            <StoryListLoadingPlaceholder />
+          ) : hasNextPage ? (
+            'Load Newer'
+          ) : (
+            'Nothing more to load'
+          )}
+          {/* {isFetchingNextPage
             ? 'Loading more...'
             : hasNextPage
             ? 'Load Newer'
@@ -74,4 +75,4 @@ export const StoryList = ({
   );
 };
 
-// Path: src/components/blocks/stories/story-list.tsx
+// Path: src/features/stories/components/blocks/story-list.tsx

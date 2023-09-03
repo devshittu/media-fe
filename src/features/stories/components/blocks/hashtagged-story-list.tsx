@@ -17,7 +17,7 @@ export const HashtaggedStoryList = ({
 }: StoryListProps) => {
   const { ref, inView } = useInView();
   const { scrollPosition, setScrollPosition } = useUserFeedsStore();
-  const { categoryTitlesLookUpTable } = useCategoryContext();
+  const { categoryLookupTable } = useCategoryContext();
 
   const {
     data: dataFromStories,
@@ -50,7 +50,7 @@ export const HashtaggedStoryList = ({
             <StoryListItem
               key={story.id}
               story={story}
-              categories={categoryTitlesLookUpTable}
+              categories={categoryLookupTable}
             />
           ))}
         </React.Fragment>
@@ -62,15 +62,17 @@ export const HashtaggedStoryList = ({
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || isFetchingNextPage}
         >
-          {isFetchingNextPage
-            ? (<StoryListLoadingPlaceholder />)
-            : hasNextPage
-            ? 'Load Newer'
-            : 'Nothing more to load'}
+          {isFetchingNextPage ? (
+            <StoryListLoadingPlaceholder />
+          ) : hasNextPage ? (
+            'Load Newer'
+          ) : (
+            'Nothing more to load'
+          )}
         </button>
       </div>
     </div>
   );
 };
 
-// Path: src/components/blocks/stories/story-list.tsx
+// Path: src/features/stories/components/blocks/hashtagged-story-list.tsx
