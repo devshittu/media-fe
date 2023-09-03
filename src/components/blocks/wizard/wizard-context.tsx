@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState } from 'react';
+import useWizard from './hooks/useWizard';
 
 type WizardContextType = {
   isCurrentStepValid: boolean;
   setValidationStatus: (status: boolean) => void;
+  goToNextStep?: () => void;
 };
 
-const WizardContext = createContext<WizardContextType | undefined>(undefined);
+export const WizardContext = createContext<WizardContextType | undefined>(undefined);
 
 export const useWizardContext = () => {
   const context = useContext(WizardContext);
@@ -16,19 +18,24 @@ export const useWizardContext = () => {
 };
 type WizardProviderProps = {
   children: React.ReactNode;
+  goToNextStep?: () => void;
 };
-export const WizardProvider = ({ children }: WizardProviderProps) => {
+export const WizardProvider = ({ children, goToNextStep }: WizardProviderProps) => {
   const [isCurrentStepValid, setIsCurrentStepValid] = useState<boolean>(false);
 
   const setValidationStatus = (status: boolean) => {
     setIsCurrentStepValid(status);
   };
+  // const { goToNextStep } = useWizard(steps, onFinish, onClose);
+
 
   return (
     <WizardContext.Provider
       value={{
         isCurrentStepValid,
         setValidationStatus,
+        goToNextStep,
+        // goToNextStep: defaultGoToNextStep,
       }}
     >
       {children}
