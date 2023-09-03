@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 
@@ -57,7 +51,6 @@ const StorylinePage = ({
           storyFor={storyFor}
           data={stories}
           queryParams={queryParams}
-         
         />
       )}
     </>
@@ -133,4 +126,4 @@ export const getServerSideProps = async ({
 };
 export default StorylinePage;
 
-// Path: pages/stories/[storyId]
+// Path: src/pages/stories/[storyId]
