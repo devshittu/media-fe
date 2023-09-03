@@ -4,7 +4,7 @@ services:
   media-fe:
     container_name: media-fe
     build:
-      context: ./media-fe
+      context: ./ #./media-fe
       dockerfile: dev.Dockerfile
 
     # Set environment variables directly in the docker-compose file
@@ -16,8 +16,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./media-fe/src:/app/src
-      - ./media-fe/public:/app/public
+      - ./src:/app/src #./media-fe/src
+      - ./public:/app/public #./media-fe/public
     restart: always
     ports:
       - 3000:3000

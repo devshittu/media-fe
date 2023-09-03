@@ -20,7 +20,7 @@ COPY .eslintignore .
 COPY .eslintrc.js .
 COPY .gitignore .
 COPY .hintrc .
-# COPY .husky .
+COPY .husky .
 COPY .prettierignore .
 COPY .prettierrc .
 COPY .storybook .
