@@ -2,7 +2,7 @@ import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { useWizardContext } from '@/components/blocks/wizard/wizard-context';
 import { Button } from '@/components/button';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export const Greetings = () => {
   // No validation function passed, so it assumes isValid is true
