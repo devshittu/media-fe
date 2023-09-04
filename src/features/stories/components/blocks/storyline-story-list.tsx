@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import {
   Story,
+  StoryListLoadingPlaceholder,
   StoryResponse,
   StorylineStoryListProps,
 } from '@/features/stories';
@@ -9,6 +10,7 @@ import { StoryListItem } from './story-list-item';
 import { useUserFeedsStore } from '@/stores/feeds/user-feeds';
 import { useCategoryContext } from '@/features/categories/hooks';
 import { useInfiniteStorylines } from '../../api/get-storylines';
+import { InteractiveLoader } from '@/components/loading/';
 
 export const StorylineStoryList = ({
   storyFor,
@@ -61,17 +63,13 @@ export const StorylineStoryList = ({
       ))}
 
       <div>
-        <button
+        <InteractiveLoader
           ref={ref}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-            ? 'Load Newer'
-            : 'Nothing more to load'}
-        </button>
+          isLoading={isFetchingNextPage}
+          hasNextPage={hasNextPage || false}
+          onClick={fetchNextPage}
+          loadingPlaceholder={<StoryListLoadingPlaceholder />}
+        />
       </div>
     </div>
   );
