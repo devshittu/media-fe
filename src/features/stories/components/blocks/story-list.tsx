@@ -6,6 +6,7 @@ import { StoryListItem } from './story-list-item';
 import { useUserFeedsStore } from '@/stores/feeds/user-feeds';
 import { useInfiniteStories } from '@/features/stories/api/get-stories';
 import { useCategoryContext } from '@/features/categories/hooks';
+import { InteractiveLoader } from '@/components/loading/';
 
 export const StoryList = ({
   data = {} as StoryResponse,
@@ -52,24 +53,13 @@ export const StoryList = ({
       ))}
 
       <div>
-        <button
+        <InteractiveLoader
           ref={ref}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage ? (
-            <StoryListLoadingPlaceholder />
-          ) : hasNextPage ? (
-            'Load Newer'
-          ) : (
-            'Nothing more to load'
-          )}
-          {/* {isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-            ? 'Load Newer'
-            : 'Nothing more to load'} */}
-        </button>
+          isLoading={isFetchingNextPage}
+          hasNextPage={hasNextPage || false}
+          onClick={fetchNextPage}
+          loadingPlaceholder={<StoryListLoadingPlaceholder />}
+        />
       </div>
     </div>
   );
