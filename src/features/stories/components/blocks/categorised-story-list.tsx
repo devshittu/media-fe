@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Story, StoryListProps, StoryResponse } from '@/features/stories';
+import {
+  Story,
+  StoryListLoadingPlaceholder,
+  StoryListProps,
+  StoryResponse,
+} from '@/features/stories';
 import { StoryListItem } from './story-list-item';
 import { useUserFeedsStore } from '@/stores/feeds/user-feeds';
 import { useCategoryContext } from '@/features/categories/hooks';
 import { useInfiniteStoriesByCategory } from '../../api/get-stories-by-category';
+import { InteractiveLoader } from '@/components/loading/';
 
 export const CategorizedStoryList = ({
   data = {} as StoryResponse,
@@ -52,17 +58,13 @@ export const CategorizedStoryList = ({
       ))}
 
       <div>
-        <button
+        <InteractiveLoader
           ref={ref}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage
-            ? 'Loading more...'
-            : hasNextPage
-            ? 'Load Newer'
-            : 'Nothing more to load'}
-        </button>
+          isLoading={isFetchingNextPage}
+          hasNextPage={hasNextPage || false}
+          onClick={fetchNextPage}
+          loadingPlaceholder={<StoryListLoadingPlaceholder />}
+        />
       </div>
     </div>
   );
