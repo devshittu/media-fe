@@ -1,6 +1,10 @@
 import React from 'react';
 import useWizard from '../hooks/useWizard';
-import { WizardContext, WizardProvider, useWizardContext } from '../wizard-context';  // Make sure to import WizardContext
+import {
+  WizardContext,
+  WizardProvider,
+  useWizardContext,
+} from '../wizard-context'; // Make sure to import WizardContext
 
 // export const withWizard = (Component: React.ComponentType<any>) => {
 //   const WithWizard = (props: any) => {
@@ -36,7 +40,6 @@ export const withWizard = (Component: React.ComponentType<any>) => {
 
   return WithWizard;
 };
-
 
 // Helper function to get the display name of a component
 function getDisplayName(Component: React.ComponentType<any>) {

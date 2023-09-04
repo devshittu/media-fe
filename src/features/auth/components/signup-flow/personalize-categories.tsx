@@ -44,8 +44,9 @@ export const PersonalizeCategories = () => {
   const selectedOptions = watch('user_categories', []);
 
   useWizardStepValidation(() => {
-console.log('isCompleted',isCompleted)
-    return (selectedOptions.length >= 3 && isCompleted)}); // TODO: take out the magic number 3
+    console.log('isCompleted', isCompleted);
+    return selectedOptions.length >= 3 && isCompleted;
+  }); // TODO: take out the magic number 3
 
   const showSuccess = useSuccessNotification(
     'Your preferred categories settings have been updated!',

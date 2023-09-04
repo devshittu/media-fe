@@ -14,7 +14,6 @@ const Wizard = ({ steps, onFinish, onClose }: WizardProps) => {
 
 export default Wizard; // Import the HOC
 
-
 // const EnhancedWizardComponent = withWizard(WizardComponent);
 
 // const Wizard = ({ steps, onFinish, onClose }: WizardProps) => {
@@ -24,6 +23,5 @@ export default Wizard; // Import the HOC
 // };
 
 // export default Wizard;
-
 
 //path: src/components/blocks/wizard/wizard.tsx

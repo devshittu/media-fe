@@ -9,7 +9,7 @@ export const Greetings = () => {
   useWizardStepValidation();
 
   const { goToNextStep } = useWizardContext();
-console.log('goToNextStep',goToNextStep);
+  console.log('goToNextStep', goToNextStep);
 
   return (
     <div className="w-full max-w-6xl p-0 lg:p-2 mx-auto relative md:text-left">
@@ -46,7 +46,9 @@ console.log('goToNextStep',goToNextStep);
               <Button className="font-bold" type={'adaptive'} outlined>
                 DISCOVER MORE
               </Button>
-      <Button onClick={goToNextStep}  type={'adaptive'}>Next</Button>
+              <Button onClick={goToNextStep} type={'adaptive'}>
+                Next
+              </Button>
             </div>
           </div>
         </div>

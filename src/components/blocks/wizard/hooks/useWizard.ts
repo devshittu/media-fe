@@ -26,7 +26,7 @@ const wizardReducer = (
 ): WizardState => {
   switch (action.type) {
     case WizardActionType.NEXT_STEP:
-  console.log("New state:", state);
+      console.log('New state:', state);
       return {
         ...state,
         currentStep: state.currentStep + 1,
@@ -67,7 +67,7 @@ const useWizard = (
   const [loading, setLoading] = useState(false);
 
   const goToNextStep = () => {
-  console.log("Going to next step");
+    console.log('Going to next step');
     setAction('next');
   };
 
@@ -96,7 +96,7 @@ const useWizard = (
         setLoading(true);
         const currentStep = steps[state.currentStep];
         if (action === 'next') {
-  console.log("Action changed:", action);
+          console.log('Action changed:', action);
           try {
             // if (beforeNext) {
             //   await beforeNext();

@@ -7,7 +7,9 @@ type WizardContextType = {
   goToNextStep?: () => void;
 };
 
-export const WizardContext = createContext<WizardContextType | undefined>(undefined);
+export const WizardContext = createContext<WizardContextType | undefined>(
+  undefined,
+);
 
 export const useWizardContext = () => {
   const context = useContext(WizardContext);
@@ -20,14 +22,16 @@ type WizardProviderProps = {
   children: React.ReactNode;
   goToNextStep?: () => void;
 };
-export const WizardProvider = ({ children, goToNextStep }: WizardProviderProps) => {
+export const WizardProvider = ({
+  children,
+  goToNextStep,
+}: WizardProviderProps) => {
   const [isCurrentStepValid, setIsCurrentStepValid] = useState<boolean>(false);
 
   const setValidationStatus = (status: boolean) => {
     setIsCurrentStepValid(status);
   };
   // const { goToNextStep } = useWizard(steps, onFinish, onClose);
-
 
   return (
     <WizardContext.Provider
