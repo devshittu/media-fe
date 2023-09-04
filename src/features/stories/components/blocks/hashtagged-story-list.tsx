@@ -10,6 +10,7 @@ import {
 import { StoryListItem } from './story-list-item';
 import { useUserFeedsStore } from '@/stores/feeds/user-feeds';
 import { useCategoryContext } from '@/features/categories/hooks';
+import { InteractiveLoader } from '@/components/loading/';
 
 export const HashtaggedStoryList = ({
   data = {} as StoryResponse,
@@ -57,19 +58,13 @@ export const HashtaggedStoryList = ({
       ))}
 
       <div>
-        <button
+        <InteractiveLoader
           ref={ref}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage ? (
-            <StoryListLoadingPlaceholder />
-          ) : hasNextPage ? (
-            'Load Newer'
-          ) : (
-            'Nothing more to load'
-          )}
-        </button>
+          isLoading={isFetchingNextPage}
+          hasNextPage={hasNextPage || false}
+          onClick={fetchNextPage}
+          loadingPlaceholder={<StoryListLoadingPlaceholder />}
+        />
       </div>
     </div>
   );
