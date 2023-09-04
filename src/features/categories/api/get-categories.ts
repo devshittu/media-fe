@@ -48,11 +48,11 @@ export const useCategories = ({ params }: GetCategoriesOptions) => {
     cacheTime: 1000 * 10,
     // staleTime: DEFAULT_STALE_TIME,
   });
-  // useEffect(() => {
-  //   if (!isFetching && !isFetched) {
-  //     queryClient.invalidateQueries([GET_CATEGORIES, params?.category_id]);
-  //   }
-  // }, [queryClient, params, isFetching, isFetched]);
+  useEffect(() => {
+    if (!isFetching && !isFetched) {
+      queryClient.invalidateQueries([GET_CATEGORIES, params?.category_id]);
+    }
+  }, [queryClient, params, isFetching, isFetched]);
   return { data, isLoading: isFetching && !isFetched };
 };
 
