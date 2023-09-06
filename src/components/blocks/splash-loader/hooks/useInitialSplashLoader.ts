@@ -9,3 +9,4 @@ export const useInitialSplashLoader = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
+// Path: src/components/blocks/splash-loader/hooks/useInitialSplashLoader.ts
