@@ -4,7 +4,7 @@ import {
   Story,
   StoryListLoadingPlaceholder,
   StoryListProps,
-  StoryResponse,
+  StoryListResponse,
   useInfiniteStoriesByHashtag,
 } from '@/features/stories';
 import { StoryListItem } from './story-list-item';
@@ -13,7 +13,7 @@ import { useCategoryContext } from '@/features/categories/hooks';
 import { InteractiveLoader } from '@/components/loading/';
 
 export const HashtaggedStoryList = ({
-  data = {} as StoryResponse,
+  data = {} as StoryListResponse,
   queryParams,
 }: StoryListProps) => {
   const { ref, inView } = useInView();
@@ -47,7 +47,7 @@ export const HashtaggedStoryList = ({
     <div>
       {dataFromStories?.pages.map((page, i) => (
         <React.Fragment key={i}>
-          {page?.stories?.map((story: Story) => (
+          {page?.results?.map((story: Story) => (
             <StoryListItem
               key={story.id}
               story={story}
