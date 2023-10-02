@@ -2,8 +2,9 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { StoriesQueryParams, StoryResponse } from '../types';
+import { StoriesQueryParams, StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
+import { URI_STORIES } from '@/config/api-constants';
 const { GET_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
@@ -13,8 +14,8 @@ type GetStoriesOptions = {
 
 export const getStories = ({
   params,
-}: GetStoriesOptions): Promise<StoryResponse> => {
-  return apiClient.get('/stories', {
+}: GetStoriesOptions): Promise<StoryListResponse> => {
+  return apiClient.get(`${URI_STORIES}`, {
     params,
   });
 };
@@ -24,7 +25,7 @@ export const useStories = ({ params }: GetStoriesOptions) => {
     queryKey: [GET_STORIES, params],
     queryFn: () => getStories({ params }),
     // enabled: !!params?.category_id,
-    initialData: {} as StoryResponse,
+    initialData: {} as StoryListResponse,
   });
 
   return {
@@ -47,9 +48,9 @@ export const useInfiniteStories = ({
         return response;
       },
       {
-        getNextPageParam: (lastPage) => {
-          return lastPage.page < lastPage.total_pages
-            ? lastPage.page + 1
+        getNextPageParam: (lastPage: StoryListResponse) => {
+          return lastPage.current_page < lastPage.total_pages
+            ? lastPage.current_page + 1
             : undefined;
         },
 
