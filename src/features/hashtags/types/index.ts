@@ -6,3 +6,5 @@ export type Hashtag = {
 };
 
 export type HashtagListResponse = PaginatedResponse<Hashtag>;
+
+// src/features/hashtags/types/index.ts
