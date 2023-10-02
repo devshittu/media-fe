@@ -16,6 +16,7 @@ export const QUERY_KEYS = {
   FOLLOW_USER: 'follow-user',
   UPDATE_USER_SETTINGS: 'get-settings',
   SYNC_ANALYTICS: 'analytics-sync',
+  AUTH_USER: 'auth-user',
 };
 
 //Path: src/config/query.ts
