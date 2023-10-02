@@ -2,31 +2,32 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { StoriesQueryParams, StoryResponse } from '../types';
+import { StoriesQueryParams, StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
+import { URI_STORYLINES } from '@/config/api-constants';
 const { GET_STORYLINES } = QUERY_KEYS;
 
 type GetStorylineOptions = {
-  storyFor: string;
+  // storyFor: string;
   params?: StoriesQueryParams;
   initialData?: any;
 };
 
 export const getStorylines = ({
-  storyFor,
+  // storyFor,
   params,
-}: GetStorylineOptions): Promise<StoryResponse> => {
-  return apiClient.get(`/stories/${storyFor}`, {
+}: GetStorylineOptions): Promise<StoryListResponse> => {
+  return apiClient.get(`${URI_STORYLINES}`, {
     params,
   });
 };
 
-export const useStorylines = ({ storyFor, params }: GetStorylineOptions) => {
+export const useStorylines = ({ params }: GetStorylineOptions) => {
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_STORYLINES, storyFor],
-    queryFn: () => getStorylines({ storyFor, params }),
+    queryKey: [GET_STORYLINES, params],
+    queryFn: () => getStorylines({ params }),
     // enabled: !!params?.category_id,
-    initialData: {} as StoryResponse,
+    initialData: {} as StoryListResponse,
   });
 
   return {
@@ -36,24 +37,24 @@ export const useStorylines = ({ storyFor, params }: GetStorylineOptions) => {
 };
 
 export const useInfiniteStorylines = ({
-  storyFor,
+  // storyFor,
   params,
   initialData,
 }: GetStorylineOptions) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
-      ['stories', storyFor],
+      ['storylines', params],
       async ({ pageParam = 2 }) => {
         const response = await getStorylines({
-          storyFor,
+          // storyFor,
           params: { ...params, page: pageParam },
         });
         return response;
       },
       {
-        getNextPageParam: (lastPage) => {
-          return lastPage.page < lastPage.total_pages
-            ? lastPage.page + 1
+        getNextPageParam: (lastPage: StoryListResponse) => {
+          return lastPage.current_page < lastPage.total_pages
+            ? lastPage.current_page + 1
             : undefined;
         },
 
