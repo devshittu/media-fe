@@ -2,22 +2,21 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { BookmarkResponse } from '../types';
+import { BookmarkListResponse } from '../types';
+import { URI_BOOKMARKS } from '@/config/api-constants';
 import { QUERY_KEYS } from '@/config/query';
+import { PaginatedListQueryParams } from '@/types';
 const { GET_BOOKMARKS } = QUERY_KEYS;
 
 type GetBookmarksOptions = {
-  params?: {
-    page?: number | undefined;
-    per_page?: number | undefined;
-  };
+  params?: PaginatedListQueryParams;
   initialData?: any;
 };
 
 export const getBookmarks = ({
   params,
-}: GetBookmarksOptions): Promise<BookmarkResponse> => {
-  return apiClient.get('/bookmarks', {
+}: GetBookmarksOptions): Promise<BookmarkListResponse> => {
+  return apiClient.get(`${URI_BOOKMARKS}`, {
     params,
   });
 };
@@ -26,7 +25,7 @@ export const useGetBookmarks = ({ params }: GetBookmarksOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_BOOKMARKS, params],
     queryFn: () => getBookmarks({ params }),
-    initialData: {} as BookmarkResponse,
+    initialData: {} as BookmarkListResponse,
   });
 
   return {
@@ -49,9 +48,9 @@ export const useInfiniteBookmarks = ({
         return response;
       },
       {
-        getNextPageParam: (lastPage) => {
-          return lastPage.page < lastPage.total_pages
-            ? lastPage.page + 1
+        getNextPageParam: (lastPage: BookmarkListResponse) => {
+          return lastPage.current_page < lastPage.total_pages
+            ? lastPage.current_page + 1
             : undefined;
         },
 
