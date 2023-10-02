@@ -1,30 +1,24 @@
+import { Story } from '@/features/stories';
+import { PaginatedListQueryParams, PaginatedResponse } from '@/types';
+
 export type Bookmark = {
-  id: string;
+  id: number;
   title: string;
-  url: string;
-  thumbnail_url?: string;
-  category: string; //  'Read Later'...
-  story_id: string;
-  excerpt?: string;
-  note?: string;
-  story_published_at: number;
+  bookmark_category: string;
+  note: string;
+  user: number;
+  story: Story;
   created_at: number;
-  updated_at: number;
 };
 
-export type BookmarksQueryParams = {
-  page?: number | undefined;
-  per_page?: number | undefined;
-};
+// export type BookmarksQueryParams = {
+//   page?: number | undefined;
+//   per_page?: number | undefined;
+// };
 
 export type BookmarkListProps = {
-  data: BookmarkResponse;
-  queryParams: BookmarksQueryParams;
+  data: BookmarkListResponse;
+  queryParams: PaginatedListQueryParams;
 };
 
-export type BookmarkResponse = {
-  bookmarks: Bookmark[];
-  page: number;
-  total_pages: number;
-  total: number;
-};
+export type BookmarkListResponse = PaginatedResponse<Bookmark>;
