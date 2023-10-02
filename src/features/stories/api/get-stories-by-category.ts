@@ -2,8 +2,13 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { StoriesQueryParams, StoryResponse } from '../types';
+import { StoriesQueryParams, StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
+import {
+  URI_STORIES,
+  URI_STORIES_CATEGORY_BY_CATEGORY_SLUG,
+} from '@/config/api-constants';
+import { uriTemplate } from '@/utils';
 const { GET_STORIES_BY_CATEGORY } = QUERY_KEYS;
 
 type GetStoriesByCategoryOptions = {
@@ -13,8 +18,15 @@ type GetStoriesByCategoryOptions = {
 
 export const getStoriesByCategory = async ({
   params,
-}: GetStoriesByCategoryOptions): Promise<StoryResponse> => {
-  return apiClient.get(`/stories/category/${params?.categoryId}`, {
+}: GetStoriesByCategoryOptions): Promise<StoryListResponse> => {
+  // TODO: make the params mandatory otherwise throw an exception
+  const uri = params?.categoryId
+    ? uriTemplate(URI_STORIES_CATEGORY_BY_CATEGORY_SLUG, {
+        category_slug: params.categoryId,
+      })
+    : URI_STORIES;
+
+  return apiClient.get(uri, {
     params,
   });
 };
@@ -26,7 +38,7 @@ export const useStoriesByCategory = ({
     queryKey: [GET_STORIES_BY_CATEGORY, params?.categoryId],
     queryFn: () => getStoriesByCategory({ params }),
     enabled: !!params?.categoryId,
-    initialData: {} as StoryResponse,
+    initialData: {} as StoryListResponse,
   });
 
   return {
@@ -49,9 +61,9 @@ export const useInfiniteStoriesByCategory = ({
         return response;
       },
       {
-        getNextPageParam: (lastPage) => {
-          return lastPage.page < lastPage.total_pages
-            ? lastPage.page + 1
+        getNextPageParam: (lastPage: StoryListResponse) => {
+          return lastPage.current_page < lastPage.total_pages
+            ? lastPage.current_page + 1
             : undefined;
         },
 
