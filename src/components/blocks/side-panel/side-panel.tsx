@@ -54,7 +54,7 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
           <InputField
             id="app-search"
             name="Search"
-            placeholder="Search app"
+            placeholder="Search app (coming soon)..."
             className="mb-4"
           />
         </div>
