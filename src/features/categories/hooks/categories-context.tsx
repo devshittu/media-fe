@@ -24,21 +24,21 @@ export const CategoriesProvider = ({ children }: CategoriesProviderProps) => {
   >({});
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { data: categoriesData, isLoading: categoriesLoading } = useCategories(
-    {},
-  );
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories({
+    params: { page_size: 100 },
+  });
 
   useEffect(() => {
     if (categoriesData) {
       const lookupTable: Record<string, { title: string; slug: string }> = {};
-      for (const category of categoriesData?.categories) {
+      for (const category of categoriesData?.results) {
         lookupTable[category.id] = {
           title: category.title,
           slug: category.slug,
         };
       }
       setCategoryLookupTable(lookupTable);
-      setCategories(categoriesData?.categories);
+      setCategories(categoriesData?.results);
     }
     setIsLoading(categoriesLoading);
   }, [categoriesData, categoriesLoading]);
