@@ -9,15 +9,18 @@ export type LoginData = {
   email: string;
   // password?: string;
 };
-
 export type User = {
   id: number;
-  username: string;
-  email: string;
   name: string;
-  created_at: string;
-  updated_at: string;
-  last_login: string;
+  email: string;
+  username: string;
+  avatar_url: string | null;
+  display_picture: string | null;
+  bio: string;
+  phone_number: string;
+  last_activity: string;
   roles: string[];
-  avatar_url: string;
+  is_active: boolean;
+  is_staff: boolean;
+  has_completed_setup: boolean;
 };
