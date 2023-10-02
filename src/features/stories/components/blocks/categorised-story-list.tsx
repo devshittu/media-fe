@@ -4,7 +4,7 @@ import {
   Story,
   StoryListLoadingPlaceholder,
   StoryListProps,
-  StoryResponse,
+  StoryListResponse,
 } from '@/features/stories';
 import { StoryListItem } from './story-list-item';
 import { useUserFeedsStore } from '@/stores/feeds/user-feeds';
@@ -13,7 +13,7 @@ import { useInfiniteStoriesByCategory } from '../../api/get-stories-by-category'
 import { InteractiveLoader } from '@/components/loading/';
 
 export const CategorizedStoryList = ({
-  data = {} as StoryResponse,
+  data = {} as StoryListResponse,
   queryParams,
 }: StoryListProps) => {
   const { ref, inView } = useInView();
@@ -47,7 +47,7 @@ export const CategorizedStoryList = ({
     <div>
       {dataFromStories?.pages.map((page, i) => (
         <React.Fragment key={i}>
-          {page?.stories?.map((story: Story) => (
+          {page?.results?.map((story: Story) => (
             <StoryListItem
               key={story.id}
               story={story}
