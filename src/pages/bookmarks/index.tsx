@@ -2,12 +2,7 @@ import { StoriesPageHeader } from '@/components/blocks/headers';
 import UserLayout from '@/layouts/user-layout';
 import React, { ReactElement, useMemo, useState } from 'react';
 import { SidePanel } from '@/components/blocks/side-panel';
-import {
-  Bookmark,
-  BookmarksQueryParams,
-  getBookmarks,
-  useGetBookmarks,
-} from '@/features/bookmarks';
+import { Bookmark, getBookmarks, useGetBookmarks } from '@/features/bookmarks';
 import { useListGrouping, useListSorting } from '@/hooks';
 import {
   BookmarkSorter,
@@ -20,6 +15,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { cleanObject } from '@/utils';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { NotFound } from '@/components/not-found';
+import { PaginatedListQueryParams } from '@/types';
 
 type PublicBookmarkPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -66,8 +62,8 @@ const BookmarksPage = ({ bookmarks, queryParams }: PublicBookmarkPageProps) => {
         </>
       )} */}
 
-      {!bookmarks.bookmarks && <NotFound />}
-      {bookmarks.bookmarks?.length > 0 && (
+      {!bookmarks.results && <NotFound />}
+      {bookmarks.results?.length > 0 && (
         <BookmarkList data={bookmarks} queryParams={queryParams} />
       )}
       {/* {sortedData?.length > 0 && (
@@ -102,15 +98,31 @@ BookmarksPage.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
-  const queryParams: BookmarksQueryParams = cleanObject({
+  const queryParams: PaginatedListQueryParams = cleanObject({
     page: 1,
     per_page: PAGINATE_STORIES_LIMIT,
   });
 
   try {
-    const bookmarks = await getBookmarks({
-      params: queryParams,
-    });
+    const bookmarks = await getBookmarks({ params: queryParams });
+    console.log('Fetched bookmarks:', bookmarks);
+
+    // Check if the results are empty
+    if (!bookmarks.results || bookmarks.results.length === 0) {
+      return {
+        props: {
+          error: 'No bookmarks found.',
+          bookmarks: {
+            links: {},
+            count: 0,
+            total_pages: 0,
+            current_page: 0,
+            results: [] as Bookmark[],
+          },
+          queryParams,
+        },
+      };
+    }
 
     return {
       props: {
@@ -119,13 +131,18 @@ export const getServerSideProps = async ({
       },
     };
   } catch (error) {
+    console.error('Error fetching bookmarks in getServerSideProps:', error);
+
     return {
       props: {
+        error:
+          'There was an error fetching the bookmarks. Please try again later.',
         bookmarks: {
-          bookmarks: [] as Bookmark[],
-          page: 1,
+          links: {},
+          count: 0,
           total_pages: 0,
-          total: 0,
+          current_page: 0,
+          results: [] as Bookmark[],
         },
         queryParams,
       },
