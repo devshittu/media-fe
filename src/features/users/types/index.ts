@@ -1,4 +1,4 @@
-import { NewsChannel } from '@/types';
+import { NewsChannel, PaginatedResponse } from '@/types';
 
 export type User = {
   id: string;
@@ -9,16 +9,11 @@ export type User = {
   updated_at: string;
   last_login: string;
   roles: string[];
-  avatar_url: string;
+  avatar_url?: string | null;
   news_channel?: NewsChannel; // Or you could use id's here like: newsChannelIds: string[];
 };
 
-export type UserResponse = {
-  users: User[];
-  page: number;
-  total_pages: number;
-  total: number;
-};
+export type UserListResponse = PaginatedResponse<User>;
 
 export type UserListProps = {
   data?: User[];
