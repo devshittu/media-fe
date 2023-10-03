@@ -12,8 +12,8 @@ export const UserSuggestionList = React.memo(
   ({ numSuggestions = 3, ...props }: UserSuggestionListProps) => {
     const { data: responseData, isLoading } = useGetUsers({});
     const allSuggestionList = useMemo(
-      () => responseData?.users,
-      [responseData?.users],
+      () => responseData?.results,
+      [responseData?.results],
     );
     const [suggestionList, setSuggestionList] = useState<User[] | null>(null);
     const [unsuggestedList, setUnsuggestedList] = useState<User[] | null>(null);
