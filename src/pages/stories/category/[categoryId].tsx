@@ -18,10 +18,10 @@ const StoriesByCategoryPage = ({
 }: PublicStoriesPageProps) => {
   return (
     <>
-      <StoriesPageHeader pageTitle={`#${queryParams.categoryId}`} />
+      <StoriesPageHeader pageTitle={`:${queryParams.categoryId}`} />
       {/* TODO: no stories to display */}
-      {!stories.stories && <NotFound />}
-      {stories.stories?.length > 0 && (
+      {!stories.results && <NotFound />}
+      {stories.results?.length > 0 && (
         <CategorizedStoryList data={stories} queryParams={queryParams} />
       )}{' '}
     </>
@@ -49,35 +49,47 @@ export const getServerSideProps = async ({
 
   try {
     const stories = await getStoriesByCategory({ params: queryParams });
+    // console.log('Fetched stories:', stories);
+    console.log('length', stories.results.length);
 
-    // Check for potential undefined values in stories
-    const sanitizedStories = {
-      ...stories,
-      stories: stories.stories || [], // Replace undefined with an empty array
-    };
+    // Check if the results are empty
+    if (!stories.results || stories.results.length === 0) {
+      return {
+        props: {
+          error: 'No stories found.',
+          stories: {
+            links: {},
+            count: 0,
+            total_pages: 0,
+            current_page: 0,
+            results: [] as Story[],
+          },
+          queryParams,
+        },
+      };
+    }
 
     return {
       props: {
-        stories: sanitizedStories,
-        queryParams, // Pass queryParams as a prop
+        stories,
+        queryParams,
       },
     };
-    return {
-      // props: {
-      //   stories,
-      //   queryParams, // Pass queryParams as a prop
-      // },
-    };
   } catch (error) {
+    console.error('Error fetching stories in getServerSideProps:', error);
+
     return {
       props: {
+        error:
+          'There was an error fetching the stories. Please try again later.',
         stories: {
-          stories: [] as Story[],
-          page: 1,
+          links: {},
+          count: 0,
           total_pages: 0,
-          total: 0,
+          current_page: 0,
+          results: [] as Story[],
         },
-        queryParams, // Pass queryParams as a prop
+        queryParams,
       },
     };
   }
