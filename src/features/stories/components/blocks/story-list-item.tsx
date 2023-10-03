@@ -53,7 +53,7 @@ export const StoryListItem = React.memo(
       },
       [addData],
     );
-    const activityRef = useUserActivityTracking(story.id, saveMetrics);
+    const activityRef = useUserActivityTracking(story.id + '', saveMetrics);
 
     return (
       <article
@@ -68,15 +68,16 @@ export const StoryListItem = React.memo(
           className={`flex align-middle items-center justify-between w-full`}
         >
           <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest uppercase">
-            <Link
-              href={`/stories/category/${categories[story.category_id]?.slug}`}
-            >
-              {`${categories[story.category_id]?.title}`}
+            <Link href={`/stories/category/${story.category.slug}`}>
+              {`${story.category.title}`}
             </Link>
           </div>
 
           {/* Context Menu Trigger */}
-          <ContextMenu story={story} initialBookmarkState={true} />
+          <ContextMenu
+            story={story}
+            initialBookmarkState={!!story.has_bookmarked}
+          />
         </div>
 
         <Link href={`/stories/${story?.slug}`}>
@@ -93,7 +94,13 @@ export const StoryListItem = React.memo(
           carouselItems={carouselItems}
           carouselOptions={carouselOptions}
         />
-        <StoryStats viewCount={1200} commentCount={6} />
+        <StoryStats
+          viewCount={1200}
+          commentCount={6}
+          likesCount={story?.likes_count}
+          dislikesCount={story.dislikes_count}
+          storylinesCount={story?.storylines_count}
+        />
         <UserDetails
           name={story?.user.name}
           organization={`Reporter, ${'Default Team'}`}
