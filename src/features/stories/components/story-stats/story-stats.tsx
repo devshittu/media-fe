@@ -4,16 +4,25 @@ import {
   EyeIcon,
   MessageSquareIcon,
   ExternalLinkIcon,
+  ThumbsUpIcon,
+  ThumbsDownIcon,
+  ListIcon,
 } from '@/components/illustrations';
 
 type StoryStatsProps = {
   viewCount: number;
   commentCount: number;
+  likesCount: number;
+  dislikesCount: number;
+  storylinesCount: number;
 };
 
 export const StoryStats: React.FC<StoryStatsProps> = ({
   viewCount,
   commentCount,
+  likesCount,
+  dislikesCount,
+  storylinesCount,
 }) => {
   return (
     <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
@@ -26,13 +35,28 @@ export const StoryStats: React.FC<StoryStatsProps> = ({
       {/* Number of views */}
       <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
         <EyeIcon className="w-4 h-4 mr-1" />
-        {viewCount}
+        {viewCount || 0}
       </span>
 
+      {/* Number of storylines */}
+      <span className="text-slate-400  mr-3 inline-flex items-center leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
+        <ListIcon className="w-4 h-4 mr-1" />
+        {storylinesCount || 0}
+      </span>
       {/* Number of comments */}
-      <span className="text-slate-400 inline-flex items-center leading-none text-base">
+      <span className="text-slate-400  mr-3 inline-flex items-center leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
         <MessageSquareIcon className="w-4 h-4 mr-1" />
-        {commentCount}
+        {commentCount || 0}
+      </span>
+      {/* Number of likes */}
+      <span className="text-slate-400  mr-3 inline-flex items-center leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
+        <ThumbsUpIcon className="w-4 h-4 mr-1" />
+        {likesCount || 0}
+      </span>
+      {/* Number of dislikes */}
+      <span className="text-slate-400 inline-flex items-center leading-none text-base">
+        <ThumbsDownIcon className="w-4 h-4 mr-1" />
+        {dislikesCount || 0}
       </span>
     </div>
   );
