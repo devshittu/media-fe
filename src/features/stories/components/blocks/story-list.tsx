@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Story, StoryListProps, StoryResponse } from '@/features/stories';
+import { Story, StoryListProps, StoryListResponse } from '@/features/stories';
 import { StoryListLoadingPlaceholder } from '@/features/stories/components/loading';
 import { StoryListItem } from './story-list-item';
 import { useUserFeedsStore } from '@/stores/feeds/user-feeds';
@@ -9,7 +9,7 @@ import { useCategoryContext } from '@/features/categories/hooks';
 import { InteractiveLoader } from '@/components/loading/';
 
 export const StoryList = ({
-  data = {} as StoryResponse,
+  data = {} as StoryListResponse,
   queryParams,
 }: StoryListProps) => {
   const { ref, inView } = useInView();
@@ -42,7 +42,7 @@ export const StoryList = ({
     <div>
       {dataFromStories?.pages.map((page, i) => (
         <React.Fragment key={i}>
-          {page?.stories?.map((story: Story) => (
+          {page?.results?.map((story: Story) => (
             <StoryListItem
               key={story.id}
               story={story}
