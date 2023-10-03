@@ -2,7 +2,6 @@ import { Story } from '@/features/stories';
 import {
   PaginatedListQueryParams,
   PaginatedResponse,
-  PaginationLinks,
 } from '@/types';
 
 export type Storyline = {
