@@ -2,8 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { UserResponse } from '../types';
+import { UserListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
+import { URI_USERS } from '@/config/api-constants';
 const { GET_USERS } = QUERY_KEYS;
 
 type GetUsersOptions = {
@@ -14,8 +15,8 @@ type GetUsersOptions = {
 
 export const getUsers = ({
   params,
-}: GetUsersOptions): Promise<UserResponse> => {
-  return apiClient.get('/users', {
+}: GetUsersOptions): Promise<UserListResponse> => {
+  return apiClient.get(`${URI_USERS}`, {
     params,
   });
 };
@@ -24,7 +25,7 @@ export const useGetUsers = ({ params }: GetUsersOptions) => {
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_USERS, params],
     queryFn: () => getUsers({ params }),
-    initialData: {} as UserResponse,
+    initialData: {} as UserListResponse,
   });
 
   return {
