@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/button';
 import { UserListItemProps } from '@/features/users/types';
 import { useUser } from '@/features/users/hooks/useUser';
+import { LoadingAvatar } from '@/components/loading';
 
 export const UserListItem = ({
   user,
@@ -22,19 +23,24 @@ export const UserListItem = ({
       },
     );
   };
+  const defaultAvatar = '/avatars/avatar.svg';
 
   return (
     <div className="py-3 sm:py-4">
       <div className="relative flex items-center space-x-4">
         <div className="flex-shrink-0">
-          <Image
-            width="48"
-            height="48"
-            className="rounded-md w-14 h-14"
-            src={user.avatar_url}
-            alt="Avatar image"
-            loading="lazy"
-          />
+          {!user.avatar_url ? (
+            <LoadingAvatar />
+          ) : (
+            <Image
+              width="48"
+              height="48"
+              className="rounded-md w-14 h-14"
+              src={user.avatar_url || defaultAvatar}
+              alt="Avatar image"
+              loading="lazy"
+            />
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
