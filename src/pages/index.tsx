@@ -4,7 +4,12 @@ import LandingLayout from '@/layouts/landing-layout';
 import { Footer, Explore } from '@/components/labs/LandingPage/';
 
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { StoriesQueryParams, Story, getStories } from '@/features/stories';
+import {
+  StoriesQueryParams,
+  Story,
+  getStories,
+  getStoriesByHashtag,
+} from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { cleanObject } from '@/utils';
 import { Category, getCategories } from '@/features/categories';
@@ -14,18 +19,13 @@ import { HashtaggedStoryList } from '@/features/stories/components/blocks/hashta
 type PublicHomePageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
-export default function Home({
-  stories,
-  hashtag,
-  categories,
-  queryParams,
-}: PublicHomePageProps) {
+export default function Home({ stories, queryParams }: PublicHomePageProps) {
   return (
     <>
       <Seo title="Home" />
-      <Explore hashtag={hashtag}>
-        {!stories.stories && <NotFound />}
-        {stories.stories?.length > 0 && (
+      <Explore hashtag={queryParams.hashtag}>
+        {!stories.results && <NotFound />}
+        {stories.results?.length > 0 && (
           <HashtaggedStoryList data={stories} queryParams={queryParams} />
         )}{' '}
       </Explore>
@@ -50,29 +50,47 @@ export const getServerSideProps = async ({
   });
 
   try {
-    const stories = await getStories({ params: queryParams });
-    const categories = await getCategories({});
+    const stories = await getStoriesByHashtag({ params: queryParams });
+    // const categories = await getCategories({});
+
+    // Check if the results are empty
+    if (!stories.results || stories.results.length === 0) {
+      return {
+        props: {
+          error: 'No stories found.',
+          stories: {
+            links: {},
+            count: 0,
+            total_pages: 0,
+            current_page: 0,
+            results: [] as Story[],
+          },
+          queryParams,
+        },
+      };
+    }
 
     return {
       props: {
         stories,
-        hashtag,
-        categories,
-        queryParams, // Pass queryParams as a prop
+        queryParams,
       },
     };
   } catch (error) {
+    console.error('Error fetching stories in getServerSideProps:', error);
+
     return {
       props: {
+        error:
+          'There was an error fetching the stories. Please try again later.',
         stories: {
-          stories: [] as Story[],
-          page: 1,
+          links: {},
+          count: 0,
           total_pages: 0,
-          total: 0,
+          current_page: 0,
+          results: [] as Story[],
         },
-        hashtag,
-        categories: [] as Category[],
-        queryParams, // Pass queryParams as a prop
+        queryParams,
       },
     };
   }
