@@ -5,3 +5,4 @@ export * from './loading-photo';
 export * from './loading-heading';
 export * from './loading-button-text';
 export * from './loading-button-text-list';
+export * from './interactive-loader';

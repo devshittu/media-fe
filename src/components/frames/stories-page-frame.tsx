@@ -2,7 +2,7 @@
 import React from 'react';
 import { SidePanel } from '@/components/blocks/side-panel/side-panel';
 import { HashtagList } from '@/features/hashtags';
-import { AccountList } from '@/features/users/components';
+import { UserList, UserSuggestionList } from '@/features/users/components';
 import { PaneConfig } from '../blocks/side-panel/types';
 
 type StoriesPageFrameProps = {
@@ -15,7 +15,7 @@ const defaultSections: PaneConfig[] = [
   {
     id: 'channelSubscriptions',
     title: 'Latest Channels',
-    component: <AccountList />,
+    component: <UserSuggestionList />,
   },
 ];
 

@@ -19,3 +19,5 @@ export const seedDb = () => {
 
   testData.settings.forEach((setting) => db.settings.create(setting));
 };
+
+// Path: media-fe/src/testing/mocks/seed-db.ts

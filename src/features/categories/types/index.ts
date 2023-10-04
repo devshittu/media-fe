@@ -1,16 +1,14 @@
-import { Entity } from '@/types';
+import { Entity, PaginatedResponse } from '@/types';
 
-// export type Category = Entity & {
+
 export type Category = {
-  id: string;
+  id: number;
+  slug: string;
+  deleted_at?: number | null;
+  created_at?: number;
+  updated_at?: number;
   title: string;
   description: string;
-  slug: string;
 };
 
-export type CategoryResponse = {
-  categories: Category[];
-  page: number;
-  total_pages: number;
-  total: number;
-};
+export type CategoryListResponse = PaginatedResponse<Category>;

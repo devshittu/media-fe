@@ -1,24 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
-import { Story, StoryResponse } from '../types';
+import { StoriesQueryParams, StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
+import { URI_STORIES } from '@/config/api-constants';
 const { GET_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
-  params?: {
-    category_id?: string | undefined;
-    page?: number | undefined;
-    per_page?: number | undefined;
-    hashtag?: string | undefined;
-  };
+  params?: StoriesQueryParams;
+  initialData?: any;
 };
 
 export const getStories = ({
   params,
-}: GetStoriesOptions): Promise<StoryResponse> => {
-  return apiClient.get('/stories', {
+}: GetStoriesOptions): Promise<StoryListResponse> => {
+  return apiClient.get(`${URI_STORIES}`, {
     params,
   });
 };
@@ -28,12 +25,48 @@ export const useStories = ({ params }: GetStoriesOptions) => {
     queryKey: [GET_STORIES, params],
     queryFn: () => getStories({ params }),
     // enabled: !!params?.category_id,
-    initialData: {} as StoryResponse,
+    initialData: {} as StoryListResponse,
   });
 
   return {
     data,
     isLoading: isFetching && !isFetched,
+  };
+};
+
+export const useInfiniteStories = ({
+  params,
+  initialData,
+}: GetStoriesOptions) => {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      [GET_STORIES, 'all'],
+      async ({ pageParam = 2 }) => {
+        const response = await getStories({
+          params: { ...params, page: pageParam },
+        });
+        return response;
+      },
+      {
+        getNextPageParam: (lastPage: StoryListResponse) => {
+          return lastPage.current_page < lastPage.total_pages
+            ? lastPage.current_page + 1
+            : undefined;
+        },
+
+        initialData: { pages: [initialData], pageParams: [1] },
+        //TODO: Keep data fresh for 5 minutes
+        staleTime: 1000 * 60 * 5,
+        // Keep data in cache for 10 minutes
+        cacheTime: 1000 * 60 * 10,
+      },
+    );
+
+  return {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   };
 };
 

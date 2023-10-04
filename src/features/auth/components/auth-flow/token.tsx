@@ -43,39 +43,38 @@ export const Token = ({ onValidationStatusChange }: StepProps) => {
 
   return (
     <>
-    <div className="flex flex-col text-slate-800 dark:text-slate-400 space-y-4 md:space-y-8 flex-grow">
-      <div className=" justify-center">
-        <PinInput
-          id="auth-token"
-          pinLength={4}
-          authStatus={AuthStatus.AUTHENTICATING}
-          onVerify={verifyPin}
-          onSuccess={handleSuccess}
-          maxAttempts={trialCount}
-          warningThreshold={2} // Magic number for triggering warning
-          onNotify={handleNotify} // Notification event handler
-        />
+      <div className="flex flex-col text-slate-800 dark:text-slate-400 space-y-4 md:space-y-8 flex-grow">
+        <div className=" justify-center">
+          <PinInput
+            id="auth-token"
+            pinLength={4}
+            authStatus={AuthStatus.AUTHENTICATING}
+            onVerify={verifyPin}
+            onSuccess={handleSuccess}
+            maxAttempts={trialCount}
+            warningThreshold={2} // Magic number for triggering warning
+            onNotify={handleNotify} // Notification event handler
+          />
 
-        <h1
-          className={`${
-            remainingAttempts <= warningThreshold && 'text-red-600'
-          }`}
-        >
-          {`You have ${remainingAttempts} ${pluralize(
-            remainingAttempts,
-            'attempt',
-            'attempts',
-          )} left.`}
-        </h1>
+          <h1
+            className={`${
+              remainingAttempts <= warningThreshold && 'text-red-600'
+            }`}
+          >
+            {`You have ${remainingAttempts} ${pluralize(
+              remainingAttempts,
+              'attempt',
+              'attempts',
+            )} left.`}
+          </h1>
+        </div>
+        <div className="text-xs md:text-sm">
+          <InfoWithHint />
+        </div>
       </div>
-      <div className="text-xs md:text-sm">
-        <InfoWithHint/>
-      </div>
-    </div>
     </>
   );
 };
-
 
 const InfoWithHint = () => {
   const { isVisible, toggleVisibility } = useToggle();
@@ -86,7 +85,7 @@ const InfoWithHint = () => {
   return (
     <>
       <Badge
-      id="show-hint-token"
+        id="show-hint-token"
         type={BadgeType.INFO}
         size={BadgeSize.LARGE}
         onClick={handleClick}
@@ -95,20 +94,23 @@ const InfoWithHint = () => {
       >
         <h2 className="font-bold text-base">Hint</h2>
       </Badge>
-      <div className={`hint ${isVisible ? 'block' : 'hidden'} bg-sky-200 dark:bg-sky-800 p-2 rounded-sm mt-3`}>
+      <div
+        className={`hint ${
+          isVisible ? 'block' : 'hidden'
+        } bg-sky-200 dark:bg-sky-800 p-2 rounded-sm mt-3`}
+      >
         <p>
-          A PIN or token has been sent to your email address. Please check
-          your inbox or spam folder. It should arrive within the next 15
-          minutes. Keep this page open until you receive it.
+          A PIN or token has been sent to your email address. Please check your
+          inbox or spam folder. It should arrive within the next 15 minutes.
+          Keep this page open until you receive it.
         </p>
         <p>
-          <strong>Note:</strong> After three unsuccessful attempts, you will
-          be prevented from requesting another token for 30 minutes.
+          <strong>Note:</strong> After three unsuccessful attempts, you will be
+          prevented from requesting another token for 30 minutes.
         </p>
       </div>
     </>
   );
 };
-
 
 //Path: src/features/auth/components/auth-flow/token.tsx

@@ -1,18 +1,18 @@
 import { Link } from '@/components/labs/typography';
 import React from 'react';
 
-interface Heading {
+export type Heading = {
   id: string;
   title: string;
   items: Heading[];
-}
+};
 
-interface HeadingProps {
+type HeadingProps = {
   heading: Heading;
   activeId: string;
-}
+};
 
-const Heading: React.FC<HeadingProps> = ({ heading, activeId }) => (
+export const Heading = ({ heading, activeId }: HeadingProps) => (
   <li
     className={`group text-base ${
       heading.id === activeId ? 'active text-slate-950 dark:text-slate-50' : ''
@@ -42,4 +42,4 @@ const Heading: React.FC<HeadingProps> = ({ heading, activeId }) => (
   </li>
 );
 
-export default Heading;
+// Path: media-fe/src/components/blocks/table-of-contents/heading.tsx

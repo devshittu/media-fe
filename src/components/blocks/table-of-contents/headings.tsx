@@ -1,12 +1,12 @@
 import React from 'react';
-import Heading from './heading';
+import { Heading } from './heading';
 
-interface HeadingsProps {
+type HeadingsProps = {
   headings: Heading[];
   activeId: string;
-}
+};
 
-const Headings: React.FC<HeadingsProps> = ({ headings, activeId }) => (
+export const Headings = ({ headings, activeId }: HeadingsProps) => (
   <ul>
     {headings.map((heading) => (
       <Heading key={heading.id} heading={heading} activeId={activeId} />
@@ -14,4 +14,4 @@ const Headings: React.FC<HeadingsProps> = ({ headings, activeId }) => (
   </ul>
 );
 
-export default Headings;
+// Path: media-fe/src/components/blocks/table-of-contents/headings.tsx

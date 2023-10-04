@@ -11,6 +11,8 @@ import {
   HashIcon,
   UserPlusIcon,
   HelpCircleIcon,
+  ListIcon,
+  ClockIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
 import { TourPopperType } from '../blocks/tour/tour-popper';
@@ -29,6 +31,13 @@ const MainMenu = () => {
       icon: <FileTextIcon />,
       url: '/stories',
       id: 'stories-page',
+    },
+    {
+      name: 'Timelines',
+      icon: <ClockIcon />,
+      url: '/storylines',
+      id: 'storyline-page',
+      tag: 'New',
     },
     {
       name: 'New Story',

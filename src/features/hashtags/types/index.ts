@@ -1,13 +1,10 @@
+import { PaginatedResponse } from '@/types';
+
 export type Hashtag = {
-  id: string;
-  label: string;
-  count: number;
-  stories: string[];
+  name: string;
+  stories_count: number;
 };
 
-export type HashtagResponse = {
-  hashtags: Hashtag[];
-  page: number;
-  total_pages: number;
-  total: number;
-};
+export type HashtagListResponse = PaginatedResponse<Hashtag>;
+
+// src/features/hashtags/types/index.ts

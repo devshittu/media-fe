@@ -67,18 +67,18 @@ export const SignupFlowSteps: Step[] = [
   },
   {
     id: 'step4',
-    title: 'Follow User Accounts',
-    subtitle:
-      'Select some accounts to follow and start connecting with others right away.',
-    component: <Channels />,
-    isMandatory: false,
-  },
-  {
-    id: 'step5',
     title: 'Visual Appearance',
     subtitle:
       'Choose themes to personalize the look and feel of your interface.',
     component: <VisualAppearance />,
+    isMandatory: false,
+  },
+  {
+    id: 'step5',
+    title: 'Follow User Accounts',
+    subtitle:
+      'Select some accounts to follow and start connecting with others right away.',
+    component: <Channels />,
     isMandatory: false,
   },
   {

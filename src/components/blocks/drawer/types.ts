@@ -14,6 +14,8 @@ export type DrawerProps = {
   children?: React.ReactNode;
   onClose?: () => void;
   showAppLogo?: boolean;
+  showOverlay?: boolean;
+  lockScroll?: boolean;
 };
 
 export type DrawerClassProps = Omit<DrawerProps, 'isActive'> & {

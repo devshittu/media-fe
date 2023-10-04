@@ -4,9 +4,10 @@ import React from 'react';
 import { Marquee } from './marquee';
 import { useCategoryContext } from '@/features/categories/hooks';
 import { LoginSection } from '@/features/auth/components/login-form/login-section';
+import { LoadingButtonTextList } from '@/components/loading';
 
 export const LeftColumnContent = () => {
-  const { categories } = useCategoryContext();
+  const { categories, isLoading: isCategoriesLoading } = useCategoryContext();
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
@@ -41,28 +42,32 @@ export const LeftColumnContent = () => {
         {/* Marquee */}
 
         <Marquee play speed="slowest" hoverToPause>
-          {categories.map((item, index) => (
-            <Link
-              key={index}
-              href="/"
-              aria-label="View Item"
-              className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800  dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
-            >
-              {item.title}
-            </Link>
-          ))}
+          {isCategoriesLoading && <LoadingButtonTextList />}
+          {!isCategoriesLoading &&
+            categories.map((item, index) => (
+              <Link
+                key={index}
+                href={`/stories/category/${item.slug}`}
+                aria-label="View Item"
+                className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800  dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
+              >
+                {item.title}
+              </Link>
+            ))}
         </Marquee>
         <Marquee play speed="slowest" hoverToPause reverse>
-          {categories.map((item, index) => (
-            <Link
-              key={index}
-              href="/"
-              aria-label="View Item"
-              className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
-            >
-              {item.title}
-            </Link>
-          ))}
+          {isCategoriesLoading && <LoadingButtonTextList />}
+          {!isCategoriesLoading &&
+            categories.map((item, index) => (
+              <Link
+                key={index}
+                href={`/stories/category/${item.slug}`}
+                aria-label="View Item"
+                className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
+              >
+                {item.title}
+              </Link>
+            ))}
         </Marquee>
 
         <LoginSection />

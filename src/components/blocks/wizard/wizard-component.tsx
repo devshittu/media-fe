@@ -29,6 +29,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
     isLastStep,
     renderCurrentStep,
   } = useWizard(steps, onFinish, onClose);
+  console.log('Current step:', currentStep);
 
   const { isCurrentStepValid } = useWizardContext();
 

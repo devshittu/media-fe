@@ -12,7 +12,7 @@ export enum BadgeSize {
   LARGE = 'large',
 }
 
-type BadgeProps =  HTMLAttributes<HTMLSpanElement> &{
+type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
   rounded?: boolean;
   outlined?: boolean;
   type?: BadgeType;
@@ -101,7 +101,7 @@ export const Badge = ({
   );
 
   return onClick ? (
-    <button onClick={onClick} className="focus:outline-none"  {...props}>
+    <button onClick={onClick} className="focus:outline-none" {...props}>
       {badgeContent}
     </button>
   ) : (

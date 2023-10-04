@@ -2,7 +2,7 @@ import React from 'react';
 import { LoginForm } from './login-form';
 import Wizard from '@/components/blocks/wizard/wizard';
 import { NotificationType, useNotifications } from '@/stores/notifications';
-import { usePopup } from '@/stores/popup';
+import { usePopup } from '@/stores/ui';
 import { SignupFlowSteps } from '@/features/auth/components/signup-flow';
 import { useTour } from '@/stores/tour';
 import { useAuthRedirect } from '../../hooks';
@@ -12,7 +12,7 @@ import { useConfetti } from '@/stores/confetti';
 
 export const LoginSection = () => {
   const { showNotification } = useNotifications();
-  const { showPopup, closePopup } = usePopup();
+  const { show: showPopup, close: closePopup } = usePopup();
   const { showTour } = useTour();
   const { playConfetti } = useConfetti();
 

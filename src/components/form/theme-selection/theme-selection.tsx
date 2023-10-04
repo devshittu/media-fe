@@ -9,14 +9,20 @@ export type ThemeOption = {
 
 type ThemeSelectionProps = {
   options: ThemeOption[];
+  selectedTheme?: string; // Add this line for the selected theme
+  errorMessage?: string | null; // Add this line for the error message
   onSelect?: (selectedOption: ThemeOption) => void;
 };
 
 export const ThemeSelection: React.FC<ThemeSelectionProps> = ({
   options,
   onSelect,
+  selectedTheme,
+  errorMessage,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(
+    selectedTheme || null,
+  );
 
   const handleSelection = (option: ThemeOption) => {
     setSelectedOption(option.id);
@@ -25,6 +31,8 @@ export const ThemeSelection: React.FC<ThemeSelectionProps> = ({
 
   return (
     <div className="font-sansx">
+      {/* Display error message if any */}
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <ul className="grid w-full gap-6 md:grid-cols-4">
         {options.map((option) => (
           <li key={option.id}>

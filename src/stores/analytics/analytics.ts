@@ -4,27 +4,45 @@ enum AnalyticsEvents {
 }
 
 export type AnalyticsData = {
-  event: string;
+  event: string; // event name e.g storyView
+  timestamp: number; // unix timestamp
+  storyId: string;
+  timeInView?: number; //in milliseconds
+};
+
+export type InteractionData = {
+  event:
+    | 'view'
+    | 'bookmark'
+    | 'unbookmark'
+    | 'share'
+    | 'click_external'
+    | 'view_timeline';
   timestamp: number;
   storyId: string;
-  // ... other fields
+  metadata?: {
+    source_page?: string;
+    platform?: 'WhatsApp' | 'Twitter' | 'Facebook' | 'Other';
+    link_url?: string;
+    source_section?: string;
+  };
 };
 
 type AnalyticsStore = {
-  dataBatch: AnalyticsData[];
+  data: AnalyticsData[];
   addData: (newData: AnalyticsData) => void;
   clearData: () => void;
 };
 
 export const analyticsStore = createStore<AnalyticsStore>((set) => ({
-  dataBatch: [],
+  data: [],
   addData: (newData) => {
     set((state) => ({
-      dataBatch: [...state.dataBatch, newData],
+      data: [...state.data, newData],
     }));
   },
   clearData: () => {
-    set({ dataBatch: [] });
+    set({ data: [] });
   },
 }));
 

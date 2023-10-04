@@ -8,30 +8,28 @@ import {
   Icon,
   ShareIcon,
 } from '@/components/illustrations';
+import { Tag } from '@/components/blocks/tag';
 type BookmarkBlockProps = {
   bookmark: Bookmark;
 };
 export const BookmarkItem = ({ bookmark }: BookmarkBlockProps) => {
   return (
-    <li key={bookmark.id}>
+    <div key={bookmark?.id}>
       <Link
-        href={`${bookmark.url}`}
+        href={`/stories/${bookmark?.story?.slug}`}
         className=" block hover:bg-slate-100 dark:hover:bg-slate-700"
       >
         <div className="mx-4 items-center block p-3">
-          {/*
-                   //Todo redesign this content display. */}
-
+          {/* TODO: redesign this content display. */}
+          <Tag variant={`green`}>{bookmark?.bookmark_category}</Tag>
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-            {bookmark.title}
+            {bookmark?.title}
           </h3>
           <p className="mb-4 text-base font-normal text-slate-500 dark:text-slate-400">
             {bookmark?.note}
-            <br></br>
-            Story overview and analytics and possibly buttons for sharing.
           </p>
         </div>
       </Link>
-    </li>
+    </div>
   );
 };

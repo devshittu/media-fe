@@ -38,12 +38,12 @@ export const StoriesPageHeader = ({
       setPageTitleBoxHeightMobile(height);
     }
   }, [pageTitleMobileRef]);
-  const { topPosition: topPositionDesktop } = useScrollSync(
-    pageTitleBoxHeightDesktop,
-  ); // top position set to 60
-  const { topPosition: topPositionMobile } = useScrollSync(
-    pageTitleBoxHeightMobile,
-  ); // top position set to 60
+  const { topPosition: topPositionDesktop } = useScrollSync({
+    contentHeight: pageTitleBoxHeightDesktop,
+  }); // top position set to 60
+  const { topPosition: topPositionMobile } = useScrollSync({
+    contentHeight: pageTitleBoxHeightMobile,
+  }); // top position set to 60
 
   const openMainMenuDrawer = () => {
     const drawer = new Drawer({
@@ -160,7 +160,7 @@ export const StoriesPageHeader = ({
         </div>
         {showTab && (
           <div>
-            <ul
+            {/* <ul
               className="flex justify-around -mb-px text-sm font-medium text-center"
               id="myTab"
               data-tabs-toggle="#myTabContent"
@@ -192,7 +192,7 @@ export const StoriesPageHeader = ({
                   Following
                 </button>
               </li>
-            </ul>
+            </ul> */}
           </div>
         )}
       </header>

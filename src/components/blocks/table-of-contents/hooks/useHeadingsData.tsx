@@ -51,3 +51,5 @@ const useHeadingsData = () => {
 };
 
 export default useHeadingsData;
+
+// Path: media-fe/src/components/blocks/table-of-contents/hooks/useHeadingsData.tsx

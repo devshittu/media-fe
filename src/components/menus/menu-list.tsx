@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@/components/labs/typography';
 import { Icon } from '@/components/illustrations';
+import { Tag } from '../blocks/tag';
 export type MenuItem = {
   name: string;
   icon: JSX.Element | React.ReactElement | null;
@@ -36,9 +37,9 @@ const MenuList = ({ menu }: MenuProps) => {
                   {name}
                 </span>
                 {tag && (
-                  <span className="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-slate-800 bg-slate-200 rounded-full dark:bg-slate-700 dark:text-slate-300">
-                    {tag}
-                  </span>
+                  <>
+                    <Tag variant="green">{tag}</Tag>
+                  </>
                 )}
               </Link>
             </li>

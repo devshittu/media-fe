@@ -1,12 +1,13 @@
-import { Story } from '../types';
+import { StoriesQueryParams, Story, StoryListResponse } from '../types';
 
 export type StoryListItemProps = {
   story: Story;
   className?: string;
-  categories: Record<string, string>;
 };
 export type StoryListProps = {
-  data?: Story[];
-  scrollInfinite?: boolean;
-  totalPages: number;
+  data: StoryListResponse;
+  queryParams: StoriesQueryParams;
+};
+export type StorylineStoryListProps = StoryListProps & {
+  storylineFor: string;
 };

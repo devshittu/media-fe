@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from '@/components/labs/typography';
 import { StoryListItemProps } from '../types';
 import { CarouselItem, CarouselOptions } from '@/components/blocks/carousel';
@@ -7,16 +7,11 @@ import { UserDetails } from '../user-details';
 import { StoryMedia } from '../story-media';
 import { StoryStats } from '../story-stats';
 import { formatDate } from '@/utils';
-import {
-  ActivityMetrics,
-  useUserActivityTracking,
-} from '@/hooks/useUserActivityTracking';
+import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { AnalyticsData, useAnalytics } from '@/stores/analytics/analytics';
 
 export const StoryListItem = React.memo(
-  ({ story, className, categories }: StoryListItemProps) => {
-    const { addData } = useAnalytics();
-    const [localBatch, setLocalBatch] = useState<AnalyticsData[]>([]);
+  ({ story, className }: StoryListItemProps) => {
     const carouselItems: CarouselItem[] = [
       {
         id: '1',
@@ -48,49 +43,17 @@ export const StoryListItem = React.memo(
         console.log('Active slide changed');
       },
     };
-    // const carousel = CarouselComponent({ carouselItems, carouselOptions });
-    // carousel.next(); // Invoke next slide
-    // carousel.prev(); // Invoke previous slide
+
+    const { addData } = useAnalytics();
+
     const saveMetrics = useCallback(
-      (metrics: ActivityMetrics) => {
-        // const newData = {
-        //   event: 'storyViewed',
-        //   timestamp: Date.now(),
-        //   storyId: story.id,
-        // };
-        // setLocalBatch((prevBatch) => [...prevBatch, newData]);
-        // addData({
-        //   event: 'storyViewed',
-        //   timestamp: Date.now(),
-        //   storyId: story.id,
-        // });
-        console.log(
-          `Story ${story.id} metrics:`,
-          `entered screen ${metrics[story.id].enterCount} time and spent ${
-            metrics[story.id].timeInView / 1000
-          }s in the viewport`,
-        );
+      (metrics: AnalyticsData) => {
+        console.log('metrics://', metrics);
+        addData(metrics);
       },
-      [story.id],
-      // [story.id, addData],
+      [addData],
     );
-
-    const options = {
-      saveMetrics,
-      storyId: story.id,
-    };
-    // useEffect(() => {
-    //   const interval = setInterval(() => {
-    //     if (localBatch.length > 0) {
-    //       addData(localBatch);
-    //       setLocalBatch([]); // Clear the local batch
-    //     }
-    //   }, 5000); // Update the Zustand store every 5 seconds
-
-    //   return () => clearInterval(interval);
-    // }, [addData, localBatch]);
-
-    const activityRef = useUserActivityTracking(options);
+    const activityRef = useUserActivityTracking(story.id + '', saveMetrics);
 
     return (
       <article
@@ -105,11 +68,16 @@ export const StoryListItem = React.memo(
           className={`flex align-middle items-center justify-between w-full`}
         >
           <div className="inline-block py-1 px-2 rounded bg-blue-50 text-blue-500 text-xs font-medium tracking-widest uppercase">
-            {`${categories[story.category_id]}`}
+            <Link href={`/stories/category/${story.category.slug}`}>
+              {`${story.category.title}`}
+            </Link>
           </div>
 
           {/* Context Menu Trigger */}
-          <ContextMenu story={story} initialBookmarkState={true} />
+          <ContextMenu
+            story={story}
+            initialBookmarkState={!!story.has_bookmarked}
+          />
         </div>
 
         <Link href={`/stories/${story?.slug}`}>
@@ -126,10 +94,16 @@ export const StoryListItem = React.memo(
           carouselItems={carouselItems}
           carouselOptions={carouselOptions}
         />
-        <StoryStats viewCount={1200} commentCount={6} />
+        <StoryStats
+          viewCount={1200}
+          commentCount={6}
+          likesCount={story?.likes_count}
+          dislikesCount={story.dislikes_count}
+          storylinesCount={story?.storylines_count}
+        />
         <UserDetails
           name={story?.user.name}
-          organization={`Reporter, ${story?.user?.news_channel?.name}`}
+          organization={`Reporter, ${'Default Team'}`}
           pub_datetime={formatDate(story?.updated_at)}
         />
       </article>

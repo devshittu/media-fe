@@ -2,11 +2,14 @@ import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { useWizardContext } from '@/components/blocks/wizard/wizard-context';
 import { Button } from '@/components/button';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export const Greetings = () => {
   // No validation function passed, so it assumes isValid is true
   useWizardStepValidation();
+
+  const { goToNextStep } = useWizardContext();
+  console.log('goToNextStep', goToNextStep);
 
   return (
     <div className="w-full max-w-6xl p-0 lg:p-2 mx-auto relative md:text-left">
@@ -42,6 +45,9 @@ export const Greetings = () => {
             <div className="inline-block align-bottom">
               <Button className="font-bold" type={'adaptive'} outlined>
                 DISCOVER MORE
+              </Button>
+              <Button onClick={goToNextStep} type={'adaptive'}>
+                Next
               </Button>
             </div>
           </div>

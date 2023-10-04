@@ -15,7 +15,7 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
   const [sidePanelHeight, setSidePanelHeight] = useState<number>(0);
 
   useEffect(() => {
-    // Listen for changes in the content rendered by <HashtagList /> and <AccountList />
+    // Listen for changes in the content rendered by <HashtagList /> and <UserSuggestionList />
     // This effect will run after the content has updated
     if (sidePanelRef.current) {
       const sidePanelTop = sidePanelRef.current.getBoundingClientRect().top;
@@ -25,9 +25,12 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
         Math.abs(screenHeight - (sidePanelHeightIn - sidePanelTop)),
       );
     }
-  }, [sidePanelRef.current?.innerHTML, screenHeight]); // This effect will run whenever the content rendered by <HashtagList /> or <AccountList /> changes
+  }, [sidePanelRef.current?.innerHTML, screenHeight]); // This effect will run whenever the content rendered by <HashtagList /> or <UserSuggestionList /> changes
 
-  const { topPosition: sidebarTop } = useScrollSync(sidePanelHeight || 0); // top position set to 60
+  const { topPosition: sidebarTop } = useScrollSync({
+    contentHeight: sidePanelHeight || 0,
+    minTop: sidePanelHeight,
+  }); // top position set to 60
 
   const renderedSections = useMemo(
     () =>
@@ -51,13 +54,13 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
           <InputField
             id="app-search"
             name="Search"
-            placeholder="Search app"
+            placeholder="Search app (coming soon)..."
             className="mb-4"
           />
         </div>
       </div>
       <div
-        className=" space-y-16 min-h-screen sticky top-28 overflow-hidden pb-60  transition-all  duration-100 ease-out"
+        className=" space-y-16 min-h-fit sticky top-28 overflow-hidden pb-60  transition-all  duration-100 ease-out"
         ref={sidePanelRef}
         style={{ transform: `translateY(${sidebarTop}px)` }}
       >

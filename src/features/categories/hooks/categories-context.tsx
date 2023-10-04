@@ -3,13 +3,15 @@ import { Category } from '../types';
 import { useCategories } from '../api/get-categories';
 
 type CategoriesContextProps = {
-  categoryTitlesLookUpTable: Record<string, string>;
+  categoryLookupTable: Record<string, { title: string; slug: string }>;
   categories: Category[];
+  isLoading: boolean; // Add isLoading property
 };
 
 export const CategoriesContext = createContext<CategoriesContextProps>({
-  categoryTitlesLookUpTable: {},
+  categoryLookupTable: {},
   categories: [],
+  isLoading: false, // Initialize isLoading as false
 });
 
 export type CategoriesProviderProps = {
@@ -17,28 +19,36 @@ export type CategoriesProviderProps = {
 };
 
 export const CategoriesProvider = ({ children }: CategoriesProviderProps) => {
-  const [categoryTitlesLookUpTable, setCategoryTitlesLookUpTable] = useState<
-    Record<string, string>
+  const [categoryLookupTable, setCategoryLookupTable] = useState<
+    Record<string, { title: string; slug: string }>
   >({});
   const [categories, setCategories] = useState<Category[]>([]);
-  const { data: categoriesData } = useCategories({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories({
+    params: { page_size: 100 },
+  });
 
   useEffect(() => {
     if (categoriesData) {
-      const categoriesMap: Record<string, string> = {};
-      for (const category of categoriesData?.categories) {
-        categoriesMap[category.id] = category.title;
+      const lookupTable: Record<string, { title: string; slug: string }> = {};
+      for (const category of categoriesData?.results) {
+        lookupTable[category.id] = {
+          title: category.title,
+          slug: category.slug,
+        };
       }
-      setCategoryTitlesLookUpTable(categoriesMap);
-      setCategories(categoriesData?.categories);
+      setCategoryLookupTable(lookupTable);
+      setCategories(categoriesData?.results);
     }
-  }, [categoriesData]);
+    setIsLoading(categoriesLoading);
+  }, [categoriesData, categoriesLoading]);
 
   return (
     <CategoriesContext.Provider
       value={{
         categories,
-        categoryTitlesLookUpTable,
+        categoryLookupTable,
+        isLoading,
       }}
     >
       {children}

@@ -48,7 +48,7 @@ export const ContextMenu = ({
   };
 
   const { isBookmarked, handleBookmark, handleUnbookmark } = useBookmark(
-    story.id,
+    story.id + '',
     (initialBookmarkState = false),
   );
 
