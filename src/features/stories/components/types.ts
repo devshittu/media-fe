@@ -3,7 +3,6 @@ import { StoriesQueryParams, Story, StoryListResponse } from '../types';
 export type StoryListItemProps = {
   story: Story;
   className?: string;
-  categories: Record<string, { title: string; slug: string }>;
 };
 export type StoryListProps = {
   data: StoryListResponse;

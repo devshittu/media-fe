@@ -11,7 +11,7 @@ import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { AnalyticsData, useAnalytics } from '@/stores/analytics/analytics';
 
 export const StoryListItem = React.memo(
-  ({ story, className, categories }: StoryListItemProps) => {
+  ({ story, className }: StoryListItemProps) => {
     const carouselItems: CarouselItem[] = [
       {
         id: '1',
