@@ -12,16 +12,17 @@ export const apiClient = Axios.create({
     // 'Access-Control-Allow-Origin': '*',
     // 'Access-Control-Allow-Headers': '*',
   },
+  requiresAuth: true,
 });
 
 apiClient.interceptors.request.use((config) => {
-  // if (!config.noAuth) {
-  //   // Check if noAuth flag is set
-  //   const token = AuthStore.getState().accessToken;
-  //   if (token) {
-  //     config.headers['Authorization'] = `Bearer ${token}`;
-  //   }
-  // }
+  if (config.requiresAuth) {
+    // Check if noAuth flag is set
+    const token = AuthStore.getState().accessToken;
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+  }
   return config;
 });
 
@@ -33,32 +34,32 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config;
 
     // If 401 response and not a retry request, try to refresh token
-    // if (
-    //   error.response &&
-    //   error.response.status === 401 &&
-    //   !originalRequest._retry
-    // ) {
-    //   originalRequest._retry = true;
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
 
-    //   try {
-    //     const res = await apiClient.post('/auth/token/refresh/'); // The browser will automatically include the refresh token cookie
-    //     const newAccessToken = res.data.access;
-    //     AuthStore.getState().setAccessToken(newAccessToken); // Update the access token in Zustand store
-    //     originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
-    //     return apiClient(originalRequest); // Retry the original request with the new token
-    //   } catch (refreshError) {
-    //     const error = refreshError as Error;
-    //     console.error('Refresh token error:', error.message);
-    //     // console.error('Refresh token error:', refreshError.response || refreshError); // Log the error response for debugging
-    //     AuthStore.getState().setAccessToken(null); // Clear access token in Zustand store
-    //     // Handle logout or redirect to login page
+      try {
+        const res = await apiClient.post('/auth/token/refresh/'); // The browser will automatically include the refresh token cookie
+        const newAccessToken = res.data.access;
+        AuthStore.getState().setAccessToken(newAccessToken); // Update the access token in Zustand store
+        originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
+        return apiClient(originalRequest); // Retry the original request with the new token
+      } catch (refreshError) {
+        const error = refreshError as Error;
+        console.error('Refresh token error:', error.message);
+        // console.error('Refresh token error:', refreshError.response || refreshError); // Log the error response for debugging
+        AuthStore.getState().setAccessToken(null); // Clear access token in Zustand store
+        // Handle logout or redirect to login page
 
-    //     const router = useRouter();
-    //     router.replace( '/');
+        const router = useRouter();
+        router.replace( '/');
 
-    //     console.error('apiClient://', refreshError);
-    //   }
-    // }
+        console.error('apiClient:// refreshError:// ', refreshError);
+      }
+    }
     const message = error.response?.data?.message || error.message;
 
     notificationsStore.getState().showNotification({
