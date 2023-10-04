@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 
-import { getStorylines } from '@/features/stories/api/get-storylines';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { NotFound } from '@/components/not-found';
 import { StoriesPageFrame } from '@/components/frames';
@@ -10,9 +9,8 @@ import { PaneConfig } from '@/components/blocks/side-panel/types';
 import { UserSuggestionList } from '@/features/users/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { TimelineScrollbar } from '@/components/blocks/timeline-scroller';
-import { StoriesQueryParams, Story } from '@/features/stories';
+import { StoriesQueryParams, Story, StoryListItem, getStory } from '@/features/stories';
 import { cleanObject } from '@/utils';
-import { StorylineStoryList } from '@/features/stories/components/blocks/storyline-story-list';
 
 type PublicStoryPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -20,38 +18,18 @@ type PublicStoryPageProps = InferGetServerSidePropsType<
 
 const StorylinePage = ({
   stories,
-  storyFor,
+  storyId,
   queryParams,
 }: PublicStoryPageProps) => {
-  const [currentStoryId, setCurrentStoryId] = useState<string | null>(null);
-  useEffect(() => {
-    console.log('about setting setCurrentStoryId:// ', storyFor);
-    setCurrentStoryId(storyFor);
-  }, [storyFor]);
-
-  useEffect(() => {
-    if (currentStoryId && stories?.stories?.length > 0) {
-      const element = document.getElementById(`scroll-to-${currentStoryId}`);
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        window.scrollTo({
-          top: rect.top + window.scrollY,
-          behavior: 'auto',
-        });
-      }
-    }
-  }, [currentStoryId, stories.stories]);
 
   return (
     <>
       <StoriesPageHeader pageTitle="Timeline" />
-      {!stories.stories && <NotFound />}
-      {stories?.stories?.length > 0 && (
-        <StorylineStoryList
-          storyFor={storyFor}
-          data={stories}
-          queryParams={queryParams}
-        />
+      {!stories && <NotFound />}
+      {stories && (
+        <>
+        <StoryListItem story={stories} />
+        </>
       )}
     </>
   );
@@ -93,32 +71,26 @@ export const getServerSideProps = async ({
     per_page: PAGINATE_STORIES_LIMIT,
     // story_id: params?.storyId as string
   });
-  const storyFor = params?.storyId as string;
-  console.log('StoryFor://', storyFor);
+  const storyId = params?.storyId as string;
+  console.log('StoryFor://', storyId);
   try {
-    const stories = await getStorylines({
-      storyFor,
-      params: queryParams,
+    const stories = await getStory({
+      storyId,
+      // params: queryParams,
     });
 
-    // console.log('StoryID://', storyId,'storyline://',stories);
     return {
       props: {
         stories,
-        storyFor,
+        storyId,
         queryParams,
       },
     };
   } catch (error) {
     return {
       props: {
-        stories: {
-          stories: [] as Story[],
-          page: 1,
-          total_pages: 0,
-          total: 0,
-        },
-        storyFor,
+        stories: {} as Story,
+        storyId,
         queryParams,
       },
     };
