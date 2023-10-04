@@ -51,7 +51,6 @@ export const getServerSideProps = async ({
 
   try {
     const stories = await getStoriesByHashtag({ params: queryParams });
-    console.log('Fetched stories:', stories);
 
     // Check if the results are empty
     if (!stories.results || stories.results.length === 0) {

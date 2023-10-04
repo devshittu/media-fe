@@ -49,8 +49,6 @@ export const getServerSideProps = async ({
 
   try {
     const stories = await getStoriesByCategory({ params: queryParams });
-    // console.log('Fetched stories:', stories);
-    console.log('length', stories.results.length);
 
     // Check if the results are empty
     if (!stories.results || stories.results.length === 0) {
