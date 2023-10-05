@@ -1,5 +1,6 @@
-import React, { LabelHTMLAttributes, forwardRef } from 'react';
+import React, { LabelHTMLAttributes, forwardRef, useState } from 'react';
 import { ChangeHandler, FieldError, UseFormRegister } from 'react-hook-form';
+import { EyeIcon, EyeOffIcon, Icon } from '../illustrations';
 
 export type InputFieldPropTypes = {
   type?: 'text' | 'email' | 'password' | 'textarea';
@@ -39,6 +40,12 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
     }: InputFieldPropTypes,
     ref: React.Ref<HTMLInputElement>,
   ) => {
+     const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+      setShowPassword(prevState => !prevState);
+    };
+
     // const handleChange = (
     //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     // ) => {
@@ -91,7 +98,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
         <div className={className}>
           {showLabel && (
             <label htmlFor={computedId} className={labelClasses}>
-              {name}
+              <h3 className='font-bold'>
+              {name}</h3>
             </label>
           )}
           {type === 'textarea' ? (
@@ -105,6 +113,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
               disabled={disabled}
             />
           ) : (
+            <div className="relative"> {/* Add a relative div wrapper */}
+              
             <input
               className={inputClasses}
               name={name}
@@ -113,9 +123,19 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
               disabled={disabled}
               id={computedId}
               ref={ref}
-              type={type}
+              type={type === 'password' && showPassword ? 'text' : type}
               {...inputProps}
             />
+              {type === 'password' && (
+                <button
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                  type="button"
+                >
+                  {showPassword ?  (<Icon icon={<EyeOffIcon/>} strokeWidth={3} className='w-5 h-5 text-slate-800'/>) : (<Icon icon={<EyeIcon/>} strokeWidth={3} className='w-5 h-5 text-slate-800'/>)}
+                </button>
+              )}
+            </div>
           )}
           {error && <div className="text-red-500">{error.message}</div>}
         </div>
