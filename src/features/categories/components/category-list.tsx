@@ -11,12 +11,12 @@ export const CategoryList = React.memo(
     const { data: responseData, isLoading } = useCategories({}); // Use data and isLoading directly from the hook
     // const { categories } = useCategoryContext();
     const stableCategories = useMemo(
-      () => responseData?.categories,
-      [responseData?.categories],
+      () => responseData?.results,
+      [responseData?.results],
     );
     return (
       <>
-        {isLoading && <LoadingButtonTextList />}
+        {isLoading && <LoadingButtonTextList wrapped />}
         {stableCategories?.length > 0 && (
           <div className="flex gap-4 flex-wrap">
             {stableCategories.map((category: Category) => (
