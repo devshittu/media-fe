@@ -1,7 +1,4 @@
-import {
-  StoriesQueryParams,
-  StoryListResponse,
-} from '../../stories/types';
+import { StoriesQueryParams, StoryListResponse } from '../../stories/types';
 
 export type StoryListProps = {
   data: StoryListResponse;
