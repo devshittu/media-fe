@@ -4,7 +4,7 @@ export const useUser = (userId: string) => {
   // const followUser = useFollowUser();
   const { submit: followUserSubmit, isFollowLoading } = useFollowUser();
 
-  //   //Todo: block and unfollow user
+  // Todo: block and unfollow user
   const handleFollowUser = async (
     onSuccess: () => void,
     onFailure: () => void,
