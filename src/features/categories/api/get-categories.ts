@@ -6,7 +6,6 @@ import { DEFAULT_STALE_TIME, QUERY_KEYS } from '@/config/query';
 import { useEffect } from 'react';
 import { URI_CATEGORIES } from '@/config/api-constants';
 import { PaginatedListQueryParams } from '@/types';
-// import { uriTemplate } from '@/utils/uri-template';
 const { GET_CATEGORIES } = QUERY_KEYS;
 type GetCategoriesOptions = {
   params?: PaginatedListQueryParams & {
@@ -17,20 +16,20 @@ type GetCategoriesOptions = {
 export const getCategories = ({
   params,
 }: GetCategoriesOptions): Promise<CategoryListResponse> => {
-  return apiClient.get(`${URI_CATEGORIES}`, { params });
+  return apiClient.get(`${URI_CATEGORIES}`, { params, requiresAuth: false });
 };
 
 export const useCategories = ({ params }: GetCategoriesOptions) => {
   const queryClient = useQueryClient();
 
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_CATEGORIES, params?.category_id],
+    queryKey: [GET_CATEGORIES, params],
     queryFn: () => getCategories({ params }),
     initialData: () => {
       // Check if we have anything in cache and return that, otherwise get initial data
       const cachedData = queryClient.getQueryData<
         CategoryListResponse | undefined
-      >([GET_CATEGORIES, params?.category_id]);
+      >([GET_CATEGORIES, params]);
 
       if (cachedData) {
         return cachedData as CategoryListResponse;
@@ -47,13 +46,14 @@ export const useCategories = ({ params }: GetCategoriesOptions) => {
       } as CategoryListResponse;
     },
     //TODO: Keep data fresh for 5 minutes
-    staleTime: 1000 * 60 * 5,
+    // staleTime: 1000 * 60 * 5,
     // Keep data in cache for 10 minutes
     cacheTime: 1000 * 10,
     // staleTime: DEFAULT_STALE_TIME,
   });
   useEffect(() => {
     if (!isFetching && !isFetched) {
+      console.log('invalidateQueries - GET_CATEGORIES');
       queryClient.invalidateQueries([GET_CATEGORIES, params?.category_id]);
     }
   }, [queryClient, params, isFetching, isFetched]);
