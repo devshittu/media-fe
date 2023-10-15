@@ -29,7 +29,10 @@ export type PaginatedResponse<T> = {
   current_page: number;
   results: T[];
 };
-
+export type ServerErrorResponse = {
+  status_code: number;
+  error: Record<string, string[]>;
+};
 export type NewsChannel = {
   id: string;
   name: string;
