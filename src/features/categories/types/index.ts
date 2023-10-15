@@ -1,6 +1,5 @@
 import { Entity, PaginatedResponse } from '@/types';
 
-
 export type Category = {
   id: number;
   slug: string;
