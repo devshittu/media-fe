@@ -1,24 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useForm, Controller, FieldError } from 'react-hook-form';
 import CustomCheckboxGroup, {
   Option,
 } from '@/components/form/custom-checkbox-group';
-import { Category } from '@/features/categories';
-import { useCategoryContext } from '@/features/categories/hooks';
-import { Button } from '@/components/button';
+import { Category, useCategories } from '@/features/categories';
 import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { useAccountSettingsStore } from '@/stores/app-settings';
 import { getObjectsByIds } from '@/utils';
 import { useUpdateUserSettings } from '@/features/settings/api/update-user-settings';
-import { StepSuccess } from './step-success';
 import { useSuccessNotification } from '@/features/settings/hooks';
 import { UpdateSettingsButton } from '@/features/settings';
 import { useStepCompletion } from '@/components/blocks/wizard/hooks/useStepCompletion';
+import { LoadingButtonTextList } from '@/components/loading';
 
 export const PersonalizeCategories = () => {
   const asyncOnCompleted = useCallback(async () => {
     // Perform any asynchronous operations here
-    console.log('Component task is completed.');
+    // console.log('Component task is completed.');
   }, []);
   const [isCompleted, setIsCompleted] = useStepCompletion({
     // trigger: true,
@@ -40,11 +38,16 @@ export const PersonalizeCategories = () => {
     },
     mode: 'all',
   });
-  const { categories } = useCategoryContext();
+  // TODO: revisit the categories on the app provider to load it globally.
+  // const { categories } = useCategoryContext();
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories({
+    params: { page_size: 100 },
+  });
+  const categories = categoriesData?.results;
   const selectedOptions = watch('user_categories', []);
 
   useWizardStepValidation(() => {
-    console.log('isCompleted', isCompleted);
+    // console.log('isCompleted', isCompleted);
     return selectedOptions.length >= 3 && isCompleted;
   }); // TODO: take out the magic number 3
 
@@ -67,7 +70,7 @@ export const PersonalizeCategories = () => {
       ['personal_settings', 'favorite_categories'],
       selectedCategoryIds,
     );
-
+    console.log('modifiedSettings:// ', modifiedSettings);
     updateSettings.submit(modifiedSettings);
   };
 
@@ -80,41 +83,45 @@ export const PersonalizeCategories = () => {
     <>
       {/* {isCompleted && <StepCompleted />}
       {!isCompleted && ( */}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          name="user_categories"
-          control={control}
-          rules={{
-            validate: (value: Option<any>[]) =>
-              (value?.length ?? 0) > 0 ||
-              'At least one category must be selected',
-          }}
-          render={({ field: { onChange, value } }) => {
-            const categoryIds = value.map((item) =>
-              typeof item === 'string' ? item : item.id,
-            );
-            const selectedCategories = getObjectsByIds(
-              allCategories,
-              categoryIds,
-            );
-            return (
-              <CustomCheckboxGroup<Category, Category>
-                options={allCategories}
-                initialSelectedOptions={selectedCategories}
-                onChange={onChange}
-                renderAs="button"
-                className="flex gap-4 flex-wrap"
-                error={
-                  errors.user_categories?.message
-                    ? (errors.user_categories as FieldError)
-                    : null
-                }
-              />
-            );
-          }}
-        />
-        <UpdateSettingsButton isLoading={updateSettings.isLoading} />
-      </form>
+
+      {categoriesLoading && <LoadingButtonTextList wrapped />}
+      {!categoriesLoading && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="user_categories"
+            control={control}
+            rules={{
+              validate: (value: Option<any>[]) =>
+                (value?.length ?? 0) > 0 ||
+                'At least one category must be selected',
+            }}
+            render={({ field: { onChange, value } }) => {
+              const categoryIds = value.map((item) =>
+                typeof item === 'string' ? item : item.id,
+              );
+              const selectedCategories = getObjectsByIds(
+                allCategories,
+                categoryIds as string[],
+              );
+              return (
+                <CustomCheckboxGroup<Category, Category>
+                  options={allCategories}
+                  initialSelectedOptions={selectedCategories}
+                  onChange={onChange}
+                  renderAs="button"
+                  className="flex gap-4 flex-wrap"
+                  error={
+                    errors.user_categories?.message
+                      ? (errors.user_categories as FieldError)
+                      : null
+                  }
+                />
+              );
+            }}
+          />
+          <UpdateSettingsButton isLoading={updateSettings.isLoading} />
+        </form>
+      )}
       {/* )} */}
     </>
   );
