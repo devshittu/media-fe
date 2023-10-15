@@ -1,27 +1,48 @@
-import Axios from 'axios';
-import { useRouter } from 'next/router';
+import Axios, { AxiosError } from 'axios';
+import Router, { useRouter } from 'next/router';
+
 import { API_URL } from '@/config/constants';
 
 import { NotificationType, notificationsStore } from '@/stores/notifications';
 import { AuthStore } from '@/stores/auth';
+import {
+  URI_AUTH_LOGOUT,
+  URI_AUTH_TOKEN_REFRESH,
+} from '@/config/api-constants';
+import { signout, useSignout } from '@/features/auth';
+
 
 export const apiClient = Axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Access-Control-Allow-Headers': '*',
   },
   requiresAuth: true,
+
+  // Add withCredentials here if you want it to be the default for all requests
+  // withCredentials: true,
 });
+
+const handleLogoutAndRedirect = async () => {
+  try {
+    await signout();
+  } catch (error) {
+    console.error('Error during signout:', error);
+  } finally {
+    AuthStore.getState().setAccessToken(null);
+    Router.push('/');
+  }
+};
 
 apiClient.interceptors.request.use((config) => {
   if (config.requiresAuth) {
-    // Check if noAuth flag is set
+    // Check if requiresAuth flag is set
     const token = AuthStore.getState().accessToken;
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
+    // Set withCredentials for requests that require authentication
+    config.withCredentials = true;
   }
   return config;
 });
@@ -37,29 +58,40 @@ apiClient.interceptors.response.use(
     if (
       error.response &&
       error.response.status === 401 &&
-      !originalRequest._retry
+      !originalRequest._retry &&
+      originalRequest.url !== URI_AUTH_TOKEN_REFRESH && // Ensure we're not retrying the refresh token endpoint itself
+      originalRequest.url !== URI_AUTH_LOGOUT // Ensure we're not retrying the signout endpoint itself
     ) {
+      const currentAccessToken = AuthStore.getState().accessToken;
+
+      // If there's no access token in the store, handle signout and exit
+      if (!currentAccessToken) {
+        console.error('No access token available.');
+        handleLogoutAndRedirect();
+        return; // Exit the interceptor
+      }
+
       originalRequest._retry = true;
 
       try {
-        const res = await apiClient.post('/auth/token/refresh/'); // The browser will automatically include the refresh token cookie
-        const newAccessToken = res.data.access;
-        AuthStore.getState().setAccessToken(newAccessToken); // Update the access token in Zustand store
+        const res = await apiClient.post(URI_AUTH_TOKEN_REFRESH);
+        const newAccessToken = res.data.access_token;
+        AuthStore.getState().setAccessToken(newAccessToken);
         originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
-        return apiClient(originalRequest); // Retry the original request with the new token
-      } catch (refreshError) {
-        const error = refreshError as Error;
-        console.error('Refresh token error:', error.message);
-        // console.error('Refresh token error:', refreshError.response || refreshError); // Log the error response for debugging
-        AuthStore.getState().setAccessToken(null); // Clear access token in Zustand store
-        // Handle logout or redirect to login page
-
-        const router = useRouter();
-        router.replace( '/');
-
-        console.error('apiClient:// refreshError:// ', refreshError);
+        return apiClient(originalRequest);
+      } catch (refreshError: any) {
+        console.error(
+          'Refresh token error:',
+          refreshError?.response?.data || refreshError.message || refreshError,
+        );
+        AuthStore.getState().setAccessToken(null);
+        handleLogoutAndRedirect();
       }
+    } else if (originalRequest._retry) {
+      // If it's a retry request and still fails, just reject the promise
+      return Promise.reject(error);
     }
+
     const message = error.response?.data?.message || error.message;
 
     notificationsStore.getState().showNotification({
@@ -68,6 +100,10 @@ apiClient.interceptors.response.use(
       duration: 5000,
       message,
     });
+
+    if (error.response?.data) {
+      return Promise.reject(error.response.data);
+    }
 
     return Promise.reject(error);
   },
