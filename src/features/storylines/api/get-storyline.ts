@@ -3,9 +3,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 
 import { Storyline } from '../types';
-import {
-  URI_STORYLINES_BY_STORYLINE_ID,
-} from '@/config/api-constants';
+import { URI_STORYLINES_BY_STORYLINE_ID } from '@/config/api-constants';
 import { QUERY_KEYS } from '@/config/query';
 import { PaginatedListQueryParams } from '@/types';
 import { uriTemplate } from '@/utils';
