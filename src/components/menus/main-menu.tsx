@@ -136,7 +136,6 @@ const MainMenu = () => {
             {/* {JSON.stringify(auth.authUserDetails)} */}
             {auth.authUserDetails?.username}
           </h3>
-          <small className="">{auth.accessToken}</small>
           <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
             last logged in on {auth.authUserDetails?.last_activity} December 2,
             2021
