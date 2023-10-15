@@ -8,6 +8,7 @@ import {
   ThumbsDownIcon,
   ListIcon,
 } from '@/components/illustrations';
+import { Button } from '@/components/button';
 
 type StoryStatsProps = {
   viewCount: number;
@@ -17,13 +18,14 @@ type StoryStatsProps = {
   storylinesCount: number;
 };
 
-export const StoryStats: React.FC<StoryStatsProps> = ({
+export const StoryStats = ({
   viewCount,
   commentCount,
   likesCount,
   dislikesCount,
   storylinesCount,
-}) => {
+}: StoryStatsProps) => {
+  const handleStorylinePop = () => alert('Storyline');
   return (
     <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
       {/* Link to "Learn more" */}
@@ -34,15 +36,19 @@ export const StoryStats: React.FC<StoryStatsProps> = ({
 
       {/* Number of views */}
       <span className="text-slate-400 mr-3 inline-flex items-center ml-auto leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
-        <EyeIcon className="w-4 h-4 mr-1" />
-        {viewCount || 0}
+        <Link href={`/storylines/${storylinesCount}`} target="_blank">
+          <EyeIcon className="w-4 h-4 mr-1" />
+          {viewCount || 0}
+        </Link>
       </span>
 
       {/* Number of storylines */}
-      <span className="text-slate-400  mr-3 inline-flex items-center leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
-        <ListIcon className="w-4 h-4 mr-1" />
-        {storylinesCount || 0}
-      </span>
+      <Button onClick={handleStorylinePop}>
+        <span className="text-slate-400  mr-3 inline-flex items-center leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
+          <ListIcon className="w-4 h-4 mr-1" />
+          {storylinesCount || 0}
+        </span>
+      </Button>
       {/* Number of comments */}
       <span className="text-slate-400  mr-3 inline-flex items-center leading-none text-base pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
         <MessageSquareIcon className="w-4 h-4 mr-1" />
