@@ -1,5 +1,6 @@
 import React from 'react';
-import { LoginForm } from './login-form';
+import { useRouter } from 'next/router';
+import { SigninForm } from './signin-form';
 import Wizard from '@/components/blocks/wizard/wizard';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 import { usePopup } from '@/stores/ui';
@@ -10,7 +11,8 @@ import { beginnerTourSequence } from '../signup-flow/beginner-tour-sequence';
 import { TourPopperType } from '@/components/blocks/tour/tour-popper';
 import { useConfetti } from '@/stores/confetti';
 
-export const LoginSection = () => {
+export const SigninSection = () => {
+  const router = useRouter();
   const { showNotification } = useNotifications();
   const { show: showPopup, close: closePopup } = usePopup();
   const { showTour } = useTour();
@@ -23,9 +25,12 @@ export const LoginSection = () => {
       type: NotificationType.SUCCESS,
       title: 'Success',
       duration: 5000,
-      message: 'Job Created!',
+      message: 'Login successful!',
     });
-    showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleWizardFinish} />);
+    const redirect = router.query.redirect as string;
+    router.replace(redirect || '/stories');
+
+    // showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleWizardFinish} />);
   };
 
   const handleWizardFinish = async () => {
@@ -40,7 +45,7 @@ export const LoginSection = () => {
     });
   };
 
-  return <LoginForm onSuccess={onSuccess} />;
+  return <SigninForm onSuccess={onSuccess} />;
 };
 
 //Path: src/features/auth/components/login-form/login-section.tsx
