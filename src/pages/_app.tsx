@@ -6,6 +6,15 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ReactElement, ReactNode } from 'react';
 
+// Todo: Remove
+// const https = require('https');
+
+// https.get('https://api.mediaapp.local/api/stories/hashtag/Deforestation/', (res) => {
+//   console.log('statusCode:', res.statusCode);
+// }).on('error', (err) => {
+//   console.error(err);
+// });
+
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'true') {
   require('@/testing/mocks/initialize');
 }
