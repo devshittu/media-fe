@@ -1,3 +1,4 @@
+export * from './auth';
 export * from './fonts';
 export * from './helpers';
 export * from './uid';
