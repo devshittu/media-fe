@@ -11,9 +11,17 @@ import {
 } from '@/config/api-constants';
 import { signout, useSignout } from '@/features/auth';
 
+import getConfig from 'next/config';
+
+// Get our configuration of our runtimes
+const {serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+
+// Use the correct url depending on if it's server or public
+const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl;
+
 
 export const apiClient = Axios.create({
-  baseURL: API_URL,
+  baseURL: apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
