@@ -4,7 +4,6 @@ import {
   defaultSettings,
   settingsCleanSheet,
 } from '@/stores/app-settings/';
-import { Banner, BannerType } from '@/components/blocks/banner';
 import { useBanner } from '@/stores/ui/banner';
 import { DevelopmentBanner } from '@/components/blocks/banner/development-banner';
 

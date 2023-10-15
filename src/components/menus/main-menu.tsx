@@ -6,18 +6,18 @@ import {
   HomeIcon,
   SettingsIcon,
   FileTextIcon,
-  LayoutIcon,
   BookmarkIcon,
-  HashIcon,
   UserPlusIcon,
   HelpCircleIcon,
-  ListIcon,
   ClockIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
 import { TourPopperType } from '../blocks/tour/tour-popper';
 import { FlashCard } from '../blocks/flash-card';
 import { useTour } from '@/stores/tour';
+import { useAuth } from '@/stores/auth';
+import { Button } from '../button';
+import { useSignout } from '@/features/auth';
 const MainMenu = () => {
   const mainMenuList: MenuItem[] = [
     {
@@ -83,6 +83,8 @@ const MainMenu = () => {
     //   id: 'ui-components-page',
     // },
   ];
+  const auth = useAuth();
+  const signout = useSignout();
   const { showTour } = useTour();
 
   const tourSequence = [
@@ -104,6 +106,10 @@ const MainMenu = () => {
     },
   ];
 
+  const handleSignout = () => {
+    signout.submit();
+  };
+
   return (
     <>
       <MenuList menu={mainMenuList} />
@@ -122,6 +128,27 @@ const MainMenu = () => {
           })
         }
       />
+      <>
+        <div className="mt-3 sm:pr-8">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {auth.authUserDetails?.name}
+            <br/>
+            {/* {JSON.stringify(auth.authUserDetails)} */}
+            {auth.authUserDetails?.username}
+          </h3>
+          <small className="">{auth.accessToken}</small>
+          <time className="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+            last logged in on {auth.authUserDetails?.last_activity} December 2,
+            2021
+          </time>
+          <p className="text-base font-normal text-gray-500 dark:text-gray-400">
+            {auth.authUserDetails?.bio}
+          </p>
+          <p>
+            <Button onClick={handleSignout}>Signout</Button>
+          </p>
+        </div>
+      </>
     </>
   );
 };

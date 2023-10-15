@@ -1,14 +1,30 @@
+import { FeedPosition, Setting } from '@/features/settings';
 import { Entity } from '@/types';
 
-export type AuthUser = Entity & {
-  email: string;
-  // organizationId: string;
+export type AuthResponse = {
+  access_token: string;
 };
 
-export type LoginData = {
-  email: string;
-  // password?: string;
+export type VerifyOTPAndAuthResponse = AuthResponse & {
+  message: string;
 };
+
+export type PasswordSigninData = {
+  email: string;
+  username_or_email?: string;
+  password?: string;
+};
+export type SignupData = {
+  email: string;
+  password: string;
+  name: string;
+  username: string;
+};
+export type VerifyAccountData = {
+  email: string;
+  otp: string;
+};
+
 export type User = {
   id: number;
   name: string;
@@ -23,4 +39,9 @@ export type User = {
   is_active: boolean;
   is_staff: boolean;
   has_completed_setup: boolean;
+};
+
+export type AuthUser = User & {
+  settings?: Setting;
+  feed_position?: FeedPosition;
 };

@@ -1,14 +1,16 @@
+import React from 'react';
+import { useCategoryContext } from '@/features/categories/hooks';
 import { HomeIcon, Icon, AppLogoIcon } from '@/components/illustrations';
 import { Link } from '@/components/labs/typography';
-import React from 'react';
 import { Marquee } from './marquee';
-import { useCategoryContext } from '@/features/categories/hooks';
-import { LoginSection } from '@/features/auth/components/login-form/login-section';
+import { SigninSection } from '@/features/auth/components/signin-form/signin-section';
 import { LoadingButtonTextList } from '@/components/loading';
 
 export const LeftColumnContent = () => {
   const { categories, isLoading: isCategoriesLoading } = useCategoryContext();
 
+  // Convert the categoriesLookupTable object into an array
+  // const categories = Object.values(categoriesLookupTable);
   return (
     <div className="flex flex-col items-center justify-center w-full">
       <div className="flex flex-col items-center justify-between flex-grow w-full mx-12">
@@ -70,7 +72,7 @@ export const LeftColumnContent = () => {
             ))}
         </Marquee>
 
-        <LoginSection />
+        <SigninSection />
       </div>
     </div>
   );

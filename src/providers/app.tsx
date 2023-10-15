@@ -13,7 +13,7 @@ import { Tour } from '@/components/blocks/tour';
 import { ConfettiEffect } from '@/components/confetti';
 import SplashLoader from '@/components/blocks/splash-loader/splash-loader';
 import { useInitialSplashLoader } from '@/components/blocks/splash-loader/hooks/useInitialSplashLoader';
-import { useInitializeStore } from '@/hooks';
+import { useInitAuth, useInitializeStore } from '@/hooks';
 import { CookieConsent } from '@/components/blocks/cookie-consent';
 import { GlobalBanner } from '@/components/blocks/banner';
 
@@ -26,6 +26,9 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
   useInitialSplashLoader();
   // Initialize the Zustand store with default settings when the App component mounts
   useInitializeStore();
+
+  useInitAuth();
+
   // useAppInitialize();
 
   return (
@@ -38,14 +41,14 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
           <QueryClientProvider client={queryClient}>
             {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
 
-            <CategoriesProvider>
-              <GlobalBanner />
-              {children}
-              <GlobalPopup />
+            {/* <CategoriesProvider> */}
+            <GlobalBanner />
+            {children}
+            <GlobalPopup />
 
-              <Tour />
-              <CookieConsent />
-            </CategoriesProvider>
+            <Tour />
+            <CookieConsent />
+            {/* </CategoriesProvider> */}
           </QueryClientProvider>
 
           {/* The confetti effect and Splash loader effect to make it available through out the app */}

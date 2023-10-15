@@ -1,7 +1,7 @@
 import { Button } from '@/components/button';
-import { useLogin } from '../../api/login';
+import { usePasswordSignin } from '../../api/post-password-signin';
 import { useForm } from 'react-hook-form';
-import { LoginData } from '../../types';
+import { PasswordSigninData } from '../../types';
 import { InputField } from '@/components';
 
 import { LinedBackgroundText } from '@/components/labs';
@@ -11,21 +11,23 @@ import {
   Icon,
   TwitterColoredIcon,
 } from '@/components/illustrations';
-export type LoginFormProps = {
+export type SigninFormProps = {
   onSuccess: () => void;
 };
 
-export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-  const login = useLogin({ onSuccess });
-  const { register, handleSubmit, formState } = useForm<LoginData>({
-    defaultValues: { email: 'user1@test.com' },
+export const SigninForm = ({ onSuccess }: SigninFormProps) => {
+  const signin = usePasswordSignin({ onSuccess });
+  const { register, handleSubmit, formState } = useForm<PasswordSigninData>({
+    defaultValues: {
+      username_or_email: 'testuser2@test.com',
+      password: 'common_password',
+    },
     // mode: 'onChange',
     mode: 'onBlur',
   });
   // console.log('formState:// ',formState.isValid);
-  const onSubmit = (data: LoginData) => {
-    console.log(data);
-    login.submit(data);
+  const onSubmit = (data: PasswordSigninData) => {
+    signin.submit(data);
   };
 
   return (
@@ -43,28 +45,44 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
             <InputField
               required
               placeholder="Enter your email to continue..."
-              id="email"
+              id="username_or_email"
               label="Email"
               type="email"
-              {...register('email', {
-                required: 'Your email is required to continue',
+              showLabel
+              {...register('username_or_email', {
+                required: 'Your email or username is required to continue',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Invalid email address',
+                  message: 'Invalid email or username address',
                 },
               })}
               error={formState.errors.email}
             />
+            <br />
+            <InputField
+              required
+              placeholder="Enter your password"
+              id="password"
+              label="Password"
+              type="password"
+              showLabel
+              {...register('password', {
+                required: 'Your password is required to continue',
+              })}
+              error={formState.errors.password}
+            />
 
             <Button
               type="primary"
-              loading={!!login.isLoading}
-              disabled={login.isLoading}
+              loading={!!signin.isLoading}
+              disabled={signin.isLoading}
               nativeType="submit"
               className="justify-center font-semibold mt-4 w-full md:h-12"
               // onClick={openModal}
             >
-              <span className="opacity-100 transition-opacity">Connect</span>{' '}
+              <span className="opacity-100 transition-opacity font-extrabold text-xl">
+                Signin
+              </span>{' '}
               <span
                 className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity"
                 data-connect--form-target="submitLoader"
@@ -99,7 +117,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
         </form>
       </div>
       <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
-        Already registered? <Link href="/en-GB/auth/login">Sign in</Link>.
+        Already registered? <Link href="/auth/signin">Sign in</Link>.
       </p>
     </>
   );

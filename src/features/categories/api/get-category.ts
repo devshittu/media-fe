@@ -3,10 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 
 import { Category } from '../types';
-import {
-  URI_CATEGORIES,
-  URI_CATEGORIES_BY_SLUG,
-} from '@/config/api-constants';
+import { URI_CATEGORIES, URI_CATEGORIES_BY_SLUG } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 
 type GetCategoryOptions = {
@@ -17,9 +14,9 @@ export const getCategory = ({
   category_id,
 }: GetCategoryOptions): Promise<Category> => {
   const uri = uriTemplate(URI_CATEGORIES_BY_SLUG, {
-        slug: category_id,
-      });
-      
+    slug: category_id,
+  });
+
   return apiClient.get(`${uri}`);
 };
 

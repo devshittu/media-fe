@@ -39,6 +39,16 @@ const Portal = ({
     };
   }, [wrapperId]);
 
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
+
   // wrapperElement state will be null on the very first render.
 
   return wrapperElement !== null

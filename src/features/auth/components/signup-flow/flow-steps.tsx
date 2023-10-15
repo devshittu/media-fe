@@ -38,16 +38,6 @@ const mockBackendCall = () => {
 };
 export const SignupFlowSteps: Step[] = [
   {
-    id: 'step1',
-    title: 'Token Verification',
-    subtitle:
-      'Authenticate and validate your email or account to ensure a secure signup.',
-    component: <Token />,
-    isMandatory: true,
-    onNext: mockBackendCall,
-    // canComeBack: false,
-  },
-  {
     id: 'step2',
     title: 'Congratulations!',
     subtitle:

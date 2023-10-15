@@ -1,13 +1,18 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
+import { uriTemplate } from '@/utils';
+import { URI_USERS_FOLLOW_BY_USER_ID } from '@/config/api-constants';
 
 const { FOLLOW_USER } = QUERY_KEYS;
 
 export const followUser = (data: {
   user_id: string;
 }): Promise<{ status: boolean }> => {
-  return apiClient.post('/users/follow', { data });
+  const uri = uriTemplate(URI_USERS_FOLLOW_BY_USER_ID, {
+    user_id: data.user_id,
+  });
+  return apiClient.post(`${uri}`, { data });
 };
 
 export const useFollowUser = () => {

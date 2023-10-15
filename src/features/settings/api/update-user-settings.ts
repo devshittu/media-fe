@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { Setting } from '../types';
 import { ApiResponse } from '@/types';
-
 import { QUERY_KEYS } from '@/config/query';
+import { URI_AUTH_ME_SETTINGS } from '@/config/api-constants';
 const { UPDATE_USER_SETTINGS } = QUERY_KEYS;
 
 type UseUpdateUserSettingsOptions = {
@@ -13,7 +13,7 @@ type UseUpdateUserSettingsOptions = {
 };
 
 export const updateUserSettings = (data: Setting): Promise<ApiResponse> => {
-  return apiClient.put('/settings', data);
+  return apiClient.patch(`${URI_AUTH_ME_SETTINGS}`, data);
 };
 export const useUpdateUserSettings = ({
   // data,

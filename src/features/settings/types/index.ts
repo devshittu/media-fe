@@ -1,5 +1,9 @@
 import { Category } from '@/features/categories';
 
+export type FeedPosition = {
+  last_story_read: string | null;
+};
+
 export type Setting = {
   id: string;
   user_id: string;

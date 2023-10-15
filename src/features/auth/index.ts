@@ -1,6 +1,6 @@
 // api:
 export * from './api/get-auth-user';
-export * from './api/logout';
+export * from './api/post-signout';
 
 // components:
 export * from './components';

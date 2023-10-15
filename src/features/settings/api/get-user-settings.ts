@@ -6,6 +6,7 @@ import { Setting } from '../types';
 
 import { ApiResponse } from '@/types';
 import { QUERY_KEYS } from '@/config/query';
+import { URI_AUTH_ME_SETTINGS } from '@/config/api-constants';
 const { GET_USER_SETTINGS } = QUERY_KEYS;
 type GetUserSettingsOptions = {
   params?: {
@@ -16,7 +17,7 @@ type GetUserSettingsOptions = {
 export const getUserSettings = ({
   params,
 }: GetUserSettingsOptions): Promise<Setting> => {
-  return apiClient.get('/settings', {
+  return apiClient.get(`${URI_AUTH_ME_SETTINGS}`, {
     params,
   });
 };

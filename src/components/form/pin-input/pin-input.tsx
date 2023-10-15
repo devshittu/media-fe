@@ -1,54 +1,47 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AuthStatus, PinInputProps } from './types';
+import { Controller, FieldError, useFormContext } from 'react-hook-form';
 import { Pin } from './pin';
-import { usePinVerification } from './hooks/usePinVerification';
-import { ErrorText } from '@/components/labs';
+import { PinInputStatus } from './types';
+
+export type PinInputProps = {
+  control: any;
+  name: string;
+  pinInputStatus: PinInputStatus;
+  id?: string;
+  pinLength?: number;
+  error?: FieldError;
+  disabled?: boolean;
+
+  watch: (name?: string) => any;
+};
 
 const PinInput: React.FC<PinInputProps> = ({
-  authStatus,
-  pinLength = 4,
+  control,
+  name,
+  error,
+  watch,
+  pinInputStatus,
   id = 'app-pin-hidden-input',
-  onSuccess,
-  onVerify,
-  maxAttempts = 3,
-  warningThreshold,
-  onNotify,
+  pinLength = 4,
 }) => {
-  if (warningThreshold && !onNotify) {
-    throw new Error('onNotify must be provided if warningThreshold is set');
-  }
-
   const [pin, setPin] = useState('');
-  const [attempts, setAttempts] = useState(0);
   const pinInputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
+  const [pinInputState, setPinInputState] =
+    useState<PinInputStatus>(pinInputStatus);
 
-  const { loading, error, userLoginState, setUserLoginState } =
-    usePinVerification(
-      pin,
-      pinLength,
-      authStatus,
-      async () => await handleVerify(),
-      setPin,
-      onSuccess,
-    );
-
-  // Handle focus and blur events
-  useEffect(() => handleFocusBlur(), []);
-
-  // Focus the input field when the component mounts and when the pin is wiped
+  const tokenValue = watch(name);
+  // Set the pin state to the default value when the component mounts
   useEffect(() => {
-    if (!pin || pin === '') {
-      pinInputRef.current?.focus();
-    }
-  }, [pin]);
+    setPin(tokenValue);
+  }, [tokenValue]);
 
-  // Notify when attempts are made
-  useEffect(() => {
-    if (attempts > 0 && attempts < maxAttempts) {
-      onNotify?.(maxAttempts - attempts);
+  const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPin = e.target.value.substring(0, pinLength);
+    if (newPin.length <= pinLength) {
+      setPin(newPin);
     }
-  }, [attempts, maxAttempts, onNotify]);
+  };
 
   const handleFocusBlur = () => {
     const inputElement = pinInputRef.current;
@@ -61,87 +54,73 @@ const PinInput: React.FC<PinInputProps> = ({
       };
     }
   };
-
-  const handleVerify = async () => {
-    if (onVerify) {
-      const isVerified = await onVerify(pin);
-      setAttempts(isVerified ? 0 : attempts + 1);
-      return isVerified;
-    }
-    return false;
-  };
-
-  const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPin = e.target.value.substring(0, pinLength);
-    if (newPin.length <= pinLength) {
-      setPin(newPin);
-    }
-  };
-
+  useEffect(() => handleFocusBlur(), []);
   const handlePinClick = () => pinInputRef.current?.focus();
 
+  useEffect(() => {
+    if (
+      pinInputState === PinInputStatus.AUTHENTICATING ||
+      pinInputState === PinInputStatus.AUTH_ERROR
+    ) {
+      pinInputRef.current?.focus();
+    }
+  }, [pinInputState]);
+
   return (
-    <div className="pin-wrapper">
-      <label htmlFor={id} className="hidden">
-        Pin
-      </label>
-      <input
-        className="bg-transparent border-none ring-0 h-0 absolute w-0"
-        disabled={
-          userLoginState !== AuthStatus.AUTHENTICATING &&
-          userLoginState !== AuthStatus.AUTH_ERROR
-        }
-        id={id}
-        maxLength={pinLength}
-        ref={pinInputRef}
-        type="number"
-        value={pin}
-        onChange={handlePinChange}
-      />
-      <div
-        role="button"
-        title="token"
-        tabIndex={0}
-        className="flex gap-2"
-        onClick={handlePinClick}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handlePinClick();
-          }
+    <>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => {
+          return (
+            <div className="pin-wrapper">
+              <label htmlFor={id} className="hidden">
+                Pin
+              </label>
+              <input
+                {...field}
+                className="bg-transparent border-none ring-0 h-0 absolute w-0"
+                disabled={
+                  pinInputState !== PinInputStatus.AUTHENTICATING &&
+                  pinInputState !== PinInputStatus.AUTH_ERROR
+                }
+                id={id}
+                maxLength={pinLength}
+                ref={pinInputRef}
+                type="number"
+                value={pin}
+                onChange={(e) => {
+                  handlePinChange(e);
+                  field.onChange(e);
+                }}
+              />
+              <div
+                role="button"
+                title="token"
+                tabIndex={0}
+                className="flex gap-2"
+                onClick={handlePinClick}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handlePinClick();
+                  }
+                }}
+              >
+                {[...Array(pinLength)].map((_, index) => (
+                  <Pin
+                    key={index}
+                    focused={isFocused && pin.length === index}
+                    value={pin[index]}
+                  />
+                ))}
+              </div>
+            </div>
+          );
         }}
-      >
-        {[...Array(pinLength)].map((_, index) => (
-          <Pin
-            key={index}
-            focused={isFocused && pin.length === index}
-            value={pin[index]}
-          />
-        ))}
-      </div>
-      {loading && <div className="text-blue-500">Verifying...</div>}
-      {error && <ErrorText>{error.message}</ErrorText>}
-      {/* <h1>
-        {'Enter the "1234" '}
-        <button
-          onClick={handleCancelClick}
-          className="text-blue-600 hover:underline"
-        >
-          Cancel
-        </button>
-      </h1>
-     <div className="flex items-center">
-        <input
-          id="remember-checkbox"
-          type="checkbox"
-          checked={rememberMe}
-          onChange={handleRememberMeChange}
-          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-        />
-        <label htmlFor="remember-checkbox" className="ml-2 font-medium">
-          Remember me
-        </label>
-      </div> */}
-    </div>
+      />
+
+      {error && <div className="text-red-500 mt-2">{error.message}</div>}
+    </>
   );
 };
 

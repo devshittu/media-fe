@@ -1,7 +1,5 @@
-import { NavMain } from '@/components/blocks/nav';
 import { LeftColumn, LeftColumnContent } from '@/components/labs/LandingPage';
-import MainMenu from '@/components/menus/main-menu';
-import React, { ReactNode, useContext, useRef } from 'react';
+import React, { ReactNode } from 'react';
 
 type LandingLayoutProps = {
   children: ReactNode;

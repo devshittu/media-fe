@@ -1,6 +1,11 @@
 import { User } from '@/features/auth';
 import { Category } from '@/features/categories';
-import { Entity, NewsChannel, PaginatedListQueryParams, PaginatedResponse } from '@/types';
+import {
+  Entity,
+  NewsChannel,
+  PaginatedListQueryParams,
+  PaginatedResponse,
+} from '@/types';
 
 export type Story = {
   storylines_count: number;

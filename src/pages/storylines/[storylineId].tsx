@@ -13,9 +13,7 @@ import { cleanObject } from '@/utils';
 import { getStoryline } from '@/features/storylines/api/get-storyline';
 import { getStorylineStories } from '@/features/storylines/api/get-storyline-stories';
 import { StorylinePane } from '@/features/storylines/components/';
-import {
-  getStorylineHashtags,
-} from '@/features/storylines/api/get-storyline-hashtags';
+import { getStorylineHashtags } from '@/features/storylines/api/get-storyline-hashtags';
 import { Hashtag } from '@/features/hashtags';
 
 type PublicStoryPageProps = InferGetServerSidePropsType<

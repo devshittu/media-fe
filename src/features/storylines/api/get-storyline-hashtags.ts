@@ -4,9 +4,7 @@ import { apiClient } from '@/lib/api-client';
 
 import { StoriesQueryParams } from '../../stories/types';
 import { QUERY_KEYS } from '@/config/query';
-import {
-  URI_STORYLINES_BY_STORYLINE_ID_HASHTAGS,
-} from '@/config/api-constants';
+import { URI_STORYLINES_BY_STORYLINE_ID_HASHTAGS } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { HashtagListResponse } from '@/features/hashtags';
 const { GET_HASHTAGS } = QUERY_KEYS;

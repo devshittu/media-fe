@@ -9,7 +9,12 @@ import { PaneConfig } from '@/components/blocks/side-panel/types';
 import { UserSuggestionList } from '@/features/users/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { TimelineScrollbar } from '@/components/blocks/timeline-scroller';
-import { StoriesQueryParams, Story, StoryListItem, getStory } from '@/features/stories';
+import {
+  StoriesQueryParams,
+  Story,
+  StoryListItem,
+  getStory,
+} from '@/features/stories';
 import { cleanObject } from '@/utils';
 
 type PublicStoryPageProps = InferGetServerSidePropsType<
@@ -21,14 +26,13 @@ const StorylinePage = ({
   storyId,
   queryParams,
 }: PublicStoryPageProps) => {
-
   return (
     <>
       <StoriesPageHeader pageTitle="Timeline" />
       {!stories && <NotFound />}
       {stories && (
         <>
-        <StoryListItem story={stories} />
+          <StoryListItem story={stories} />
         </>
       )}
     </>

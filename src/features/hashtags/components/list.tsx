@@ -16,7 +16,7 @@ export const HashtagList = React.memo(
     );
     return (
       <>
-        {isLoading && <LoadingButtonTextList />}
+        {isLoading && <LoadingButtonTextList wrapped />}
         {stableHashtags?.length > 0 && (
           <div className="flex gap-4 flex-wrap">
             {stableHashtags.map((hashtag: Hashtag, i) => (
