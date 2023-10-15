@@ -82,7 +82,7 @@ export const PersonalSettings = ({
   };
 
   const categoriesData = useCategories({});
-  const allCategories = (categoriesData.data.categories as Category[]).map(
+  const allCategories = (categoriesData.data.results as Category[]).map(
     (category) => ({
       ...category,
       label: category.title,
