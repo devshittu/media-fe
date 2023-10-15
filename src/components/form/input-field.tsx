@@ -27,6 +27,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
       type = 'text',
       size = 'base',
       name,
+      label,
       error,
       placeholder,
       value,
@@ -40,10 +41,10 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
     }: InputFieldPropTypes,
     ref: React.Ref<HTMLInputElement>,
   ) => {
-     const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
-      setShowPassword(prevState => !prevState);
+      setShowPassword((prevState) => !prevState);
     };
 
     // const handleChange = (
@@ -62,7 +63,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
 
     //focus:ring-inset
     const inputClasses = `
-  block  w-full font-bold
+    block  w-full font-bold
     bg-slate-50 text-slate-700 border-2 border-slate-700  dark:border-slate-300 placeholder-slate-400
     text-base
     
@@ -98,8 +99,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
         <div className={className}>
           {showLabel && (
             <label htmlFor={computedId} className={labelClasses}>
-              <h3 className='font-bold'>
-              {name}</h3>
+              <h3 className="font-bold">{label || name}</h3>
             </label>
           )}
           {type === 'textarea' ? (
@@ -113,26 +113,39 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
               disabled={disabled}
             />
           ) : (
-            <div className="relative"> {/* Add a relative div wrapper */}
-              
-            <input
-              className={inputClasses}
-              name={name}
-              placeholder={placeholder}
-              value={value}
-              disabled={disabled}
-              id={computedId}
-              ref={ref}
-              type={type === 'password' && showPassword ? 'text' : type}
-              {...inputProps}
-            />
+            <div className="relative">
+              {' '}
+              {/* Add a relative div wrapper */}
+              <input
+                className={inputClasses}
+                name={name}
+                placeholder={placeholder}
+                value={value}
+                disabled={disabled}
+                id={computedId}
+                ref={ref}
+                type={type === 'password' && showPassword ? 'text' : type}
+                {...inputProps}
+              />
               {type === 'password' && (
                 <button
                   onClick={togglePasswordVisibility}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                   type="button"
                 >
-                  {showPassword ?  (<Icon icon={<EyeOffIcon/>} strokeWidth={3} className='w-5 h-5 text-slate-800'/>) : (<Icon icon={<EyeIcon/>} strokeWidth={3} className='w-5 h-5 text-slate-800'/>)}
+                  {showPassword ? (
+                    <Icon
+                      icon={<EyeOffIcon />}
+                      strokeWidth={2.5}
+                      className="w-5 h-5 text-slate-800 dark:text-slate-200"
+                    />
+                  ) : (
+                    <Icon
+                      icon={<EyeIcon />}
+                      strokeWidth={2.5}
+                      className="w-5 h-5 text-slate-800 dark:text-slate-200"
+                    />
+                  )}
                 </button>
               )}
             </div>
