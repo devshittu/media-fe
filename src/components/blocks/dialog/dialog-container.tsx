@@ -2,17 +2,18 @@ import React from 'react';
 
 type DialogContainerProps = React.HTMLProps<HTMLDivElement> & {
   rounded?: boolean;
+  width?: 'fit' | 'medium' | 'wide';
 };
 
 export const DialogContainer = React.forwardRef<
   HTMLDivElement,
   DialogContainerProps
->(({ rounded, children, ...props }, ref) => {
+>(({ rounded, width = 'wide', children, ...props }, ref) => {
   return (
     <div
-      className={`flex flex-col w-full mx-auto outline-none bg-slate-50 dark:bg-slate-950 max-h-[calc(100%-56px)] overflow-y-hidden shadow-lg max-w-4xl ${
-        rounded ? 'rounded-2xl' : ''
-      } z-[9999]`}
+      className={`flex flex-col w-full mx-auto outline-none bg-slate-50 dark:bg-slate-950 max-h-[calc(100%-56px)] overflow-y-hidden shadow-lg  ${
+        width === 'medium' ? 'max-w-2xl' : ' max-w-4xl '
+      }  ${rounded ? 'rounded-2xl' : ''}`}
       data-app-dialog="true"
       tabIndex={-1}
       role="dialog"
