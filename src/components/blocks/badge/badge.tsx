@@ -1,3 +1,4 @@
+import { Button } from '@/components/button';
 import React, { HTMLAttributes } from 'react';
 export enum BadgeType {
   SUCCESS = 'success',
@@ -101,9 +102,14 @@ export const Badge = ({
   );
 
   return onClick ? (
-    <button onClick={onClick} className="focus:outline-none" {...props}>
+    <Button
+      onClick={onClick}
+      className="focus:outline-none"
+      {...props}
+      nativeType="button"
+    >
       {badgeContent}
-    </button>
+    </Button>
   ) : (
     badgeContent
   );
