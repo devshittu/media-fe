@@ -241,3 +241,5 @@ export const PopoverClose = React.forwardRef<
     />
   );
 });
+
+// Path: src/components/blocks/popover/popover.tsx
