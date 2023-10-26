@@ -21,13 +21,13 @@ export const useAuthUser = () => {
       // Handle the error here if needed
       console.error(error);
 
-      throw new Error(error.response?.data?.message || "Failed to fetch auth user");
-  
+      throw new Error(
+        error.response?.data?.message || 'Failed to fetch auth user',
+      );
     },
   });
 
   return { data, isLoading, error };
 };
-
 
 // src/features/auth/api/get-auth-user.ts
