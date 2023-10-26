@@ -11,11 +11,9 @@ import {
   Icon,
   TwitterColoredIcon,
 } from '@/components/illustrations';
-export type SigninFormProps = {
-  onSuccess: () => void;
-};
+import { AppFormProps } from '@/types';
 
-export const SigninForm = ({ onSuccess }: SigninFormProps) => {
+export const SigninForm = ({ onSuccess }: AppFormProps) => {
   const signin = usePasswordSignin({ onSuccess });
   const { register, handleSubmit, formState } = useForm<PasswordSigninData>({
     defaultValues: {
@@ -117,7 +115,7 @@ export const SigninForm = ({ onSuccess }: SigninFormProps) => {
         </form>
       </div>
       <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
-        Already registered? <Link href="/auth/signin">Sign in</Link>.
+        {"I don't have an account?"} <Link href="/auth/signup">Sign up</Link>.
       </p>
     </>
   );
