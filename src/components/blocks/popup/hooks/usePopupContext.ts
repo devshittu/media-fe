@@ -21,3 +21,5 @@ export const usePopupContext = () => {
 
   return context;
 };
+
+// Path: src/components/blocks/popup/hooks/usePopupContext.ts
