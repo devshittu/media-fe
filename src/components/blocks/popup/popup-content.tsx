@@ -4,37 +4,43 @@ import {
   FloatingPortal,
   FloatingFocusManager,
   FloatingOverlay,
-  useId,
 } from '@floating-ui/react';
 import { usePopupContext } from './hooks/usePopupContext';
 export const PopupContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLProps<HTMLDivElement>
->((props, propRef) => {
-  const { context: floatingContext, ...context } = usePopupContext();
+>(({ style, ...props }, propRef) => {
+  const { context: floatingContext, modal, ...context } = usePopupContext();
   const ref = useMergeRefs([context.refs.setFloating, propRef]);
 
   if (!floatingContext.open) return null;
 
+  const renderContent = (
+    <FloatingFocusManager context={floatingContext} modal={modal}>
+      <div
+        ref={ref}
+        style={!modal ? { ...context.floatingStyles, ...style } : {}} //TODO: !Fix here based on modal
+        aria-labelledby={context.labelId}
+        aria-describedby={context.descriptionId}
+        {...context.getFloatingProps(props)}
+      >
+        {props.children}
+      </div>
+    </FloatingFocusManager>
+  );
+
   return (
     <FloatingPortal>
-      <div
-        style={{ zIndex: 30, position: 'fixed', overflow: 'auto', inset: 0 }}
-      >
-        <FloatingOverlay lockScroll>
-          <FloatingFocusManager context={floatingContext}>
-            <div
-              ref={ref}
-              aria-labelledby={context.labelId}
-              aria-describedby={context.descriptionId}
-              {...context.getFloatingProps(props)}
-            >
-              {props.children}
-            </div>
-          </FloatingFocusManager>
-        </FloatingOverlay>
-      </div>
+      {modal ? (
+        <div style={{ zIndex: 99, position: 'absolute' }}>
+          <FloatingOverlay lockScroll>{renderContent}</FloatingOverlay>
+        </div>
+      ) : (
+        renderContent
+      )}
     </FloatingPortal>
   );
 });
 PopupContent.displayName = 'PopupContent';
+
+// Path: src/components/blocks/popup/popup-content.tsx
