@@ -1,9 +1,12 @@
 import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { StepProps } from '@/components/blocks/wizard/types';
+import { useSignupStore } from '@/stores/auth';
 import React, { useEffect } from 'react';
 
 export const Finish = ({ onValidationStatusChange }: StepProps) => {
   useWizardStepValidation();
+  // Access store methods.
+  const { getSignupData } = useSignupStore();
   return (
     <>
       <div>
