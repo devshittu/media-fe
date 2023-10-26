@@ -7,18 +7,21 @@ import PinInput from '@/components/form/pin-input/pin-input';
 import { PinInputStatus } from '@/components/form/pin-input/types';
 import { useVerifyAccount } from '../../api/post-verify-account';
 import { Hint } from '@/components/blocks/hint';
+import { useSignupStore } from '@/stores/auth';
 export type AccountVerificationFormProps = {
   onSuccess: () => void;
 };
 export const AccountVerificationForm = ({
   onSuccess,
 }: AccountVerificationFormProps) => {
+  // Access store methods.
+  const { setOTP, basicInformation } = useSignupStore();
   const { submit, isLoading, error } = useVerifyAccount({ onSuccess });
   const { control, watch, register, handleSubmit, formState, setError } =
     useForm<VerifyAccountData>({
       defaultValues: {
         otp: '',
-        email: 'test100@test.com',
+        email: basicInformation?.email || '',
       },
       // mode: 'onChange',
       mode: 'onBlur',
@@ -41,13 +44,16 @@ export const AccountVerificationForm = ({
 
   const onSubmit = async (data: VerifyAccountData) => {
     console.log(data);
-
+    setOTP(data.otp);
+    // TODO uncomment when ready to submit to server.
     submit(data);
+    // onSuccess()
   };
 
   return (
     <>
       <div className="w-full max-w-[500px]">
+        <>Email: {basicInformation?.email}</>
         <form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
@@ -87,20 +93,7 @@ export const AccountVerificationForm = ({
               nativeType="submit"
               className="justify-center font-semibold mt-4 w-full md:h-12"
             >
-              <span className="opacity-100 transition-opacity">Verify</span>{' '}
-              <span
-                className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity"
-                data-connect--form-target="submitLoader"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  className="w-6 h-6 animate-spin currentColor"
-                >
-                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm8 12c0 4.418-3.582 8-8 8s-8-3.582-8-8 3.582-8 8-8 8 3.582 8 8zm-19 0c0-6.065 4.935-11 11-11v2c-4.962 0-9 4.038-9 9 0 2.481 1.009 4.731 2.639 6.361l-1.414 1.414.015.014c-2-1.994-3.24-4.749-3.24-7.789z"></path>
-                </svg>
-              </span>
+              <span className="opacity-100 transition-opacity">Verify</span>
             </Button>
           </div>
         </form>
