@@ -20,7 +20,8 @@ export type InputFieldPropTypes = {
   className?: string;
 } & Partial<ReturnType<UseFormRegister<Record<string, unknown>>>>;
 
-export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
+// export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputFieldPropTypes>(
+export const InputField = forwardRef<any, InputFieldPropTypes>(
   (
     {
       id,
@@ -109,8 +110,9 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldPropTypes>(
               name={name}
               placeholder={placeholder}
               value={value}
-              {...inputProps}
               disabled={disabled}
+              ref={ref as React.Ref<HTMLTextAreaElement>}
+              {...inputProps}
             />
           ) : (
             <div className="relative">
