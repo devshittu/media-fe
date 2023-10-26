@@ -6,8 +6,9 @@ import React, {
   HTMLAttributes,
   useContext,
 } from 'react';
-
+import { Button } from '@/components/button';
 import { Link } from '@/components/labs/typography';
+import { Icon } from '../illustrations';
 
 type MenuProps = {
   children: ReactNode;
@@ -55,7 +56,7 @@ const useMenuContext = (): MenuContextType => {
   return context;
 };
 
-type MenuItemProps = {
+type MenuLinkItemProps = {
   label: string;
   url: string;
   onClick?: React.MouseEventHandler;
@@ -64,7 +65,7 @@ type MenuItemProps = {
   tag?: ReactNode;
 };
 
-const MenuItem: React.FC<MenuItemProps> = ({
+const MenuLinkItem: React.FC<MenuLinkItemProps> = ({
   label,
   onClick,
   url,
@@ -99,6 +100,47 @@ const MenuItem: React.FC<MenuItemProps> = ({
   );
 };
 
+type MenuButtonItemProps = {
+  label: string;
+  icon?: ReactNode;
+  onClick?: () => void;
+  disabled?: boolean;
+  tag?: ReactNode;
+};
+
+export const MenuButtonItem = ({
+  label,
+  icon,
+  onClick,
+  disabled,
+  tag,
+}: MenuButtonItemProps) => {
+  return (
+    <>
+      <Button
+        nativeType="button"
+        className={`relative inline-flex items-center w-full px-4 py-2 text-base xl:text-lg font-medium hover:bg-slate-100 hover:text-cyan-600 focus:z-10 focus:ring-2 focus:ring-cyan-600 focus:text-cyan-600 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-white dark:focus:ring-slate-500 dark:focus:text-cyan-500 ${
+          disabled ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
+        onClick={disabled ? undefined : onClick}
+        disabled={disabled}
+      >
+        {/* {icon && <Icon icon={icon} className="w-3 h-3 mr-2.5" />} */}
+
+        {icon && (
+          <span className="mr-2 text-slate-400 dark:text-slate-500 group-hover:text-cyan-600 dark:group-hover:text-cyan-500">
+            {icon}
+          </span>
+        )}
+
+        <h4>{label}</h4>
+
+        {tag && <span className="ml-auto">{tag}</span>}
+      </Button>
+    </>
+  );
+};
+
 type MenuHeaderProps = {
   children: ReactNode;
 };
@@ -119,5 +161,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ children }) => {
   return <div className="menu-footer">{children}</div>;
 };
 
-export { Menu, MenuItem, MenuHeader, MenuFooter };
+export { Menu, MenuLinkItem, MenuHeader, MenuFooter };
 export default Menu;
+
+// Path: src/components/menus/menu.tsx
