@@ -12,11 +12,11 @@ export type ProtectedProps = {
 
 export const Protected = ({ children }: ProtectedProps) => {
   const { replace, asPath } = useRouter();
-  const {data: authUser, isLoading, error} = useAuthUser();
+  const { data: authUser, isLoading, error } = useAuthUser();
 
   useEffect(() => {
     if (error) {
-      console.error('user.error:// ', error); // Log the error for debugging
+      console.error('user.error:// ', error, 'current url:// ', asPath); // Log the error for debugging
       replace(`/auth/login?redirect=${asPath}`, undefined, { shallow: true });
     }
     // if (!user.data && !user.isLoading) {
@@ -32,13 +32,13 @@ export const Protected = ({ children }: ProtectedProps) => {
     );
   }
 
-if (error) {
-  return (
-    <div>
-      Please <Link href="/">log in</Link> to continue.
-    </div>
-  );
-}
+  if (error) {
+    return (
+      <div>
+        Please <Link href="/">log in</Link> to continue.
+      </div>
+    );
+  }
   if (!authUser && !isLoading) return null;
 
   return <>{children}</>;
