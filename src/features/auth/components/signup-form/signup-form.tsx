@@ -14,6 +14,7 @@ import {
 } from '@/components/illustrations';
 import { ServerErrorResponse } from '@/types';
 import { useRouter } from 'next/router';
+import { useSignupStore } from '@/stores/auth';
 
 export type SignupFormProps = {
   onSuccess: () => void;
@@ -21,12 +22,13 @@ export type SignupFormProps = {
 export const SignupForm = ({ onSuccess }: SignupFormProps) => {
   const router = useRouter();
   const { submit, isLoading, error } = useSignup({ onSuccess });
+  const { setBasicInformation } = useSignupStore();
   const { register, handleSubmit, formState, setError } = useForm<SignupData>({
     defaultValues: {
-      name: 'Test User 100',
-      email: 'test100@test.com',
+      name: 'Test User 20',
+      email: 'test20@test.com',
       password: 'commonPassword=1',
-      username: 'test100',
+      username: 'test20',
     },
     // mode: 'onChange',
     mode: 'onBlur',
@@ -49,9 +51,12 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
 
   const onSubmit = async (data: SignupData) => {
     console.log(data);
-    // TODO: allow todo
+    // TODO: allow saving in the signup store
+    setBasicInformation(data);
+    //TODO: when real data is expected to be submited to the server uncomment this and delete the onSuccess callback
     submit(data);
-    // router.push(`/auth/signup/verify-account`);
+    // TODO: deletes this when real data is submitted
+    // onSuccess();
   };
 
   return (
