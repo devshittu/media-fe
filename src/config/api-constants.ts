@@ -38,7 +38,7 @@ export const URI_STORYLINES_BY_STORYLINE_ID = '/storylines/{{storyline_id}}/';
 export const URI_STORYLINES_BY_STORYLINE_ID_STORIES =
   '/storylines/{{storyline_id}}/stories/';
 export const URI_BOOKMARKS = '/bookmarks/';
-export const URI_BOOKMARKS_BY_PK = '/bookmarks/{{pk}}/';
+export const URI_BOOKMARKS_BY_STORY_ID = '/bookmarks/{{story_id}}/';
 export const URI_USERS = '/users/';
 export const URI_USERS_BY_PK = '/users/{{pk}}/';
 export const URI_USERS_UNFOLLOWED = '/users/unfollowed/';
@@ -63,3 +63,4 @@ export const URI_ANALYTICS_ACCESSIBILITY_TOOLS =
   '/analytics/accessibility-tools/';
 export const URI_ANALYTICS_ACCESSIBILITY_TOOLS_BY_PK =
   '/analytics/accessibility-tools/{{pk}}/';
+export const URI_FEEDBACKS_REPORT = '/feedbacks/report/';
