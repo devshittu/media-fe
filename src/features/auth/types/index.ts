@@ -45,3 +45,10 @@ export type AuthUser = User & {
   settings?: Setting;
   feed_position?: FeedPosition;
 };
+
+export type AuthUserTileProps = {
+  actionButtonText: string;
+  closeIcon?: React.ReactNode;
+};
+
+// Path: src/features/auth/types/index.ts

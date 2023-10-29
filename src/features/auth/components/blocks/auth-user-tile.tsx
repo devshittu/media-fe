@@ -13,8 +13,6 @@ import { useSignout } from '@/features/auth';
 export const AuthUserTile = ({
   actionButtonText,
   closeIcon = <SettingsIcon className="w-6 h-6" strokeWidth={2.5} />,
-  onActionClick,
-  onCloseClick,
 }: AuthUserTileProps) => {
   const auth = useAuth();
   const defaultAvatar = '/avatars/avatar.svg';
