@@ -17,15 +17,11 @@ export const AuthUserTile = ({
   onCloseClick,
 }: AuthUserTileProps) => {
   const auth = useAuth();
-  const signout = useSignout();
   const defaultAvatar = '/avatars/avatar.svg';
   const name = auth.authUserDetails?.name || 'Loading...';
   const subName = auth.authUserDetails?.username || 'Loading...';
   const description = auth.authUserDetails?.bio || 'Loading...';
   const profileImageSrc = auth.authUserDetails?.avatar_url || 'Loading...';
-  const handleSignout = () => {
-    signout.submit();
-  };
 
   return (
     <>
@@ -63,7 +59,7 @@ export const AuthUserTile = ({
           </div>
           <button
             type="button"
-            onClick={onCloseClick}
+            // onClick={onCloseClick}
             className="flex ml-auto -mx-1.5x -my-1.5x bg-whitex justify-center items-center flex-shrink-0 text-slate-700 hover:text-slate-900 rounded-lgx focus:ring-2 focus:ring-slate-300 p-1.5 hover:bg-slate-100x  h-8 w-8 dark:text-slate-300 dark:hover:text-white dark:bg-slate-800x dark:hover:bg-slate-700x"
             aria-label="Close"
           >
