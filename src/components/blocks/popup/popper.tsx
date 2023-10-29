@@ -20,7 +20,9 @@ export const ControlledPopper = ({
       open={open}
       onOpenChange={setOpen}
     >
-      <PopupTrigger asChild onClick={() => setOpen((v) => !v)}>{trigger}</PopupTrigger>
+      <PopupTrigger asChild onClick={() => setOpen((v) => !v)}>
+        {trigger}
+      </PopupTrigger>
       <PopupContent className="Popup  z-20 w-44 md:w-48 bg-slate-50 dark:bg-slate-800">
         {children}
       </PopupContent>
