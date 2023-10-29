@@ -1,8 +1,13 @@
 import { BoxIcon } from '@/components/illustrations';
 import { MenuButtonItem } from '@/components/menus/menu';
 import React from 'react';
+import { useSignout } from '../../api/post-signout';
 
 export const AuthUserContextMenu = () => {
+  const signout = useSignout();
+    const handleSignout = () => {
+    signout.submit();
+  };
   return (
     <div className="w-48 text-slate-900 bg-white border-2 border-slate-600  shadow-md dark:shadow-slate-950 dark:bg-slate-950 dark:border-slate-400 dark:text-white">
       <MenuButtonItem
@@ -25,7 +30,7 @@ export const AuthUserContextMenu = () => {
       />
       <MenuButtonItem
         label="Signout"
-        onClick={() => console.log('Signout clicked')}
+        onClick={handleSignout}
       />
     </div>
   );
