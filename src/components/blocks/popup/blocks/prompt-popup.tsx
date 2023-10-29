@@ -40,11 +40,11 @@ export const PromptPopup = ({
   };
 
   // Ensure that children is a single React element
-    if (React.Children.count(children) !== 1) {
-      throw new Error(
-        'PromptPopup expects a single child component make sure that children is not conditional which may make it undefined such as {someCondition && <SomeComponent/>.}',
-      );
-    }
+  if (React.Children.count(children) !== 1) {
+    throw new Error(
+      'PromptPopup expects a single child component make sure that children is not conditional which may make it undefined such as {someCondition && <SomeComponent/>.}',
+    );
+  }
 
   return (
     <Dialog>
