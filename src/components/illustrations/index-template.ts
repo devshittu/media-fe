@@ -11,3 +11,4 @@ function defaultIndexTemplate(filePaths) {
 }
 
 module.exports = defaultIndexTemplate;
+// Path: src/components/illustrations/index-template.ts
