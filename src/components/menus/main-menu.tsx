@@ -9,12 +9,15 @@ import {
   UserPlusIcon,
   HelpCircleIcon,
   ClockIcon,
+  Icon,
+  AppLogoIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
 import { TourPopperType } from '../blocks/tour/tour-popper';
 import { FlashCard } from '../blocks/flash-card';
 import { useTour } from '@/stores/tour';
 import { AuthUserTile } from '@/features/auth';
+import { Link } from '../labs';
 const MainMenu = () => {
   const mainMenuList: MenuItem[] = [
     {
@@ -71,7 +74,7 @@ const MainMenu = () => {
       name: 'Auth',
       icon: <UserPlusIcon />,
       url: '/auth/signup',
-      id: 'music-page',
+      id: 'auth-page',
     },
     // {
     //   name: 'UI/UX Components',
@@ -103,6 +106,24 @@ const MainMenu = () => {
 
   return (
     <>
+      {/* Header */}
+      <div className="flex items-start justify-between w-full pl-1.5 mb-16 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700">
+        <Link
+          href="/"
+          aria-label="Company"
+          title="Company"
+          className="inline-flex items-center"
+        >
+          <AppLogoIcon strokeWidth={2} />
+          <span className="ml-2 text-xl font-bold tracking-wide uppercase">
+            Media Inc.
+          </span>
+        </Link>
+
+        <span className="w-35"></span>
+
+        <span className="w-35"></span>
+      </div>
       <MenuList menu={mainMenuList} />
       <ThemeSwitch />
       <FlashCard
