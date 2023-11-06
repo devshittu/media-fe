@@ -11,9 +11,8 @@ import { useForm } from 'react-hook-form';
 import { useAddFeedback } from '../../api/post-add-feedback';
 import { Story } from '@/features/stories';
 import { AddFeedbackFormData, ReportType } from '@/features/feedbacks';
-import { Controller } from 'react-hook-form';
-import CustomCheckbox from '@/components/form/custom-checkbox';
 import { AuthStore } from '@/stores/auth';
+import { Space } from '@/components/labs';
 
 export const AddFeedbackForm = ({
   story,
@@ -114,7 +113,8 @@ export const AddFeedbackForm = ({
                   Submit
                 </span>
               </Button>
-              &nbsp;&nbsp;
+              <Space />
+              <Space />
               <Button
                 nativeType="button"
                 outlined
