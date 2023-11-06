@@ -6,6 +6,7 @@ import { AppFormProps } from '@/types';
 import { useForm } from 'react-hook-form';
 import { useAddBookmark } from '../../api/post-add-bookmark';
 import { Story } from '@/features/stories';
+import { Space } from '@/components/labs';
 
 export const AddBookmarkForm = ({
   story,
@@ -84,7 +85,8 @@ export const AddBookmarkForm = ({
                   Add Bookmark
                 </span>
               </Button>
-              &nbsp;&nbsp;
+              <Space />
+              <Space />
               <Button
                 nativeType="button"
                 outlined
