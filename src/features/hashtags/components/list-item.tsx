@@ -30,7 +30,7 @@ export const HashtagListItem = ({
       >
         {`#` + hashtag.name}
 
-        {/* &nbsp;&nbsp;<Tag variant='yellow'>{hashtag.stories_count}</Tag> */}
+        {/* <Space/><Space/><Tag variant='yellow'>{hashtag.stories_count}</Tag> */}
         {closable && (
           <button
             type="button"
