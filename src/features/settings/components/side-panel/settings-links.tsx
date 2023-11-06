@@ -1,5 +1,5 @@
 import React from 'react';
-import Menu, { MenuItem } from '@/components/menus/menu';
+import Menu, { MenuLinkItem } from '@/components/menus/menu';
 import { Tag } from '@/components/blocks/tag';
 import {
   Icon,
@@ -15,7 +15,7 @@ export const SettingsLinks = () => {
       {/* <MenuHeader>
             <h3 className="text-lg font-bold">Share</h3>
           </MenuHeader> */}
-      <MenuItem
+      <MenuLinkItem
         label={'Account Settings'}
         url="/settings/account"
         icon={
@@ -27,7 +27,7 @@ export const SettingsLinks = () => {
         }
         tag={<Tag variant="green">New</Tag>}
       />
-      <MenuItem
+      <MenuLinkItem
         label={'Notification Settings'}
         url="/settings/notifications"
         icon={
@@ -38,7 +38,7 @@ export const SettingsLinks = () => {
           />
         }
       />
-      <MenuItem
+      <MenuLinkItem
         label={'Personal Settings'}
         url="/settings/personal"
         icon={
@@ -49,7 +49,7 @@ export const SettingsLinks = () => {
           />
         }
       />
-      <MenuItem
+      <MenuLinkItem
         label={'System Settings'}
         url="/settings/system"
         icon={
