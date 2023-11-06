@@ -8,7 +8,7 @@ const { DELETE_BOOKMARK } = QUERY_KEYS;
 
 type DeleteBookmarkData = {
   data: {
-    story_id: string | undefined;
+    story_id: string;
   };
 };
 
@@ -16,7 +16,7 @@ export const deleteBookmark = ({
   data,
 }: DeleteBookmarkData): Promise<ApiResponse> => {
   const uri = uriTemplate(URI_BOOKMARKS_BY_STORY_ID, {
-    story_id: data.story_id + '',
+    story_id: data.story_id.toString(),
   });
 
   return apiClient.delete(`${uri}`);
