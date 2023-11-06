@@ -32,6 +32,15 @@ export const URI_STORIES_BY_STORY_ID_DISLIKE = '/stories/{{story_id}}/dislike/';
 export const URI_STORIES_BY_STORY_ID_UNLIKE = '/stories/{{story_id}}/unlike/';
 export const URI_STORIES_BY_STORY_ID_UNDISLIKE =
   '/stories/{{story_id}}/undislike/';
+
+export const URI_STORIES_BY_STORY_SLUG_LIKE = '/stories/{{story_slug}}/like/';
+export const URI_STORIES_BY_STORY_SLUG_DISLIKE =
+  '/stories/{{story_slug}}/dislike/';
+export const URI_STORIES_BY_STORY_SLUG_UNLIKE =
+  '/stories/{{story_slug}}/unlike/';
+export const URI_STORIES_BY_STORY_SLUG_UNDISLIKE =
+  '/stories/{{story_slug}}/undislike/';
+
 export const URI_STORIES_BY_SLUG_STORYLINES = '/stories/{{slug}}/storylines/';
 export const URI_STORYLINES = '/storylines/';
 export const URI_STORYLINES_BY_STORYLINE_ID = '/storylines/{{storyline_id}}/';
