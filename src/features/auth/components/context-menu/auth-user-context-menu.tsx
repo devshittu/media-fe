@@ -5,7 +5,7 @@ import { useSignout } from '../../api/post-signout';
 
 export const AuthUserContextMenu = () => {
   const signout = useSignout();
-    const handleSignout = () => {
+  const handleSignout = () => {
     signout.submit();
   };
   return (
@@ -19,19 +19,16 @@ export const AuthUserContextMenu = () => {
         label="Settings"
         onClick={() => console.log('Settings clicked')}
       />
-      <MenuButtonItem
+      {/* <MenuButtonItem
         label="Messages"
         onClick={() => console.log('Messages clicked')}
-      />
+      /> 
       <MenuButtonItem
         disabled
         label="Download"
         onClick={() => console.log('Download clicked')}
-      />
-      <MenuButtonItem
-        label="Signout"
-        onClick={handleSignout}
-      />
+      />*/}
+      <MenuButtonItem label="Signout" onClick={handleSignout} />
     </div>
   );
 };
