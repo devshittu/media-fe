@@ -18,7 +18,7 @@ export const AddBookmarkForm = ({
     defaultValues: {
       bookmark_category: BookmarkCategory.Save,
       note: '',
-      story_id: story.id + '',
+      story_id: story.id.toString(),
     },
     // mode: 'onChange',
     mode: 'onBlur',
