@@ -11,14 +11,14 @@ type UserLayoutProps = {
 const UserLayout = ({ children }: UserLayoutProps) => {
   return (
     <Protected>
-    <div
-      className={`relative container lg:grid lg:grid-cols-10 lg:max-w-7xl mx-auto`}
-    >
-      <NavMain>
-        <MainMenu />
-      </NavMain>
-      <main className={`w-full lg:col-span-8`}>{children}</main>
-    </div>
+      <div
+        className={`relative container lg:grid lg:grid-cols-10 lg:max-w-7xl mx-auto`}
+      >
+        <NavMain>
+          <MainMenu />
+        </NavMain>
+        <main className={`w-full lg:col-span-8`}>{children}</main>
+      </div>
     </Protected>
   );
 };
