@@ -18,7 +18,7 @@ import { AttentionType } from '@/types';
 
 // export const PromptPop = () => {
 //   const { prompt, dismissPrompt } = usePrompts();
-  // if (!prompt) return null;
+// if (!prompt) return null;
 //   return (
 //     <>
 //     {/* <Popup> */}
