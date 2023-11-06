@@ -12,12 +12,12 @@ export const CategoryListItem = ({
     <>
       <Link
         href={`/stories/category/${category.slug}`}
-        id={category.id}
+        id={category.id.toString()}
         className="inline-flex items-center px-2 py-1x mr-2 lg:mr-0 text-sm lg:text-xl font-medium text-slate-800 roundedx  bg-slate-100x dark:bg-slate-700x dark:text-slate-300  border-2 border-slate-600 dark:border-slate-400"
       >
         {category.title}
 
-        {/* &nbsp;&nbsp;<Tag variant='yellow'>{category.count}</Tag> */}
+        {/* <Space/><Space/><Tag variant='yellow'>{category.count}</Tag> */}
         {closable && (
           <button
             type="button"
