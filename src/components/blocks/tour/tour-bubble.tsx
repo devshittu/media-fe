@@ -10,6 +10,7 @@ import {
   XIcon,
 } from '@/components/illustrations';
 import { Button } from '@/components/button';
+import { Space } from '@/components/labs';
 
 type TourBubbleProps = {
   forElement?: string;
@@ -76,7 +77,9 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
                 {props.previousLabel}
               </Button>
             ) : (
-              <div>&nbsp;</div>
+              <div>
+                <Space />
+              </div>
             )}
 
             {props.nextLabel ? (
@@ -89,7 +92,9 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
                 {props.nextLabel}
               </Button>
             ) : (
-              <div>&nbsp;</div>
+              <div>
+                <Space />
+              </div>
             )}
           </CardFooter>
         </Card>
