@@ -18,7 +18,7 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
   const { register, handleSubmit, formState } = useForm<PasswordSigninData>({
     defaultValues: {
       username_or_email: 'testuser2@test.com',
-      password: 'common_password',
+      password: 'commonPassword=1',
     },
     // mode: 'onChange',
     mode: 'onBlur',
