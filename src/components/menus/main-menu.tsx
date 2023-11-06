@@ -107,7 +107,7 @@ const MainMenu = () => {
   return (
     <>
       {/* Header */}
-      <div className="flex items-start justify-between w-full pl-1.5 mb-16 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700">
+      <div className="flex items-start justify-between w-full pl-1.5 mb-16 text-slate-900 dark:text-white">
         <Link
           href="/"
           aria-label="Company"
@@ -141,11 +141,7 @@ const MainMenu = () => {
         }
       />
       <>
-        <AuthUserTile
-          actionButtonText="Reply"
-          onActionClick={() => console.log('Reply clicked')}
-          onCloseClick={() => console.log('Close clicked')}
-        />
+        <AuthUserTile actionButtonText="Reply" />
       </>
     </>
   );
