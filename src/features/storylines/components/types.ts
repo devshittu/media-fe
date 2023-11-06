@@ -1,4 +1,8 @@
-import { StoriesQueryParams, StoryListResponse } from '../../stories/types';
+import {
+  StoriesQueryParams,
+  Story,
+  StoryListResponse,
+} from '../../stories/types';
 
 export type StoryListProps = {
   data: StoryListResponse;
@@ -7,3 +11,9 @@ export type StoryListProps = {
 export type StorylineStoryListProps = StoryListProps & {
   storyFor: string;
 };
+
+export type StorylineMiniCardProps = {
+  story: Story;
+  identifier?: string;
+};
+
