@@ -41,3 +41,5 @@ export type SystemSettingsData = {
 export type PersonalSettingsData = {
   favorite_categories: (string | Category)[];
 };
+
+// Path: src/features/settings/types/index.ts
