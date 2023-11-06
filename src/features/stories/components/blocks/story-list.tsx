@@ -14,7 +14,7 @@ export const StoryList = ({
 }: StoryListProps) => {
   const { ref, inView } = useInView();
   const { scrollPosition, setScrollPosition } = useUserFeedsStore();
-  const { categoryLookupTable, categories } = useCategoryContext();
+  // const { categoryLookupTable, categories } = useCategoryContext();
   const {
     data: dataFromStories,
     fetchNextPage,
@@ -46,7 +46,7 @@ export const StoryList = ({
             <StoryListItem
               key={story.id}
               story={story}
-              categories={categoryLookupTable}
+              // categories={categoryLookupTable}
             />
           ))}
         </React.Fragment>
