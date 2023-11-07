@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo, HTMLAttributes } from 'react';
 import { useGetUsers } from '@/features/users/api/get-users';
-import { User } from '@/features/users/types';
+import { User } from '@/features/auth';
 import { UserListItem } from '../user';
 import { UserListLoadingPlaceholder } from '../../loading';
+import { NotificationType, useNotifications } from '@/stores/notifications';
 
 type UserSuggestionListProps = HTMLAttributes<HTMLDivElement> & {
   numSuggestions?: number;
@@ -10,6 +11,7 @@ type UserSuggestionListProps = HTMLAttributes<HTMLDivElement> & {
 
 export const UserSuggestionList = React.memo(
   ({ numSuggestions = 3, ...props }: UserSuggestionListProps) => {
+    const { showNotification } = useNotifications();
     const { data: responseData, isLoading } = useGetUsers({});
     const allSuggestionList = useMemo(
       () => responseData?.results,
@@ -29,7 +31,11 @@ export const UserSuggestionList = React.memo(
 
     const handleDelete = (id: string) => {
       if (!suggestionList || !unsuggestedList) return;
-      const remainingUsers = suggestionList.filter((user) => user.id !== id);
+      const numericId = parseInt(id, 10);
+      const remainingUsers = suggestionList.filter(
+        (user) => user.id !== numericId,
+      );
+
       const nextUser = unsuggestedList[0];
       const updatedList = nextUser
         ? [...remainingUsers, nextUser]
@@ -40,11 +46,30 @@ export const UserSuggestionList = React.memo(
     };
 
     const handleFollowSuccess = (id: string) => {
+      if (!suggestionList || !unsuggestedList) return;
+      const numericId = parseInt(id, 10);
+      const followedUser = suggestionList.filter(
+        (user) => user.id === numericId,
+      )[0];
+
+      showNotification({
+        type: NotificationType.SUCCESS,
+        title: 'Success',
+        duration: 5000,
+        message: `You are now following ${followedUser.name}`,
+      });
       handleDelete(id);
     };
 
     const handleFollowFailure = (id: string) => {
-      console.error(`Follow failed for user with id: ${id}`);
+      if (!suggestionList || !unsuggestedList) return;
+      const numericId = parseInt(id, 10);
+      const followedUser = suggestionList.filter(
+        (user) => user.id === numericId,
+      )[0];
+      console.error(
+        `Follow failed for user with id: ${id} - ${followedUser.name}`,
+      );
     };
 
     return (
@@ -60,7 +85,7 @@ export const UserSuggestionList = React.memo(
               user={user}
               onDelete={handleDelete}
               onFollowSuccess={handleFollowSuccess}
-              onFollowFailure={handleFollowFailure}
+              onFollowError={handleFollowFailure}
             />
           ))}
         </div>
