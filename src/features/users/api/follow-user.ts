@@ -3,12 +3,13 @@ import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
 import { uriTemplate } from '@/utils';
 import { URI_USERS_FOLLOW_BY_USER_ID } from '@/config/api-constants';
+import { FollowerRelationshipResponse } from '../types';
 
 const { FOLLOW_USER } = QUERY_KEYS;
 
 export const followUser = (data: {
   user_id: string;
-}): Promise<{ status: boolean }> => {
+}): Promise<FollowerRelationshipResponse> => {
   const uri = uriTemplate(URI_USERS_FOLLOW_BY_USER_ID, {
     user_id: data.user_id,
   });
