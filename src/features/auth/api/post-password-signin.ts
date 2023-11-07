@@ -7,7 +7,7 @@ import { AuthUser, AuthResponse, PasswordSigninData } from '../types';
 import { URI_AUTH_TOKEN } from '@/config/api-constants';
 import { AuthStore } from '@/stores/auth';
 import { getAuthUser } from './get-auth-user';
-import {setStoredToken, setStoredUserDetails } from '@/utils/auth';
+import { setStoredToken, setStoredUserDetails } from '@/utils/auth';
 
 export const signin = (data: PasswordSigninData): Promise<AuthResponse> => {
   return apiClient.post(`${URI_AUTH_TOKEN}`, data);
@@ -29,7 +29,10 @@ export const usePasswordSignin = ({
       const { setAccessToken } = AuthStore.getState();
       setAccessToken(newAccessToken);
 
-      const authUserData = await queryClient.fetchQuery(['auth-user'], getAuthUser);
+      const authUserData = await queryClient.fetchQuery(
+        ['auth-user'],
+        getAuthUser,
+      );
       setStoredUserDetails(authUserData);
       const { setAuthUserDetails } = AuthStore.getState();
       setAuthUserDetails(authUserData);

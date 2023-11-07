@@ -14,6 +14,7 @@ import { UpdateSettingsButton } from '@/features/settings';
 import { useUpdateUserSettings } from '@/features/settings/api/update-user-settings';
 import { useSuccessNotification } from '@/features/settings/hooks';
 import { useAccountSettingsStore } from '@/stores/app-settings';
+import { useSignupStore } from '@/stores/auth';
 import React, { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -46,13 +47,16 @@ export const VisualAppearance = ({ onValidationStatusChange }: StepProps) => {
   };
 
   const updateSettings = useUpdateUserSettings({ onSuccess });
-
+  // Access store methods.
+  const { setTheme } = useSignupStore();
   // Function to perform server synchronization
   const serverSync = async (theme: string) => {
     // Perform the server sync logic here
 
     updateModifiedSettings(['system_settings', 'theme'], theme);
     console.log('About to submit this to the server', modifiedSettings);
+    // Update the signup store
+    setTheme(theme);
     updateSettings.submit(modifiedSettings);
     console.log('Perform the server sync logic here');
   };

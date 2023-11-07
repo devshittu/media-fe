@@ -53,7 +53,7 @@ export const StoryListItem = React.memo(
       },
       [addData],
     );
-    const activityRef = useUserActivityTracking(story.id + '', saveMetrics);
+    const activityRef = useUserActivityTracking(story.id.toString(), saveMetrics);
 
     return (
       <article
@@ -94,13 +94,7 @@ export const StoryListItem = React.memo(
           carouselItems={carouselItems}
           carouselOptions={carouselOptions}
         />
-        <StoryStats
-          viewCount={1200}
-          commentCount={6}
-          likesCount={story?.likes_count}
-          dislikesCount={story.dislikes_count}
-          storylinesCount={story?.storylines_count}
-        />
+        <StoryStats story={story} />
         <UserDetails
           name={story?.user.name}
           organization={`Reporter, ${'Default Team'}`}

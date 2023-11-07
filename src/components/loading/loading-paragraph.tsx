@@ -23,7 +23,10 @@ export const LoadingParagraph = () => {
 
 export const LoadingText = () => {
   return (
-    <div role="status" className="space-y-2.5 animate-pulse max-w-lg">
+    <div
+      role="status"
+      className="space-y-2.5 md:space-y-4 animate-pulse max-w-lg"
+    >
       <div className="flex items-center w-full space-x-2">
         <div className="h-2.5 bg-slate-200 dark:bg-slate-700 w-32"></div>
         <div className="h-2.5 bg-slate-300 dark:bg-slate-600 w-24"></div>

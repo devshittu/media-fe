@@ -9,9 +9,11 @@ export type SelectFieldOption = {
 export type SelectFieldProps = {
   id: string;
   label: string;
-  size?: 'small' | 'default' | 'large';
+  name: string;
+  size?: 'small' | 'base' | 'large';
   disabled?: boolean;
   rounded?: boolean;
+  outlined?: boolean;
   showLabel?: boolean;
   options: SelectFieldOption[];
   error?: FieldError;
@@ -25,7 +27,8 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
     {
       id,
       label,
-      size = 'default',
+      name,
+      size = 'base',
       disabled = false,
       rounded = false,
       showLabel = false,
@@ -40,30 +43,58 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
   ) => {
     const sizeClasses = {
       small: 'p-2 text-sm',
-      default: 'p-2.5 text-sm',
+      base: 'p-2.5 text-sm',
       large: 'px-4 py-3 text-base',
     };
+
+    const selectClasses = `
+    block  w-full font-bold
+    bg-slate-50 text-slate-700 border-2 border-slate-700  dark:border-slate-300 placeholder-slate-400
+    text-base
+    
+    focus:outline-none focus:ring-slate-700x focus:border-slate-700x focus:ring-cyan-600 focus:border-cyan-600
+    dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-cyan-300 dark:focus:border-cyan-300
+    ${
+      size === 'large'
+        ? 'p-4 md:text-xl focus:ring-4 '
+        : size === 'base'
+        ? 'p-2.5 md:text-base focus:ring-2'
+        : 'p-1.5 sm:text-sm focus:ring-1'
+    }
+    ${rounded ? 'rounded-lg ' : 'rounded-none'}
+    `
+      .trim()
+      .replace(/\s+/g, ' ');
+    const labelClasses =
+      `block mb-2  uppercase tracking-wide text-slate-900 text-sm font-bold dark:text-slate-300
+    ${
+      size === 'large'
+        ? 'md:text-xl'
+        : size === 'base'
+        ? 'md:text-base'
+        : 'sm:text-sm'
+    }`
+        .trim()
+        .replace(/\s+/g, ' ');
+    const computedId = id ? id : name.toLowerCase() + '-select';
 
     return (
       <div className={`select-field ${className}`}>
         {showLabel && (
-          <label
-            htmlFor={id}
-            className="block mb-2 text-sm font-medium text-slate-900 dark:text-white"
-          >
-            {label}
+          <label htmlFor={computedId} className={labelClasses}>
+            <h3 className="font-bold">{label || name}</h3>
           </label>
         )}
         <select
-          // {...register(id, { onChange })}
-          id={id}
-          className={`block w-full ${
-            sizeClasses[size]
-          } text-slate-900 border border-slate-300 bg-slate-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
-        ${rounded ? 'rounded-lg' : ''}
-        ${disabled ? 'cursor-not-allowed' : ''} ${
-            error ? 'border-red-500' : ''
-          }`}
+          id={computedId}
+          //   className={`block w-full ${
+          //     sizeClasses[size]
+          //   } text-slate-900 border border-slate-300 bg-slate-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+          // ${rounded ? 'rounded-lg' : ''}
+          // ${disabled ? 'cursor-not-allowed' : ''} ${
+          //     error ? 'border-red-500' : ''
+          //   }`}
+          className={`${selectClasses}`}
           ref={ref}
           {...selectProps}
           disabled={disabled}

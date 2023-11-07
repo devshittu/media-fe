@@ -32,13 +32,22 @@ export const URI_STORIES_BY_STORY_ID_DISLIKE = '/stories/{{story_id}}/dislike/';
 export const URI_STORIES_BY_STORY_ID_UNLIKE = '/stories/{{story_id}}/unlike/';
 export const URI_STORIES_BY_STORY_ID_UNDISLIKE =
   '/stories/{{story_id}}/undislike/';
+
+export const URI_STORIES_BY_STORY_SLUG_LIKE = '/stories/{{story_slug}}/like/';
+export const URI_STORIES_BY_STORY_SLUG_DISLIKE =
+  '/stories/{{story_slug}}/dislike/';
+export const URI_STORIES_BY_STORY_SLUG_UNLIKE =
+  '/stories/{{story_slug}}/unlike/';
+export const URI_STORIES_BY_STORY_SLUG_UNDISLIKE =
+  '/stories/{{story_slug}}/undislike/';
+
 export const URI_STORIES_BY_SLUG_STORYLINES = '/stories/{{slug}}/storylines/';
 export const URI_STORYLINES = '/storylines/';
 export const URI_STORYLINES_BY_STORYLINE_ID = '/storylines/{{storyline_id}}/';
 export const URI_STORYLINES_BY_STORYLINE_ID_STORIES =
   '/storylines/{{storyline_id}}/stories/';
 export const URI_BOOKMARKS = '/bookmarks/';
-export const URI_BOOKMARKS_BY_PK = '/bookmarks/{{pk}}/';
+export const URI_BOOKMARKS_BY_STORY_ID = '/bookmarks/{{story_id}}/';
 export const URI_USERS = '/users/';
 export const URI_USERS_BY_PK = '/users/{{pk}}/';
 export const URI_USERS_UNFOLLOWED = '/users/unfollowed/';
@@ -63,3 +72,4 @@ export const URI_ANALYTICS_ACCESSIBILITY_TOOLS =
   '/analytics/accessibility-tools/';
 export const URI_ANALYTICS_ACCESSIBILITY_TOOLS_BY_PK =
   '/analytics/accessibility-tools/{{pk}}/';
+export const URI_FEEDBACKS_REPORT = '/feedbacks/report/';

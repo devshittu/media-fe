@@ -1,23 +1,32 @@
-// Auto-generated file created by svgr-cli source svg-template.js
+// Auto-generated file created by svgr-cli
 // Run yarn icons:create to update
 // Do not edit
 import * as React from 'react';
 import type { SVGProps } from 'react';
-const SvgShieldOff = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth={2}
-    className={props.className || ''}
-    viewBox="0 0 24 24"
-    role="img"
-    aria-hidden={true}
-    {...props}
-  >
-    <path d="M19.69 14a6.9 6.9 0 0 0 .31-2V5l-8-3-3.16 1.18M4.73 4.73 4 5v7c0 6 8 10 8 10a20.29 20.29 0 0 0 5.62-4.38M1 1l22 22" />
-  </svg>
+const SvgShieldOff = React.forwardRef(
+  (props: SVGProps<SVGSVGElement>, ref: React.Ref<SVGSVGElement>) => {
+    return React.cloneElement(
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        className={props.className || ''}
+        viewBox="0 0 24 24"
+        role="img"
+        aria-hidden="true"
+        {...props}
+      >
+        <path d="M19.69 14a6.9 6.9 0 0 0 .31-2V5l-8-3-3.16 1.18M4.73 4.73 4 5v7c0 6 8 10 8 10a20.29 20.29 0 0 0 5.62-4.38M1 1l22 22" />
+      </svg>,
+      {
+        ...props,
+        ref,
+      },
+    );
+  },
 );
+SvgShieldOff.displayName = 'SvgShieldOff';
 export default SvgShieldOff;

@@ -4,8 +4,12 @@ import { getItem, setItem, removeItem } from '@/utils/localStorage';
 import { refreshToken } from '@/features/auth/api/post-refresh-token';
 import { queryClient } from '@/lib/react-query';
 import { getAuthUser } from '@/features/auth';
-import { setStoredToken, getStoredToken, setStoredUserDetails, getStoredUserDetails } from '@/utils/auth';
-
+import {
+  setStoredToken,
+  getStoredToken,
+  setStoredUserDetails,
+  getStoredUserDetails,
+} from '@/utils/auth';
 
 export type authStore = {
   accessToken: string | null;
@@ -39,7 +43,10 @@ export const AuthStore = createStore<authStore>((set) => ({
     const storedToken = getStoredToken();
     const storedAuthUserDetails = getStoredUserDetails();
     if (storedToken && storedAuthUserDetails) {
-      console.log('storedToken and storedAuthUserDetails is here before fetching from server:', storedToken);
+      console.log(
+        'storedToken and storedAuthUserDetails is here before fetching from server:',
+        storedToken,
+      );
       set({ accessToken: storedToken, authUserDetails: storedAuthUserDetails });
     } else {
       try {
@@ -50,7 +57,10 @@ export const AuthStore = createStore<authStore>((set) => ({
 
         // Fetch auth user information (only if not already stored)
         if (!storedAuthUserDetails) {
-          const authUserData = await queryClient.fetchQuery(['auth-user'], getAuthUser);
+          const authUserData = await queryClient.fetchQuery(
+            ['auth-user'],
+            getAuthUser,
+          );
           console.log('fetching from server authUserData', authUserData);
           setStoredUserDetails(authUserData);
           set({ authUserDetails: authUserData });

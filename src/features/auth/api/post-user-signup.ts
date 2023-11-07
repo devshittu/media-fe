@@ -30,7 +30,7 @@ export const useSignup = ({ onSuccess }: UseSignupOptions = {}) => {
       // queryClient.setQueryData(['auth-user'], user);
       onSuccess?.(user);
 
-      SignupDataStore.getState().setSignupData(user); // Update the access token in Zustand store
+      // SignupDataStore.getState().setSignupData(user); // Update the access token in Zustand store
     },
 
     onError: (error) => {

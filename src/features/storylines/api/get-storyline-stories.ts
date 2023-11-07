@@ -88,4 +88,4 @@ export const useInfiniteStorylineStories = ({
   };
 };
 
-//Path: src/features/stories/api/get-stories.ts
+//Path: src/features/stories/api/get-storyline-by-story.ts

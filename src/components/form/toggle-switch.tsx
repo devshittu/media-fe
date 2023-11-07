@@ -1,32 +1,64 @@
 import React, { forwardRef } from 'react';
 
-interface ToggleSwitchProps {
+type LabelType = string | { checked: string; unchecked: string };
+
+interface ToggleSwitchProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'checked' | 'size'
+  > {
   id: string;
-  leftLabel?: string;
-  rightLabel?: string;
-  checked?: number; // This should be a number (1 or 0)
-  onChange?: (value: number) => void; // Ensure this accepts a number
+  // leftLabel?: string;
+  // rightLabel?: string;
+
+  leftLabel?: LabelType;
+  rightLabel?: LabelType;
+  size?: 'small' | 'base' | 'large';
+  checked?: number;
+  onValueChange?: (value: number) => void;
 }
 
 export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
   (
     {
       id,
-      leftLabel = 'Left',
-      rightLabel = 'Right',
+      leftLabel = '',
+      rightLabel = '',
+      size = 'base',
       checked,
-      onChange,
+      onValueChange,
+      ...restProps
     }: ToggleSwitchProps,
     ref,
   ) => {
+    const getLabel = (label: LabelType, isChecked: boolean) => {
+      if (typeof label === 'string') return label;
+      return isChecked ? label.checked : label.unchecked;
+    };
+
+    const labelClasses =
+      `block  uppercase tracking-wide text-slate-900 text-sm font-bold dark:text-slate-300
+    ${
+      size === 'large'
+        ? 'md:text-xl'
+        : size === 'base'
+        ? 'md:text-base'
+        : 'sm:text-sm'
+    }`
+        .trim()
+        .replace(/\s+/g, ' ');
     return (
       <label
         htmlFor={id}
-        className="inline-flex items-center space-x-4 cursor-pointer dark:text-gray-100"
+        className="inline-flex items-center space-x-4 cursor-pointer dark:text-slate-100"
       >
-        <span>{leftLabel}</span>
+        {/* {leftLabel && (<h4 className={`${labelClasses}`}>{leftLabel}</h4>)} */}
+        {leftLabel && (
+          <h4 className={`${labelClasses}`}>
+            {getLabel(leftLabel, checked === 1)}
+          </h4>
+        )}
         <span className="relative">
-          {/* <input id={id} type="checkbox" className="hidden peer" ref={ref} /> */}
           <input
             id={id}
             type="checkbox"
@@ -34,18 +66,27 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
             ref={ref}
             checked={checked === 1}
             onChange={(e) => {
-              if (onChange) {
-                onChange(e.target.checked ? 1 : 0);
+              const isChecked = e.target.checked ? 1 : 0;
+              if (onValueChange) {
+                onValueChange(isChecked);
               }
             }}
+            {...restProps}
           />
-          <div className="w-10 h-6 rounded-full shadow-inner dark:bg-gray-400 peer-checked:dark:bg-cyan-400"></div>
-          <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto dark:bg-gray-800"></div>
+          <div className="w-10 h-6 rounded-full shadow-inner dark:bg-slate-400 peer-checked:dark:bg-cyan-400"></div>
+          <div className="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto dark:bg-slate-800"></div>
         </span>
-        <span>{rightLabel}</span>
+        {/* {rightLabel && (<h4 className={`${labelClasses}`}>{rightLabel}</h4>)} */}
+        {rightLabel && (
+          <h4 className={`${labelClasses}`}>
+            {getLabel(rightLabel, checked === 1)}
+          </h4>
+        )}
       </label>
     );
   },
 );
 
 ToggleSwitch.displayName = 'Toggle Switch';
+
+// Path: src/components/form/toggle-switch.tsx

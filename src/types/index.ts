@@ -12,6 +12,14 @@ export type ApiResponse = {
   // data: ApiResponseData;
 };
 
+export enum ResponseStatusType {
+  SUCCESS = 'success',
+  FAILED = 'failed',
+}
+export type ResponseStatus = {
+  status: ResponseStatusType.SUCCESS | ResponseStatusType.FAILED;
+};
+
 export type PaginationLinks = {
   next?: string | null;
   previous?: string | null;
@@ -39,3 +47,15 @@ export type NewsChannel = {
   feed_url: string;
   logo_url: string;
 };
+
+export type AppFormProps = {
+  onSuccess: () => void;
+  onError?: () => void;
+};
+
+export enum AttentionType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info',
+}

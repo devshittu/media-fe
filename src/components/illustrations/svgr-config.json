@@ -11,6 +11,6 @@
   "svgProps": {
     "className": "{props.className || ''}",
     "role": "img",
-    "aria-hidden": "{true}"
+    "aria-hidden": "true"
   }
 }

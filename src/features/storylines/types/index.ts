@@ -6,7 +6,7 @@ export type Storyline = {
   description: string;
   summary: string;
   subject: string;
-  hashtags: string;
+  hashtags: string[];
   stories_count: number;
 };
 

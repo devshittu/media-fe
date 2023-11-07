@@ -12,6 +12,7 @@ import { useSuccessNotification } from '@/features/settings/hooks';
 import { UpdateSettingsButton } from '@/features/settings';
 import { useStepCompletion } from '@/components/blocks/wizard/hooks/useStepCompletion';
 import { LoadingButtonTextList } from '@/components/loading';
+import { useSignupStore } from '@/stores/auth';
 
 export const PersonalizeCategories = () => {
   const asyncOnCompleted = useCallback(async () => {
@@ -26,6 +27,8 @@ export const PersonalizeCategories = () => {
 
   const { modifiedSettings, updateModifiedSettings } =
     useAccountSettingsStore();
+  // Access store methods.
+  const { setFavoriteCategories } = useSignupStore();
   const {
     handleSubmit,
     control,
@@ -70,6 +73,9 @@ export const PersonalizeCategories = () => {
       ['personal_settings', 'favorite_categories'],
       selectedCategoryIds,
     );
+    // submit to favorites in the signup store
+    setFavoriteCategories(selectedCategoryIds);
+
     console.log('modifiedSettings:// ', modifiedSettings);
     updateSettings.submit(modifiedSettings);
   };

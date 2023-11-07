@@ -1,8 +1,5 @@
-import Axios, { AxiosError } from 'axios';
-import Router, { useRouter } from 'next/router';
-
-import { API_URL } from '@/config/constants';
-
+import Axios from 'axios';
+import Router from 'next/router';
 import { NotificationType, notificationsStore } from '@/stores/notifications';
 import { AuthStore } from '@/stores/auth';
 import {
@@ -11,9 +8,16 @@ import {
 } from '@/config/api-constants';
 import { signout, useSignout } from '@/features/auth';
 
+import getConfig from 'next/config';
+
+// Get our configuration of our runtimes
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
+
+// Use the correct url depending on if it's server or public
+const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl;
 
 export const apiClient = Axios.create({
-  baseURL: API_URL,
+  baseURL: apiUrl,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -92,7 +96,17 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const message = error.response?.data?.message || error.message;
+    let message = error.response?.data?.message || error.message;
+
+    // Check for status code 400 and specific error structure
+    if (
+      error.response &&
+      error.response.status === 400 &&
+      error.response.data.error &&
+      error.response.data.error.detail
+    ) {
+      message = error.response.data.error.detail[0];
+    }
 
     notificationsStore.getState().showNotification({
       type: NotificationType.ERROR,
@@ -100,7 +114,6 @@ apiClient.interceptors.response.use(
       duration: 5000,
       message,
     });
-
     if (error.response?.data) {
       return Promise.reject(error.response.data);
     }

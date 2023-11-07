@@ -4,7 +4,6 @@ import {
   Finish,
   Greetings,
   PersonalizeCategories,
-  Token,
   VisualAppearance,
 } from './';
 import {

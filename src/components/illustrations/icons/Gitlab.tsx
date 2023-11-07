@@ -1,23 +1,32 @@
-// Auto-generated file created by svgr-cli source svg-template.js
+// Auto-generated file created by svgr-cli
 // Run yarn icons:create to update
 // Do not edit
 import * as React from 'react';
 import type { SVGProps } from 'react';
-const SvgGitlab = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeWidth={2}
-    className={props.className || ''}
-    viewBox="0 0 24 24"
-    role="img"
-    aria-hidden={true}
-    {...props}
-  >
-    <path d="M22.65 14.39 12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z" />
-  </svg>
+const SvgGitlab = React.forwardRef(
+  (props: SVGProps<SVGSVGElement>, ref: React.Ref<SVGSVGElement>) => {
+    return React.cloneElement(
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        className={props.className || ''}
+        viewBox="0 0 24 24"
+        role="img"
+        aria-hidden="true"
+        {...props}
+      >
+        <path d="M22.65 14.39 12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z" />
+      </svg>,
+      {
+        ...props,
+        ref,
+      },
+    );
+  },
 );
+SvgGitlab.displayName = 'SvgGitlab';
 export default SvgGitlab;

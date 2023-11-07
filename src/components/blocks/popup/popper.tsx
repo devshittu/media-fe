@@ -1,24 +1,40 @@
 import { useEffect, useState } from 'react';
 import { Popup, PopupContent, PopupTrigger } from './';
+import { Placement } from '@floating-ui/react';
+type PopperProps = {
+  children: React.ReactNode;
+  trigger?: React.ReactNode;
+  showOnHover?: boolean;
+  placement?: Placement;
+  width?: string | number;
+};
 
-export const ControlledPopper = ({ children }: PopperProps) => {
+export const ControlledPopper = ({
+  children,
+  trigger,
+  showOnHover = false,
+  placement = 'bottom-end',
+  width = 'w-44 md:w-48', // Default width
+}: PopperProps) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Popup>
-      <PopupTrigger>
-        {/* <Button type={'primary'}> */}
-        My trigger
+    <Popup
+      placement={placement || 'bottom-end'}
+      onHoverEnabled={showOnHover}
+      open={open}
+      onOpenChange={setOpen}
+    >
+      <PopupTrigger asChild onClick={() => setOpen((v) => !v)}>
+        {trigger}
       </PopupTrigger>
-      {/* <PopupTrigger>My trigger</PopupTrigger> */}
-      <PopupContent className="Popup">
-        {/* <DialogFlow steps={steps} onFinish={handleFinish} /> */}
+      <PopupContent
+        className={`Popup z-20 ${width} bg-slate-50 dark:bg-slate-800`}
+      >
         {children}
       </PopupContent>
     </Popup>
   );
-};
-
-type PopperProps = {
-  children: React.ReactNode;
 };
 type PopperUncontrolledProps = PopperProps & {
   initOpen?: boolean;
@@ -26,7 +42,9 @@ type PopperUncontrolledProps = PopperProps & {
 export const UncontrolledPopper = ({
   initOpen = false,
   children,
-}: PopperUncontrolledProps) => {
+  width = '', // Default width
+}: // showOnHover = false,
+PopperUncontrolledProps) => {
   const [open, setOpen] = useState(initOpen);
 
   useEffect(() => {
@@ -36,8 +54,8 @@ export const UncontrolledPopper = ({
     // return () => clearTimeout(timeout);
   }, []);
   return (
-    <Popup open={open} onOpenChange={setOpen}>
-      <PopupContent className="Popup">{children}</PopupContent>
+    <Popup open={open} onOpenChange={setOpen} modal>
+      <PopupContent className={`Popup ${width}`}>{children}</PopupContent>
     </Popup>
   );
 };

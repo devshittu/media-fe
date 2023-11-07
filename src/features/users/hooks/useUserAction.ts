@@ -1,32 +1,31 @@
+import { ResponseStatusType } from '@/types';
 import { useFollowUser } from '../api/follow-user';
 
-export const useUser = (userId: string) => {
+export const useUserAction = (userId: string) => {
   // const followUser = useFollowUser();
   const { submit: followUserSubmit, isFollowLoading } = useFollowUser();
 
   // Todo: block and unfollow user
   const handleFollowUser = async (
     onSuccess: () => void,
-    onFailure: () => void,
+    onError: () => void,
   ): Promise<void> => {
     try {
       await followUserSubmit(
         { user_id: userId },
         {
           onSuccess: (data) => {
-            if (data && data.status) {
+            if (data && data.status === ResponseStatusType.SUCCESS) {
               onSuccess();
-            } else {
-              onFailure();
             }
           },
-          onError: () => {
-            onFailure();
+          onError: (error) => {
+            onError();
           },
         },
       );
     } catch (error) {
-      onFailure();
+      onError();
     }
   };
 

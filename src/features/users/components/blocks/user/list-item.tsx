@@ -2,24 +2,25 @@ import Image from 'next/image';
 import React from 'react';
 import { Button } from '@/components/button';
 import { UserListItemProps } from '@/features/users/types';
-import { useUser } from '@/features/users/hooks/useUser';
+import { useUserAction } from '@/features/users/hooks/useUserAction';
 import { LoadingAvatar } from '@/components/loading';
 
 export const UserListItem = ({
   user,
   onDelete,
   onFollowSuccess,
-  onFollowFailure,
+  onFollowError,
 }: UserListItemProps) => {
-  const { handleFollowUser, isFollowLoading } = useUser(user.id);
-  const handleIgnoreClick = async () => onDelete?.(user.id);
+  const userId = user.id as unknown as string;
+  const { handleFollowUser, isFollowLoading } = useUserAction(userId);
+  const handleIgnoreClick = async () => onDelete?.(userId);
   const handleFollowClick = async () => {
     await handleFollowUser(
       () => {
-        onFollowSuccess?.(user.id);
+        onFollowSuccess?.(userId);
       },
       () => {
-        onFollowFailure?.(user.id);
+        onFollowError?.(userId);
       },
     );
   };
@@ -59,7 +60,7 @@ export const UserListItem = ({
             {'Follow'}
           </Button>
           <Button className="" onClick={handleIgnoreClick}>
-            Ignore
+            {'Ignore'}
           </Button>
         </div>
       </div>

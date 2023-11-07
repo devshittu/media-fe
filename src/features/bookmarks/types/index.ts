@@ -11,10 +11,17 @@ export type Bookmark = {
   created_at: number;
 };
 
-// export type BookmarksQueryParams = {
-//   page?: number | undefined;
-//   per_page?: number | undefined;
-// };
+export enum BookmarkCategory {
+  ReadLater = 'Read Later',
+  Favorites = 'Favorites',
+  Save = 'Save',
+}
+
+export type AddBookmarkFormData = {
+  bookmark_category: BookmarkCategory;
+  note: string;
+  story_id: string;
+};
 
 export type BookmarkListProps = {
   data: BookmarkListResponse;

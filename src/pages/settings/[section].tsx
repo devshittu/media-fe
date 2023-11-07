@@ -9,7 +9,7 @@ import {
 import { useUserSettings } from '@/features/settings/api/get-user-settings';
 import { Loading } from '@/components/loading';
 import UserLayout from '@/layouts/user-layout';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { StoriesPageFrame } from '@/components/frames';
 import { PaneConfig } from '@/components/blocks/side-panel/types';
 import { NotFound } from '@/components/not-found';
@@ -23,7 +23,7 @@ const sectionTitles: Record<string, string> = {
   default: 'Settings',
 };
 
-const SettingsSection = () => {
+export const SettingsSection = () => {
   const router = useRouter();
   const { section } = router.query;
   const { data: userSettings, isLoading } = useUserSettings({

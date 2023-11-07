@@ -9,7 +9,9 @@ import {
 
 export type Story = {
   storylines_count: number;
+  storyline_id: string | null;
   has_liked: boolean | null;
+  has_disliked: boolean | null;
   has_bookmarked: boolean | null;
   user: User;
   multimedia: any[]; // You can replace 'any' with the appropriate type if you have more details about the multimedia structure

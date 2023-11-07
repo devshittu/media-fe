@@ -25,7 +25,7 @@ export const Dialog: React.FC<DialogProps> = React.forwardRef<
   return (
     <div
       {...props}
-      className="fixed top-0 right-0 bottom-0 left-0 overflow-auto z-50 flex flex-col items-center content-center pt-[15px] px-[15px] h-[calc(100%-15px)] md:p-4 lg:pt-[10vh]"
+      className=" z-50 flex flex-col items-center content-center pt-[15px] px-[15px] h-[calc(100%-15px)] md:p-4 lg:pt-[10vh]"
       data-app-dialog-overlay="true"
       ref={ref}
       id={id}

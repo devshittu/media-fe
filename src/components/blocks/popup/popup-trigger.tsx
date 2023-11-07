@@ -30,6 +30,8 @@ export const PopupTrigger = React.forwardRef<
   return (
     <button
       ref={ref}
+      type="button"
+      name="context-popup-toggle"
       data-state={context.open ? 'open' : 'closed'}
       {...context.getReferenceProps(rest)}
     >
@@ -38,3 +40,5 @@ export const PopupTrigger = React.forwardRef<
   );
 });
 PopupTrigger.displayName = 'PopupTrigger';
+
+// Path: src/components/blocks/popup/popup-trigger.tsx

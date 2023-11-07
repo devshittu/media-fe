@@ -13,3 +13,5 @@ export const GlobalPopup = () => {
     </UncontrolledPopper>
   );
 };
+
+// Path: src/components/blocks/popup/global-popup.tsx

@@ -58,10 +58,14 @@ export const AccountVerificationSection = () => {
     />
   );
 
-  return isVerified ? (
-    successfulActivation
-  ) : (
-    <AccountVerificationForm onSuccess={onSuccess} />
+  return (
+    <>
+      {isVerified ? (
+        successfulActivation
+      ) : (
+        <AccountVerificationForm onSuccess={onSuccess} />
+      )}
+    </>
   );
 };
 
