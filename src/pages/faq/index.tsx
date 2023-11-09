@@ -1,21 +1,19 @@
 import PublicLayout from '@/layouts/public-layout';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, } from 'react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { Link } from '@/components/labs';
-import { Button } from '@/components/button';
-import { AppLogoIcon } from '@/components/illustrations';
 import Hero from '@/components/labs/public-page/hero';
 import Footer from '@/components/labs/public-page/footer';
 import Header from '@/components/labs/public-page/header';
 import Newsletter from '@/components/labs/public-page/newsletter';
 import MoreArticles from '@/components/labs/public-page/more-articles';
-import { Accordion } from '@/components/blocks/accordion/';
 import { ContentSection } from '@/components/labs/public-page';
+import { FAQList } from '@/features/support';
 
 type PublicFAQPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 export default function Index({ categories }: PublicFAQPageProps) {
+
   const breadcrumbTrail = [
     { href: '/parent1', label: 'Parent 1' },
     { href: '/parent2', label: 'Parent 2' },
@@ -87,44 +85,25 @@ export default function Index({ categories }: PublicFAQPageProps) {
     // Add more articles here...
   ];
 
-  const accordionItems = [
-    {
-      title: 'Ex orci laoreet egestas sapien magna egestas scelerisque?',
-      content:
-        'Lectus iaculis orci metus vitae ligula dictum per. Nisl per nullam taciti at adipiscing est.',
-    },
-    {
-      title:
-        'Lorem at arcu rutrum viverra metus sapien venenatis lobortis odio?',
-      content:
-        'Tincidunt ut hac condimentum rhoncus phasellus nostra. Magna porttitor egestas tincidunt neque vehicula potenti.',
-    },
-    {
-      title:
-        'Eleifend feugiat sollicitudin laoreet adipiscing bibendum suscipit erat?',
-      content:
-        'Justo libero tellus integer tincidunt justo semper consequat venenatis aliquet imperdiet. Ultricies urna proin fusce nulla pretium sodales vel magna et massa euismod vulputate sed.',
-    },
-  ];
   return (
     <>
       <Header menuLinks={menuLinks} />
       <Hero
         title="Frequently Asked Question"
         breadcrumbTrail={breadcrumbTrail}
-        subtitle="Cupiditate minima voluptate temporibus quia? Architecto beatae esse ab
-          amet vero eaque explicabo!"
+        subtitle="Find answers to common questions and learn how to make the most of our app."
       />
       <ContentSection>
-        <Accordion items={accordionItems} />
+        <FAQList/>
       </ContentSection>
-      {/* <MoreArticles articles={articles} heading="Related articles" />
+
+      <MoreArticles articles={articles} heading="Related articles" />
       <Newsletter
         heading="Sign up for our newsletter"
         description="Stay up to date with the roadmap progress, announcements and
               exclusive discounts feel free to sign up with your email."
         buttonText="Subscribe to news"
-      /> */}
+      />
 
       <Footer categories={footerCategories} />
     </>
