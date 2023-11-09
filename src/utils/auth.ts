@@ -1,28 +1,21 @@
 import { AuthUser } from '@/features/auth';
 import { setItem, getItem, removeItem } from '@/utils/localStorage';
+import { queryClient } from '@/lib/react-query';
+import { AuthStore } from '@/stores/auth';
+import { apiClient } from '@/lib/api-client';
+import { URI_AUTH_LOGOUT } from '@/config/api-constants';
 
-export const setStoredToken = (token: string | null) => {
-  if (token) {
-    setItem('accessToken', token);
-  } else {
-    removeItem('accessToken');
+export const signOut = async () => {
+  try {
+    await apiClient.post(URI_AUTH_LOGOUT, {}, { withCredentials: true });
+  } catch (error) {
+    console.error('Error during signout:', error);
+  } finally {
+    // queryClient.clear();
+    AuthStore.getState().setAuthUserDetails(null);
+    AuthStore.getState().setAccessToken(null);
+    // Perform any additional cleanup if needed
   }
-};
-
-export const getStoredToken = (): string | null => {
-  return getItem<string>('accessToken');
-};
-
-export const setStoredUserDetails = (userDetails: AuthUser | null) => {
-  if (userDetails) {
-    setItem('authUserDetails', userDetails);
-  } else {
-    removeItem('authUserDetails');
-  }
-};
-
-export const getStoredUserDetails = (): AuthUser | null => {
-  return getItem<AuthUser>('authUserDetails');
 };
 
 //Path: utils/auth.ts
