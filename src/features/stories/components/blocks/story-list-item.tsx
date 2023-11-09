@@ -8,7 +8,8 @@ import { StoryMedia } from '../story-media';
 import { StoryStats } from '../story-stats';
 import { formatDate } from '@/utils';
 import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
-import { AnalyticsData, useAnalytics } from '@/stores/analytics/analytics';
+import { useAnalytics } from '@/stores/analytics/analytics';
+import { AnalyticsData, InteractionType } from '@/features/analytics/types';
 
 export const StoryListItem = React.memo(
   ({ story, className }: StoryListItemProps) => {
@@ -48,12 +49,15 @@ export const StoryListItem = React.memo(
 
     const saveMetrics = useCallback(
       (metrics: AnalyticsData) => {
-        console.log('metrics://', metrics);
+        console.log(`metrics:// ${JSON.stringify(metrics)}`);
         addData(metrics);
       },
       [addData],
     );
-    const activityRef = useUserActivityTracking(story.id.toString(), saveMetrics);
+    const activityRef = useUserActivityTracking(
+      story.id.toString(),
+      saveMetrics,
+    );
 
     return (
       <article

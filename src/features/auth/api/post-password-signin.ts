@@ -7,7 +7,6 @@ import { AuthUser, AuthResponse, PasswordSigninData } from '../types';
 import { URI_AUTH_TOKEN } from '@/config/api-constants';
 import { AuthStore } from '@/stores/auth';
 import { getAuthUser } from './get-auth-user';
-import { setStoredToken, setStoredUserDetails } from '@/utils/auth';
 
 export const signin = (data: PasswordSigninData): Promise<AuthResponse> => {
   return apiClient.post(`${URI_AUTH_TOKEN}`, data);
@@ -25,7 +24,6 @@ export const usePasswordSignin = ({
 
     onSuccess: async (response) => {
       const newAccessToken = response.access_token;
-      setStoredToken(newAccessToken);
       const { setAccessToken } = AuthStore.getState();
       setAccessToken(newAccessToken);
 
@@ -33,7 +31,6 @@ export const usePasswordSignin = ({
         ['auth-user'],
         getAuthUser,
       );
-      setStoredUserDetails(authUserData);
       const { setAuthUserDetails } = AuthStore.getState();
       setAuthUserDetails(authUserData);
 

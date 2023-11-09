@@ -24,6 +24,9 @@ export const QUERY_KEYS = {
   UPDATE_USER_SETTINGS: 'get-settings',
   SYNC_ANALYTICS: 'analytics-sync',
   AUTH_USER: 'auth-user',
+  ADD_BATCH_ANALYTICS: 'add-batch-analytics',
+  ADD_ANALYTICS: 'add-analytics',
+  GET_SUPPORT_ARTICLES: 'get-support-articles',
 };
 
 //Path: src/config/query.ts

@@ -2,9 +2,7 @@ import React, { memo, useState } from 'react';
 import { Storyline } from '../../types';
 import { Link } from '@/components/labs';
 import { Tag } from '@/components/blocks/tag';
-import {
-  ExpandableHashtagList,
-} from '@/features/hashtags';
+import { ExpandableHashtagList } from '@/features/hashtags';
 import { StorylineStats } from '../storyline-stats';
 type StorylineBlockProps = {
   storyline: Storyline;

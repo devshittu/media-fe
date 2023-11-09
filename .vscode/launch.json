@@ -7,9 +7,10 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}"
+      "name": "Run Chrome",
+      // "url": "http://localhost:3000",
+      "url": "https://app.mediaapp.local",
+      "webRoot": "${workspaceFolder}/src"
     }
   ]
 }

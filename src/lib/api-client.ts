@@ -6,9 +6,11 @@ import {
   URI_AUTH_LOGOUT,
   URI_AUTH_TOKEN_REFRESH,
 } from '@/config/api-constants';
-import { signout, useSignout } from '@/features/auth';
+// import { signout } from '@/features/auth';
 
 import getConfig from 'next/config';
+import { refreshToken } from '@/features/auth/api/post-refresh-token';
+import { signOut } from '@/utils';
 
 // Get our configuration of our runtimes
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
@@ -29,11 +31,12 @@ export const apiClient = Axios.create({
 
 const handleLogoutAndRedirect = async () => {
   try {
-    await signout();
+    await signOut();
   } catch (error) {
     console.error('Error during signout:', error);
   } finally {
-    AuthStore.getState().setAccessToken(null);
+    // AuthStore.getState().setAccessToken(null);
+    // AuthStore.getState().setAuthUserDetails(null);
     Router.push('/');
   }
 };
@@ -68,6 +71,7 @@ apiClient.interceptors.response.use(
     ) {
       const currentAccessToken = AuthStore.getState().accessToken;
 
+      console.log(`authdebug: the currentAccessToken = ${currentAccessToken}`);
       // If there's no access token in the store, handle signout and exit
       if (!currentAccessToken) {
         console.error('No access token available.');
@@ -78,8 +82,8 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const res = await apiClient.post(URI_AUTH_TOKEN_REFRESH);
-        const newAccessToken = res.data.access_token;
+        const response = await refreshToken();
+        const newAccessToken = response.access_token;
         AuthStore.getState().setAccessToken(newAccessToken);
         originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
         return apiClient(originalRequest);

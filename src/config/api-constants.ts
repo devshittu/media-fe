@@ -27,12 +27,6 @@ export const URI_STORIES_TRENDING = '/stories/trending/';
 export const URI_STORYLINES_BY_STORYLINE_ID_HASHTAGS =
   '/storylines/{{storyline_id}}/hashtags/';
 export const URI_STORIES_BY_STORY_SLUG = '/stories/{{story_slug}}/';
-export const URI_STORIES_BY_STORY_ID_LIKE = '/stories/{{story_id}}/like/';
-export const URI_STORIES_BY_STORY_ID_DISLIKE = '/stories/{{story_id}}/dislike/';
-export const URI_STORIES_BY_STORY_ID_UNLIKE = '/stories/{{story_id}}/unlike/';
-export const URI_STORIES_BY_STORY_ID_UNDISLIKE =
-  '/stories/{{story_id}}/undislike/';
-
 export const URI_STORIES_BY_STORY_SLUG_LIKE = '/stories/{{story_slug}}/like/';
 export const URI_STORIES_BY_STORY_SLUG_DISLIKE =
   '/stories/{{story_slug}}/dislike/';
@@ -40,7 +34,11 @@ export const URI_STORIES_BY_STORY_SLUG_UNLIKE =
   '/stories/{{story_slug}}/unlike/';
 export const URI_STORIES_BY_STORY_SLUG_UNDISLIKE =
   '/stories/{{story_slug}}/undislike/';
-
+export const URI_STORIES_BY_STORY_ID_LIKE = '/stories/{{story_id}}/like/';
+export const URI_STORIES_BY_STORY_ID_DISLIKE = '/stories/{{story_id}}/dislike/';
+export const URI_STORIES_BY_STORY_ID_UNLIKE = '/stories/{{story_id}}/unlike/';
+export const URI_STORIES_BY_STORY_ID_UNDISLIKE =
+  '/stories/{{story_id}}/undislike/';
 export const URI_STORIES_BY_SLUG_STORYLINES = '/stories/{{slug}}/storylines/';
 export const URI_STORYLINES = '/storylines/';
 export const URI_STORYLINES_BY_STORYLINE_ID = '/storylines/{{storyline_id}}/';
@@ -73,3 +71,25 @@ export const URI_ANALYTICS_ACCESSIBILITY_TOOLS =
 export const URI_ANALYTICS_ACCESSIBILITY_TOOLS_BY_PK =
   '/analytics/accessibility-tools/{{pk}}/';
 export const URI_FEEDBACKS_REPORT = '/feedbacks/report/';
+export const URI_SUPPORT_CATEGORIES = '/support/categories/';
+export const URI_SUPPORT_CATEGORIES_BY_PK = '/support/categories/{{pk}}/';
+export const URI_SUPPORT_TICKETS = '/support/tickets/';
+export const URI_SUPPORT_TICKETS_BY_PK = '/support/tickets/{{pk}}/';
+export const URI_SUPPORT_TICKET_RESPONSES = '/support/ticket-responses/';
+export const URI_SUPPORT_TICKET_RESPONSES_BY_PK =
+  '/support/ticket-responses/{{pk}}/';
+export const URI_SUPPORT_TAGS = '/support/tags/';
+export const URI_SUPPORT_TAGS_BY_PK = '/support/tags/{{pk}}/';
+export const URI_SUPPORT_APP_VERSIONS = '/support/app-versions/';
+export const URI_SUPPORT_APP_VERSIONS_BY_PK = '/support/app-versions/{{pk}}/';
+export const URI_SUPPORT_ARTICLES = '/support/articles/';
+export const URI_SUPPORT_ARTICLES_BY_SLUG = '/support/articles/{{slug}}/';
+export const URI_SUPPORT_ARTICLES_BY_PK = '/support/articles/{{pk}}/';
+export const URI_SUPPORT_FAQS = '/support/faqs/';
+export const URI_SUPPORT_FAQS_BY_PK = '/support/faqs/{{pk}}/';
+export const URI_SUPPORT_TERMS_AND_CONDITIONS =
+  '/support/terms-and-conditions/';
+export const URI_SUPPORT_TERMS_AND_CONDITIONS_BY_PK =
+  '/support/terms-and-conditions/{{pk}}/';
+export const URI_SUPPORT_PRIVACY_TERMS = '/support/privacy-terms/';
+export const URI_SUPPORT_PRIVACY_TERMS_BY_PK = '/support/privacy-terms/{{pk}}/';

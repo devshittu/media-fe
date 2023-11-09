@@ -4,7 +4,7 @@ import {
   Icon,
 } from '@/components/illustrations';
 import React, { useState } from 'react';
-
+import ReactMarkdown from 'react-markdown';
 interface AccordionItemProps {
   title: string;
   content: string;
@@ -44,7 +44,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
           isOpen ? 'max-h-96' : 'max-h-0'
         }`}
       >
-        {content}
+        <ReactMarkdown>{content}</ReactMarkdown>
       </p>
     </details>
   );

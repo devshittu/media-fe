@@ -16,13 +16,18 @@ export const Protected = ({ children }: ProtectedProps) => {
 
   useEffect(() => {
     if (error) {
-      console.error('user.error:// ', error, 'current url:// ', asPath); // Log the error for debugging
+      console.error(
+        'authdebug: user.error:// ',
+        error,
+        'current url:// ',
+        asPath,
+      ); // Log the error for debugging
       replace(`/auth/login?redirect=${asPath}`, undefined, { shallow: true });
     }
     // if (!user.data && !user.isLoading) {
     //   replace(`/auth/login?redirect=${asPath}`, undefined, { shallow: true });
     // }
-  }, [authUser, asPath, replace]);
+  }, [authUser, asPath, replace, error]);
 
   if (isLoading) {
     return (
@@ -43,3 +48,5 @@ export const Protected = ({ children }: ProtectedProps) => {
 
   return <>{children}</>;
 };
+
+// Path: src/features/auth/components/protected/protected.tsx

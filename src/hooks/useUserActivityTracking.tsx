@@ -1,5 +1,5 @@
+import { AnalyticsData, InteractionType } from '@/features/analytics/types';
 import { useEffect, useRef } from 'react';
-import { AnalyticsData } from '@/stores/analytics/analytics'; // Import your AnalyticsData type
 
 export const useUserActivityTracking = (
   storyId: string,
@@ -17,12 +17,21 @@ export const useUserActivityTracking = (
         startTimeRef.current = Date.now();
       } else if (startTimeRef.current !== null) {
         const timeSpent = Date.now() - startTimeRef.current;
-        addData({
-          event: 'storyViewed',
-          timestamp: Date.now(),
-          storyId,
-          timeInView: timeSpent,
-        });
+        // if (timeSpent >= 2000) {
+        // Only add data if timeInView is at least 2 seconds
+
+        let analyticsData: AnalyticsData = {
+          story: storyId,
+          interaction_type: InteractionType.STORY_VIEW,
+          metadata: {
+            event: 'storyViewed',
+            timestamp: Date.now(),
+            storyId,
+            timeInView: timeSpent,
+          },
+        };
+        addData(analyticsData);
+        // }
         startTimeRef.current = null; // Reset startTimeRef
       }
     };
@@ -44,7 +53,5 @@ export const useUserActivityTracking = (
 
   return activityRef;
 };
-
-//Path: src/hooks/useUserActivityTracking.tsx
 
 //Path: src/hooks/useUserActivityTracking.tsx

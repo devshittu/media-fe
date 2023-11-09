@@ -16,6 +16,7 @@ import { useInitialSplashLoader } from '@/components/blocks/splash-loader/hooks/
 import { useInitAuth, useInitializeStore } from '@/hooks';
 import { CookieConsent } from '@/components/blocks/cookie-consent';
 import { GlobalBanner } from '@/components/blocks/banner';
+import { AnalyticsSyncWrapper } from '@/features/analytics/components';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -43,11 +44,14 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
 
             {/* <CategoriesProvider> */}
             <GlobalBanner />
+
+            {/* Now useAnalyticsSync will be called within a component that is a child of QueryClientProvider */}
+            <AnalyticsSyncWrapper />
             {children}
             <GlobalPopup />
 
             <Tour />
-            <CookieConsent />
+            {/* <CookieConsent /> */}
             {/* </CategoriesProvider> */}
           </QueryClientProvider>
 
