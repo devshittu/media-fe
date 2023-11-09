@@ -23,3 +23,6 @@ let year = d.getFullYear();
 export const COPYRIGHT_TEXT =
   (process.env.NEXT_PUBLIC_COPYRIGHT_TEXT as string) ??
   `© Copyright ${year} ${APP_NAME} Inc. All rights reserved.`;
+
+export const ACCESS_TOKEN_KEY = 'accessToken';
+export const AUTH_USER_DETAILS_KEY = 'authUserDetails';
