@@ -4,12 +4,7 @@ import { getItem, setItem, removeItem } from '@/utils/localStorage';
 import { refreshToken } from '@/features/auth/api/post-refresh-token';
 import { queryClient } from '@/lib/react-query';
 import { getAuthUser } from '@/features/auth';
-import {
-  setStoredToken,
-  getStoredToken,
-  setStoredUserDetails,
-  getStoredUserDetails,
-} from '@/utils/auth';
+import { ACCESS_TOKEN_KEY, AUTH_USER_DETAILS_KEY } from '@/config/constants';
 
 export type authStore = {
   accessToken: string | null;
@@ -19,41 +14,48 @@ export type authStore = {
   initializeAuth: () => void;
 };
 
-export const AuthStore = createStore<authStore>((set) => ({
-  accessToken: null,
-  authUserDetails: null,
+export const AuthStore = createStore<authStore>((set, get) => ({
+  [ACCESS_TOKEN_KEY]: null,
+  [AUTH_USER_DETAILS_KEY]: null,
   setAccessToken: (token) => {
-    set({ accessToken: token });
+    set({ [ACCESS_TOKEN_KEY]: token });
     if (token) {
-      setItem('accessToken', token);
+      setItem(ACCESS_TOKEN_KEY, token);
     } else {
-      removeItem('accessToken');
+      removeItem(ACCESS_TOKEN_KEY);
     }
   },
   setAuthUserDetails: (userDetails) => {
-    set({ authUserDetails: userDetails });
+    set({ [AUTH_USER_DETAILS_KEY]: userDetails });
     if (userDetails) {
-      setItem('authUserDetails', userDetails);
+      setItem(AUTH_USER_DETAILS_KEY, userDetails);
     } else {
-      removeItem('authUserDetails');
+      removeItem(AUTH_USER_DETAILS_KEY);
     }
   },
 
   initializeAuth: async () => {
-    const storedToken = getStoredToken();
-    const storedAuthUserDetails = getStoredUserDetails();
+    console.log(`authdebug: initializeAuth begins`);
+    const storedToken = getItem<string>(ACCESS_TOKEN_KEY);
+    const storedAuthUserDetails = getItem<AuthUser>(AUTH_USER_DETAILS_KEY);
     if (storedToken && storedAuthUserDetails) {
       console.log(
-        'storedToken and storedAuthUserDetails is here before fetching from server:',
-        storedToken,
+        `authdebug: storedToken:${storedToken} and storedAuthUserDetails: ${JSON.stringify(
+          storedAuthUserDetails,
+        )} is here before fetching from server:`,
       );
-      set({ accessToken: storedToken, authUserDetails: storedAuthUserDetails });
+      get().setAccessToken(storedToken);
+      get().setAuthUserDetails(storedAuthUserDetails);
     } else {
+      console.log('authdebug: doing await refreshToken');
       try {
         const response = await refreshToken();
         const newAccessToken = response.access_token;
-        setStoredToken(newAccessToken);
-        set({ accessToken: newAccessToken });
+        console.log(
+          `authdebug: set new Token(newAccessToken) ${newAccessToken} is stored`,
+        );
+
+        get().setAccessToken(storedToken);
 
         // Fetch auth user information (only if not already stored)
         if (!storedAuthUserDetails) {
@@ -61,14 +63,20 @@ export const AuthStore = createStore<authStore>((set) => ({
             ['auth-user'],
             getAuthUser,
           );
-          console.log('fetching from server authUserData', authUserData);
-          setStoredUserDetails(authUserData);
-          set({ authUserDetails: authUserData });
+          console.log(
+            'authdebug: fetching from server authUserData',
+            authUserData,
+          );
+          get().setAuthUserDetails(storedAuthUserDetails);
         }
       } catch (error) {
-        console.error('Failed to refresh token:', error);
+        console.error(`authdebug: Failed to refresh token:`, error);
+        get().setAccessToken(null);
+        get().setAuthUserDetails(null);
       }
     }
+
+    console.log(`authdebug: initializeAuth ends`);
   },
 }));
 
