@@ -16,4 +16,3 @@ export type StorylineMiniCardProps = {
   story: Story;
   identifier?: string;
 };
-
