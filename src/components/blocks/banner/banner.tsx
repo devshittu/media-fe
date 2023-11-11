@@ -43,7 +43,7 @@ export const Banner = ({
       break;
     case BannerType.ERROR:
       typeClasses =
-        'bg-red-100 text-red-800 dark:bg-gray-700 dark:text-red-400 border-red-800 dark:border-red-400';
+        'bg-red-100 text-red-800 dark:bg-slate-700 dark:text-red-400 border-red-800 dark:border-red-400';
       break;
     case BannerType.WARNING:
       typeClasses =
