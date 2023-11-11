@@ -127,7 +127,7 @@ export function TourPopper({
             <FloatingFocusManager context={context} modal={false}>
               <div
                 className={`grid place-items-center ${
-                  classes ? classes : 'bg-gray-100 text-gray-50'
+                  classes ? classes : 'bg-slate-100 text-slate-50'
                 } `}
                 ref={refs.setFloating}
                 style={{
