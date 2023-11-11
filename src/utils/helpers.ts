@@ -125,4 +125,32 @@ export const cleanObject = (obj: any) =>
     Object.entries(obj).filter(([_, value]) => value !== undefined),
   );
 
+// type Position = 'start' | 'end';
+export enum Position {
+  START = 'start',
+  END = 'end',
+}
+
+export const removeChars = (
+  originalString: string,
+  numCharsToRemove: number = 0,
+  position: Position = Position.START,
+): string => {
+  if (numCharsToRemove < 0) {
+    throw new Error('Number of characters to remove must be non-negative.');
+  }
+
+  if (numCharsToRemove === 0 || originalString.length === 0) {
+    return originalString;
+  }
+
+  if (numCharsToRemove > originalString.length) {
+    throw new Error('Number of characters to remove exceeds string length.');
+  }
+
+  return position === 'start'
+    ? originalString.substring(numCharsToRemove)
+    : originalString.substring(0, originalString.length - numCharsToRemove);
+};
+
 // Path: src/utils/helper.ts
