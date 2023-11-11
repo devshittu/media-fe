@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Popup, PopupContent, PopupTrigger } from './';
 import { Placement } from '@floating-ui/react';
 type PopperProps = {
@@ -17,7 +17,6 @@ export const ControlledPopper = ({
   width = 'w-44 md:w-48', // Default width
 }: PopperProps) => {
   const [open, setOpen] = useState(false);
-
   return (
     <Popup
       placement={placement || 'bottom-end'}
