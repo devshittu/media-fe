@@ -27,7 +27,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ trails }) => {
         <li className="flex items-center">
           <Link href="/" title="Back to homepage" className="hover:underline">
             <HomeIcon
-              className="w-5 h-5 pr-1 dark:text-gray-300"
+              className="w-5 h-5 pr-1 dark:text-slate-300"
               strokeWidth={3}
             />
           </Link>
@@ -57,7 +57,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ trails }) => {
           <li key={index} className="flex items-center space-x-2">
             <Icon
               icon={<ArrowRightIcon />}
-              className="w-4 h-4  mt-0.5 fill-current dark:text-gray-600"
+              className="w-4 h-4  mt-0.5 fill-current dark:text-slate-600"
             />
             <Link href={link.link} className="flex items-center px-1 capitalize hover:underline">
               {link.label}
@@ -68,7 +68,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ trails }) => {
         <li className="flex items-center space-x-2">
           <Icon
             icon={<ArrowRightIcon />}
-            className="w-4 h-4 mt-0.5 fill-current dark:text-gray-600"
+            className="w-4 h-4 mt-0.5 fill-current dark:text-slate-600"
           />
           <Link
             href="#"
