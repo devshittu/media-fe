@@ -130,7 +130,7 @@ export const DrawerComponent = ({
               isOpen ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <h5
+            {/* <h5
               id="drawer-bottom-label"
               className={`inline-flex items-center mb-4 ${
                 showAppLogo ? 'text-xl uppercase ' : 'text-base'
@@ -146,7 +146,7 @@ export const DrawerComponent = ({
                 />
               )}
               {title ? title : ''}
-            </h5>
+            </h5> */}
             <button
               type="button"
               data-drawer-hide="drawer-bottom-example"
