@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@/components/labs';
-import { COPYRIGHT_TEXT } from '@/config/constants';
+import { APP_SUPPORT_VERSION, COPYRIGHT_TEXT } from '@/config/constants';
 
 type CopyrightProps = {
   text?: string;
@@ -13,9 +13,19 @@ export const Copyright = ({ text, links, themeComponent }: CopyrightProps) => {
   const copyrightLinks = links
     ? links
     : [
+        {
+          url: `/support/`,
+          label: 'Support Center',
+        },
         { url: '/faq', label: 'F.A.Q' },
-        { url: '/legal/v1.0.0/privacy', label: 'Privacy Policy' },
-        { url: '/legal/v1.0.0/terms', label: 'Terms & Conditions' },
+        {
+          url: `/legal/${APP_SUPPORT_VERSION}/privacy`,
+          label: 'Privacy Policy',
+        },
+        {
+          url: `/legal/${APP_SUPPORT_VERSION}/terms`,
+          label: 'Terms & Conditions',
+        },
       ];
   return (
     <div className="flex flex-col-reverse lg:flex-row justify-between md:items-center py-2 md:py-5 border-t border-slate-100 dark:border-slate-800">
