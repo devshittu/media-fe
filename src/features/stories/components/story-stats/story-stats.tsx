@@ -87,7 +87,7 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
       </div>
 
       {/* Number of storylines */}
-      
+
       <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
         <Link
           href={`#`}
