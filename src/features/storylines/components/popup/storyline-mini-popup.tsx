@@ -71,16 +71,16 @@ export const StorylineMiniPopup = React.forwardRef<
     <>
       <div ref={ref} {...rest}>
         <h1 className="text-xl font-semibold my-2">{summary}</h1>
-        <div className="flex space-x-2 text-gray-400 text-sm">
+        <div className="flex space-x-2 text-slate-400 text-sm">
           <Icon icon={<FileTextIcon />} className="h-5 w-5" />
           <p>{storiesCountText}</p>
         </div>
-        <div className="flex space-x-2 text-gray-400 text-sm my-3">
+        <div className="flex space-x-2 text-slate-400 text-sm my-3">
           <Icon icon={<CalendarIcon />} className="h-5 w-5" />
 
           <p>{lastUpdatedText}</p>
         </div>
-        <div className="flex space-x-2 text-gray-400 text-sm my-3">
+        <div className="flex space-x-2 text-slate-400 text-sm my-3">
           <Icon icon={<HashIcon />} className="h-5 w-5" />
 
           <p>{hashtagsCount}</p>
@@ -104,7 +104,7 @@ export const StorylineMiniPopup = React.forwardRef<
           </div>
           <div className="my-2">
             <p className="font-semibold text-base mb-2">Views</p>
-            <div className="text-base text-gray-400 font-semibold">
+            <div className="text-base text-slate-400 font-semibold">
               {/* <p>{progress}%</p> */}
               <p>{3846}</p>
             </div>
