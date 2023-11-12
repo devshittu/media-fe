@@ -20,12 +20,14 @@ type TopicContentSectionProps = {
   title: string;
   description: string;
   children: React.ReactNode;
+  hint?: React.ReactNode;
 };
 
 export const TopicContentSection = ({
   title,
   description,
   children,
+  hint,
 }: TopicContentSectionProps) => {
   return (
     <section className="text-slate-600 body-font">
@@ -34,10 +36,16 @@ export const TopicContentSection = ({
         <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
           {title}
         </h1>
-        <p className="text-base md:text-lg leading-relaxed w-full xl:w-3/4 lg:w-4/5 text-slate-700 dark:text-slate-300">
+        <p className="text-base sm:text-lg md:text-xl leading-relaxed w-full xl:w-3/4 lg:w-4/5 text-slate-700 dark:text-slate-300">
           {description}
         </p>
         <div className=" w-full lg:w-4/5">{children}</div>
+
+        {hint && (
+          <div className=" max-w-screen-sm text-sm text-left text-slate-500 dark:text-slate-300">
+            {hint}
+          </div>
+        )}
       </div>
     </section>
   );
