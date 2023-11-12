@@ -19,8 +19,7 @@ import { SettingsSectionProps } from '../types';
 
 export const AccountSettings = ({
   initialSettingValues,
-}: // onSuccess,
-SettingsSectionProps) => {
+}: SettingsSectionProps) => {
   // if (!initialSettingValues) return;
   const { showNotification } = useNotifications();
   const defaultSettings: AccountSettingsData = { display_name: '', email: '' };
