@@ -7,7 +7,6 @@ import { URI_AUTH_LOGOUT } from '@/config/api-constants';
 import { AuthStore } from '@/stores/auth';
 import { signOut } from '@/utils';
 
-
 type UseSignoutOptions = {
   onSuccess?: () => void;
 };
