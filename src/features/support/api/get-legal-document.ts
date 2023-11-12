@@ -12,7 +12,7 @@ import { uriTemplate } from '@/utils';
 const { GET_LEGAL_DOCUMENT } = QUERY_KEYS;
 
 export type LegalURIParams = {
-  document: 'privacy' | 'terms' | 'faq';
+  document: 'privacy' | 'terms' | 'faq' | 'article';
   version?: string | null;
 };
 type GetLegalDocumentsOptions = {
