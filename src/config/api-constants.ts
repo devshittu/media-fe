@@ -82,14 +82,15 @@ export const URI_SUPPORT_TAGS = '/support/tags/';
 export const URI_SUPPORT_TAGS_BY_PK = '/support/tags/{{pk}}/';
 export const URI_SUPPORT_APP_VERSIONS = '/support/app-versions/';
 export const URI_SUPPORT_APP_VERSIONS_BY_PK = '/support/app-versions/{{pk}}/';
-export const URI_SUPPORT_ARTICLES = '/support/articles/';
-export const URI_SUPPORT_ARTICLES_BY_SLUG = '/support/articles/{{slug}}/';
-export const URI_SUPPORT_ARTICLES_BY_PK = '/support/articles/{{pk}}/';
-export const URI_SUPPORT_FAQS = '/support/faqs/';
-export const URI_SUPPORT_FAQS_BY_PK = '/support/faqs/{{pk}}/';
-export const URI_SUPPORT_TERMS_AND_CONDITIONS =
-  '/support/terms-and-conditions/';
-export const URI_SUPPORT_TERMS_AND_CONDITIONS_BY_PK =
-  '/support/terms-and-conditions/{{pk}}/';
-export const URI_SUPPORT_PRIVACY_TERMS = '/support/privacy-terms/';
-export const URI_SUPPORT_PRIVACY_TERMS_BY_PK = '/support/privacy-terms/{{pk}}/';
+export const URI_SUPPORT_BY_VERSION_ARTICLES = '/support/{{version}}/articles/';
+export const URI_SUPPORT_BY_VERSION_ARTICLES_BY_PK =
+  '/support/{{version}}/articles/{{pk}}/';
+export const URI_SUPPORT_BY_VERSION_ARTICLES_BY_SLUG =
+  '/support/{{version}}/articles/{{slug}}/';
+export const URI_SUPPORT_BY_VERSION_FAQS = '/support/{{version}}/faqs/';
+export const URI_SUPPORT_BY_VERSION_FAQS_BY_PK =
+  '/support/{{version}}/faqs/{{pk}}/';
+export const URI_SUPPORT_BY_VERSION_PRIVACY_POLICIES =
+  '/support/{{version}}/privacy-policies/';
+export const URI_SUPPORT_BY_VERSION_TERMS_AND_CONDITIONS =
+  '/support/{{version}}/terms-and-conditions/';
