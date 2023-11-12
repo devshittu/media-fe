@@ -59,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
         </ul>
         <div className="items-center flex-shrink-0 hidden lg:flex">
           <Button className="self-center px-8 py-3 rounded">Sign in</Button>
-          <Button className="self-center px-8 py-3 font-semibold rounded dark:bg-cyan-400 dark:text-gray-900">
+          <Button className="self-center px-8 py-3 font-semibold rounded dark:bg-cyan-400 dark:text-slate-900">
             Sign up
           </Button>
 
@@ -73,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
           </Link>
         </div>
         <Button className="p-4 lg:hidden">
-          <Icon icon={<MenuIcon />} className="w-6 h-6 dark:text-gray-100" />
+          <Icon icon={<MenuIcon />} className="w-6 h-6 dark:text-slate-100" />
         </Button>
       </div>
     </header>
