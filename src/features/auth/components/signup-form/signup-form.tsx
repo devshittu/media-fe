@@ -181,7 +181,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
           </div>
         </form>
       </div>
-      <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
+      <p className="my-6 mt-0 text-slate-600 sm:my-12 sm:mt-3">
         Already registered? <Link href="/auth/signin">Sign in</Link>.
       </p>
     </>
