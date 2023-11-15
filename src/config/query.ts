@@ -27,6 +27,7 @@ export const QUERY_KEYS = {
   ADD_BATCH_ANALYTICS: 'add-batch-analytics',
   ADD_ANALYTICS: 'add-analytics',
   GET_SUPPORT_ARTICLES: 'get-support-articles',
+  GET_SUPPORT_CATEGORIES: 'get-support-categories',
   GET_LEGAL_DOCUMENT: 'get-legal-document',
 };
 
