@@ -25,6 +25,7 @@ export const getSupportArticleBySlug = ({
   });
   return apiClient.get(`${uri}`, {
     params,
+    requiresAuth: false 
   });
 };
 
