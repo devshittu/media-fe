@@ -33,6 +33,7 @@ export const getLegalDocuments = ({
   );
   return apiClient.get(`${uri}`, {
     params,
+    requiresAuth: false 
   });
 };
 
