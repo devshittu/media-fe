@@ -1,0 +1,4 @@
+.markdown {
+  @apply text-slate-700 dark:text-slate-300;
+}
+/* src/components/markdown/Markdown.module.css */
