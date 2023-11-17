@@ -11,8 +11,8 @@ import { useStorylinesByStory } from '../../api/get-storylines-by-story';
 import { TrendingListItem } from '@/features/trends/components/blocks/trends';
 import { Loading } from '@/components/loading';
 import { Storyline } from '../../types';
-import pluralize from 'pluralize';
 import { StorylineMiniPopupLoadingPlaceholder } from '../loading/storyline-mini-popup-loading-placeholder';
+import { word_pluralize } from '@/utils';
 
 export const StorylineMiniPopup = React.forwardRef<
   HTMLDivElement,
@@ -51,7 +51,7 @@ export const StorylineMiniPopup = React.forwardRef<
   } = stableStoryline[0] || ({} as Storyline);
   // Destructure the first element of the results array
 
-  const storiesCountText = `${stories_count} ${pluralize(
+  const storiesCountText = `${stories_count} ${word_pluralize(
     'story',
     stories_count,
   )}`;
@@ -59,7 +59,7 @@ export const StorylineMiniPopup = React.forwardRef<
   const hashtagsCount = `${
     hashtags.length === 0
       ? 'No hashtags found'
-      : `${hashtags.length} ${pluralize('hashtag', hashtags.length)}`
+      : `${hashtags.length} ${word_pluralize('hashtag', hashtags.length)}`
   }`;
   const storylineWatchers = [
     'https://dummyimage.com/104x104',
