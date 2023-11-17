@@ -24,7 +24,11 @@ export const Hero: React.FC<HeroProps> = ({
         <h1 className="text-4xl font-bold md:leading-normal sm:text-5xl">
           {title}
         </h1>
-        {subtitle && <p className="text-lg text-slate-600">{subtitle}</p>}
+        {subtitle && (
+          <p className="text-lgx text-slate-600 dark:text-slate-100">
+            {subtitle}
+          </p>
+        )}
       </div>
     </section>
   );
