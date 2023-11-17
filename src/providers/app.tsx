@@ -42,17 +42,17 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
           <QueryClientProvider client={queryClient}>
             {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
 
-            {/* <CategoriesProvider> */}
-            <GlobalBanner />
+            <CategoriesProvider>
+              <GlobalBanner />
 
-            {/* Now useAnalyticsSync will be called within a component that is a child of QueryClientProvider */}
-            <AnalyticsSyncWrapper />
-            {children}
-            <GlobalPopup />
+              {/* Now useAnalyticsSync will be called within a component that is a child of QueryClientProvider */}
+              <AnalyticsSyncWrapper />
+              {children}
+              <GlobalPopup />
 
-            <Tour />
-            {/* <CookieConsent /> */}
-            {/* </CategoriesProvider> */}
+              <Tour />
+              {/* <CookieConsent /> */}
+            </CategoriesProvider>
           </QueryClientProvider>
 
           {/* The confetti effect and Splash loader effect to make it available through out the app */}
