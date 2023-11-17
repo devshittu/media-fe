@@ -51,7 +51,7 @@ export const UserListItem = ({
             {`@` + user.username}
           </h3>
         </div>
-        <div className="inline-flex space-x-3 items-center text-base font-semibold text-gray-900 dark:text-white">
+        <div className="inline-flex space-x-3 items-center text-base font-semibold text-slate-900 dark:text-white">
           <Button
             className=""
             loading={isFollowLoading}
