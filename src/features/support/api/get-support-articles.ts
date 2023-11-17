@@ -11,7 +11,7 @@ import { LegalURIParams } from './get-legal-document';
 const { GET_SUPPORT_ARTICLES } = QUERY_KEYS;
 
 type GetSupportArticlesOptions = {
-  params: LegalURIParams & PaginatedListQueryParams;
+  params: Omit<LegalURIParams, 'document'> & PaginatedListQueryParams;
   initialData?: any;
 };
 
@@ -23,7 +23,7 @@ export const getSupportArticles = ({
   });
   return apiClient.get(`${uri}`, {
     params,
-    requiresAuth: false 
+    requiresAuth: false,
   });
 };
 
