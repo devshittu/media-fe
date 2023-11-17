@@ -23,7 +23,7 @@ export const getSupportFAQs = ({
   });
   return apiClient.get(`${uri}`, {
     params,
-    requiresAuth: false 
+    requiresAuth: false,
   });
 };
 
