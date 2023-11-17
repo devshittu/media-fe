@@ -1,19 +1,23 @@
 import PublicLayout from '@/layouts/public-layout';
-import React, { ReactElement, } from 'react';
+import React, { ReactElement } from 'react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import Hero from '@/components/labs/public-page/hero';
 import Footer from '@/components/labs/public-page/footer';
 import Header from '@/components/labs/public-page/header';
 import Newsletter from '@/components/labs/public-page/newsletter';
-import MoreArticles from '@/components/labs/public-page/more-articles';
+// import {  } from '@/features/support/components/blocks/extra-articles';
 import { ContentSection } from '@/components/labs/public-page';
-import { FAQList } from '@/features/support';
+import {
+  FAQList,
+  SearchSection,
+  ExtraArticles,
+  HelpCenterSection,
+} from '@/features/support';
 
 type PublicFAQPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 export default function Index({ categories }: PublicFAQPageProps) {
-
   const breadcrumbTrail = [
     { href: '/parent1', label: 'Parent 1' },
     { href: '/parent2', label: 'Parent 2' },
@@ -45,45 +49,6 @@ export default function Index({ categories }: PublicFAQPageProps) {
     { href: '/services', label: 'Services' },
     { href: '/contact', label: 'Contact' },
   ];
-  const articles = [
-    {
-      imageUrl:
-        'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-1.png',
-      title: 'Our first office',
-      description:
-        'Over the past year, Volosoft has undergone many changes! After months of preparation.',
-      readTime: '2 minutes',
-      url: '#',
-    },
-    {
-      imageUrl:
-        'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png',
-      title: 'Enterprise design tips',
-      description:
-        'Over the past year, Volosoft has undergone many changes! After months of preparation.',
-      readTime: '12 minutes',
-      url: '#',
-    },
-    {
-      imageUrl:
-        'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-3.png',
-      title: 'We partnered with Google',
-      description:
-        'Over the past year, Volosoft has undergone many changes! After months of preparation.',
-      readTime: '8 minutes',
-      url: '#',
-    },
-    {
-      imageUrl:
-        'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-4.png',
-      title: 'Our first project with React',
-      description:
-        'Over the past year, Volosoft has undergone many changes! After months of preparation.',
-      readTime: '4 minutes',
-      url: '#',
-    },
-    // Add more articles here...
-  ];
 
   return (
     <>
@@ -94,10 +59,24 @@ export default function Index({ categories }: PublicFAQPageProps) {
         subtitle="Find answers to common questions and learn how to make the most of our app."
       />
       <ContentSection>
-        <FAQList/>
+        <FAQList />
       </ContentSection>
 
-      <MoreArticles articles={articles} heading="Related articles" />
+      <SearchSection />
+
+      {/* <HelpCenterSection
+        title="Explore Our Support Categories"
+        description="Browse our wealth of knowledge by categories. Find detailed guides and solutions tailored to your needs."
+        categories={[
+          'Account Security',
+          'Account Preferences',
+          'Themes',
+          'My Identity',
+          'How Tos',
+        ]}
+      /> */}
+
+      <ExtraArticles heading="Related articles" />
       <Newsletter
         heading="Sign up for our newsletter"
         description="Stay up to date with the roadmap progress, announcements and
