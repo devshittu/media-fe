@@ -19,16 +19,45 @@ export type FAQ = {
   updated_at: number;
 };
 
-export type SupportArticle = {
+export type LegalDocumentResponse = {
   url: string;
+  title: string;
+  content: string;
+  app_version: number;
+  created_at: number;
+  updated_at: number;
+};
+export type SupportCategory = {
+  id: number;
+  name: string;
+  slug: string;
+  subcategories: SupportSubcategory[];
+  created_at: number;
+  updated_at: number;
+};
+
+type SupportSubcategory = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
+export type SupportArticle = {
+  id: number;
   title: string;
   slug: string;
   content: string;
-  category: number; // or CategoryType if you have a defined type for the category
-  tags: string[]; // assuming tags are an array of strings
-  app_version: number; // or AppVersionType if you have a defined type for the app version
-  created_at: number; // assuming this is a Unix timestamp
-  updated_at: number; // assuming this is a Unix timestamp
+  summary: string;
+  reading_time: number;
+  category: {
+    name: string;
+  };
+  tags: string[];
+  app_version: {
+    version: string;
+  };
+  created_at: number;
+  updated_at: number;
 };
 
 export type AddSupportArticleFormData = {
@@ -42,5 +71,6 @@ export type SupportArticleListProps = {
   queryParams: PaginatedListQueryParams;
 };
 
+export type SupportCategoryListResponse = PaginatedResponse<SupportCategory>;
 export type SupportArticleListResponse = PaginatedResponse<SupportArticle>;
 export type FAQListResponse = PaginatedResponse<FAQ>;
