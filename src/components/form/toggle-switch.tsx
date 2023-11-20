@@ -8,14 +8,12 @@ interface ToggleSwitchProps
     'checked' | 'size'
   > {
   id: string;
-  // leftLabel?: string;
-  // rightLabel?: string;
 
   leftLabel?: LabelType;
   rightLabel?: LabelType;
   size?: 'small' | 'base' | 'large';
-  checked?: number;
-  onValueChange?: (value: number) => void;
+  checked?: boolean;
+  onValueChange?: (value: boolean) => void;
 }
 
 export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
@@ -55,7 +53,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
         {/* {leftLabel && (<h4 className={`${labelClasses}`}>{leftLabel}</h4>)} */}
         {leftLabel && (
           <h4 className={`${labelClasses}`}>
-            {getLabel(leftLabel, checked === 1)}
+            {getLabel(leftLabel, !!checked)}
           </h4>
         )}
         <span className="relative">
@@ -64,9 +62,9 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
             type="checkbox"
             className="hidden peer"
             ref={ref}
-            checked={checked === 1}
+            checked={checked}
             onChange={(e) => {
-              const isChecked = e.target.checked ? 1 : 0;
+              const isChecked = e.target.checked;
               if (onValueChange) {
                 onValueChange(isChecked);
               }
@@ -79,7 +77,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
         {/* {rightLabel && (<h4 className={`${labelClasses}`}>{rightLabel}</h4>)} */}
         {rightLabel && (
           <h4 className={`${labelClasses}`}>
-            {getLabel(rightLabel, checked === 1)}
+            {getLabel(rightLabel, !!checked)}
           </h4>
         )}
       </label>
