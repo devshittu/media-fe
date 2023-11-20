@@ -23,20 +23,26 @@ export const Markdown: React.FC<MarkdownProps> = ({
 
   return (
     <div className={`${styles.markdown} text-slate-700 dark:text-slate-300`}>
-      
       <ReactMarkdown
         components={{
-          p: ({ node, ...props }) => (
-            <p className="" {...props} />
-          ),
+          p: ({ node, ...props }) => <p className="" {...props} />,
           h1: ({ node, ...props }) => (
-            <h1 className="text-4xl font-bold mt-6 mb-4 text-slate-800 dark:text-slate-200" {...props} />
+            <h1
+              className="text-4xl font-bold mt-6 mb-4 text-slate-800 dark:text-slate-200"
+              {...props}
+            />
           ),
           h2: ({ node, ...props }) => (
-            <h2 className="text-3xl font-semibold mt-5 mb-3 text-slate-800 dark:text-slate-200" {...props} />
+            <h2
+              className="text-3xl font-semibold mt-5 mb-3 text-slate-800 dark:text-slate-200"
+              {...props}
+            />
           ),
           h3: ({ node, ...props }) => (
-            <h3 className="text-2l font-semibold mt-4 mb-2 text-slate-800 dark:text-slate-200" {...props} />
+            <h3
+              className="text-2l font-semibold mt-4 mb-2 text-slate-800 dark:text-slate-200"
+              {...props}
+            />
           ),
           ul: ({ node, ...props }) => (
             <ul className="list-disc pl-5 my-4" {...props} />
@@ -63,9 +69,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
           a: ({ node, ...props }) => (
             <a className="text-blue-600 hover:underline" {...props} />
           ),
-          hr: ({ node, ...props }) => (
-            <hr className="my-4" {...props} />
-          ),
+          hr: ({ node, ...props }) => <hr className="my-4" {...props} />,
           // Add more HTML tag mappings as needed
         }}
       >
