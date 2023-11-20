@@ -6,7 +6,10 @@ import Footer from '@/components/labs/public-page/footer';
 import Header from '@/components/labs/public-page/header';
 import Newsletter from '@/components/labs/public-page/newsletter';
 // import {  } from '@/features/support/components/blocks/extra-articles';
-import { ContentSection, TopicContentSection } from '@/components/labs/public-page';
+import {
+  ContentSection,
+  TopicContentSection,
+} from '@/components/labs/public-page';
 import {
   FAQList,
   SearchSection,
