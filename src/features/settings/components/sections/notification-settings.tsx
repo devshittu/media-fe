@@ -23,9 +23,9 @@ export const NotificationSettings = ({
 SettingsSectionProps) => {
   const { showNotification } = useNotifications();
   const defaultSettings: NotificationSettingsData = {
-    account: 1,
-    marketing: 1,
-    updates: 1,
+    account: true,
+    marketing: true,
+    updates: false,
   };
 
   const [localSettings, setLocalSettings] = useState<NotificationSettingsData>(
@@ -51,6 +51,7 @@ SettingsSectionProps) => {
     });
   const onSubmit = (data: NotificationSettingsData) => {
     console.log('data:', data);
+
     const updatedData = updateDeep(initialSettingValues, {
       notification_settings: { email: data },
     });
@@ -69,7 +70,6 @@ SettingsSectionProps) => {
         >
           <SettingsField
             id="accountField"
-            // fieldType="checkbox"
             title="Account notifications"
             description="Preferences for email notifications, including account-related, marketing, and update emails."
           >
@@ -77,18 +77,16 @@ SettingsSectionProps) => {
               name="account"
               control={control}
               defaultValue={defaultSettings.account}
-              render={({ field }) => (
+              render={({ field: { onChange, value, name, ref } }) => (
                 <ToggleSwitch
                   id="accountToggle"
-                  leftLabel="Off"
-                  rightLabel="On"
-                  checked={field.value}
-                  {...field}
-                  onChange={(value) => field.onChange(value)} // This will pass 1 or 0 to the form
+                  checked={value}
+                  onChange={(e) => onChange(e.target.checked)}
+                  name={name}
+                  ref={ref}
                 />
               )}
             />
-
             <p>Toggle is {isAccountChecked ? 'ON' : 'OFF'}</p>
           </SettingsField>
           <SettingsField
@@ -101,14 +99,13 @@ SettingsSectionProps) => {
               name="marketing"
               control={control}
               defaultValue={defaultSettings.marketing}
-              render={({ field }) => (
+              render={({ field: { onChange, value, name, ref } }) => (
                 <ToggleSwitch
                   id="marketingToggle"
-                  leftLabel="Off"
-                  rightLabel="On"
-                  checked={field.value}
-                  {...field}
-                  onChange={(value) => field.onChange(value)} // This will pass 1 or 0 to the form
+                  checked={value}
+                  onChange={(e) => onChange(e.target.checked)}
+                  name={name}
+                  ref={ref}
                 />
               )}
             />
@@ -125,14 +122,13 @@ SettingsSectionProps) => {
               name="updates"
               control={control}
               defaultValue={defaultSettings.updates}
-              render={({ field }) => (
+              render={({ field: { onChange, value, name, ref } }) => (
                 <ToggleSwitch
                   id="updatesToggle"
-                  leftLabel="Off"
-                  rightLabel="On"
-                  checked={field.value}
-                  {...field}
-                  onChange={(value) => field.onChange(value)} // This will pass 1 or 0 to the form
+                  checked={value}
+                  onChange={(e) => onChange(e.target.checked)}
+                  name={name}
+                  ref={ref}
                 />
               )}
             />
