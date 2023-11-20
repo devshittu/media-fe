@@ -10,7 +10,7 @@ import {
   NotificationType,
   NotificationPosition,
 } from '@/stores/notifications';
-import { AccountSettingsData, Setting } from '../../types';
+import { AccountSettingsData } from '../../types';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/button';
 import { useUpdateUserSettings } from '../../api/update-user-settings';
@@ -22,7 +22,7 @@ export const AccountSettings = ({
 }: SettingsSectionProps) => {
   // if (!initialSettingValues) return;
   const { showNotification } = useNotifications();
-  const defaultSettings: AccountSettingsData = { display_name: '', email: '' };
+  const defaultSettings: AccountSettingsData = { display_name: '', email: '', username: '' };
 
   const [localSettings, setLocalSettings] = useState<AccountSettingsData>(
     initialSettingValues?.account_settings || defaultSettings,
@@ -75,7 +75,7 @@ export const AccountSettings = ({
           <SettingsField
             id="account_display_name"
             title="Change your display name"
-            description="Your public username or display name."
+            description="Your public display name."
           >
             <InputField
               label="Display name"
@@ -84,6 +84,18 @@ export const AccountSettings = ({
               error={formState.errors['display_name']}
             />
           </SettingsField>
+          {/* <SettingsField
+            id="account_username"
+            title="Change your username"
+            description="Your public username."
+          >
+            <InputField
+              label="Username"
+              type="text"
+              {...register('username', { required: 'Required' })}
+              error={formState.errors['username']}
+            />
+          </SettingsField> */}
           <SettingsFieldsetFooter>
             <Button
               loading={!!updateSettings.isLoading}
