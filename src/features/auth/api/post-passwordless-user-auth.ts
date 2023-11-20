@@ -5,10 +5,11 @@ import { apiClient } from '@/lib/api-client';
 import { AuthUser } from '../types';
 
 import { QUERY_KEYS } from '@/config/query';
+import { URI_AUTH_ME } from '@/config/api-constants';
 const { AUTH_USER } = QUERY_KEYS;
 
 export const getAuthUser = (): Promise<AuthUser> => {
-  return apiClient.get('/auth/me');
+  return apiClient.get(`${URI_AUTH_ME}`);
 };
 
 export const useUser = () => {
