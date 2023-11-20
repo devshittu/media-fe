@@ -5,13 +5,13 @@ type ContentSectionProps = {
 };
 
 export const ContentSection: React.FC<ContentSectionProps> = ({ children }) => {
-
   return (
     <section className="text-slate-600 body-font">
       <div className="container mx-auto flex flex-col gap-4 items-start px-4 py-5 md:py-10 md:px-10 lg:px-32 xl:max-w-3xlx">
         <div className=" w-full 2xl:w-4/5  lg:my-4">{children}</div>
       </div>
-    </section>)
+    </section>
+  );
 };
 
 type TopicContentSectionProps = {
