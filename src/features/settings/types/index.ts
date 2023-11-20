@@ -20,9 +20,9 @@ export type SettingNotification = {
   // short_message_service?: SMSNotificationSettingsData;
 };
 export type NotificationSettingsData = {
-  account: number; // email about the user's account
-  marketing: number; // email about the marketing, products and promotions
-  updates: number; // newly on-boarded features/announcements
+  account: boolean; // email about the user's account
+  marketing: boolean; // email about the marketing, products and promotions
+  updates: boolean; // newly on-boarded features/announcements
 };
 // export type SMSNotificationSettingsData = {
 //   account: number; // sms about the user's account
@@ -32,6 +32,7 @@ export type NotificationSettingsData = {
 export type AccountSettingsData = {
   display_name: string;
   email: string;
+  username: string;
 };
 export type SystemSettingsData = {
   theme: string;
