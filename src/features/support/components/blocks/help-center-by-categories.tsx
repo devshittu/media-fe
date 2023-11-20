@@ -14,10 +14,7 @@ type HelpCenterSectionProps = {
   categories: SupportCategory[];
 };
 
-export const HelpCenterSection = ({
-  
-  categories,
-}: HelpCenterSectionProps) => {
+export const HelpCenterSection = ({ categories }: HelpCenterSectionProps) => {
   return (
     <>
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 xl:gap-4 ">
