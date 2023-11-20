@@ -5,10 +5,7 @@ import Hero from '@/components/labs/public-page/hero';
 import Footer from '@/components/labs/public-page/footer';
 import Header from '@/components/labs/public-page/header';
 import Newsletter from '@/components/labs/public-page/newsletter';
-import { ExtraArticles } from '@/features/support/components/blocks/extra-articles';
 import { ContentSection } from '@/components/labs/public-page';
-import { FAQList } from '@/features/support';
-import ReactMarkdown from 'react-markdown';
 import {
   LegalURIParams,
   getLegalDocuments,
@@ -64,7 +61,6 @@ export default function PublicTermsPage({ document }: PublicTermsPageProps) {
       {/* <ContentSection>
         <ReactMarkdown>{document.content}</ReactMarkdown>
       </ContentSection> */}
-
 
       <ContentSection>
         <Markdown>{document.content}</Markdown>
