@@ -22,6 +22,8 @@ export const QUERY_KEYS = {
   GET_USER_SETTINGS: 'get-settings',
   FOLLOW_USER: 'follow-user',
   UPDATE_USER_SETTINGS: 'get-settings',
+  UPDATE_USER_PROFILE_INFO: 'put-user-profile-info',
+  UPDATE_USER_PASSWORD: 'put-user-password',
   SYNC_ANALYTICS: 'analytics-sync',
   AUTH_USER: 'auth-user',
   ADD_BATCH_ANALYTICS: 'add-batch-analytics',
