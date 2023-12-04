@@ -27,7 +27,7 @@ export type VerifyAccountData = {
 
 export type User = {
   id: number;
-  name: string;
+  display_name: string;
   email: string;
   username: string;
   avatar_url: string | null;
