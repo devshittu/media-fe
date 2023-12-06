@@ -9,7 +9,7 @@ import { NotificationSettingsData, Setting } from '../../types';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '@/components/button';
 import { SettingsSectionProps } from '../types';
-import { useUpdateUserSettings } from '../../api/update-user-settings';
+import { useUpdateUserSettings } from '../../api/patch-update-user-settings';
 import {
   NotificationPosition,
   NotificationType,
