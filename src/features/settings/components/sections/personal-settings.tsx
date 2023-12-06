@@ -19,7 +19,7 @@ import {
 } from '@/stores/notifications';
 import { PersonalSettingsData } from '../../types';
 import { SettingsSectionProps } from '../types';
-import { useUpdateUserSettings } from '../../api/update-user-settings';
+import { useUpdateUserSettings } from '../../api/patch-update-user-settings';
 import { useCategoryContext } from '@/features/categories/hooks';
 // Moved to a separate (function) component for clarity and reusability
 
