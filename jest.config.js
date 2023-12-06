@@ -12,6 +12,9 @@ const customJestConfig = {
     '@/(.*)': '<rootDir>/src/$1',
   },
   testPathIgnorePatterns: ['<rootDir>/cypress/', '<rootDir>/code-stages/'],
+
+  preset: 'ts-jest',
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
 };
 
 module.exports = createJestConfig(customJestConfig);
