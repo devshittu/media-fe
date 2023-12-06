@@ -3,7 +3,17 @@ import { Category } from '@/features/categories';
 export type FeedPosition = {
   last_story_read: string | null;
 };
+export type UpdatePasswordData = {
+  old_password: string;
+  new_password: string;
+  confirm_new_password: string;
+};
 
+export type UpdateUserProfileData = {
+  username?: string;
+  email?: string;
+  display_name?: string;
+};
 export type Setting = {
   id: string;
   user_id: string;
