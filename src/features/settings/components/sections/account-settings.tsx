@@ -10,19 +10,21 @@ import {
   NotificationType,
   NotificationPosition,
 } from '@/stores/notifications';
-import { AccountSettingsData } from '../../types';
+import { AccountSettingsData, UpdateUserProfileData } from '../../types';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/button';
-import { useUpdateUserSettings } from '../../api/update-user-settings';
-import { updateDeep } from '@/utils';
 import { SettingsSectionProps } from '../types';
+import { useUpdateUserProfile } from '../../api/put-update-user-profile-info';
 
 export const AccountSettings = ({
   initialSettingValues,
 }: SettingsSectionProps) => {
-  // if (!initialSettingValues) return;
   const { showNotification } = useNotifications();
-  const defaultSettings: AccountSettingsData = { display_name: '', email: '', username: '' };
+  const defaultSettings: AccountSettingsData = {
+    display_name: '',
+    email: '',
+    username: '',
+  };
 
   const [localSettings, setLocalSettings] = useState<AccountSettingsData>(
     initialSettingValues?.account_settings || defaultSettings,
@@ -40,76 +42,95 @@ export const AccountSettings = ({
     );
   };
 
-  const updateSettings = useUpdateUserSettings({ onSuccess });
-  const { register, handleSubmit, formState } = useForm<AccountSettingsData>({
+  // const updateSettings = useUpdateUserSettings({ onSuccess });
+  const updateSettings = useUpdateUserProfile({ onSuccess });
+  const { register, handleSubmit, formState } = useForm<UpdateUserProfileData>({
     defaultValues: localSettings,
   });
-  const onSubmit = (data: AccountSettingsData) => {
+  const onSubmit = (data: UpdateUserProfileData) => {
     console.log('data:', data);
-    const updatedData = updateDeep(initialSettingValues, {
-      account_settings: data,
-    });
-    console.log('updatedData:', JSON.stringify(updatedData));
-    updateSettings.submit(updatedData);
+    // const updatedData = updateDeep(initialSettingValues, {
+    //   account_settings: data,
+    // });
+    console.log('updatedData:', JSON.stringify(data));
+    updateSettings.submit(data);
   };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <SettingsFieldset
-          id="AccountDetailsSettings"
-          title="Account Settings"
-          description="Personal details and contact information associated with the user's account."
-        >
-          <SettingsField
-            id="account_email"
-            title="Change your account email"
-            description="The email address associated with your account."
+    <>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          {/* Display Name
+
+Title: "Public Profile Name"
+Description: "Your visible name to other users; choose something memorable."
+Username
+
+Title: "Unique Username"
+Description: "A distinct identifier for sign-in and profile reference."
+Email
+
+Title: "Email Address"
+Description: "Used for account security and essential notifications."
+ */}
+          <SettingsFieldset
+            id="AccountDetailsSettings"
+            title="Account Settings"
+            description="Personal details and contact information associated with the user's account."
           >
-            <InputField
-              label="Email"
-              type="email"
-              {...register('email', { required: 'Required' })}
-              error={formState.errors['email']}
-            />
-          </SettingsField>
-          <SettingsField
-            id="account_display_name"
-            title="Change your display name"
-            description="Your public display name."
-          >
-            <InputField
-              label="Display name"
-              type="text"
-              {...register('display_name', { required: 'Required' })}
-              error={formState.errors['display_name']}
-            />
-          </SettingsField>
-          {/* <SettingsField
-            id="account_username"
-            title="Change your username"
-            description="Your public username."
-          >
-            <InputField
-              label="Username"
-              type="text"
-              {...register('username', { required: 'Required' })}
-              error={formState.errors['username']}
-            />
-          </SettingsField> */}
-          <SettingsFieldsetFooter>
-            <Button
-              loading={!!updateSettings.isLoading}
-              disabled={updateSettings.isLoading}
-              nativeType="submit"
-              size="large"
-              type="primary"
+            <SettingsField
+              id="account_email"
+              title="Account email"
+              description="Used for account security and essential notifications."
             >
-              Update settings
-            </Button>
-          </SettingsFieldsetFooter>
-        </SettingsFieldset>
-      </form>
-    </div>
+              <InputField
+                label="Email"
+                type="email"
+                {...register('email', { required: 'Required' })}
+                error={formState.errors['email']}
+              />
+            </SettingsField>
+            <SettingsField
+              id="account_display_name"
+              title="Display Name"
+              description="Your visible name to other users; choose something memorable."
+            >
+              <InputField
+                label="Display name"
+                type="text"
+                {...register('display_name', { required: 'Required' })}
+                error={formState.errors['display_name']}
+              />
+            </SettingsField>
+
+            <SettingsField
+              id="account_username"
+              title="Username"
+              description="A distinct identifier for sign-in and profile reference."
+            >
+              <InputField
+                label="username"
+                type="text"
+                {...register('username', { required: 'Required' })}
+                error={formState.errors['username']}
+              />
+            </SettingsField>
+
+            <SettingsFieldsetFooter>
+              <Button
+                loading={!!updateSettings.isLoading}
+                disabled={updateSettings.isLoading}
+                nativeType="submit"
+                size="large"
+                type="primary"
+              >
+                Update account information
+              </Button>
+            </SettingsFieldsetFooter>
+          </SettingsFieldset>
+        </form>
+      </div>
+    </>
   );
 };
 
