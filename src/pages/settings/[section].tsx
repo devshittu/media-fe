@@ -5,6 +5,7 @@ import {
   PersonalSettings,
   NotificationSettings,
   SettingsLinks,
+  SecuritySettings,
 } from '@/features/settings/';
 import { useUserSettings } from '@/features/settings/api/get-user-settings';
 import { Loading } from '@/components/loading';
@@ -20,6 +21,7 @@ const sectionTitles: Record<string, string> = {
   notifications: 'Notifications',
   personal: 'Personal',
   system: 'System',
+  security: 'Security',
   default: 'Settings',
 };
 
@@ -54,6 +56,8 @@ export const SettingsSection = () => {
             return <PersonalSettings initialSettingValues={userSettings} />;
           case 'system':
             return <SystemSettings initialSettingValues={userSettings} />;
+          case 'security':
+            return <SecuritySettings initialSettingValues={userSettings} />;
           default:
             return <NotFound />;
         }
