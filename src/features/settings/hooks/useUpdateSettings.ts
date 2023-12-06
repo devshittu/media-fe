@@ -1,5 +1,5 @@
 import { updateDeep } from '@/utils';
-import { useUpdateUserSettings } from '../api/update-user-settings';
+import { useUpdateUserSettings } from '../api/patch-update-user-settings';
 import { useSuccessNotification } from './useSuccessNotification';
 
 export const useUpdateSettings = (
