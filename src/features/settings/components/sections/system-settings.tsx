@@ -11,30 +11,25 @@ import { Button } from '@/components/button';
 
 import { Setting, SystemSettingsData } from '../../types';
 import { SettingsSectionProps } from '../types';
-import { useSettingsForm } from '../../hooks';
-import {
-  NotificationPosition,
-  NotificationType,
-  useNotifications,
-} from '@/stores/notifications';
-import { useUpdateUserSettings } from '../../api/update-user-settings';
+import { useSuccessNotification } from '../../hooks';
+
+import { useUpdateUserSettings } from '../../api/patch-update-user-settings';
 import { updateDeep } from '@/utils';
 import { SettingsFooter } from '../blocks/settings-footer';
 
 export const SystemSettings = ({
   initialSettingValues,
 }: SettingsSectionProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState,
-    control,
-    onSubmit,
-    sectionDefaults,
-  } = useSettingsForm<Setting, 'system_settings'>(
-    initialSettingValues,
-    'system_settings',
+  const defaultSettings: SystemSettingsData = { theme: '', language: '' };
+
+  const [localSettings, setLocalSettings] = useState<SystemSettingsData>(
+    initialSettingValues?.system_settings || defaultSettings,
   );
+  const { register, handleSubmit, formState, control } =
+    useForm<SystemSettingsData>({
+      defaultValues: localSettings,
+    });
+
   const languageError: FieldError | undefined = formState.errors['language']
     ? {
         type: formState.errors['language'].type as string,
@@ -45,6 +40,17 @@ export const SystemSettings = ({
       }
     : undefined;
 
+  const showSuccess = useSuccessNotification('Settings updated!');
+  const updateSettings = useUpdateUserSettings({ onSuccess: showSuccess });
+
+  const onSubmit = (data: SystemSettingsData) => {
+    console.log('data:', data);
+    const updatedData = updateDeep(initialSettingValues, {
+      system_settings: data,
+    });
+    console.log('updatedData:', JSON.stringify(updatedData));
+    // updateSettings.submit(updatedData);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <SettingsFieldset
@@ -61,7 +67,7 @@ export const SystemSettings = ({
             <Controller
               name="theme"
               control={control as any}
-              defaultValue={sectionDefaults.theme}
+              defaultValue={defaultSettings.theme}
               rules={{ required: 'Theme is required' }}
               render={({
                 field: { onChange, value },
@@ -85,6 +91,25 @@ export const SystemSettings = ({
           description="Select the language for the system's interface."
         >
           <div className="w-1/3 md:block">
+            {/* <Controller
+            name="language"
+            control={control}
+            render={({ field }) => (
+              <SelectField
+                id="language"
+                name='language'
+                label="Language"
+                placeholder="Select Language"
+                options={[
+                  { value: 'en', label: 'English' },
+                  { value: 'es', label: 'Spanish' },
+                ]}
+                onChange={field.onChange}
+                value={field.value}
+                error={formState.errors.language}
+              />
+            )}
+          /> */}
             <SelectField
               id="language"
               label="Language"
@@ -131,9 +156,9 @@ export const SystemSettings = ({
 //     );
 //   };
 //   const updateSettings = useUpdateUserSettings({ onSuccess });
-//   const { register, handleSubmit, formState, control } = useForm<SystemSettingsData>({
-//     defaultValues: localSettings,
-//   });
+// const { register, handleSubmit, formState, control } = useForm<SystemSettingsData>({
+//   defaultValues: localSettings,
+// });
 //   const onSubmit = (data: SystemSettingsData) => {
 //     console.log('changed data:// ',data);
 //     const updatedData = updateDeep(initialSettingValues, {
