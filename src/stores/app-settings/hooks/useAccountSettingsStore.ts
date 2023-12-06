@@ -18,10 +18,7 @@ export const defaultSettings = {
     },
   },
   personal_settings: {
-    favorite_categories: [
-      '__all__',
-
-    ],
+    favorite_categories: ['__all__'],
   },
   last_updated: 1690123521,
   created_at: 1690123521,
