@@ -74,7 +74,7 @@ apiClient.interceptors.response.use(
       // If there's no access token in the store, handle signout and exit
       if (!currentAccessToken) {
         console.error('No access token available.');
-        handleLogoutAndRedirect();
+        // handleLogoutAndRedirect();
         return; // Exit the interceptor
       }
 
