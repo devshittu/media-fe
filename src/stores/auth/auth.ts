@@ -1,4 +1,5 @@
 import { createStore, useStore } from 'zustand';
+import Router from 'next/router';
 import { AuthUser } from '@/features/auth/types';
 import { getItem, setItem, removeItem } from '@/utils/localStorage';
 import { refreshToken } from '@/features/auth/api/post-refresh-token';
@@ -18,6 +19,7 @@ export const AuthStore = createStore<authStore>((set, get) => ({
   [ACCESS_TOKEN_KEY]: null,
   [AUTH_USER_DETAILS_KEY]: null,
   setAccessToken: (token) => {
+    console.log('authdebug: start setting the ACCESS_TOKEN_KEY: ', token);
     set({ [ACCESS_TOKEN_KEY]: token });
     if (token) {
       setItem(ACCESS_TOKEN_KEY, token);
@@ -26,6 +28,10 @@ export const AuthStore = createStore<authStore>((set, get) => ({
     }
   },
   setAuthUserDetails: (userDetails) => {
+    console.log(
+      'authdebug: start setting the AUTH_USER_DETAILS_KEY: ',
+      userDetails,
+    );
     set({ [AUTH_USER_DETAILS_KEY]: userDetails });
     if (userDetails) {
       setItem(AUTH_USER_DETAILS_KEY, userDetails);
@@ -40,12 +46,12 @@ export const AuthStore = createStore<authStore>((set, get) => ({
     const storedAuthUserDetails = getItem<AuthUser>(AUTH_USER_DETAILS_KEY);
     if (storedToken && storedAuthUserDetails) {
       console.log(
-        `authdebug: storedToken:${storedToken} and storedAuthUserDetails: ${JSON.stringify(
-          storedAuthUserDetails,
+        `authdebug: storedToken:${storedToken} and storedAuthUserDetails.display_name: ${JSON.stringify(
+          storedAuthUserDetails.display_name,
         )} is here before fetching from server:`,
       );
-      get().setAccessToken(storedToken);
-      get().setAuthUserDetails(storedAuthUserDetails);
+      set({ [ACCESS_TOKEN_KEY]: storedToken });
+      set({ [AUTH_USER_DETAILS_KEY]: storedAuthUserDetails });
     } else {
       console.log('authdebug: doing await refreshToken');
       try {
@@ -55,7 +61,9 @@ export const AuthStore = createStore<authStore>((set, get) => ({
           `authdebug: set new Token(newAccessToken) ${newAccessToken} is stored`,
         );
 
-        get().setAccessToken(storedToken);
+        set({ [ACCESS_TOKEN_KEY]: newAccessToken });
+        setItem(ACCESS_TOKEN_KEY, newAccessToken);
+        // get().setAccessToken(storedToken);
 
         // Fetch auth user information (only if not already stored)
         if (!storedAuthUserDetails) {
@@ -67,12 +75,25 @@ export const AuthStore = createStore<authStore>((set, get) => ({
             'authdebug: fetching from server authUserData',
             authUserData,
           );
-          get().setAuthUserDetails(storedAuthUserDetails);
+
+          set({ [AUTH_USER_DETAILS_KEY]: authUserData });
+          setItem(AUTH_USER_DETAILS_KEY, authUserData);
         }
+
+        // if (newAccessToken) {
+        //   get().setAccessToken(newAccessToken);
+        // }
+
+        // if (authUserData) {
+        //   get().setAuthUserDetails(authUserData);
+        // }
       } catch (error) {
         console.error(`authdebug: Failed to refresh token:`, error);
         get().setAccessToken(null);
         get().setAuthUserDetails(null);
+        // Show notification that Cannot login.
+
+        Router.push('/');
       }
     }
 
