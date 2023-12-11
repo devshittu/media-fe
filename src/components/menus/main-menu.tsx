@@ -122,7 +122,7 @@ const MainMenu = () => {
           title="Company"
           className="inline-flex items-center"
         >
-          <AppLogoIcon strokeWidth={2} />
+          <AppLogoIcon strokeWidth={2} className="w-12 h-12" />
           <span className="ml-2 text-xl font-bold tracking-wide uppercase">
             Media Inc.
           </span>
