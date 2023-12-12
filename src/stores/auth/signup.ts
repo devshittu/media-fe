@@ -42,14 +42,15 @@ export const SignupDataStore = createStore<signupStore>((set, get) => ({
         language: 'en',
       },
       account_settings: {
-        display_name: get().basicInformation?.username || '',
+        display_name: get().basicInformation?.display_name || '',
+        username: get().basicInformation?.username || '',
         email: get().basicInformation?.email || '',
       },
       notification_settings: {
         email: {
-          account: 1, //TODO: get the default information
-          marketing: 1,
-          updates: 1,
+          account: true, //TODO: get the default information
+          marketing: true,
+          updates: true,
         },
       },
       personal_settings: {
