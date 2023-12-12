@@ -8,7 +8,11 @@ import {
 } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { ApiResponse } from '@/types';
-import { LikeStoryFormData, StoryAction, UseLikeStoryOptions } from '../components';
+import {
+  LikeStoryFormData,
+  StoryAction,
+  UseLikeStoryOptions,
+} from '../components';
 import { useUpdateStoryInCache } from './get-stories';
 const { UNLIKE_STORY } = QUERY_KEYS;
 
@@ -40,7 +44,7 @@ export const useUnlikeStory = ({
   onSuccess,
   onError,
 }: UseLikeStoryOptions) => {
-const updateStoryInCache = useUpdateStoryInCache();
+  const updateStoryInCache = useUpdateStoryInCache();
   const { mutate: submit, isLoading } = useMutation({
     mutationKey: [UNLIKE_STORY, story_id],
     mutationFn: unlikeStory,
