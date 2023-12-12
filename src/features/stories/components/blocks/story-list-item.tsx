@@ -100,7 +100,7 @@ export const StoryListItem = React.memo(
         />
         <StoryStats story={story} />
         <UserDetails
-          name={story?.user.name}
+          name={story?.user.display_name}
           organization={`Reporter, ${'Default Team'}`}
           pub_datetime={formatDate(story?.updated_at)}
         />
