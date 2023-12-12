@@ -7,7 +7,6 @@ jest.mock('next/config', () => () => ({
   },
 }));
 
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -31,19 +30,21 @@ describe('StorylineItem', () => {
     expect(screen.getByText(mockStoryline.subject)).toBeInTheDocument();
   });
 
-//   it('renders the transformed hashtags', () => {
-//     render(<StorylineItem storyline={mockStoryline} />);
-//     mockStoryline.hashtags.forEach(hashtag => {
-//       expect(screen.getByText(hashtag)).toBeInTheDocument();
-//     });
-//   });
-it('renders the transformed hashtags', () => {
-  render(<StorylineItem storyline={mockStoryline} />);
-  mockStoryline.hashtags.forEach(hashtag => {
-    // Use a custom text matcher to check if the text contains the hashtag
-    expect(screen.getByText(text => text.includes(hashtag))).toBeInTheDocument();
+  //   it('renders the transformed hashtags', () => {
+  //     render(<StorylineItem storyline={mockStoryline} />);
+  //     mockStoryline.hashtags.forEach(hashtag => {
+  //       expect(screen.getByText(hashtag)).toBeInTheDocument();
+  //     });
+  //   });
+  it('renders the transformed hashtags', () => {
+    render(<StorylineItem storyline={mockStoryline} />);
+    mockStoryline.hashtags.forEach((hashtag) => {
+      // Use a custom text matcher to check if the text contains the hashtag
+      expect(
+        screen.getByText((text) => text.includes(hashtag)),
+      ).toBeInTheDocument();
+    });
   });
-});
 
   // If you have any click events or other interactions, test them here
 
