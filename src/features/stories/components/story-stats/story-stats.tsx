@@ -64,7 +64,7 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
   );
 
   return (
-    <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
+    <div className="flex items-center justify-between pb-4 mb-4 border-b-2 border-slate-100 dark:border-slate-800 mt-auto w-full">
       {/* Link to "Read more" */}
       <Link
         href={source_link || '/'}
@@ -74,8 +74,9 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
         <ExternalLinkIcon className="w-4 h-4 ml-2" />
       </Link>
 
-      {/* Number of views */}
-      <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 ml-auto pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
+      <div className="flex justify-end">
+        {/* Number of views */}
+        {/* <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
         <Link
           href={`/storylines/${storyline_id}`}
           className="inline-flex items-center leading-none "
@@ -84,36 +85,10 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
           <EyeIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />
           {viewCount || 0}
         </Link>
-      </div>
+      </div> */}
 
-      {/* Number of storylines */}
-
-      <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
-        <Link
-          href={`#`}
-          className="inline-flex items-center leading-none "
-          target="_blank"
-        >
-          <ControlledPopper
-            width={`max-w-xs sm:max-w-md`}
-            placement="bottom"
-            trigger={closeIcon}
-            showOnHover
-          >
-            <>
-              <div className=" text-slate-900 bg-white border-2 border-slate-600  shadow-md dark:shadow-slate-950 dark:bg-slate-950 dark:border-slate-400 dark:text-white md:p-8">
-                <StorylineMiniPopup
-                  key={`${id}-${slug}-mini-pop`}
-                  identifier={`${slug}-mini-pop`}
-                  story={story}
-                />
-              </div>
-            </>
-          </ControlledPopper>
-        </Link>
-      </div>
-      {/* Number of comments */}
-      <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
+        {/* Number of comments */}
+        {/* <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
         <Link
           href={`#`}
           className="inline-flex items-center leading-none "
@@ -122,17 +97,45 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
           <MessageSquareIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />
           {commentCount || 0}
         </Link>
-      </div>
-      {/* Number of likes */}
-      {/* {`has_liked: ${has_liked} now would use ${ !has_liked ? 'handleLikeStory' : 'handleUnlikeStory' }`} */}
-      <div className="inline-flex items-center leading-none text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100">
-        <Button
-          onClick={!has_liked ? handleLikeStory : handleUnlikeStory}
-          className="inline-flex items-center leading-none "
-        >
-          <ThumbsUpIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />
-          {likes_count || 0}
-        </Button>
+      </div> */}
+
+        {/* Number of storylines */}
+
+        <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
+          <Link
+            href={`#`}
+            className="inline-flex items-center leading-none "
+            target="_blank"
+          >
+            <ControlledPopper
+              width={`max-w-xs sm:max-w-md`}
+              placement="bottom"
+              trigger={closeIcon}
+              showOnHover
+            >
+              <>
+                <div className=" text-slate-900 bg-white border-2 border-slate-600  shadow-md dark:shadow-slate-950 dark:bg-slate-950 dark:border-slate-400 dark:text-white md:p-8">
+                  <StorylineMiniPopup
+                    key={`${id}-${slug}-mini-pop`}
+                    identifier={`${slug}-mini-pop`}
+                    story={story}
+                  />
+                </div>
+              </>
+            </ControlledPopper>
+          </Link>
+        </div>
+        {/* Number of likes */}
+        {/* {`has_liked: ${has_liked} now would use ${ !has_liked ? 'handleLikeStory' : 'handleUnlikeStory' }`} */}
+        <div className="inline-flex items-center leading-none text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100">
+          <Button
+            onClick={!has_liked ? handleLikeStory : handleUnlikeStory}
+            className="inline-flex items-center leading-none "
+          >
+            <ThumbsUpIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />
+            {likes_count || 0}
+          </Button>
+        </div>
       </div>
     </div>
   );
