@@ -49,7 +49,7 @@ const StorylinePage = ({
 
   return (
     <>
-      <StoriesPageHeader pageTitle="Timeline" />
+      <StoriesPageHeader pageTitle="Storyline" />
 
       {/* TODO: no stories to display */}
       {!storylineStories.results && <NotFound />}

@@ -114,7 +114,7 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
           </div>
         </form>
       </div>
-      <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
+      <p className="my-6 mt-0 text-slate-600 sm:my-12 sm:mt-3">
         {"I don't have an account?"} <Link href="/auth/signup">Sign up</Link>.
       </p>
     </>

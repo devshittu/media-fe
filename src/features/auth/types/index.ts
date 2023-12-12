@@ -17,7 +17,7 @@ export type PasswordSigninData = {
 export type SignupData = {
   email: string;
   password: string;
-  name: string;
+  display_name: string;
   username: string;
 };
 export type VerifyAccountData = {
@@ -27,7 +27,7 @@ export type VerifyAccountData = {
 
 export type User = {
   id: number;
-  name: string;
+  display_name: string;
   email: string;
   username: string;
   avatar_url: string | null;

@@ -47,7 +47,7 @@ export const AccountVerificationForm = ({
     setOTP(data.otp);
     // TODO uncomment when ready to submit to server.
     submit(data);
-    // onSuccess()
+    onSuccess();
   };
 
   return (
@@ -60,8 +60,8 @@ export const AccountVerificationForm = ({
           className="flex flex-col justify-center overflow-hidden w-full relative"
         >
           <div className="w-full p-6 flex flex-col space-y-4">
-            <h1 className="mb-6 text-3xl font-bold leading-tight text-center text-slate-900 dark:text-slate-100">
-              Account verification
+            <h1 className="mb-10 leading-tight text-4xl font-bold md:leading-normal sm:text-5xl text-center text-slate-900 dark:text-slate-100">
+              {'Account verification'}
             </h1>
             <input type="hidden" {...register('email')} />
 

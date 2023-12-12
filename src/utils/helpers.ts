@@ -1,4 +1,5 @@
 import { ObjectItem } from '@/types';
+import pluralize from 'pluralize';
 
 export const rangeLimit = (value: number, min: number, max: number): number =>
   Math.max(min, Math.min(value, max));
@@ -108,8 +109,12 @@ export const updateDeep = <T>(
   return obj;
 };
 
-export const pluralize = (count: number, singular: string, plural: string) =>
-  count === 1 ? singular : plural;
+// export const pluralize = (count: number, singular: string, plural: string) =>
+//   count === 1 ? singular : plural;
+
+export const word_pluralize = (singular: string, count: number): string =>
+  pluralize(singular, count);
+// count === 1 ? singular : plural;
 
 // Helper function to create a delay with cancellation
 export const delayWithCancel = (ms: number) => {
@@ -124,5 +129,33 @@ export const cleanObject = (obj: any) =>
   Object.fromEntries(
     Object.entries(obj).filter(([_, value]) => value !== undefined),
   );
+
+// type Position = 'start' | 'end';
+export enum Position {
+  START = 'start',
+  END = 'end',
+}
+
+export const removeChars = (
+  originalString: string,
+  numCharsToRemove: number = 0,
+  position: Position = Position.START,
+): string => {
+  if (numCharsToRemove < 0) {
+    throw new Error('Number of characters to remove must be non-negative.');
+  }
+
+  if (numCharsToRemove === 0 || originalString.length === 0) {
+    return originalString;
+  }
+
+  if (numCharsToRemove > originalString.length) {
+    throw new Error('Number of characters to remove exceeds string length.');
+  }
+
+  return position === 'start'
+    ? originalString.substring(numCharsToRemove)
+    : originalString.substring(0, originalString.length - numCharsToRemove);
+};
 
 // Path: src/utils/helper.ts

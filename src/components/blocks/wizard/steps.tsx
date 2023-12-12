@@ -63,7 +63,7 @@ export const Step1: React.FC = () => {
 
   return (
     <div>
-      <h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white">
+      <h3 className="mb-5 text-lg font-medium text-slate-900 dark:text-white">
         Choose technologies:
       </h3>
 
@@ -113,7 +113,7 @@ export const Step5: React.FC = () => {
   return (
     <div>
       Step 5: Set favorite channels to follow (skippable)
-      <ul className="max-w-sm divide-y divide-gray-200 dark:divide-gray-700">
+      <ul className="max-w-sm divide-y divide-slate-200 dark:divide-slate-700">
         <li className="py-3 sm:py-4">
           <div className="flex items-center space-x-3">
             <div className="flex-shrink-0">
@@ -127,10 +127,10 @@ export const Step5: React.FC = () => {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
+              <p className="text-sm font-semibold text-slate-900 truncate dark:text-white">
                 Neil Sims
               </p>
-              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+              <p className="text-sm text-slate-500 truncate dark:text-slate-400">
                 email@example.com
               </p>
             </div>
@@ -153,10 +153,10 @@ export const Step5: React.FC = () => {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
+              <p className="text-sm font-semibold text-slate-900 truncate dark:text-white">
                 Bonnie Green
               </p>
-              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+              <p className="text-sm text-slate-500 truncate dark:text-slate-400">
                 email@example.com
               </p>
             </div>

@@ -5,11 +5,12 @@ import {
   PersonalSettings,
   NotificationSettings,
   SettingsLinks,
+  SecuritySettings,
 } from '@/features/settings/';
 import { useUserSettings } from '@/features/settings/api/get-user-settings';
 import { Loading } from '@/components/loading';
 import UserLayout from '@/layouts/user-layout';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import { StoriesPageFrame } from '@/components/frames';
 import { PaneConfig } from '@/components/blocks/side-panel/types';
 import { NotFound } from '@/components/not-found';
@@ -20,15 +21,21 @@ const sectionTitles: Record<string, string> = {
   notifications: 'Notifications',
   personal: 'Personal',
   system: 'System',
+  security: 'Security',
   default: 'Settings',
 };
 
 export const SettingsSection = () => {
   const router = useRouter();
   const { section } = router.query;
-  const { data: userSettings, isLoading } = useUserSettings({
+  const { data: responseData, isLoading } = useUserSettings({
     params: { user_id: '1' },
   });
+
+  const userSettings = useMemo(() => responseData || [], [responseData]);
+
+  console.log(`settingsdebug: userSettings:  ${JSON.stringify(userSettings)}`);
+
   const pageTitle = sectionTitles[section as string] || sectionTitles.default;
 
   if (isLoading) {
@@ -49,6 +56,8 @@ export const SettingsSection = () => {
             return <PersonalSettings initialSettingValues={userSettings} />;
           case 'system':
             return <SystemSettings initialSettingValues={userSettings} />;
+          case 'security':
+            return <SecuritySettings initialSettingValues={userSettings} />;
           default:
             return <NotFound />;
         }

@@ -91,11 +91,14 @@ export const AddFeedbackForm = ({
               rightLabel={{
                 checked: 'Submitting Anonymously',
                 unchecked: `Submitting ${
-                  'as ' + AuthStore.getState().authUserDetails?.name ||
-                  'with Name'
+                  AuthStore.getState().authUserDetails?.display_name
+                    ? `as  ${
+                        AuthStore.getState().authUserDetails?.display_name
+                      }`
+                    : 'with your name'
                 }`,
               }}
-              checked={watch('is_anonymous') ? 1 : 0}
+              checked={watch('is_anonymous')}
               {...register('is_anonymous')}
             />
 

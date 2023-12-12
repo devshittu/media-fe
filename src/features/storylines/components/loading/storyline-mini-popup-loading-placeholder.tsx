@@ -14,10 +14,10 @@ export const StorylineMiniPopupLoadingPlaceholder = () => {
         {/* <h1 className="text-xl font-semibold my-2">{summary}</h1> */}
 
         <LoadingHeading />
-        <div className="flex space-x-2 text-gray-400 text-sm">
+        <div className="flex space-x-2 text-slate-400 text-sm">
           <LoadingSubheading />
         </div>
-        <div className="flex space-x-2 text-gray-400 text-sm my-3">
+        <div className="flex space-x-2 text-slate-400 text-sm my-3">
           <LoadingSubheading />
         </div>
         <div className="border-t-2 "></div>
@@ -35,7 +35,7 @@ export const StorylineMiniPopupLoadingPlaceholder = () => {
             <p className="font-semibold text-base mb-2">
               <LoadingHeadingName />
             </p>
-            <div className="text-base text-gray-400 font-semibold">
+            <div className="text-base text-slate-400 font-semibold">
               <LoadingSubheading />
             </div>
           </div>

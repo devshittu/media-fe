@@ -13,7 +13,7 @@ export const AuthUserTile = ({
 }: AuthUserTileProps) => {
   const auth = useAuth();
   const defaultAvatar = '/avatars/avatar.svg';
-  const name = auth.authUserDetails?.name || 'Loading...';
+  const name = auth.authUserDetails?.display_name || 'Loading...';
   const subName = auth.authUserDetails?.username || 'Loading...';
   const description = auth.authUserDetails?.bio || 'Loading...';
   const profileImageSrc = auth.authUserDetails?.avatar_url || defaultAvatar;
@@ -21,7 +21,7 @@ export const AuthUserTile = ({
   return (
     <>
       <div
-        className="w-full max-w-xs py-4 text-slate-500x bg-whitex rounded-lgx shadowx dark:bg-slate-800x dark:text-slate-400x"
+        className="absolute bottom-0 left-0     w-full max-w-xs py-4 text-slate-500x bg-whitex rounded-lgx shadowx dark:bg-slate-800x dark:text-slate-400x"
         role="alert"
       >
         <div className="flex">

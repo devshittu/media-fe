@@ -17,7 +17,7 @@ export const getCategory = ({
     slug: category_id,
   });
 
-  return apiClient.get(`${uri}`);
+  return apiClient.get(`${uri}`, { requiresAuth: false });
 };
 
 export const useCategory = ({ category_id }: GetCategoryOptions) => {

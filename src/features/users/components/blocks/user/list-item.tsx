@@ -45,13 +45,13 @@ export const UserListItem = ({
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
-            {user.name}
+            {user.display_name}
           </h2>
           <h3 className="text-sm text-slate-500 truncate dark:text-slate-400">
             {`@` + user.username}
           </h3>
         </div>
-        <div className="inline-flex space-x-3 items-center text-base font-semibold text-gray-900 dark:text-white">
+        <div className="inline-flex space-x-3 items-center text-base font-semibold text-slate-900 dark:text-white">
           <Button
             className=""
             loading={isFollowLoading}

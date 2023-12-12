@@ -26,3 +26,5 @@ export const COPYRIGHT_TEXT =
 
 export const ACCESS_TOKEN_KEY = 'accessToken';
 export const AUTH_USER_DETAILS_KEY = 'authUserDetails';
+export const APP_SUPPORT_VERSION =
+  (process.env.NEXT_PUBLIC_APP_SUPPORT_VERSION as string) ?? `v1.0`;

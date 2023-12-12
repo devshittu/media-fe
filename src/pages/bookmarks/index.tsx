@@ -16,73 +16,119 @@ import { cleanObject } from '@/utils';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { NotFound } from '@/components/not-found';
 import { PaginatedListQueryParams } from '@/types';
+import { useBookmarkPageTabs } from '@/stores/tabs';
+import { useTabContentManager } from '@/components/blocks/tab';
 
 type PublicBookmarkPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
-const BookmarksPage = ({ bookmarks, queryParams }: PublicBookmarkPageProps) => {
-  // const [selected, setSelected] = useState<string>('dateAdded');
+const BookmarksPage = ({
+  bookmarks,
+  queryParams,
+  error,
+}: PublicBookmarkPageProps) => {
+  // Filter bookmarks for each category
+  const savedBookmarks = useMemo(
+    () =>
+      bookmarks.results?.filter((b) => b.bookmark_category === 'Save') || [],
+    [bookmarks.results],
+  );
+  const readLaterBookmarks = useMemo(
+    () =>
+      bookmarks.results?.filter((b) => b.bookmark_category === 'Read Later') ||
+      [],
+    [bookmarks.results],
+  );
+  const favoriteBookmarks = useMemo(
+    () =>
+      bookmarks.results?.filter((b) => b.bookmark_category === 'Favorites') ||
+      [],
+    [bookmarks.results],
+  );
 
-  // const { data: responseData, isLoading } = useGetBookmarks({});
-  // const stableBookmarks = useMemo(
-  //   () => responseData?.bookmarks,
-  //   [responseData?.bookmarks],
-  // );
+  // Define asynchronous functions for each tab
+  const fetchDataForYou = async () => {
+    // Async operation for the "For You" tab
+    console.log('TabTest: Fetching data for you');
+  };
 
-  // const formatDate = (timestamp: number) => {
-  //   return new Date(timestamp * 1000).toLocaleDateString('en-US', {
-  //     day: 'numeric',
-  //     month: 'long',
-  //     year: 'numeric',
-  //   });
-  // };
+  const fetchDataFollowing = async () => {
+    // Async operation for the "Following" tab
+    console.log('TabTest: Fetching data  following ');
+  };
 
-  // // Group bookmarks by date
-  // const groupedItems = useListGrouping<Bookmark>(
-  //   bookmarks?.bookmarks as Bookmark[],
-  //   'created_at',
-  //   formatDate,
-  // );
-
-  // // Sort the grouped bookmarks
-  // const { sortedData, sortOrder, toggleSortOrder } = useListSorting(
-  //   Object.entries(groupedItems),
-  //   '0', // since the data is an array of [date, items], we sort by the date which is at index 0
-  //   'desc',
-  // );
-
-  // const { sortedData, sortOrder, toggleSortOrder } = useListSorting(Object.entries(groupedItems), 'created_at', 'desc');
+  const tabsConfig = {
+    save: {
+      content: (
+        <>
+          <h1>Save</h1>
+          {!savedBookmarks.length && <NotFound />}
+          {savedBookmarks.length > 0 && (
+            <BookmarkList
+              data={{ ...bookmarks, results: savedBookmarks }}
+              queryParams={queryParams}
+            />
+          )}
+        </>
+      ),
+      fetchData: fetchDataForYou,
+    },
+    'read-later': {
+      content: (
+        <>
+          <h1>Read Later</h1>
+          {!readLaterBookmarks.length && <NotFound />}
+          {readLaterBookmarks.length > 0 && (
+            <BookmarkList
+              data={{ ...bookmarks, results: readLaterBookmarks }}
+              queryParams={queryParams}
+            />
+          )}
+        </>
+      ),
+      fetchData: fetchDataFollowing,
+    },
+    favorite: {
+      content: (
+        <>
+          <h1>Favorites</h1>
+          {!favoriteBookmarks.length && <NotFound />}
+          {favoriteBookmarks.length > 0 && (
+            <BookmarkList
+              data={{ ...bookmarks, results: favoriteBookmarks }}
+              queryParams={queryParams}
+            />
+          )}
+        </>
+      ),
+      fetchData: fetchDataFollowing,
+    },
+    // ... other tabs
+  };
+  // const bookmarkPageTabs = useBookmarkPageTabs()
+  const { handleScroll, contentRef, renderTabContent } = useTabContentManager(
+    useBookmarkPageTabs,
+    tabsConfig,
+  );
 
   return (
     <>
-      <StoriesPageHeader pageTitle="Bookmarks" />
-      {/* {isLoading && (
-        <>
-          <BookmarkMomentLoadingPlaceholder />
-        </>
-      )} */}
+      <StoriesPageHeader
+        pageTitle="Bookmarks"
+        showTab
+        parallax
+        tabStore={useBookmarkPageTabs}
+      />
 
-      {!bookmarks.results && <NotFound />}
+      <div ref={contentRef} onScroll={handleScroll} className="tab-content">
+        {error && <p className="error-message">{error}</p>}
+
+        {renderTabContent()}
+        {/* {!bookmarks.results && <NotFound />}
       {bookmarks.results?.length > 0 && (
         <BookmarkList data={bookmarks} queryParams={queryParams} />
-      )}
-      {/* {sortedData?.length > 0 && (
-        <section className="space-y-8">
-          <button onClick={toggleSortOrder}>
-            Sort by {sortOrder === 'desc' ? 'Earliest' : 'Latest'}
-          </button>
-          <BookmarkSorter
-            selectedValue={selected}
-            onSelect={(value) => setSelected(value)}
-          />
-          {sortedData.map(([date, items]) => (
-            <React.Fragment key={date}>
-              <BookmarkMoment time={date} momentData={items} />
-            </React.Fragment>
-          ))}
-
-        </section>
       )} */}
+      </div>
     </>
   );
 };

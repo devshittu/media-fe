@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import NextLink from 'next/link';
-import { Button } from '@/components/button';
 
 const variants = {
   link: {

@@ -26,9 +26,9 @@ export const UserDetails = ({
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
+          <h3 className="text-sm lg:text-base font-semibold text-slate-900 truncate dark:text-slate-100">
             {name || `John Doe`}
-          </p>
+          </h3>
           <p className="text-sm text-slate-500 truncate dark:text-slate-400">
             {organization || `Correspondence, Reuter`}
           </p>

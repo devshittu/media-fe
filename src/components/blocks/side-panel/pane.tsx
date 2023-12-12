@@ -14,7 +14,7 @@ export const Pane = ({
     <section className="w-full max-w-md font-inter" id={id}>
       <div className="flex items-center justify-between mb-4">
         <h5
-          className="text-xl font-bold leading-none text-gray-900 dark:text-white"
+          className="text-xl font-bold leading-none text-slate-900 dark:text-white"
           id={`${id}Title`}
         >
           {title}

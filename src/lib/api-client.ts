@@ -6,7 +6,6 @@ import {
   URI_AUTH_LOGOUT,
   URI_AUTH_TOKEN_REFRESH,
 } from '@/config/api-constants';
-// import { signout } from '@/features/auth';
 
 import getConfig from 'next/config';
 import { refreshToken } from '@/features/auth/api/post-refresh-token';
@@ -75,7 +74,7 @@ apiClient.interceptors.response.use(
       // If there's no access token in the store, handle signout and exit
       if (!currentAccessToken) {
         console.error('No access token available.');
-        handleLogoutAndRedirect();
+        // handleLogoutAndRedirect();
         return; // Exit the interceptor
       }
 
@@ -92,7 +91,7 @@ apiClient.interceptors.response.use(
           'Refresh token error:',
           refreshError?.response?.data || refreshError.message || refreshError,
         );
-        AuthStore.getState().setAccessToken(null);
+        // AuthStore.getState().setAccessToken(null);
         handleLogoutAndRedirect();
       }
     } else if (originalRequest._retry) {

@@ -11,6 +11,7 @@ import {
   ClockIcon,
   Icon,
   AppLogoIcon,
+  ListIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
 import { TourPopperType } from '../blocks/tour/tour-popper';
@@ -20,43 +21,50 @@ import { AuthUserTile } from '@/features/auth';
 import { Link } from '../labs';
 const MainMenu = () => {
   const mainMenuList: MenuItem[] = [
+    // {
+    //   name: 'Home',
+    //   icon: <HomeIcon />,
+    //   url: '/',
+    //   id: 'home-page-link',
+    // },
     {
       name: 'Home',
-      icon: <HomeIcon />,
-      url: '/',
-      id: 'home-page-link',
-    },
-    {
-      name: 'Stories',
       icon: <FileTextIcon />,
       url: '/stories',
       id: 'stories-page',
     },
     {
-      name: 'Timelines',
+      name: 'Storylines',
       icon: <ClockIcon />,
       url: '/storylines',
       id: 'storyline-page',
-      tag: 'New',
+      // tag: 'New',
     },
+    // {
+    //   name: 'New Story',
+    //   icon: <EditIcon />,
+    //   url: '/draft',
+    //   id: 'new-story-page',
+    // },
     {
-      name: 'New Story',
-      icon: <EditIcon />,
-      url: '/draft',
-      id: 'new-story-page',
-    },
-    {
-      name: 'Settings',
-      icon: <SettingsIcon />,
+      name: 'Topics',
+      icon: <ListIcon />,
       url: '/settings',
-      id: 'settings-page',
-      tag: 'New',
+      id: 'topics-page',
+      tag: 'Coming soon',
     },
     {
       name: 'Bookmarks',
       icon: <BookmarkIcon />,
       url: '/bookmarks',
       id: 'bookmarks-page',
+    },
+    {
+      name: 'Settings',
+      icon: <SettingsIcon />,
+      url: '/settings',
+      id: 'settings-page',
+      // tag: 'New',
     },
     // {
     //   name: 'Hashtags',
@@ -70,12 +78,12 @@ const MainMenu = () => {
     //   url: '/music',
     //   id: 'music-page',
     // },
-    {
-      name: 'Auth',
-      icon: <UserPlusIcon />,
-      url: '/auth/signup',
-      id: 'auth-page',
-    },
+    // {
+    //   name: 'Auth',
+    //   icon: <UserPlusIcon />,
+    //   url: '/auth/signup',
+    //   id: 'auth-page',
+    // },
     // {
     //   name: 'UI/UX Components',
     //   icon: <LayoutIcon />,
@@ -114,7 +122,7 @@ const MainMenu = () => {
           title="Company"
           className="inline-flex items-center"
         >
-          <AppLogoIcon strokeWidth={2} />
+          <AppLogoIcon strokeWidth={2} className="w-12 h-12" />
           <span className="ml-2 text-xl font-bold tracking-wide uppercase">
             Media Inc.
           </span>

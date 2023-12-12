@@ -12,6 +12,7 @@ import {
 } from '@/components/illustrations';
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import Aside from './try';
+import { Button } from '@/components/button';
 
 type Section = {
   name: string;
@@ -168,18 +169,18 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(
   ({ name, icon, isActive, onClick }, ref) => (
     <section
       className={`p-4 mb-8 border-t-2 border-primary ${
-        isActive ? 'bg-gray-100' : 'bg-white'
+        isActive ? 'bg-slate-100' : 'bg-white'
       }`}
       ref={ref}
     >
-      <header className="sticky top-0 p-1 mb-1 bg-gradient-to-top from-transparent to-white text-capitalize text-gray-500 font-medium transition duration-100">
+      <header className="sticky top-0 p-1 mb-1 bg-gradient-to-top from-transparent to-white text-capitalize text-slate-500 font-medium transition duration-100">
         <Icon icon={icon} className="w-5" /> {name}
       </header>
-      <div className="text-xl text-gray-700">
+      <div className="text-xl text-slate-700">
         {sectionsSetup.find((s) => s.name === name)?.content}
       </div>
       <button
-        className={`mt-2 text-sm text-gray-600 font-medium ${
+        className={`mt-2 text-sm text-slate-600 font-medium ${
           isActive ? 'text-primary' : ''
         }`}
         onClick={onClick}
@@ -265,14 +266,14 @@ const Bookmark: React.FC = () => {
         onTouchEnd={() => {
           dragState.isDragging = false;
         }}
-        onTouchMove={(e) => {
-          onDragMove(e.touches[0]);
-          const { delta } = dragState;
-          parent.current!.style.setProperty(
-            '--delta',
-            `${limitDragRange(delta)}`,
-          );
-        }}
+        // onTouchMove={(e) => {
+        //   onDragMove(e.touches[0]);
+        //   const { delta } = dragState;
+        //   parent.current!.style.setProperty(
+        //     '--delta',
+        //     `${limitDragRange(delta)}`,
+        //   );
+        // }}
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
@@ -283,11 +284,11 @@ const Bookmark: React.FC = () => {
             minWidth: '300px',
           }}
         >
-          <nav className="h-full bg-blue-300 border-r border-l border-white shadow border-gray-400">
+          <nav className="h-full bg-blue-300 border-r border-l border-white shadow border-slate-400">
             {sections.map((section) => (
-              <button
+              <Button
                 key={section.name}
-                className={`w-full px-2 py-3 text-2xl font-semibold text-gray-700 hover:bg-blue-400 hover:text-white focus:outline-none ${
+                className={`w-full px-2 py-3 text-2xl font-semibold text-slate-700 hover:bg-blue-400 hover:text-white focus:outline-none ${
                   section === activeSection.current
                     ? 'bg-blue-400 text-white'
                     : ''
@@ -295,7 +296,7 @@ const Bookmark: React.FC = () => {
                 onClick={handleSectionClick(section)}
               >
                 <Icon icon={section.icon} className="w-8" />
-              </button>
+              </Button>
             ))}
           </nav>
         </div>

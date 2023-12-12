@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { useCategories } from '../api/get-categories';
 import { Category } from '../types';
 
@@ -28,31 +22,30 @@ export type CategoriesProviderProps = {
 };
 
 export const CategoriesProvider = ({ children }: CategoriesProviderProps) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const { data: categoriesData, isLoading: categoriesLoading } = useCategories({
+  const { data: responseData, isLoading } = useCategories({
     params: { page_size: 100 },
   });
 
-  const categoriesLookupTable = useMemo(() => {
-    const lookupTable: Record<
-      string,
-      { title: string; slug: string; description: string }
-    > = {};
-    for (const category of categoriesData?.results || []) {
-      lookupTable[category.id] = {
-        title: category.title,
-        slug: category.slug,
-        description: category.description,
-      };
-    }
-    return lookupTable;
-  }, [categoriesData]);
+  const categories = useMemo(() => {
+    return (
+      responseData?.results.map((category) => ({
+        ...category,
+        id: category.id.toString(), // Convert ID to string
+      })) || []
+    );
+  }, [responseData?.results]);
 
-  useEffect(() => {
-    setCategories(categoriesData?.results);
-    setIsLoading(categoriesLoading);
-  }, [categoriesLoading, categoriesData]);
+  const categoriesLookupTable: Record<
+    string,
+    { title: string; slug: string; description: string }
+  > = {};
+  categories.forEach((category) => {
+    categoriesLookupTable[category.id] = {
+      title: category.title,
+      slug: category.slug,
+      description: category.description,
+    };
+  });
 
   return (
     <CategoriesContext.Provider

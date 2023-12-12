@@ -4,17 +4,30 @@ import { Link } from '@/components/labs/typography';
 import { AppLogoIcon, Icon, MenuIcon } from '@/components/illustrations';
 import { Drawer, DrawerSide } from '../drawer';
 import { useScrollSync } from '@/hooks/useScrollSync';
-
-export type StoriesPageHeaderProps = {
+import { Tab, TabList } from '../tab';
+import { TabStore } from '@/stores/tabs/hooks';
+type BaseProps = {
   pageTitle: string;
-  showTab?: boolean;
   parallax?: boolean;
 };
+
+type WithTabProps = BaseProps & {
+  showTab: true;
+  tabStore: () => TabStore;
+};
+
+type WithoutTabProps = BaseProps & {
+  showTab?: false;
+  tabStore?: never;
+};
+
+export type StoriesPageHeaderProps = WithTabProps | WithoutTabProps;
 
 export const StoriesPageHeader = ({
   pageTitle = 'Home',
   showTab = false,
   parallax = false,
+  tabStore,
 }: StoriesPageHeaderProps) => {
   const headerRef = useRef<HTMLElement>(null);
 
@@ -65,6 +78,19 @@ export const StoriesPageHeader = ({
     event.preventDefault();
     openMainMenuDrawer();
   };
+  // const { tabs, activeTab, setActiveTab } = tabStore();
+
+  // let tabs, activeTab, setActiveTab;
+
+  // Provide default values
+  let tabs: Tab[] = []; // Assuming Tab is the correct type
+  let activeTab: string = ''; // Default active tab
+  let setActiveTab = (tabId: string) => {}; // No-op function
+
+  if (showTab && tabStore) {
+    ({ tabs, activeTab, setActiveTab } = tabStore());
+  }
+
   return (
     <>
       {/* Desktop */}
@@ -90,41 +116,13 @@ export const StoriesPageHeader = ({
           </div>
         </div>
         {showTab && (
-          <div>
-            <ul
-              className="flex justify-around -mb-px text-sm font-medium text-center"
-              id="myTab"
-              data-tabs-toggle="#myTabContent"
-              role="tablist"
-            >
-              <li className="mr-2" role="presentation">
-                <button
-                  className="inline-block p-4 border-b-4 rounded-t-lg border-slate-500 dark:border-slate-200  font-semibold text-slate-900 truncate dark:text-slate-200"
-                  id="profile-tab"
-                  data-tabs-target="#profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="profile"
-                  aria-selected="false"
-                >
-                  For You
-                </button>
-              </li>
-              <li role="presentation">
-                <button
-                  className="inline-block p-4 border-b-4 border-transparent    hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300"
-                  id="dashboard-tab"
-                  data-tabs-target="#dashboard"
-                  type="button"
-                  role="tab"
-                  aria-controls="dashboard"
-                  aria-selected="false"
-                >
-                  Following
-                </button>
-              </li>
-            </ul>
-          </div>
+          <>
+            <TabList
+              tabs={tabs}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
+          </>
         )}
       </header>
       {/* mobile */}
@@ -150,50 +148,27 @@ export const StoriesPageHeader = ({
           {/* Main Menu Trigger */}
 
           <Link href="/" onClick={handleOpenDrawer}>
-            <Icon icon={<MenuIcon />} className="w-6" />
+            <Icon icon={<MenuIcon />} strokeWidth={3} className="w-6" />
           </Link>
-          <ol className="ml-4 flex text-sm leading-6 whitespace-nowrap min-w-0">
+          <ol className="ml-4 flex text-xl md:text-2xl leading-6 whitespace-nowrap min-w-0">
             <li className="font-semibold text-slate-900 truncate dark:text-slate-200">
-              {pageTitle}
+              <h3
+                className=" inline-block font-extrabold leading-none tracking-tight"
+                id="page-title"
+              >
+                {pageTitle}
+              </h3>
             </li>
           </ol>
         </div>
         {showTab && (
-          <div>
-            {/* <ul
-              className="flex justify-around -mb-px text-sm font-medium text-center"
-              id="myTab"
-              data-tabs-toggle="#myTabContent"
-              role="tablist"
-            >
-              <li className="mr-2" role="presentation">
-                <button
-                  className="inline-block p-4 border-b-4 rounded-t-lg border-slate-500 dark:border-slate-200  font-semibold text-slate-900 truncate dark:text-slate-200"
-                  id="profile-tab-mobile"
-                  data-tabs-target="#profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="profile"
-                  aria-selected="false"
-                >
-                  For You
-                </button>
-              </li>
-              <li role="presentation">
-                <button
-                  className="inline-block p-4 border-b-4 border-transparent    hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300"
-                  id="dashboard-tab-mobile"
-                  data-tabs-target="#dashboard"
-                  type="button"
-                  role="tab"
-                  aria-controls="dashboard"
-                  aria-selected="false"
-                >
-                  Following
-                </button>
-              </li>
-            </ul> */}
-          </div>
+          <>
+            <TabList
+              tabs={tabs}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
+          </>
         )}
       </header>
     </>

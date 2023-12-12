@@ -7,6 +7,7 @@ import {
   BellIcon,
   BoxIcon,
   MonitorIcon,
+  ShieldIcon,
 } from '@/components/illustrations/';
 
 export const SettingsLinks = () => {
@@ -55,6 +56,17 @@ export const SettingsLinks = () => {
         icon={
           <Icon
             icon={<MonitorIcon />}
+            className="w-6 text-slate-900 dark:text-slate-100"
+            strokeWidth={2.5}
+          />
+        }
+      />
+      <MenuLinkItem
+        label={'Security Settings'}
+        url="/settings/security"
+        icon={
+          <Icon
+            icon={<ShieldIcon />}
             className="w-6 text-slate-900 dark:text-slate-100"
             strokeWidth={2.5}
           />

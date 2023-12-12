@@ -3,21 +3,27 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 
 import { SupportArticleListResponse } from '../types';
-import { URI_SUPPORT_ARTICLES } from '@/config/api-constants';
+import { URI_SUPPORT_BY_VERSION_ARTICLES } from '@/config/api-constants';
 import { QUERY_KEYS } from '@/config/query';
 import { PaginatedListQueryParams } from '@/types';
+import { uriTemplate } from '@/utils';
+import { LegalURIParams } from './get-legal-document';
 const { GET_SUPPORT_ARTICLES } = QUERY_KEYS;
 
 type GetSupportArticlesOptions = {
-  params?: PaginatedListQueryParams;
+  params: Omit<LegalURIParams, 'document'> & PaginatedListQueryParams;
   initialData?: any;
 };
 
 export const getSupportArticles = ({
   params,
 }: GetSupportArticlesOptions): Promise<SupportArticleListResponse> => {
-  return apiClient.get(`${URI_SUPPORT_ARTICLES}`, {
+  const uri = uriTemplate(URI_SUPPORT_BY_VERSION_ARTICLES, {
+    version: params.version?.toString() as string,
+  });
+  return apiClient.get(`${uri}`, {
     params,
+    requiresAuth: false,
   });
 };
 

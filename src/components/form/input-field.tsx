@@ -1,4 +1,9 @@
-import React, { LabelHTMLAttributes, forwardRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  LabelHTMLAttributes,
+  forwardRef,
+  useState,
+} from 'react';
 import { ChangeHandler, FieldError, UseFormRegister } from 'react-hook-form';
 import { EyeIcon, EyeOffIcon, Icon } from '../illustrations';
 
@@ -18,6 +23,9 @@ export type InputFieldPropTypes = {
   rounded?: boolean;
   disabled?: boolean;
   className?: string;
+  actionIcon?: JSX.Element;
+  actionIconAriaLabel?: string;
+  onActionClick?: () => void;
 } & Partial<ReturnType<UseFormRegister<Record<string, unknown>>>>;
 
 // export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputFieldPropTypes>(
@@ -38,6 +46,9 @@ export const InputField = forwardRef<any, InputFieldPropTypes>(
       rounded = false,
       showLabel = false,
       className,
+      actionIcon,
+      onActionClick,
+      actionIconAriaLabel,
       ...inputProps
     }: InputFieldPropTypes,
     ref: React.Ref<HTMLInputElement>,
@@ -148,6 +159,19 @@ export const InputField = forwardRef<any, InputFieldPropTypes>(
                       className="w-5 h-5 text-slate-800 dark:text-slate-200"
                     />
                   )}
+                </button>
+              )}
+              {actionIcon && (
+                <button
+                  onClick={onActionClick}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                  type="button"
+                  aria-label={actionIconAriaLabel || 'Action button'} // Aria-label for accessibility
+                >
+                  <Icon
+                    icon={actionIcon}
+                    className="w-5 h-5 text-slate-800 dark:text-slate-200"
+                  />
                 </button>
               )}
             </div>

@@ -46,7 +46,7 @@ export const CookieConsentComponent = ({
         title={`Select your cookie preferences`}
         showOverlay={false}
         onClose={closeConsent}>
-          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mb-6 text-sm text-slate-500 dark:text-slate-400">
             We use cookies to improve your experience.
           </p>
           <div className="grid grid-cols-2 gap-4">

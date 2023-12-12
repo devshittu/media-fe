@@ -11,7 +11,7 @@ import {
 } from '@/components/illustrations';
 import { useThemeChanger } from '@/components/theme-switch/hooks';
 import { UpdateSettingsButton } from '@/features/settings';
-import { useUpdateUserSettings } from '@/features/settings/api/update-user-settings';
+import { useUpdateUserSettings } from '@/features/settings/api/patch-update-user-settings';
 import { useSuccessNotification } from '@/features/settings/hooks';
 import { useAccountSettingsStore } from '@/stores/app-settings';
 import { useSignupStore } from '@/stores/auth';

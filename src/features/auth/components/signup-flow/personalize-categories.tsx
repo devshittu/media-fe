@@ -7,12 +7,13 @@ import { Category, useCategories } from '@/features/categories';
 import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { useAccountSettingsStore } from '@/stores/app-settings';
 import { getObjectsByIds } from '@/utils';
-import { useUpdateUserSettings } from '@/features/settings/api/update-user-settings';
+import { useUpdateUserSettings } from '@/features/settings/api/patch-update-user-settings';
 import { useSuccessNotification } from '@/features/settings/hooks';
 import { UpdateSettingsButton } from '@/features/settings';
 import { useStepCompletion } from '@/components/blocks/wizard/hooks/useStepCompletion';
 import { LoadingButtonTextList } from '@/components/loading';
 import { useSignupStore } from '@/stores/auth';
+import { useCategoryContext } from '@/features/categories/hooks';
 
 export const PersonalizeCategories = () => {
   const asyncOnCompleted = useCallback(async () => {
@@ -41,12 +42,8 @@ export const PersonalizeCategories = () => {
     },
     mode: 'all',
   });
-  // TODO: revisit the categories on the app provider to load it globally.
-  // const { categories } = useCategoryContext();
-  const { data: categoriesData, isLoading: categoriesLoading } = useCategories({
-    params: { page_size: 100 },
-  });
-  const categories = categoriesData?.results;
+  // revisit the categories on the app provider to load it globally.
+  const { categories, isLoading: categoriesLoading } = useCategoryContext();
   const selectedOptions = watch('user_categories', []);
 
   useWizardStepValidation(() => {

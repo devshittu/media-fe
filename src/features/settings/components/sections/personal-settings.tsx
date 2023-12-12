@@ -4,7 +4,7 @@ import {
   SettingsFieldset,
   SettingsFieldsetFooter,
 } from '../blocks';
-import { Category, useCategories } from '@/features/categories';
+import { Category } from '@/features/categories';
 import CustomCheckboxGroup, {
   Option,
 } from '@/components/form/custom-checkbox-group';
@@ -17,18 +17,20 @@ import {
   NotificationType,
   useNotifications,
 } from '@/stores/notifications';
-import { PersonalSettingsData, Setting } from '../../types';
+import { PersonalSettingsData } from '../../types';
 import { SettingsSectionProps } from '../types';
-import { useUpdateUserSettings } from '../../api/update-user-settings';
-import { useSettingsForm } from '../../hooks';
+import { useUpdateUserSettings } from '../../api/patch-update-user-settings';
+import { useCategoryContext } from '@/features/categories/hooks';
 // Moved to a separate (function) component for clarity and reusability
 
 const CategoryDisplay = (option: Category) => (
-  <div className="block">
-    <h3 className="w-full text-base md:text-lg font-bold text-ellipsis truncate">
+  <div className="block text-slate-800 dark:text-slate-200">
+    <h3 className="w-full text-lg lg:text-xl font-bold text-ellipsis truncate">
       {option.title}
     </h3>
-    <div className="w-full text-sm hidden md:block">{option.description}</div>
+    <div className="w-full text-sm lg:text-base hidden md:block">
+      {option.description}
+    </div>
   </div>
 );
 
@@ -36,16 +38,12 @@ export const PersonalSettings = ({
   initialSettingValues,
 }: SettingsSectionProps) => {
   const { showNotification } = useNotifications();
-  const defaultCategories = Array.from({ length: 20 }, (_, i) =>
-    (i + 1).toString(),
-  );
-  const defaultSettings: PersonalSettingsData = {
-    favorite_categories: defaultCategories,
-  };
+  const { categories, isLoading: isCategoriesLoading } = useCategoryContext();
 
-  const [localSettings, setLocalSettings] = useState<PersonalSettingsData>(
-    initialSettingValues?.personal_settings || defaultSettings,
-  );
+  const allCategories = categories.map((category) => ({
+    ...category,
+    label: category.title,
+  })) as Option<Category>[];
 
   const onSuccess = () => {
     showNotification(
@@ -60,14 +58,25 @@ export const PersonalSettings = ({
   };
 
   const updateSettings = useUpdateUserSettings({ onSuccess });
-  const { register, handleSubmit, formState, control, watch } =
+
+  // Prepare initial favorite categories
+  const initialFavoriteCategories =
+    initialSettingValues?.personal_settings?.favorite_categories.includes(
+      '__all__',
+    )
+      ? categories.map((category) => category.id.toString()) // Convert all category IDs to strings
+      : initialSettingValues?.personal_settings?.favorite_categories;
+
+  const { register, handleSubmit, control, formState } =
     useForm<PersonalSettingsData>({
-      defaultValues: localSettings,
+      defaultValues: {
+        favorite_categories: initialFavoriteCategories,
+      },
     });
 
   const onSubmit = (data: PersonalSettingsData) => {
     const selectedCategoryIds = data.favorite_categories.map((item) =>
-      typeof item === 'string' ? item : item.id,
+      typeof item === 'string' ? item : item.id.toString(),
     );
 
     // Update the personal_settings with the extracted IDs
@@ -80,14 +89,6 @@ export const PersonalSettings = ({
 
     updateSettings.submit(updatedData);
   };
-
-  const categoriesData = useCategories({});
-  const allCategories = (categoriesData.data.results as Category[]).map(
-    (category) => ({
-      ...category,
-      label: category.title,
-    }),
-  ) as Option<Category>[];
 
   const userSelectedCategoriesId = useMemo(() => {
     return initialSettingValues?.personal_settings
@@ -102,7 +103,7 @@ export const PersonalSettings = ({
     return initCategories.map((category) => category.id);
   }, [initCategories]);
 
-  if (categoriesData.isLoading) {
+  if (isCategoriesLoading) {
     return <Loading />;
   }
 
@@ -127,12 +128,12 @@ export const PersonalSettings = ({
                 value.length > 0 || 'You must select at least one option.',
             }}
             render={({ field: { onChange, value } }) => {
-              const categoryIds = value.map((item) =>
+              const categoryIds = value.map((item: string | Category) =>
                 typeof item === 'string' ? item : item.id,
               );
               const selectedCategories = getObjectsByIds(
                 allCategories,
-                categoryIds,
+                categoryIds as string[],
               );
               return (
                 <CustomCheckboxGroup<Category, Category>

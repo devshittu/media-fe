@@ -24,3 +24,5 @@ const UserLayout = ({ children }: UserLayoutProps) => {
 };
 
 export default UserLayout;
+
+// Path: src/layouts/user-layout.tsx

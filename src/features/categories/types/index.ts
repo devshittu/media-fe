@@ -1,7 +1,7 @@
 import { Entity, PaginatedResponse } from '@/types';
 
 export type Category = {
-  id: number;
+  id: string;
   slug: string;
   deleted_at?: number | null;
   created_at?: number;

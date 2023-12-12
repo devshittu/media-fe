@@ -22,7 +22,7 @@ export const Hero = () => {
                 Brand new
               </p>
             </div>
-            <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-none">
+            <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl sm:leading-none">
               We will bring your
               <br className="hidden md:block" />
               business{' '}
@@ -30,7 +30,7 @@ export const Hero = () => {
                 online
               </span>
             </h2>
-            <p className="text-base text-gray-700 md:text-lg">
+            <p className="text-base text-slate-700 md:text-lg">
               Sed ut perspiciatis unde omnis iste natus error sit voluptatem
               accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
               quae. explicabo.
@@ -42,13 +42,13 @@ export const Hero = () => {
                 placeholder="Name"
                 required
                 type="text"
-                className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-slate-300 rounded shadow-sm appearance-none md:mr-2 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
               />
               <input
                 placeholder="Email"
                 required
                 type="text"
-                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
+                className="flex-grow w-full h-12 px-4 mb-3 transition duration-200 bg-white border border-slate-300 rounded shadow-sm appearance-none md:mb-0 focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
               />
             </div>
             <div className="flex items-center mt-4">

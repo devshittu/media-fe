@@ -25,7 +25,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
   const { setBasicInformation } = useSignupStore();
   const { register, handleSubmit, formState, setError } = useForm<SignupData>({
     defaultValues: {
-      name: 'Test User 20',
+      display_name: 'Test User 20',
       email: 'test20@test.com',
       password: 'commonPassword=1',
       username: 'test20',
@@ -56,7 +56,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
     //TODO: when real data is expected to be submited to the server uncomment this and delete the onSuccess callback
     submit(data);
     // TODO: deletes this when real data is submitted
-    // onSuccess();
+    onSuccess();
   };
 
   return (
@@ -68,8 +68,8 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
           className="flex flex-col justify-center overflow-hidden w-full relative"
         >
           <div className="w-full p-6 flex flex-col space-y-4">
-            <h1 className="mb-6 text-3xl font-bold leading-tight text-center text-slate-900 dark:text-slate-100">
-              Connect with us
+            <h1 className="mb-10 leading-tight text-4xl font-bold md:leading-normal sm:text-5xl text-center text-slate-900 dark:text-slate-100">
+              {'Connect with us'}
             </h1>
             <InputField
               required
@@ -78,14 +78,14 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
               label="Your name"
               type="text"
               showLabel
-              {...register('name', {
+              {...register('display_name', {
                 required: 'Your name is required to continue',
                 pattern: {
                   value: /^[\p{L}\p{N}\p{Z}\p{Pd}'’]+$/u,
                   message: 'Invalid name format',
                 },
               })}
-              error={formState.errors.name}
+              error={formState.errors.display_name}
             />
 
             <InputField
@@ -181,7 +181,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
           </div>
         </form>
       </div>
-      <p className="my-6 mt-0 text-gray-600 sm:my-12 sm:mt-3">
+      <p className="my-6 mt-0 text-slate-600 sm:my-12 sm:mt-3">
         Already registered? <Link href="/auth/signin">Sign in</Link>.
       </p>
     </>

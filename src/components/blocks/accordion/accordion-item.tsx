@@ -1,10 +1,7 @@
-import {
-  ArrowRightIcon,
-  ChevronRightIcon,
-  Icon,
-} from '@/components/illustrations';
+import { ChevronRightIcon, Icon } from '@/components/illustrations';
+import { Markdown } from '@/components/markdown';
 import React, { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
+
 interface AccordionItemProps {
   title: string;
   content: string;
@@ -40,11 +37,11 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
         />
       </summary>
       <p
-        className={`px-4 py-6 pt-0 ml-4 -mt-4 text-slate-700 dark:text-gray-400 transition-max-height duration-300 overflow-hidden ${
+        className={`px-4 py-6 pt-0 ml-4 -mt-4 text-slate-700 dark:text-slate-400 transition-max-height duration-300 overflow-hidden ${
           isOpen ? 'max-h-96' : 'max-h-0'
         }`}
       >
-        <ReactMarkdown>{content}</ReactMarkdown>
+        <Markdown>{content}</Markdown>
       </p>
     </details>
   );

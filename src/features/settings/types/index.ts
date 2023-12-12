@@ -3,7 +3,17 @@ import { Category } from '@/features/categories';
 export type FeedPosition = {
   last_story_read: string | null;
 };
+export type UpdatePasswordData = {
+  old_password: string;
+  new_password: string;
+  confirm_new_password: string;
+};
 
+export type UpdateUserProfileData = {
+  username?: string;
+  email?: string;
+  display_name?: string;
+};
 export type Setting = {
   id: string;
   user_id: string;
@@ -20,9 +30,9 @@ export type SettingNotification = {
   // short_message_service?: SMSNotificationSettingsData;
 };
 export type NotificationSettingsData = {
-  account: number; // email about the user's account
-  marketing: number; // email about the marketing, products and promotions
-  updates: number; // newly on-boarded features/announcements
+  account: boolean; // email about the user's account
+  marketing: boolean; // email about the marketing, products and promotions
+  updates: boolean; // newly on-boarded features/announcements
 };
 // export type SMSNotificationSettingsData = {
 //   account: number; // sms about the user's account
@@ -32,6 +42,7 @@ export type NotificationSettingsData = {
 export type AccountSettingsData = {
   display_name: string;
   email: string;
+  username: string;
 };
 export type SystemSettingsData = {
   theme: string;

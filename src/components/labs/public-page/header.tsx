@@ -58,11 +58,29 @@ export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
           ))}
         </ul>
         <div className="items-center flex-shrink-0 hidden lg:flex">
-          <Button className="self-center px-8 py-3 rounded">Sign in</Button>
-          <Button className="self-center px-8 py-3 font-semibold rounded dark:bg-cyan-400 dark:text-gray-900">
-            Sign up
-          </Button>
-
+          <ul className="flex items-center md:hidden md:ml-auto space-x-8 lg:flex">
+            <li>
+              <Link
+                href="/auth/signin"
+                aria-label="Sign in"
+                title="Sign in"
+                className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400"
+              >
+                <span className="font-inter ">Sign in</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/auth/signup"
+                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-slate-100 dark:text-slate-900 transition duration-200 shadow-md bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none"
+                aria-label="Sign up"
+                // outlined
+                // type="primary"
+              >
+                <span className="font-inter ">Sign up</span>
+              </Link>
+            </li>
+          </ul>
           <Link
             href="/"
             aria-label="Back to homepage"
@@ -73,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
           </Link>
         </div>
         <Button className="p-4 lg:hidden">
-          <Icon icon={<MenuIcon />} className="w-6 h-6 dark:text-gray-100" />
+          <Icon icon={<MenuIcon />} className="w-6 h-6 dark:text-slate-100" />
         </Button>
       </div>
     </header>

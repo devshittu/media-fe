@@ -5,7 +5,8 @@ import {
   Icon,
   TrendingUpIcon,
 } from '@/components/illustrations';
-import { Bullet, MiddleDot } from '@/components/labs';
+import { Bullet, MiddleDot, Space } from '@/components/labs';
+import { Pinging } from '@/components/loading';
 
 const TrendingListItem: React.FC<TrendingListItemProps> = memo(
   ({ rank, category, title, subtitle, onArrowClick }) => {
@@ -13,7 +14,9 @@ const TrendingListItem: React.FC<TrendingListItemProps> = memo(
       <div className="flex py-3 sm:py-4">
         <div className="flex-1">
           <p className="text-sm font-semibold">
-            {rank}. {category} <Bullet className="mx-1 lg:mx-2 " /> Trending
+            {rank}. {category} <Bullet className="mx-1 lg:mx-2 " /> Trending{' '}
+            <Space />
+            <Pinging />
           </p>
           <h2 className=" w-48 font-bold tracking-normal">{title}</h2>
           <p className="inline-flex content-center justify-start  w-48 text-sm font-semiboldx font-serif">

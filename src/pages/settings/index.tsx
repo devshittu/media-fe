@@ -68,6 +68,12 @@ const SettingsPage = () => {
                 linkHref={`/settings/system`}
                 description={`Settings related to the system's appearance and language.`}
               />
+              <SettingsFieldLink
+                id={'security-settings-link'}
+                title="Security Settings"
+                linkHref={`/settings/security`}
+                description={`Settings related to the system's appearance and language.`}
+              />
             </div>
           </div>
         </section>

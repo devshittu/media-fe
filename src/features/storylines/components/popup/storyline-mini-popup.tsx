@@ -11,8 +11,9 @@ import { useStorylinesByStory } from '../../api/get-storylines-by-story';
 import { TrendingListItem } from '@/features/trends/components/blocks/trends';
 import { Loading } from '@/components/loading';
 import { Storyline } from '../../types';
-import pluralize from 'pluralize';
 import { StorylineMiniPopupLoadingPlaceholder } from '../loading/storyline-mini-popup-loading-placeholder';
+import { word_pluralize } from '@/utils';
+import Link from 'next/link';
 
 export const StorylineMiniPopup = React.forwardRef<
   HTMLDivElement,
@@ -51,7 +52,7 @@ export const StorylineMiniPopup = React.forwardRef<
   } = stableStoryline[0] || ({} as Storyline);
   // Destructure the first element of the results array
 
-  const storiesCountText = `${stories_count} ${pluralize(
+  const storiesCountText = `${stories_count} ${word_pluralize(
     'story',
     stories_count,
   )}`;
@@ -59,7 +60,7 @@ export const StorylineMiniPopup = React.forwardRef<
   const hashtagsCount = `${
     hashtags.length === 0
       ? 'No hashtags found'
-      : `${hashtags.length} ${pluralize('hashtag', hashtags.length)}`
+      : `${hashtags.length} ${word_pluralize('hashtag', hashtags.length)}`
   }`;
   const storylineWatchers = [
     'https://dummyimage.com/104x104',
@@ -71,16 +72,16 @@ export const StorylineMiniPopup = React.forwardRef<
     <>
       <div ref={ref} {...rest}>
         <h1 className="text-xl font-semibold my-2">{summary}</h1>
-        <div className="flex space-x-2 text-gray-400 text-sm">
+        <div className="flex space-x-2 text-slate-400 text-sm">
           <Icon icon={<FileTextIcon />} className="h-5 w-5" />
           <p>{storiesCountText}</p>
         </div>
-        <div className="flex space-x-2 text-gray-400 text-sm my-3">
+        <div className="flex space-x-2 text-slate-400 text-sm my-3">
           <Icon icon={<CalendarIcon />} className="h-5 w-5" />
 
           <p>{lastUpdatedText}</p>
         </div>
-        <div className="flex space-x-2 text-gray-400 text-sm my-3">
+        <div className="flex space-x-2 text-slate-400 text-sm my-3">
           <Icon icon={<HashIcon />} className="h-5 w-5" />
 
           <p>{hashtagsCount}</p>
@@ -104,16 +105,25 @@ export const StorylineMiniPopup = React.forwardRef<
           </div>
           <div className="my-2">
             <p className="font-semibold text-base mb-2">Views</p>
-            <div className="text-base text-gray-400 font-semibold">
+            <div className="text-base text-slate-400 font-semibold">
               {/* <p>{progress}%</p> */}
               <p>{3846}</p>
             </div>
           </div>
         </div>
       </div>
-      <p className="">{description}</p>
-      {/* <h1>{`StoryID: ${id} Storyline id : ${storyline_id}`}</h1> */}
-      {/* <TrendingListItem key={trend.title} {...trend} /> */}
+      <p className="mb-6">{description}</p>
+      <div
+        className={`flex items-center md:hidden md:ml-auto space-x-8 lg:flex`}
+      >
+        <Link
+          href={`/storylines/${storylineId}`}
+          className="font-mediumx font-bold tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:underline"
+          aria-label="Go to storyline"
+        >
+          <span className="font-inter ">Go to storyline</span>
+        </Link>
+      </div>
     </>
   );
 });

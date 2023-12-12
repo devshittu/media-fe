@@ -5,12 +5,6 @@ import { Copyright } from '../public-page/copyright';
 import { COPYRIGHT_TEXT } from '@/config/constants';
 
 export const Footer = () => {
-  const copyrightText = COPYRIGHT_TEXT;
-  const links = [
-    { href: '/faq', label: 'F.A.Q' },
-    { href: '/privacy', label: 'Privacy Policy' },
-    { href: '/terms', label: 'Terms & Conditions' },
-  ];
   return (
     <>
       <footer className="relative md:fixed bottom-0 left-0 z-20 w-full bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-600">
@@ -66,7 +60,7 @@ export const Footer = () => {
               </div>
             </div>
 
-            <Copyright text={copyrightText} links={links} />
+            <Copyright />
           </div>
         </div>
       </footer>
