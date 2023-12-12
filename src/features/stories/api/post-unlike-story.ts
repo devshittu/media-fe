@@ -8,7 +8,8 @@ import {
 } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { ApiResponse } from '@/types';
-import { LikeStoryFormData, UseLikeStoryOptions } from '../components';
+import { LikeStoryFormData, StoryAction, UseLikeStoryOptions } from '../components';
+import { useUpdateStoryInCache } from './get-stories';
 const { UNLIKE_STORY } = QUERY_KEYS;
 
 export const unlikeStory = ({
@@ -39,12 +40,14 @@ export const useUnlikeStory = ({
   onSuccess,
   onError,
 }: UseLikeStoryOptions) => {
+const updateStoryInCache = useUpdateStoryInCache();
   const { mutate: submit, isLoading } = useMutation({
     mutationKey: [UNLIKE_STORY, story_id],
     mutationFn: unlikeStory,
     onSuccess: (data) => {
       // Invalidate and refetch something when a post is unbookmarked
       //   queryClient.invalidateQueries('someQueryKey');
+      updateStoryInCache(story_id, StoryAction.UNLIKE);
       onSuccess?.(data);
     },
     onError: (data) => {
