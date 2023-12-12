@@ -56,7 +56,7 @@ export const UserSuggestionList = React.memo(
         type: NotificationType.SUCCESS,
         title: 'Success',
         duration: 5000,
-        message: `You are now following ${followedUser.name}`,
+        message: `You are now following ${followedUser.display_name}`,
       });
       handleDelete(id);
     };
@@ -68,7 +68,7 @@ export const UserSuggestionList = React.memo(
         (user) => user.id === numericId,
       )[0];
       console.error(
-        `Follow failed for user with id: ${id} - ${followedUser.name}`,
+        `Follow failed for user with id: ${id} - ${followedUser.display_name}`,
       );
     };
 
