@@ -13,6 +13,7 @@ import { Loading } from '@/components/loading';
 import { Storyline } from '../../types';
 import { StorylineMiniPopupLoadingPlaceholder } from '../loading/storyline-mini-popup-loading-placeholder';
 import { word_pluralize } from '@/utils';
+import Link from 'next/link';
 
 export const StorylineMiniPopup = React.forwardRef<
   HTMLDivElement,
@@ -111,9 +112,18 @@ export const StorylineMiniPopup = React.forwardRef<
           </div>
         </div>
       </div>
-      <p className="">{description}</p>
-      {/* <h1>{`StoryID: ${id} Storyline id : ${storyline_id}`}</h1> */}
-      {/* <TrendingListItem key={trend.title} {...trend} /> */}
+      <p className="mb-6">{description}</p>
+      <div
+        className={`flex items-center md:hidden md:ml-auto space-x-8 lg:flex`}
+      >
+        <Link
+          href={`/storylines/${storylineId}`}
+          className="font-mediumx font-bold tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:underline"
+          aria-label="Go to storyline"
+        >
+          <span className="font-inter ">Go to storyline</span>
+        </Link>
+      </div>
     </>
   );
 });
