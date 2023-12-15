@@ -71,6 +71,7 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
             />
 
             <Button
+              id={`button-sign-in`}
               type="primary"
               loading={!!signin.isLoading}
               disabled={signin.isLoading}
