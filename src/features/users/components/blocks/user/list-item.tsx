@@ -53,13 +53,18 @@ export const UserListItem = ({
         </div>
         <div className="inline-flex space-x-3 items-center text-base font-semibold text-slate-900 dark:text-white">
           <Button
+            id={`id-follow-button`}
             className=""
             loading={isFollowLoading}
             onClick={handleFollowClick}
           >
             {'Follow'}
           </Button>
-          <Button className="" onClick={handleIgnoreClick}>
+          <Button
+            id={`id-ignore-button`}
+            className=""
+            onClick={handleIgnoreClick}
+          >
             {'Ignore'}
           </Button>
         </div>
