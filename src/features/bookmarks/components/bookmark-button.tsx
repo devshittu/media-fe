@@ -14,6 +14,7 @@ const BookmarkButton: React.FC<Props> = ({
 }) => {
   return (
     <Button
+      id={`bookmark-toggle`}
       className="p-2 bg-blue-500 text-white"
       onClick={isBookmarked ? onUnbookmark : onBookmark}
     >
