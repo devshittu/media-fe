@@ -129,6 +129,7 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
         {/* {`has_liked: ${has_liked} now would use ${ !has_liked ? 'handleLikeStory' : 'handleUnlikeStory' }`} */}
         <div className="inline-flex items-center leading-none text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100">
           <Button
+            id={`like-button`}
             onClick={!has_liked ? handleLikeStory : handleUnlikeStory}
             className="inline-flex items-center leading-none "
           >
