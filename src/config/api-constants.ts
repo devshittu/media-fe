@@ -21,6 +21,8 @@ export const URI_STORIES = '/stories/';
 export const URI_STORIES_CATEGORY_BY_CATEGORY_SLUG =
   '/stories/category/{{category_slug}}/';
 export const URI_USER_FEED = '/user-feed/';
+export const URI_USER_INVERSE_FEED = '/user-inverse-feed/';
+export const URI_TRENDING_STORIES = '/trending-stories/';
 export const URI_STORIES_HASHTAG_BY_HASHTAG_NAME =
   '/stories/hashtag/{{hashtag_name}}/';
 export const URI_STORIES_TRENDING = '/stories/trending/';
