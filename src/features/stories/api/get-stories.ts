@@ -85,54 +85,54 @@ export const useUpdateStoryInCache = () => {
 
   const updateStory = (story_id: number | string, actionType: StoryAction) => {
     // queryClient.setQueryData<StoryListResponse | undefined>(
-    queryClient.setQueryData<
-     PaginatedStoryListResponse
-      | undefined
-    >([GET_STORIES, 'all'], (oldData: PaginatedStoryListResponse | undefined) => {
-      console.log(`oldData`, oldData);
-      if (!oldData) return;
+    queryClient.setQueryData<PaginatedStoryListResponse | undefined>(
+      [GET_STORIES, 'all'],
+      (oldData: PaginatedStoryListResponse | undefined) => {
+        console.log(`oldData`, oldData);
+        if (!oldData) return;
 
-      const newData: PaginatedStoryListResponse = {
-        ...oldData,
-        pages: oldData.pages.map((page: StoryListResponse) => ({
-          ...page,
-          results: page.results.map((story) => {
-            if (story.id === story_id) {
-              let updatedStory = { ...story };
-              switch (actionType) {
-                case StoryAction.LIKE:
-                  updatedStory = {
-                    ...updatedStory,
-                    likes_count: (updatedStory.likes_count || 0) + 1,
-                    has_liked: true,
-                  };
-                  break;
-                case StoryAction.UNLIKE:
-                  updatedStory = {
-                    ...updatedStory,
-                    likes_count: Math.max(
-                      (updatedStory.likes_count || 0) - 1,
-                      0,
-                    ),
-                    has_liked: false,
-                  };
-                  break;
-                case StoryAction.DISLIKE:
-                  // Similar logic for dislike
-                  break;
-                case StoryAction.UNDISLIKE:
-                  // Similar logic for undislike
-                  break;
+        const newData: PaginatedStoryListResponse = {
+          ...oldData,
+          pages: oldData.pages.map((page: StoryListResponse) => ({
+            ...page,
+            results: page.results.map((story) => {
+              if (story.id === story_id) {
+                let updatedStory = { ...story };
+                switch (actionType) {
+                  case StoryAction.LIKE:
+                    updatedStory = {
+                      ...updatedStory,
+                      likes_count: (updatedStory.likes_count || 0) + 1,
+                      has_liked: true,
+                    };
+                    break;
+                  case StoryAction.UNLIKE:
+                    updatedStory = {
+                      ...updatedStory,
+                      likes_count: Math.max(
+                        (updatedStory.likes_count || 0) - 1,
+                        0,
+                      ),
+                      has_liked: false,
+                    };
+                    break;
+                  case StoryAction.DISLIKE:
+                    // Similar logic for dislike
+                    break;
+                  case StoryAction.UNDISLIKE:
+                    // Similar logic for undislike
+                    break;
+                }
+                return updatedStory;
               }
-              return updatedStory;
-            }
-            return story;
-          }),
-        })),
-      };
+              return story;
+            }),
+          })),
+        };
 
-      return newData;
-    });
+        return newData;
+      },
+    );
   };
 
   return updateStory;
