@@ -32,6 +32,7 @@ function CustomCheckbox<T extends { id: string; label?: string }>({
           onChange={handleCheckboxChange}
         />
         <Button
+          id={`checkbox-${option.label}`}
           type={isChecked ? 'adaptive' : 'adaptive'}
           outlined={!isChecked}
           size="medium"
