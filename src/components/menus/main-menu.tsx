@@ -96,15 +96,23 @@ const MainMenu = () => {
   const tourSequence = [
     {
       forElement: '#page-title',
-      text: 'This is where you will find the page title for the current page.',
+      text: 'Home - Your Gateway to Personalized Stories and Trends',
+    },
+    {
+      forElement: '#tab-item-id-for-you-desktop',
+      text: 'Personalized stories based on your preferences.',
+    },
+    {
+      forElement: '#tab-item-id-discover-desktop',
+      text: 'Explore diverse stories beyond your usual interests.',
     },
     {
       forElement: '#app-search',
-      text: 'Search stories here...',
+      text: 'Find stories, and storylines instantly.',
     },
     {
       forElement: '#trendsForYouTitle',
-      text: 'This is where you will find some trends for you',
+      text: 'Personalized trends based on your interests.',
     },
     {
       forElement: '.App-nowhere',
