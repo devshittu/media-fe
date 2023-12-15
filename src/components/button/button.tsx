@@ -23,6 +23,7 @@ export type ButtonProps = {
   size?: 'small' | 'medium' | 'large';
   expand?: boolean;
   badge?: string;
+  id: string;
   title?: string;
   badgeType?:
     | 'info'
@@ -43,6 +44,7 @@ export type ButtonProps = {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
+      id,
       outlined = false,
       title = '',
       rounded = false,
@@ -277,6 +279,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
     return (
       <button
+      id={id}
         type={nativeType}
         className={buttonClasses}
         disabled={disabled}
