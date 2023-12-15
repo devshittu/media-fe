@@ -5,25 +5,33 @@ import { Button } from './button';
 
 describe('Button Component', () => {
   test('renders button with text', () => {
-    render(<Button>Click me</Button>);
+    render(<Button id={`action-click-me`}>Click me</Button>);
     expect(screen.getByText('Click me')).toBeInTheDocument();
   });
 
   test('handles click event', () => {
     const handleClick = jest.fn();
-    render(<Button onClick={handleClick}>Click me</Button>);
+    render(
+      <Button id={`action-click-test`} onClick={handleClick}>
+        Click me
+      </Button>,
+    );
     fireEvent.click(screen.getByText('Click me'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
   test('is disabled when disabled prop is true', () => {
-    render(<Button disabled>Click me</Button>);
+    render(
+      <Button id={`action-click-test`} disabled>
+        Click me
+      </Button>,
+    );
     expect(screen.getByText('Click me')).toBeDisabled();
   });
 
   test('shows loading indicator when loading prop is true', () => {
     render(
-      <Button data-testid="loading-indicator" loading>
+      <Button id={`action-test`} data-testid="loading-indicator" loading>
         Click me
       </Button>,
     );
@@ -43,7 +51,11 @@ describe('Button Component', () => {
       'adaptive',
     ];
     types.forEach((type) => {
-      render(<Button type={type}>Click me</Button>);
+      render(
+        <Button id={`action-click-test`} type={type}>
+          Click me
+        </Button>,
+      );
       expect(screen.getByText('Click me'));
       // .toHaveClass(`button-${type}`);
     });
