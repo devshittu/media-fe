@@ -52,6 +52,7 @@ export const FlashCard = ({
         </span>
         {closeable && (
           <Button
+            id={`close-flash`}
             nativeType="button"
             className="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-900 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 hover:bg-blue-200 inline-flex h-6 w-6 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
             onClick={closeFlash}
@@ -65,6 +66,7 @@ export const FlashCard = ({
       <p className="mb-3 text-sm text-blue-800 dark:text-blue-400">{text}</p>
       {actionText && actionIcon ? (
         <Button
+          id={`action-button`}
           onClick={onClickActionButton}
           icon={actionIcon}
           className="text-sm text-blue-800 underline font-medium hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
@@ -73,6 +75,7 @@ export const FlashCard = ({
         </Button>
       ) : (
         <Button
+          id={`action-button`}
           onClick={onClickActionButton}
           className="text-sm text-blue-800 underline font-medium hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
         >
