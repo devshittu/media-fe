@@ -10,6 +10,7 @@ export const UpdateSettingsButton = ({
 }: UpdateSettingsButtonProps) => {
   return (
     <Button
+      id={`update-settings-button`}
       loading={!!isLoading}
       disabled={isLoading}
       nativeType="submit"
