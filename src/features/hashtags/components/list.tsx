@@ -63,6 +63,7 @@ export const ExpandableHashtagList = memo(
             ))}
             {hashtags.length > initialVisibleCount && (
               <Button
+                id={`more-toogle`}
                 onClick={() => setExpanded(!expanded)}
                 className="mt-2x underline"
               >
