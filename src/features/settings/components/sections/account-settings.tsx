@@ -118,6 +118,7 @@ Description: "Used for account security and essential notifications."
 
             <SettingsFieldsetFooter>
               <Button
+                id={`update-settings-button`}
                 loading={!!updateSettings.isLoading}
                 disabled={updateSettings.isLoading}
                 nativeType="submit"
