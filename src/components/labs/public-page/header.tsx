@@ -90,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({ menuLinks }) => {
             <ChevronRightIcon className="w-8 stroke-2" />
           </Link>
         </div>
-        <Button className="p-4 lg:hidden">
+        <Button id={`nav-menu`} className="p-4 lg:hidden">
           <Icon icon={<MenuIcon />} className="w-6 h-6 dark:text-slate-100" />
         </Button>
       </div>
