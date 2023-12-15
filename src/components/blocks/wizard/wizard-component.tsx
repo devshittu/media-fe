@@ -53,6 +53,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
               <nav className="flex items-center space-x-2 md:space-x-4">
                 <>
                   <Button
+                    id={`action-can-go-back`}
                     type="primary"
                     size="small"
                     rounded
@@ -64,6 +65,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
 
                   {isLastStep ? (
                     <Button
+                      id={`action-finish`}
                       type="primary"
                       size="small"
                       rounded
@@ -76,6 +78,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
                     <>
                       {!isNextStepDisabled() && (
                         <Button
+                          id={`action-next`}
                           type="primary"
                           size="small"
                           rounded
@@ -93,6 +96,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
                       )}
                       {!isCurrentStepMandatory && (
                         <Button
+                          id={`action-skip`}
                           type="primary"
                           size="small"
                           rounded
