@@ -1,4 +1,5 @@
 import { Button } from '@/components/button';
+import { DeviceType } from '@/types';
 import React from 'react';
 // import { useTab } from './store';
 
@@ -13,6 +14,7 @@ type TabListProps = {
   activeTab: string;
   setActiveTab: (tabId: string) => void;
   scrollable?: boolean;
+  device?: DeviceType;
 };
 
 export const TabList: React.FC<TabListProps> = ({
@@ -20,6 +22,7 @@ export const TabList: React.FC<TabListProps> = ({
   activeTab,
   setActiveTab,
   scrollable = false,
+  device = DeviceType.ANY,
 }) => {
   return (
     <ul
@@ -38,7 +41,7 @@ export const TabList: React.FC<TabListProps> = ({
                 : 'border-transparent hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300'
             }`}
             onClick={() => setActiveTab(tab.id)}
-            id={tab.id}
+            id={`tab-item-id-${tab.id}-${device}`}
             aria-controls={tab.id}
             aria-selected={activeTab === tab.id}
           >
