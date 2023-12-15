@@ -73,6 +73,7 @@ export const AddBookmarkForm = ({
             <br />
             <div className="flex space-x-3">
               <Button
+                id={`add-bookmark`}
                 type="primary"
                 loading={!!isLoading}
                 disabled={isLoading}
@@ -88,6 +89,7 @@ export const AddBookmarkForm = ({
               <Space />
               <Space />
               <Button
+                id={`cancel-add-bookmark`}
                 nativeType="button"
                 outlined
                 type={`adaptive`}
