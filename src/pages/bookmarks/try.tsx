@@ -287,6 +287,7 @@ const Bookmark: React.FC = () => {
           <nav className="h-full bg-blue-300 border-r border-l border-white shadow border-slate-400">
             {sections.map((section) => (
               <Button
+                id={`id-button`}
                 key={section.name}
                 className={`w-full px-2 py-3 text-2xl font-semibold text-slate-700 hover:bg-blue-400 hover:text-white focus:outline-none ${
                   section === activeSection.current
