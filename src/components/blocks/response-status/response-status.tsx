@@ -43,6 +43,7 @@ const ResponseStatusWidget = ({
           <div className="flex justify-center">
             {ctaText && (
               <Button
+                id={`action-cta`}
                 type="primary"
                 nativeType="submit"
                 size="large"
