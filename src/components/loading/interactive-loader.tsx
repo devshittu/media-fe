@@ -29,6 +29,7 @@ export const InteractiveLoader = forwardRef<
       ) : (
         <div className="flex justify-center py-4">
           <Button
+            id={`interactive-loader`}
             onClick={onClick}
             type={`primary`}
             disabled={!hasNextPage || isLoading}
