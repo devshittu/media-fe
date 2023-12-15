@@ -38,7 +38,7 @@ export const TabList: React.FC<TabListProps> = ({
                 : 'border-transparent hover:text-slate-600 hover:border-slate-300 dark:hover:text-slate-300'
             }`}
             onClick={() => setActiveTab(tab.id)}
-            // role="tab"
+            id={tab.id}
             aria-controls={tab.id}
             aria-selected={activeTab === tab.id}
           >
