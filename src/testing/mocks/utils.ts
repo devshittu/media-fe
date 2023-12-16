@@ -1,7 +1,7 @@
 import { RestRequest } from 'msw';
 
 import { IS_TEST } from '@/config/constants';
-import { AuthUser, LoginData } from '@/features/auth';
+import { AuthUser, PasswordSigninData } from '@/features/auth';
 
 import { testData } from '../test-data';
 
@@ -23,7 +23,7 @@ export const getUser = () => sanitizeUser(testData.users[0]);
 export const authenticate = ({
   email,
 }: // password,
-LoginData) => {
+PasswordSigninData) => {
   const user = db.user.findFirst({
     where: {
       email: {
