@@ -6,7 +6,12 @@ import {
 
 import { apiClient } from '@/lib/api-client';
 
-import { StoriesQueryParams, Story, StoryListResponse } from '../types';
+import {
+  PaginatedStoryListResponse,
+  StoriesQueryParams,
+  Story,
+  StoryListResponse,
+} from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES } from '@/config/api-constants';
 import { StoryAction } from '../components';
@@ -75,10 +80,6 @@ export const useInfiniteStories = ({
   };
 };
 
-export type PaginatedStoryListResponse = {
-  pages: StoryListResponse[];
-  pageParams: number[];
-};
 type UpdateStoryProps = Partial<Story>;
 export const useUpdateStoryInCache = () => {
   const queryClient = useQueryClient();
