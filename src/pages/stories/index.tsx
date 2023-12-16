@@ -16,7 +16,7 @@ import { NotFound } from '@/components/not-found';
 import { cleanObject } from '@/utils';
 import { useTabContentManager } from '@/components/blocks/tab';
 import { useHomePageTabs } from '@/stores/tabs';
-import { Discover } from '@/features/trends/components/blocks/discover';
+import { Discover } from '@/features/trends/components/discover/discover';
 
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
