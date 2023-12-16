@@ -59,3 +59,10 @@ export enum AttentionType {
   WARNING = 'warning',
   INFO = 'info',
 }
+
+export enum DeviceType {
+  ANY = 'any',
+  DESKTOP = 'desktop',
+  TABLET = 'tablet',
+  MOBILE = 'mobile',
+}
