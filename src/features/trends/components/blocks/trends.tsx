@@ -11,7 +11,7 @@ import { Pinging } from '@/components/loading';
 const TrendingListItem: React.FC<TrendingListItemProps> = memo(
   ({ rank, category, title, subtitle, onArrowClick }) => {
     return (
-      <div className="flex py-3 sm:py-4">
+      <div className="flex items-center py-3 sm:py-4">
         <div className="flex-1">
           <p className="text-sm font-semibold">
             {rank}. {category} <Bullet className="mx-1 lg:mx-2 " /> Trending{' '}
@@ -31,10 +31,10 @@ const TrendingListItem: React.FC<TrendingListItemProps> = memo(
             <span>{subtitle}</span>
           </p>
         </div>
-        <div className="flex px-4x py-2 m-2x">
+        <div className="flex shrink-0 px-4x py-2 m-2x">
           <button
             onClick={onArrowClick}
-            className=" text-2xl rounded-full text-slate-400 hover:bg-slate-800 hover:text-blue-300 float-right"
+            className=" text-2xl rounded-sm p-2 text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800"
           >
             {/* SVG icon here */}
             <Icon
