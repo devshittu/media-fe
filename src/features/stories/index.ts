@@ -3,6 +3,7 @@ export * from './api/get-story';
 export * from './api/get-stories';
 export * from './api/get-stories-by-hashtag';
 export * from './api/get-stories-by-category';
+export * from './api/get-user-feed-stories';
 // export * from './api/get-storylines';
 export * from './api/post-like-story';
 
