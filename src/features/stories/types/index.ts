@@ -42,9 +42,10 @@ export type StoriesQueryParams = PaginatedListQueryParams & {
 
 export type StoryListResponse = PaginatedResponse<Story>;
 
-// export type CreateStoryData = Pick<
-//   Story,
-//   'position' | 'department' | 'location' | 'info'
-// >;
+export type PaginatedStoryListResponse = {
+  pages: StoryListResponse[];
+  pageParams: number[];
+};
+
 
 // Path: media-fe/src/features/stories/types/index.ts
