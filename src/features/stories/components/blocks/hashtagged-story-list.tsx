@@ -18,7 +18,7 @@ export const HashtaggedStoryList = ({
 }: StoryListProps) => {
   const { ref, inView } = useInView();
   const { scrollPosition, setScrollPosition } = useUserFeedsStore();
-  const { categoryLookupTable } = useCategoryContext();
+  const { categoriesLookupTable } = useCategoryContext();
 
   const {
     data: dataFromStories,
@@ -48,11 +48,7 @@ export const HashtaggedStoryList = ({
       {dataFromStories?.pages.map((page, i) => (
         <React.Fragment key={i}>
           {page?.results?.map((story: Story) => (
-            <StoryListItem
-              key={story.id}
-              story={story}
-              categories={categoryLookupTable}
-            />
+            <StoryListItem key={story.id} story={story} />
           ))}
         </React.Fragment>
       ))}
