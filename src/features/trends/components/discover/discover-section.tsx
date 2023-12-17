@@ -1,7 +1,5 @@
 import { Button } from '@/components/button';
-import {
-  Icon,
-} from '@/components/illustrations';
+import { Icon } from '@/components/illustrations';
 import React from 'react';
 
 export type DiscoverSectionAction = {
@@ -51,7 +49,6 @@ export const DiscoverSection = ({
         </div>
         {children}
       </div>
-
     </>
   );
 };
