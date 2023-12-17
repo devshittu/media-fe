@@ -10,11 +10,14 @@ import { formatDate } from '@/utils';
 import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { useAnalytics } from '@/stores/analytics/analytics';
 import { AnalyticsData, InteractionType } from '@/features/analytics/types';
+import { randomUUID } from 'crypto';
 
 export const StoryListItem = React.memo(
   ({ story, className }: StoryListItemProps) => {
-    const carouselItems: CarouselItem[] = [
-      {
+    const width = 600;
+    const height = 600;
+    const sig = randomUUID;
+    /* {
         id: '1',
         media:
           'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=10',
@@ -24,6 +27,24 @@ export const StoryListItem = React.memo(
         id: '2',
         media:
           'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=399&q=10',
+        caption: '2 ' + story?.title,
+      }, */
+
+    const imageurl1 = `https://source.unsplash.com/random/${width}x${height}?sig=${
+      sig + story.slug + '1'
+    }`;
+    const imageurl2 = `https://source.unsplash.com/random/${width}x${height}?sig=${
+      sig + story.slug + '2'
+    }`;
+    const carouselItems: CarouselItem[] = [
+      {
+        id: '1',
+        media: imageurl1,
+        caption: '1 ' + story?.title,
+      },
+      {
+        id: '2',
+        media: imageurl2,
         caption: '2 ' + story?.title,
       },
     ];
