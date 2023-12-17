@@ -13,8 +13,8 @@ import {
   StoryAction,
   UseLikeStoryOptions,
 } from '../components';
-import { useUpdateStoryInCache } from './get-stories';
-const { UNLIKE_STORY } = QUERY_KEYS;
+import { useUpdateCachedStory } from '../hooks/useUpdateCachedStory';
+const { UNLIKE_STORY, GET_USER_FEED_STORIES, GET_STORIES } = QUERY_KEYS;
 
 export const unlikeStory = ({
   story_slug,
@@ -44,14 +44,18 @@ export const useUnlikeStory = ({
   onSuccess,
   onError,
 }: UseLikeStoryOptions) => {
-  const updateStoryInCache = useUpdateStoryInCache();
+  const updateCachedStory = useUpdateCachedStory();
   const { mutate: submit, isLoading } = useMutation({
     mutationKey: [UNLIKE_STORY, story_id],
     mutationFn: unlikeStory,
     onSuccess: (data) => {
-      // Invalidate and refetch something when a post is unbookmarked
-      //   queryClient.invalidateQueries('someQueryKey');
-      updateStoryInCache(story_id, StoryAction.UNLIKE);
+      // updateStoryInCache(story_id, StoryAction.UNLIKE);
+      // To update a story in the user feed stories cache
+      updateCachedStory(
+        [GET_STORIES, 'all'],
+        story_id,
+        StoryAction.UNLIKE,
+      );
       onSuccess?.(data);
     },
     onError: (data) => {
