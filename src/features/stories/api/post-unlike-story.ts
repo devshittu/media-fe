@@ -51,11 +51,7 @@ export const useUnlikeStory = ({
     onSuccess: (data) => {
       // updateStoryInCache(story_id, StoryAction.UNLIKE);
       // To update a story in the user feed stories cache
-      updateCachedStory(
-        [GET_STORIES, 'all'],
-        story_id,
-        StoryAction.UNLIKE,
-      );
+      updateCachedStory([GET_STORIES, 'all'], story_id, StoryAction.UNLIKE);
       onSuccess?.(data);
     },
     onError: (data) => {
