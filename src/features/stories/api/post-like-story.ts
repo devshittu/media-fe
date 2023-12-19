@@ -52,11 +52,7 @@ export const useLikeStory = ({
     mutationFn: likeStory,
     onSuccess: (data) => {
       // To update a story in the stories cache
-      updateCachedStory(
-        [GET_STORIES, 'all'],
-        story_id,
-        StoryAction.LIKE,
-      );
+      updateCachedStory([GET_STORIES, 'all'], story_id, StoryAction.LIKE);
       // Invalidate and refetch something when a post is unbookmarked
       //   queryClient.invalidateQueries('someQueryKey');
 
