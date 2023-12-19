@@ -66,3 +66,5 @@ export enum DeviceType {
   TABLET = 'tablet',
   MOBILE = 'mobile',
 }
+
+// Path: src/types/index.ts
