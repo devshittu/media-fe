@@ -6,16 +6,15 @@ import {
 
 import { apiClient } from '@/lib/api-client';
 
-import { StoriesQueryParams, Story, StoryListResponse } from '../types';
+import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_USER_INVERSE_FEED } from '@/config/api-constants';
-import { StoryAction } from '../components';
+import {
+  GetStoriesOptions,
+  InfiniteStoriesResponse,
+} from '../components';
+import { CacheRefType } from '@/types';
 const { GET_USER_INVERSE_FEED_STORIES } = QUERY_KEYS;
-
-type GetStoriesOptions = {
-  params?: StoriesQueryParams;
-  initialData?: any;
-};
 
 export const getUserInvertedFeedStories = ({
   params,
@@ -26,15 +25,20 @@ export const getUserInvertedFeedStories = ({
   });
 };
 
-export const useUserInvertedFeedStories = ({ params }: GetStoriesOptions) => {
+export const useUserInvertedFeedStories = ({
+  params,
+  initialData = {},
+}: GetStoriesOptions) => {
+  const queryKey: CacheRefType = [GET_USER_INVERSE_FEED_STORIES, 'all'];
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_USER_INVERSE_FEED_STORIES, params],
+    queryKey,
     queryFn: () => getUserInvertedFeedStories({ params }),
     // enabled: !!params?.category_id,
-    initialData: {} as StoryListResponse,
+    initialData: initialData as StoryListResponse,
   });
 
   return {
+    queryKey,
     data,
     isLoading: isFetching && !isFetched,
   };
@@ -42,43 +46,32 @@ export const useUserInvertedFeedStories = ({ params }: GetStoriesOptions) => {
 
 export const useInfiniteUserInvertedFeedStories = ({
   params,
-  initialData,
-}: GetStoriesOptions) => {
+}: GetStoriesOptions): InfiniteStoriesResponse => {
+  const queryKey: CacheRefType = [
+    QUERY_KEYS.GET_USER_INVERSE_FEED_STORIES,
+    'infinite',
+  ];
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [GET_USER_INVERSE_FEED_STORIES, 'all'],
-      async ({ pageParam = 2 }) => {
-        const response = await getUserInvertedFeedStories({
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
+    useInfiniteQuery<StoryListResponse>(
+      queryKey,
+      ({ pageParam = 1 }) =>
+        getUserInvertedFeedStories({ params: { ...params, page: pageParam } }),
       {
-        getNextPageParam: (lastPage: StoryListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
+        getNextPageParam: (lastPage, allPages) => {
+          // Check if there are more pages to load
+          if (lastPage.current_page < lastPage.total_pages) {
+            return lastPage.current_page + 1;
+          }
+          return undefined; // No more pages
         },
-
-        initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
       },
     );
-
   return {
+    queryKey,
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   };
 };
-
-export type PaginatedStoryListResponse = {
-  pages: StoryListResponse[];
-  pageParams: number[];
-};
-
-//Path: src/features/stories/api/get-stories.ts
+//Path: src/features/stories/api/get-user-inverse-feed-stories.ts
