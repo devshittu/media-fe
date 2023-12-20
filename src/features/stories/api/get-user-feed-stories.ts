@@ -14,13 +14,12 @@ import {
 } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_USER_FEED } from '@/config/api-constants';
-import { StoryAction } from '../components';
+import {
+  GetStoriesOptions,
+  InfiniteStoriesResponse,
+} from '../components';
+import { CacheRefType } from '@/types';
 const { GET_USER_FEED_STORIES } = QUERY_KEYS;
-
-type GetStoriesOptions = {
-  params?: StoriesQueryParams;
-  initialData?: any;
-};
 
 export const getUserFeedStories = ({
   params,
@@ -32,14 +31,16 @@ export const getUserFeedStories = ({
 };
 
 export const useUserFeedStories = ({ params }: GetStoriesOptions) => {
+  const queryKey: CacheRefType = [GET_USER_FEED_STORIES, 'all'];
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_USER_FEED_STORIES, params],
+    queryKey,
     queryFn: () => getUserFeedStories({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as StoryListResponse,
   });
 
   return {
+    queryKey,
     data,
     isLoading: isFetching && !isFetched,
   };
@@ -47,33 +48,25 @@ export const useUserFeedStories = ({ params }: GetStoriesOptions) => {
 
 export const useInfiniteUserFeedStories = ({
   params,
-  initialData,
-}: GetStoriesOptions) => {
+}: GetStoriesOptions): InfiniteStoriesResponse => {
+  const queryKey: CacheRefType = [GET_USER_FEED_STORIES, 'infinite'];
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [GET_USER_FEED_STORIES, 'all'],
-      async ({ pageParam = 2 }) => {
-        const response = await getUserFeedStories({
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
+    useInfiniteQuery<StoryListResponse>(
+      queryKey,
+      ({ pageParam = 1 }) =>
+        getUserFeedStories({ params: { ...params, page: pageParam } }),
       {
-        getNextPageParam: (lastPage: StoryListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
+        getNextPageParam: (lastPage, allPages) => {
+          // Check if there are more pages to load
+          if (lastPage.current_page < lastPage.total_pages) {
+            return lastPage.current_page + 1;
+          }
+          return undefined; // No more pages
         },
-
-        initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
       },
     );
-
   return {
+    queryKey,
     data,
     fetchNextPage,
     hasNextPage,
@@ -81,61 +74,4 @@ export const useInfiniteUserFeedStories = ({
   };
 };
 
-type UpdateStoryProps = Partial<Story>;
-export const useUpdateUserFeedStoryInCache = () => {
-  const queryClient = useQueryClient();
-
-  const updateStory = (story_id: number | string, actionType: StoryAction) => {
-    // queryClient.setQueryData<StoryListResponse | undefined>(
-    queryClient.setQueryData<PaginatedStoryListResponse | undefined>(
-      [GET_USER_FEED_STORIES, 'all'],
-      (oldData: PaginatedStoryListResponse | undefined) => {
-        if (!oldData) return;
-
-        const newData: PaginatedStoryListResponse = {
-          ...oldData,
-          pages: oldData.pages.map((page: StoryListResponse) => ({
-            ...page,
-            results: page.results.map((story) => {
-              if (story.id === story_id) {
-                let updatedStory = { ...story };
-                switch (actionType) {
-                  case StoryAction.LIKE:
-                    updatedStory = {
-                      ...updatedStory,
-                      likes_count: (updatedStory.likes_count || 0) + 1,
-                      has_liked: true,
-                    };
-                    break;
-                  case StoryAction.UNLIKE:
-                    updatedStory = {
-                      ...updatedStory,
-                      likes_count: Math.max(
-                        (updatedStory.likes_count || 0) - 1,
-                        0,
-                      ),
-                      has_liked: false,
-                    };
-                    break;
-                  case StoryAction.DISLIKE:
-                    // Similar logic for dislike
-                    break;
-                  case StoryAction.UNDISLIKE:
-                    // Similar logic for undislike
-                    break;
-                }
-                return updatedStory;
-              }
-              return story;
-            }),
-          })),
-        };
-
-        return newData;
-      },
-    );
-  };
-
-  return updateStory;
-};
-//Path: src/features/stories/api/get-stories.ts
+//Path: src/features/stories/api/get-user-feed-stories.ts
