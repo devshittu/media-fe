@@ -6,21 +6,16 @@ import {
 
 import { apiClient } from '@/lib/api-client';
 
-import {
-  PaginatedStoryListResponse,
-  StoriesQueryParams,
-  Story,
-  StoryListResponse,
-} from '../types';
+import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES } from '@/config/api-constants';
-import { StoryAction } from '../components';
+import {
+  GetStoriesOptions,
+  InfiniteStoriesResponse,
+  StoryAction,
+} from '../components';
+import { CacheRefType } from '@/types';
 const { GET_STORIES } = QUERY_KEYS;
-
-type GetStoriesOptions = {
-  params?: StoriesQueryParams;
-  initialData?: any;
-};
 
 export const getStories = ({
   params,
@@ -30,15 +25,17 @@ export const getStories = ({
   });
 };
 
-export const useStories = ({ params }: GetStoriesOptions) => {
+export const useStories = ({ params, initialData = {} }: GetStoriesOptions) => {
+  const queryKey: CacheRefType = [GET_STORIES, 'all'];
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_STORIES, params],
+    queryKey,
     queryFn: () => getStories({ params }),
     // enabled: !!params?.category_id,
-    initialData: {} as StoryListResponse,
+    initialData: initialData as StoryListResponse,
   });
 
   return {
+    queryKey,
     data,
     isLoading: isFetching && !isFetched,
   };
@@ -47,10 +44,11 @@ export const useStories = ({ params }: GetStoriesOptions) => {
 export const useInfiniteStories = ({
   params,
   initialData,
-}: GetStoriesOptions) => {
+}: GetStoriesOptions): InfiniteStoriesResponse => {
+  const queryKey: CacheRefType = [GET_STORIES, 'infinite'];
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
-      [GET_STORIES, 'all'],
+      queryKey,
       async ({ pageParam = 2 }) => {
         const response = await getStories({
           params: { ...params, page: pageParam },
@@ -73,6 +71,7 @@ export const useInfiniteStories = ({
     );
 
   return {
+    queryKey,
     data,
     fetchNextPage,
     hasNextPage,
