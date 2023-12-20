@@ -10,7 +10,7 @@ export type DiscoverSectionAction = {
 };
 export type DiscoverSectionProps = {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   actions?: DiscoverSectionAction[];
 };
 
@@ -47,8 +47,10 @@ export const DiscoverSection = ({
               ))}
           </div>
         </div>
-        {children}
+        {children && children}
       </div>
     </>
   );
 };
+
+// Path: src/features/trends/components/discover/discover-section.tsx
