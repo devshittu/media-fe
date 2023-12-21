@@ -14,7 +14,7 @@ import {
   UseLikeStoryOptions,
 } from '../components';
 import { useUpdateCachedStory } from '../hooks/useUpdateCachedStory';
-const { UNLIKE_STORY, GET_USER_FEED_STORIES, GET_STORIES } = QUERY_KEYS;
+const { UNLIKE_STORY } = QUERY_KEYS;
 
 export const unlikeStory = ({
   story_slug,
@@ -36,6 +36,7 @@ export const unlikeStory = ({
 
   return apiClient.delete(uri, {
     data: story_id ? { story_id } : { story_slug },
+    requiresAuth: true,
   });
 };
 
@@ -43,6 +44,7 @@ export const useUnlikeStory = ({
   story_id,
   onSuccess,
   onError,
+  cacheRefQueryKey,
 }: UseLikeStoryOptions) => {
   const updateCachedStory = useUpdateCachedStory();
   const { mutate: submit, isLoading } = useMutation({
@@ -51,7 +53,7 @@ export const useUnlikeStory = ({
     onSuccess: (data) => {
       // updateStoryInCache(story_id, StoryAction.UNLIKE);
       // To update a story in the user feed stories cache
-      updateCachedStory([GET_STORIES, 'all'], story_id, StoryAction.UNLIKE);
+      updateCachedStory(cacheRefQueryKey, story_id, StoryAction.UNLIKE);
       onSuccess?.(data);
     },
     onError: (data) => {
