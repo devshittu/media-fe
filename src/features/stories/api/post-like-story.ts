@@ -35,15 +35,20 @@ export const likeStory = ({
     throw new Error('Either story_id or story_slug must be provided.');
   }
 
-  return apiClient.post(uri, {
-    data: story_id ? { story_id } : { story_slug },
-  });
+  return apiClient.post(
+    uri,
+    {
+      data: story_id ? { story_id } : { story_slug },
+    },
+    { requiresAuth: true },
+  );
 };
 
 export const useLikeStory = ({
   story_id,
   onSuccess,
   onError,
+  cacheRefQueryKey,
 }: UseLikeStoryOptions) => {
   // const updateStoryInCache = useUpdateStoryInCache();
   const updateCachedStory = useUpdateCachedStory();
@@ -52,7 +57,7 @@ export const useLikeStory = ({
     mutationFn: likeStory,
     onSuccess: (data) => {
       // To update a story in the stories cache
-      updateCachedStory([GET_STORIES, 'all'], story_id, StoryAction.LIKE);
+      updateCachedStory(cacheRefQueryKey, story_id, StoryAction.LIKE);
       // Invalidate and refetch something when a post is unbookmarked
       //   queryClient.invalidateQueries('someQueryKey');
 
