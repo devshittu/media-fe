@@ -35,16 +35,19 @@ import { useDislikeStory } from '../../api/post-dislike-story';
 import { useUndislikeStory } from '../../api/post-undislike-story';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 import { usePrompts } from '@/stores/ui/prompts';
-import { AttentionType } from '@/types';
+import { AttentionType, CacheRefType } from '@/types';
+import { useDeleteBookmark } from '@/features/bookmarks/api/delete-bookmark';
 
 type ContextMenuProps = {
   story: Story;
   initialBookmarkState: boolean;
+  cacheRefQueryKey: CacheRefType;
 };
 
 export const ContextMenu = ({
   story,
   initialBookmarkState,
+  cacheRefQueryKey,
 }: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
   const { show: showPopup, close: closePopup } = usePopup();
@@ -53,22 +56,51 @@ export const ContextMenu = ({
   const { id, slug, has_disliked } = story;
 
   const { handleStoryAction: handleDislikeStory, isLoading: isDislikeLoading } =
-    useStoryActionLogic(id, slug, StoryAction.DISLIKE, useDislikeStory);
+    useStoryActionLogic({
+      payload: {
+        story_id: id,
+        story_slug: slug,
+      },
+      action: StoryAction.DISLIKE,
+      apiFunction: useDislikeStory, // Replace with your actual API function
+      cacheRefQueryKey: cacheRefQueryKey,
+    });
 
   const {
     handleStoryAction: handleUndislikeStory,
     isLoading: isUndislikeLoading,
-  } = useStoryActionLogic(id, slug, StoryAction.DISLIKE, useUndislikeStory);
-
-  const { isBookmarked, handleBookmark, handleUnbookmark } = useBookmark(
-    story.id.toString(),
-    (initialBookmarkState = !!story?.has_bookmarked),
-  );
+  } = useStoryActionLogic({
+    payload: {
+      story_id: id,
+      story_slug: slug,
+    },
+    action: StoryAction.UNDISLIKE,
+    apiFunction: useUndislikeStory, // Replace with your actual API function
+    cacheRefQueryKey: cacheRefQueryKey,
+  });
+  const {
+    handleStoryAction: handleDeleteBookmark,
+    isLoading: isDeleteBookmarkLoading,
+  } = useStoryActionLogic({
+    payload: {
+      story_id: id,
+      story_slug: slug,
+    },
+    action: StoryAction.DELETE_BOOKMARK,
+    apiFunction: useDeleteBookmark, // Replace with your actual API function
+    cacheRefQueryKey: cacheRefQueryKey,
+  });
+  // const { isBookmarked, handleBookmark, handleUnbookmark } = useBookmark(
+  //   story.id.toString(),
+  //   (initialBookmarkState = !!story?.has_bookmarked),
+  // );
 
   const addBookmark = () => {
-    if (isBookmarked) {
+    if (!!story?.has_bookmarked) {
       // handleUnbookmark();
-      showPopup(<PromptPopup onOk={handleUnbookmark} onClose={closePopup} />);
+      showPopup(
+        <PromptPopup onOk={handleDeleteBookmark} onClose={closePopup} />,
+      );
     } else {
       // handleBookmark();
       showPopup(
@@ -77,7 +109,11 @@ export const ContextMenu = ({
           subtitle={`Save your favorite news stories to revisit later.`}
           onClose={closePopup}
         >
-          <AddBookmarkSection story={story} onCancel={closePopup} />
+          <AddBookmarkSection
+            story={story}
+            onCancel={closePopup}
+            cacheRefQueryKey={cacheRefQueryKey}
+          />
         </FormPopup>,
       );
     }
@@ -200,7 +236,7 @@ export const ContextMenu = ({
             icon={<Icon icon={<TwitterColoredIcon />} className="w-6" />}
           />
           <MenuButtonItem
-            label={isBookmarked ? 'Unbookmark' : 'Bookmark'}
+            label={!!story?.has_bookmarked ? 'Unbookmark' : 'Bookmark'}
             onClick={addBookmark}
             icon={
               <Icon
