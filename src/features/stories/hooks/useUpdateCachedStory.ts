@@ -1,122 +1,127 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 
-import { PaginatedStoryListResponse, Story, StoryListResponse } from '../types';
+import { Story, StoryListResponse } from '../types';
 import { StoryAction } from '../components';
-import { QUERY_KEYS } from '@/config/query';
-const { GET_USER_FEED_STORIES } = QUERY_KEYS;
+import { ApiCallResultType, CacheRefType } from '@/types';
 
 export const useUpdateCachedStory = () => {
   const queryClient = useQueryClient();
 
   const updateStory = (
-    queryKey: [string, ...any[]],
+    cacheRefQueryKey: CacheRefType,
     story_id: number | string,
     actionType: StoryAction,
   ) => {
-    queryClient.setQueryData<PaginatedStoryListResponse | undefined>(
-      queryKey,
-      (oldData: PaginatedStoryListResponse | undefined) => {
-        if (!oldData) return;
-
-        console.log('updatecache: ', oldData);
-
-        const newData: PaginatedStoryListResponse = {
-          ...oldData,
-          pages: oldData.pages.map((page: StoryListResponse) => ({
-            ...page,
-            results: page.results.map((story) => {
-              if (story.id === story_id) {
-                console.log('updatecache: ', story);
-                let updatedStory = { ...story };
-                switch (actionType) {
-                  case StoryAction.LIKE:
-                    updatedStory = {
-                      ...updatedStory,
-                      likes_count: (updatedStory.likes_count || 0) + 1,
-                      has_liked: true,
-                    };
-                    break;
-                  case StoryAction.UNLIKE:
-                    updatedStory = {
-                      ...updatedStory,
-                      likes_count: Math.max(
-                        (updatedStory.likes_count || 0) - 1,
-                        0,
-                      ),
-                      has_liked: false,
-                    };
-                    break;
-                  case StoryAction.DISLIKE:
-                    // Similar logic for dislike
-                    break;
-                  case StoryAction.UNDISLIKE:
-                    // Similar logic for undislike
-                    break;
-                }
-                return updatedStory;
-              }
-              return story;
-            }),
-          })),
-        };
-
-        return newData;
-      },
-    );
+    const isQueryInfinite = cacheRefQueryKey[1] === ApiCallResultType.INFINITE;
+    if (isQueryInfinite) {
+      // Handle infinite query cache update
+      queryClient.setQueryData<InfiniteData<StoryListResponse> | undefined>(
+        cacheRefQueryKey,
+        (oldData) => {
+          return updateStoryDataInPages(oldData, story_id, actionType);
+        },
+      );
+    } else {
+      // Handle regular query cache update
+      queryClient.setQueryData<StoryListResponse | undefined>(
+        cacheRefQueryKey,
+        (oldData) => {
+          return updateStoryDataInResults(oldData, story_id, actionType);
+        },
+      );
+    }
   };
 
   return updateStory;
 };
 
-// export const useUpdateCachedStory = () => {
-//   const queryClient = useQueryClient();
+function updateStoryDataInPages(
+  data: InfiniteData<StoryListResponse> | undefined,
+  story_id: number | string,
+  actionType: StoryAction,
+): InfiniteData<StoryListResponse> | undefined {
+  if (!data) return undefined;
+  const updatedPages = data.pages
+    .map((page) => updateStoryDataInResults(page, story_id, actionType))
+    .filter((page): page is StoryListResponse => page !== undefined);
 
-//   const updateStory = (
-//     queryKey: [string, ...any[]],
-//     story_id: number | string,
-//     actionType: StoryAction
-//   ) => {
-//     queryClient.setQueryData<PaginatedStoryListResponse | undefined>(
-//       queryKey,
-//       (oldData) => {
-//         if (!oldData) return;
+  return {
+    ...data,
+    pages: updatedPages,
+  };
+}
 
-//         const newData: PaginatedStoryListResponse = {
-//           ...oldData,
-//           pages: oldData.pages.map((page: StoryListResponse) => ({
-//             ...page,
-//             results: page.results.map((story: Story) => {
-//               if (story.id === story_id) {
-//                 let updatedStory = { ...story };
-//                 switch (actionType) {
-//                   case StoryAction.LIKE:
-//                     updatedStory = {
-//                       ...updatedStory,
-//                       likes_count: (updatedStory.likes_count || 0) + 1,
-//                       has_liked: true,
-//                     };
-//                     break;
-//                   case StoryAction.UNLIKE:
-//                     updatedStory = {
-//                       ...updatedStory,
-//                       likes_count: Math.max((updatedStory.likes_count || 0) - 1, 0),
-//                       has_liked: false,
-//                     };
-//                     break;
-//                   // Add cases for 'dislike' and 'undislike' as needed
-//                 }
-//                 return updatedStory;
-//               }
-//               return story;
-//             }),
-//           })),
-//         };
+function updateStoryDataInResults(
+  data: StoryListResponse | undefined,
+  story_id: number | string,
+  actionType: StoryAction,
+): StoryListResponse | undefined {
+  if (!data) return undefined;
 
-//         return newData;
-//       }
-//     );
-//   };
+  return {
+    ...data,
+    results: data.results.map((story) => {
+      console.log(' story.id=', story.id, ' story_id=', story_id);
+      if (story.id === story_id) {
+        return updateStoryBasedOnAction(story, actionType);
+      }
+      return story;
+    }),
+  };
+}
 
-//   return updateStory;
-// };
+function updateStoryBasedOnAction(
+  story: Story,
+  actionType: StoryAction,
+): Story {
+  let updatedStory = { ...story };
+  switch (actionType) {
+    case StoryAction.LIKE:
+      updatedStory = {
+        ...updatedStory,
+        likes_count: (updatedStory.likes_count || 0) + 1,
+        has_liked: true,
+      };
+      break;
+    case StoryAction.UNLIKE:
+      updatedStory = {
+        ...updatedStory,
+        likes_count: Math.max((updatedStory.likes_count || 0) - 1, 0),
+        has_liked: false,
+      };
+      break;
+    case StoryAction.DISLIKE:
+      // Similar logic for dislike
+      updatedStory = {
+        ...updatedStory,
+        dislikes_count: (updatedStory.dislikes_count || 0) + 1,
+        has_disliked: true,
+      };
+      break;
+    case StoryAction.UNDISLIKE:
+      // Similar logic for undislike
+      updatedStory = {
+        ...updatedStory,
+        dislikes_count: Math.max((updatedStory.dislikes_count || 0) - 1, 0),
+        has_disliked: false,
+      };
+      break;
+
+    case StoryAction.ADD_BOOKMARK:
+      updatedStory = {
+        ...updatedStory,
+        has_bookmarked: true,
+      };
+      break;
+    case StoryAction.DELETE_BOOKMARK:
+      updatedStory = {
+        ...updatedStory,
+        has_bookmarked: false,
+      };
+      break;
+    // Handle other action types...
+  }
+  return updatedStory;
+}
+
 //Path: src/features/stories/hooks/useUpdateCachedStory.ts
