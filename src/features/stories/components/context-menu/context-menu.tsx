@@ -9,7 +9,6 @@ import {
   TwitterColoredIcon,
   FlagIcon,
   BookmarkIcon,
-  GoogleColoredIcon,
   Icon,
   MoreHorizontalIcon,
   ThumbsDownIcon,
@@ -20,11 +19,7 @@ import Menu, {
   MenuLinkItem,
   MenuButtonItem,
 } from '@/components/menus/menu';
-import { Toast, ToastPosition, ToastType } from '@/components/blocks/toast';
-import { Button } from '@/components/button';
-import { Modal } from '@/components/blocks/modal';
 import { Story } from '../../types';
-import { useBookmark } from '@/features/bookmarks/hooks/useBookmark';
 import { usePopup } from '@/stores/ui';
 import { FormPopup, PromptPopup } from '@/components/blocks/popup/blocks/';
 import { AddBookmarkSection } from '@/features/bookmarks';
@@ -40,13 +35,11 @@ import { useDeleteBookmark } from '@/features/bookmarks/api/delete-bookmark';
 
 type ContextMenuProps = {
   story: Story;
-  initialBookmarkState: boolean;
   cacheRefQueryKey: CacheRefType;
 };
 
 export const ContextMenu = ({
   story,
-  initialBookmarkState,
   cacheRefQueryKey,
 }: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
@@ -55,11 +48,11 @@ export const ContextMenu = ({
   const { showPrompt } = usePrompts();
   const { id, slug, has_disliked } = story;
 
-  const { handleStoryAction: handleDislikeStory, isLoading: isDislikeLoading } =
+
+  const { handleSimpleAction: handleDislikeStory, isLoading: isDislikeLoading } =
     useStoryActionLogic({
-      payload: {
+      basePayload: {
         story_id: id,
-        story_slug: slug,
       },
       action: StoryAction.DISLIKE,
       apiFunction: useDislikeStory, // Replace with your actual API function
@@ -67,42 +60,34 @@ export const ContextMenu = ({
     });
 
   const {
-    handleStoryAction: handleUndislikeStory,
+    handleSimpleAction: handleUndislikeStory,
     isLoading: isUndislikeLoading,
   } = useStoryActionLogic({
-    payload: {
+    basePayload: {
       story_id: id,
-      story_slug: slug,
     },
     action: StoryAction.UNDISLIKE,
     apiFunction: useUndislikeStory, // Replace with your actual API function
     cacheRefQueryKey: cacheRefQueryKey,
   });
   const {
-    handleStoryAction: handleDeleteBookmark,
+    handleSimpleAction: handleDeleteBookmark,
     isLoading: isDeleteBookmarkLoading,
   } = useStoryActionLogic({
-    payload: {
+    basePayload: {
       story_id: id,
-      story_slug: slug,
     },
     action: StoryAction.DELETE_BOOKMARK,
     apiFunction: useDeleteBookmark, // Replace with your actual API function
     cacheRefQueryKey: cacheRefQueryKey,
   });
-  // const { isBookmarked, handleBookmark, handleUnbookmark } = useBookmark(
-  //   story.id.toString(),
-  //   (initialBookmarkState = !!story?.has_bookmarked),
-  // );
 
   const addBookmark = () => {
     if (!!story?.has_bookmarked) {
-      // handleUnbookmark();
       showPopup(
         <PromptPopup onOk={handleDeleteBookmark} onClose={closePopup} />,
       );
     } else {
-      // handleBookmark();
       showPopup(
         <FormPopup
           title={`Add a Bookmark`}
@@ -280,9 +265,7 @@ export const ContextMenu = ({
             tag={<Tag variant="green">Pro</Tag>}
           /> */}
         </Menu>
-        {/* <PopoverHeading>My popover heading</PopoverHeading>
-          <PopoverDescription>My popover description</PopoverDescription>
-          <PopoverClose>Close</PopoverClose> */}
+        
       </PopoverContent>
     </Popover>
   );
