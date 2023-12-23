@@ -10,10 +10,10 @@ import { formatDate } from '@/utils';
 import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { useAnalytics } from '@/stores/analytics/analytics';
 import { AnalyticsData, InteractionType } from '@/features/analytics/types';
-import { randomUUID } from 'crypto';
+
 
 export const StoryListItem = React.memo(
-  ({ story, className }: StoryListItemProps) => {
+  ({ story, className, cacheRefQueryKey }: StoryListItemProps) => {
     const carouselItems: CarouselItem[] = story.multimedia;
 
     const carouselOptions: CarouselOptions = {
@@ -68,7 +68,7 @@ export const StoryListItem = React.memo(
           {/* Context Menu Trigger */}
           <ContextMenu
             story={story}
-            initialBookmarkState={!!story.has_bookmarked}
+            cacheRefQueryKey={cacheRefQueryKey}
           />
         </div>
 
@@ -86,7 +86,7 @@ export const StoryListItem = React.memo(
           carouselItems={carouselItems}
           carouselOptions={carouselOptions}
         />
-        <StoryStats story={story} />
+        <StoryStats story={story} cacheRefQueryKey={cacheRefQueryKey} />
         <UserDetails
           name={story?.user.display_name}
           organization={`Reporter, ${'Default Team'}`}
