@@ -11,7 +11,7 @@ import {
   Story,
   getStories,
   getUserFeedStories,
-  useUserFeedStories,
+  useInfiniteUserFeedStories,
 } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { StoriesPageFrame } from '@/components/frames';
@@ -22,10 +22,8 @@ import { useHomePageTabs } from '@/stores/tabs';
 import { Discover } from '@/features/trends/components/discover/discover';
 
 import {
-  refreshAccessToken,
-  refreshToken,
-} from '@/features/auth/api/post-refresh-token';
-import { useUserInvertedFeedStories } from '@/features/stories/api/get-user-inverse-feed-stories';
+  useInfiniteUserInvertedFeedStories,
+} from '@/features/stories/api/get-user-inverse-feed-stories';
 
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -37,53 +35,18 @@ const StoriesPage = ({
   queryParams,
   error,
 }: PublicStoriesPageProps) => {
-  const {
-    queryKey: userInvertedFeedQueryKey,
-    fetchMoreFunction: userInvertedFeedFetchMoreFunctionFunction,
-    data: userInvertedFeedResponseData,
-    isLoading: isUserInvertedFeedLoading,
-  } = useUserInvertedFeedStories({
-    params: { page_size: 3 },
-  });
-
-  const stableUserInvertedFeedStories = useMemo(
-    () => userInvertedFeedResponseData?.results,
-    [userInvertedFeedResponseData?.results],
-  );
-  console.log('Inverted Feed');
-  stableUserInvertedFeedStories?.filter((v, i) => {
-    console.log(`${v.id} :  ${v.title}`);
-  });
-
-  const {
-    queryKey: userFeedQueryKey,
-    fetchMoreFunction: userFeedFetchMoreFunctionFunction,
-    data: userFeedResponseData,
-    isLoading: isUserFeedLoading,
-  } = useUserFeedStories({
-    params: { page_size: 8 },
-  });
-  const stableUserFeedStories = useMemo(
-    () => userFeedResponseData?.results,
-    [userFeedResponseData?.results],
-  );
-
-  console.log('Normal Feed');
-  stableUserFeedStories?.filter((v, i) => {
-    console.log(`${v.id} :  ${v.title}`);
-  });
   // Define asynchronous functions for each tab
   const fetchDataForYou = useMemo(
     () => async () => {
       // Async operation for the "For You" tab
-      console.log('TabTest: Fetching data for you');
+      // console.log('TabTest: Fetching data for you');
     },
     [],
   );
   const fetchDataDiscover = useMemo(
     () => async () => {
       // Async operation for the "Discover" tab
-      console.log('TabTest: Fetching data discover');
+      // console.log('TabTest: Fetching data discover');
     },
     [],
   );
@@ -93,17 +56,12 @@ const StoriesPage = ({
       content: (
         <>
           <Discover />
-          {JSON.stringify(stableUserInvertedFeedStories?.length)}
-          {isUserInvertedFeedLoading && <StoryListLoadingPlaceholder />}
-          {!stableUserInvertedFeedStories && <NotFound />}
-          {stableUserInvertedFeedStories?.length > 0 && (
-            <StoryList
-              fetchMoreFunction={userInvertedFeedFetchMoreFunctionFunction}
-              queryKey={userInvertedFeedQueryKey}
-              data={userInvertedFeedResponseData}
-              queryParams={queryParams}
-            />
-          )}
+
+          <StoryList
+            useStoriesHook={useInfiniteUserInvertedFeedStories}
+            queryParams={{ page: 1, page_size: 3 }}
+            isFinite
+          />
         </>
       ),
       fetchData: fetchDataDiscover,
@@ -111,17 +69,12 @@ const StoriesPage = ({
     'for-you': {
       content: (
         <>
-          {isUserFeedLoading && <StoryListLoadingPlaceholder />}
-          {!stableUserFeedStories && <NotFound />}
-
-          {stableUserFeedStories?.length > 0 && (
-            <StoryList
-              queryKey={userFeedQueryKey}
-              fetchMoreFunction={userFeedFetchMoreFunctionFunction}
-              data={userFeedResponseData}
-              queryParams={queryParams}
-            />
-          )}
+          <StoryList
+            useStoriesHook={useInfiniteUserFeedStories}
+            queryParams={queryParams}
+            loadMoreOnScroll
+            // isFinite
+          />
         </>
       ),
       fetchData: fetchDataForYou,
@@ -147,10 +100,6 @@ const StoriesPage = ({
 
         {renderTabContent()}
 
-        {/* {!stories.results && <NotFound />}
-      {stories.results?.length > 0 && (
-        <StoryList data={stories} queryParams={queryParams} />
-      )} */}
       </div>
     </>
   );
@@ -163,11 +112,6 @@ StoriesPage.getLayout = function getLayout(page: ReactElement) {
     </UserLayout>
   );
 };
-
-// export const getServerSideProps = async ({
-//   params,
-//   req,
-// }: GetServerSidePropsContext) => {
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext,
