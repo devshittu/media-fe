@@ -18,6 +18,7 @@ export const getBookmarks = ({
 }: GetBookmarksOptions): Promise<BookmarkListResponse> => {
   return apiClient.get(`${URI_BOOKMARKS}`, {
     params,
+    requiresAuth: true,
   });
 };
 
