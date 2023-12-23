@@ -1,17 +1,100 @@
 import { Button } from '@/components/button';
 import {
-  BookmarkIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  FilmIcon,
-  Icon,
-  MapIcon,
-  MapPinIcon,
-  StarIcon,
 } from '@/components/illustrations';
 import React from 'react';
 import { DiscoverSection } from './discover-section';
-import { Image } from '@/components/labs';
+import { GridItemData } from '@/components/labs/display/types';
+import GridDisplay from '@/components/labs/display/grid-display';
+import { randomUUID } from 'crypto';
+import { DiscoverSectionGrid } from './discover-section-grid';
+import { UserListItem } from '@/features/users/components';
+import { User } from '@/features/auth';
+import { ChannelList } from '@/features/channels/components/blocks/channel-list';
+import mockChannels from '@/features/channels/mocks/data';
+import { ChannelListItem } from '@/features/channels/components/blocks/channel-list-item';
+import { Channel } from '@/features/channels/types';
+import mockCities from '../city/mocks/data';
+import { City } from '../../types';
+import { CityListItem } from '../city/city-list-item';
+const randomUsers: User[] = [
+  {
+    id: 1,
+    display_name: 'Alice Johnson',
+    email: 'alice.johnson@example.com',
+    username: 'alicej',
+    avatar_url: null,
+    display_picture: null,
+    bio: 'Loves hiking and outdoor activities.',
+    phone_number: '555-0101',
+    last_activity: '2023-03-01T12:00:00Z',
+    roles: ['editor'],
+    is_active: true,
+    is_staff: false,
+    has_completed_setup: true,
+  },
+  {
+    id: 2,
+    display_name: 'Bob Smith',
+    email: 'bob.smith@example.com',
+    username: 'bobby',
+    avatar_url: null,
+    display_picture: null,
+    bio: 'Avid reader and writer.',
+    phone_number: '555-0202',
+    last_activity: '2023-03-02T15:30:00Z',
+    roles: ['contributor'],
+    is_active: true,
+    is_staff: false,
+    has_completed_setup: false,
+  },
+  {
+    id: 3,
+    display_name: 'Carol White',
+    email: 'carol.white@example.com',
+    username: 'carolw',
+    avatar_url: null,
+    display_picture: null,
+    bio: 'Passionate about photography and art.',
+    phone_number: '555-0303',
+    last_activity: '2023-03-03T09:45:00Z',
+    roles: ['admin'],
+    is_active: true,
+    is_staff: true,
+    has_completed_setup: true,
+  },
+  {
+    id: 4,
+    display_name: 'David Brown',
+    email: 'david.brown@example.com',
+    username: 'daveb',
+    avatar_url: null,
+    display_picture: null,
+    bio: 'Tech enthusiast and gadget lover.',
+    phone_number: '555-0404',
+    last_activity: '2023-03-04T17:20:00Z',
+    roles: ['user'],
+    is_active: true,
+    is_staff: false,
+    has_completed_setup: true,
+  },
+  {
+    id: 5,
+    display_name: 'Eve Green',
+    email: 'eve.green@example.com',
+    username: 'eveg',
+    avatar_url: null,
+    display_picture: null,
+    bio: 'Enjoys cooking and experimenting with new recipes.',
+    phone_number: '555-0505',
+    last_activity: '2023-03-05T08:10:00Z',
+    roles: ['moderator'],
+    is_active: true,
+    is_staff: true,
+    has_completed_setup: false,
+  },
+];
 
 export const Discover = () => {
   const handlePrevious = () => {
@@ -19,148 +102,126 @@ export const Discover = () => {
   };
   const recentStoriesSectionActions = [
     {
-      id: 'previous',
+      id: 'scrollLeft',
       label: 'Previous',
       onClick: handlePrevious,
       icon: <ChevronLeftIcon />,
     },
     {
-      id: 'next',
+      id: 'scrollRight',
       label: 'Next',
       onClick: handlePrevious,
       icon: <ChevronRightIcon />,
     },
   ];
+
+  const image_width = 600;
+  const image_height = 320;
+
+  const exampleGridItems: GridItemData[] = [
+    {
+      media_url: `https://source.unsplash.com/random/${image_width}x${image_height}?sig=${randomUUID}`,
+      caption: '1. Serene Beach Sunset',
+      location: {
+        region: 'Bali',
+        label: 'Indonesia',
+      },
+      price: 200,
+      reservationDate: '2022-08-01',
+    },
+  ];
+
   return (
     <>
-      <DiscoverSection
-        title="Recent Stories"
-        actions={recentStoriesSectionActions}
-      >
-        <div className="mb-6 sm:w-1/2 rounded-lg bg-black dark:bg-white p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Image
-                width={`32`}
-                height={`32`}
-                className="mr-2 h-10 w-10 rounded-full object-cover"
-                src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?q=80&w=1921&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="profile"
-              />
-              <div>
-                <h3 className="text-base font-semibold text-gray-100 dark:text-gray-900">
-                  Kotler Philips
-                </h3>
-                <span className="block text-xs font-normal  text-gray-400 dark:text-gray-500">
-                  Web Developer
-                </span>
-              </div>
-            </div>
-            <p className="text-sm font-medium text-cyan-500">
-              <span className="mr-0.5">+</span>Follow
-            </p>
-          </div>
-          <div className="mt-6 flex items-center justify-between text-sm font-semibold text-gray-900">
-            <div className="flex">
-              <FilmIcon className="mr-2 h-5 w-5 text-base text-gray-500" />
-              <span className="mr-1">40</span> Task
-            </div>
-            <div className="flex items-center">
-              <StarIcon className="mr-1 h-4 w-4 text-yellow-500" />
-              4,7 (750 Reviews)
-            </div>
-          </div>
-        </div>
-      </DiscoverSection>
+      <DiscoverSectionGrid
+        title="Newly Added Channels"
+        gridProps={{
+          items: mockChannels,
+          numColumns: 10,
+          numRows: 2,
+          itemWidth: 'more-than-2/3',
+          renderItem: (channel: Channel, index: number) => (
+            <ChannelListItem key={index} channel={channel} />
+          ),
+        }}
+        actions={[
+          {
+            label: 'Scroll Left',
+            onClick: () => {},
+            icon: <ChevronLeftIcon />,
+            id: 'scrollLeft',
+          },
+          {
+            label: 'Scroll Right',
+            onClick: () => {},
+            icon: <ChevronRightIcon />,
+            id: 'scrollRight',
+          },
+          // ... other actions ...
+        ]}
+      />
+
+      <DiscoverSectionGrid
+        title="Readers Around You"
+        gridProps={{
+          items: randomUsers,
+          numColumns: 5,
+          numRows: 1,
+          itemWidth: 'more-than-2/3',
+          renderItem: (user: User, index: number) => (
+            <UserListItem key={index} user={user} />
+          ),
+        }}
+        actions={[
+          {
+            label: 'Scroll Left',
+            onClick: () => {},
+            icon: <ChevronLeftIcon />,
+            id: 'scrollLeft',
+          },
+          {
+            label: 'Scroll Right',
+            onClick: () => {},
+            icon: <ChevronRightIcon />,
+            id: 'scrollRight',
+          },
+          // ... other actions ...
+        ]}
+      />
+
+      <DiscoverSectionGrid
+        title="Explore by Locations"
+        gridProps={{
+          items: mockCities,
+          numColumns: 6,
+          numRows: 2,
+          itemWidth: 'more-than-2/3',
+          renderItem: (city: City, index: number) => (
+            <CityListItem key={index} city={city} />
+          ),
+        }}
+        actions={[
+          {
+            label: 'Scroll Left',
+            onClick: () => {},
+            icon: <ChevronLeftIcon />,
+            id: 'scrollLeft',
+          },
+          {
+            label: 'Scroll Right',
+            onClick: () => {},
+            icon: <ChevronRightIcon />,
+            id: 'scrollRight',
+          },
+          // ... other actions ...
+        ]}
+      />
 
       <DiscoverSection
-        title="Explore the world"
-        actions={recentStoriesSectionActions}
+        title="Popular Stories"
+        // actions={recentStoriesSectionActions}
       >
-        <div className="grid mt-5 grid-cols-2  space-x-4 overflow-y-scroll flex justify-center items-center w-full ">
-          <div
-            className="relative flex flex-col justify-between   bg-whitex  bg-cover text-gray-800  overflow-hidden cursor-pointer w-full object-cover object-center rounded shadow-md h-64 my-2"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/reserve/8T8J12VQxyqCiQFGa2ct_bahamas-atlantis.jpg?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80')",
-            }}
-          >
-            <div className="absolute bg-gradient-to-t from-green-400 to-blue-400  opacity-50 inset-0 z-0"></div>
-            <div className="relative flex flex-row items-end  h-72 w-full ">
-              <div className="absolute right-0 top-0 m-2">
-                <BookmarkIcon className="h-9 w-9 p-2 text-gray-200 hover:text-blue-400 rounded-full hover:bg-white transition ease-in duration-200 " />
-              </div>
-              <div className="p-6 rounded-lg  flex flex-col w-full z-10 ">
-                <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
-                  Loremipsum..
-                </h4>
-                <div className="flex justify-between items-center ">
-                  <div className="flex flex-col">
-                    <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                      <MapPinIcon className="h-4 w-4 mr-1" />
-                      Dubai
-                    </h2>
-                  </div>
-                </div>
-                <div className="flex pt-4  text-sm text-gray-300">
-                  <div className="flex items-center mr-auto">
-                    <StarIcon className="h-5 w-5 text-yellow-500 mr-1" />
-
-                    <p className="font-normal">4.5</p>
-                  </div>
-                  <div className="flex items-center font-medium text-white ">
-                    $1800
-                    <span className="text-gray-300 text-sm font-normal">
-                      {' '}
-                      /wk
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="relative flex flex-col justify-between   bg-whitex  bg-cover text-gray-800  overflow-hidden cursor-pointer w-full object-cover object-center rounded shadow-md h-64 my-2"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80')",
-            }}
-          >
-            <div className="absolute bg-gradient-to-t from-green-400 to-blue-400  opacity-50 inset-0 z-0"></div>
-            <div className="relative flex flex-row items-end  h-72 w-full ">
-              <div className="absolute right-0 top-0 m-2">
-                <BookmarkIcon className="h-9 w-9 p-2 text-gray-200 hover:text-blue-400 rounded-full hover:bg-white transition ease-in duration-200 " />
-              </div>
-              <div className="p-6 rounded-lg  flex flex-col w-full z-10 ">
-                <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
-                  Loremipsum..
-                </h4>
-                <div className="flex justify-between items-center ">
-                  <div className="flex flex-col">
-                    <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                      <MapPinIcon className="h-4 w-4 mr-1" />
-                      Dubai
-                    </h2>
-                  </div>
-                </div>
-                <div className="flex pt-4  text-sm text-gray-300">
-                  <div className="flex items-center mr-auto">
-                    <StarIcon className="h-5 w-5 text-yellow-500 mr-1" />
-
-                    <p className="font-normal">4.5</p>
-                  </div>
-                  <div className="flex items-center font-medium text-white ">
-                    $1800
-                    <span className="text-gray-300 text-sm font-normal">
-                      {' '}
-                      /wk
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <></>
       </DiscoverSection>
     </>
   );
