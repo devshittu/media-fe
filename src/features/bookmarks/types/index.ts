@@ -20,6 +20,10 @@ export enum BookmarkCategory {
 export type AddBookmarkFormData = {
   bookmark_category: BookmarkCategory;
   note: string;
+  story_id: number;
+};
+
+export type DeleteBookmarkFormData = {
   story_id: string;
 };
 
