@@ -1,16 +1,33 @@
-import { PaginatedListQueryParams, PaginatedResponse } from '@/types';
-import { StoriesQueryParams, Story, StoryListResponse } from '../types';
+import {
+  CacheRefType,
+  PaginatedListQueryParams,
+  PaginatedResponse,
+} from '@/types';
+import {
+  PaginatedStoryListResponse,
+  StoriesQueryParams,
+  Story,
+  StoryListResponse,
+} from '../types';
+import { InfiniteData, QueryKey } from '@tanstack/react-query';
 
 export type StoryListItemProps = {
   story: Story;
   className?: string;
+  cacheRefQueryKey: CacheRefType;
 };
 
 export type StoryListProps = {
-  queryKey: any[];
-  fetchMoreFunction: (params: GetStoriesOptions) => Promise<StoryListResponse>;
-  data: StoryListResponse;
+  cacheRefQueryKey?: CacheRefType;
   queryParams: StoriesQueryParams;
+  isFinite?: boolean;
+  loadMoreOnScroll?: boolean;
+  useStoriesHook: (options: GetStoriesOptions) => InfiniteStoriesResponse;
+};
+
+export type StoryStatsProps = {
+  story: Story;
+  cacheRefQueryKey: CacheRefType;
 };
 
 export type StorylineStoryListProps = StoryListProps & {
@@ -20,13 +37,23 @@ export type GetStoriesOptions = {
   params?: StoriesQueryParams;
   initialData?: any;
 };
+
+export type InfiniteStoriesResponse = {
+  queryKey: CacheRefType;
+  data: InfiniteData<StoryListResponse> | undefined;
+  fetchNextPage: () => void;
+  hasNextPage: boolean | undefined;
+  isFetchingNextPage: boolean;
+  isLoading: boolean;
+};
 export type LikeStoryFormData = {
   story_slug?: string;
-  story_id?: number;
+  story_id: number;
 };
 
 export type UseLikeStoryOptions = {
   story_id: string;
+  cacheRefQueryKey: CacheRefType;
   onSuccess?: (data: any) => void;
   onError?: (message: any) => void;
 };
@@ -36,6 +63,8 @@ export enum StoryAction {
   UNLIKE = 'unlike',
   DISLIKE = 'dislike',
   UNDISLIKE = 'undislike',
+  ADD_BOOKMARK = 'add-bookmark',
+  DELETE_BOOKMARK = 'delete-bookmark',
 }
 
 enum MultimediaItemType {
@@ -51,11 +80,11 @@ export type MultimediaItem = {
   caption: string;
   thumbnail: string | null;
   media_type: MultimediaItemType;
-  id: number;
+  id: string;
   user: number;
   story: number;
 };
 
-type Multimedia = MultimediaItem[];
+export type Multimedia = MultimediaItem[];
 
 // Path: src/features/stories/components/types.ts
