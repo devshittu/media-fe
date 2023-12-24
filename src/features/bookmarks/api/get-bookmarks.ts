@@ -48,13 +48,12 @@ export const useGetBookmarks = ({ params }: GetBookmarksOptions) => {
 
 export const useInfiniteBookmarks = ({
   params,
-  // initialData,
 }: GetBookmarksOptions): InfiniteBookmarksResponse => {
     const queryKey: CacheRefType = [
     GET_BOOKMARKS,
     ApiCallResultType.INFINITE,
+    params?.category
   ];
-  console.log(`useInfiniteBookmarks:// `,queryKey);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage,
     isFetching,
     isFetched, } =
