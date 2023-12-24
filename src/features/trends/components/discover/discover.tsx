@@ -18,6 +18,7 @@ import { Channel } from '@/features/channels/types';
 import mockCities from '../city/mocks/data';
 import { City } from '../../types';
 import { CityListItem } from '../city/city-list-item';
+import { IS_DEBUG_MODE } from '@/config/constants';
 const randomUsers: User[] = [
   {
     id: 1,
@@ -161,7 +162,7 @@ export const Discover = () => {
         ]}
       />
 
-      <DiscoverSectionGrid
+      {IS_DEBUG_MODE && (<><DiscoverSectionGrid
         title="Readers Around You"
         gridProps={{
           items: randomUsers,
@@ -216,6 +217,8 @@ export const Discover = () => {
           // ... other actions ...
         ]}
       />
+      </>
+      )}
 
       <DiscoverSection
         title="Popular Stories"
