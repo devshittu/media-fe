@@ -1,4 +1,4 @@
-import React, { ForwardedRef, MouseEventHandler, ReactNode } from 'react';
+import React, { CSSProperties, ForwardedRef, MouseEventHandler, ReactNode } from 'react';
 import { Icon, LoaderIcon } from '../illustrations';
 
 export type ButtonProps = {
@@ -25,6 +25,7 @@ export type ButtonProps = {
   badge?: string;
   id: string;
   title?: string;
+  style?: CSSProperties;
   badgeType?:
     | 'info'
     | 'primary'
@@ -58,6 +59,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       expand = false,
       badge,
       badgeType = 'success',
+      style,
       children,
       className,
       onClick,
@@ -284,6 +286,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={buttonClasses}
         disabled={disabled}
         onClick={onClick}
+        style={style}
         title={title}
         {...rest}
       >
