@@ -7,14 +7,18 @@ interface AccordionItemProps {
   content: string;
 }
 
-export const AccordionItem: React.FC<AccordionItemProps> = ({
-  title,
-  content,
-}) => {
+export const AccordionItem = ({ title, content }: AccordionItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLElement>) => {
+    // Toggle on Enter or Space key press
+    if (event.key === 'Enter' || event.key === ' ') {
+      toggleAccordion();
+    }
   };
 
   return (
@@ -26,6 +30,10 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       <summary
         className={`px-4 py-6 focus:outline-none focus-visible:ri cursor-pointer flex items-center justify-between  text-slate-900 dark:text-slate-100`}
         onClick={toggleAccordion}
+        onKeyPress={handleKeyPress}
+        tabIndex={0} // Make it focusable
+        role="button" // Semantically mark as a button for assistive technologies
+        aria-expanded={isOpen ? 'true' : 'false'} // Convert boolean to string literals
       >
         <h3 className="mr-2">{title}</h3>
 
