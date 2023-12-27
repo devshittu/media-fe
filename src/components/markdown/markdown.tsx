@@ -15,11 +15,14 @@ export const Markdown: React.FC<MarkdownProps> = ({
   truncateLength = 100,
   truncateEnding = '...',
 }) => {
+  // let content = '';
+  // if (typeof children === 'string') {
   let content = children;
 
   if (truncate && content && content.length > truncateLength) {
     content = content.slice(0, truncateLength) + truncateEnding;
   }
+  // }
 
   return (
     <div className={`${styles.markdown} text-slate-700 dark:text-slate-300`}>
@@ -53,7 +56,7 @@ export const Markdown: React.FC<MarkdownProps> = ({
           li: ({ node, ...props }) => <li className="mb-1" {...props} />,
           pre: ({ node, ...props }) => (
             <pre
-              className="bg-slate-200 p-3 rounded overflow-x-auto my-4"
+              className="text-sm bg-slate-200 dark:bg-slate-800 p-3 rounded overflow-x-auto my-4 max-w-full whitespace-break-spaces "
               {...props}
             />
           ),
@@ -73,7 +76,8 @@ export const Markdown: React.FC<MarkdownProps> = ({
           // Add more HTML tag mappings as needed
         }}
       >
-        {content}
+        {/* {(typeof children === 'string') ? content : children} */}
+        {children}
       </ReactMarkdown>
     </div>
   );
