@@ -29,13 +29,6 @@ export const URI_STORIES_TRENDING = '/stories/trending/';
 export const URI_STORYLINES_BY_STORYLINE_ID_HASHTAGS =
   '/storylines/{{storyline_id}}/hashtags/';
 export const URI_STORIES_BY_STORY_SLUG = '/stories/{{story_slug}}/';
-export const URI_STORIES_BY_STORY_SLUG_LIKE = '/stories/{{story_slug}}/like/';
-export const URI_STORIES_BY_STORY_SLUG_DISLIKE =
-  '/stories/{{story_slug}}/dislike/';
-export const URI_STORIES_BY_STORY_SLUG_UNLIKE =
-  '/stories/{{story_slug}}/unlike/';
-export const URI_STORIES_BY_STORY_SLUG_UNDISLIKE =
-  '/stories/{{story_slug}}/undislike/';
 export const URI_STORIES_BY_STORY_ID_LIKE = '/stories/{{story_id}}/like/';
 export const URI_STORIES_BY_STORY_ID_DISLIKE = '/stories/{{story_id}}/dislike/';
 export const URI_STORIES_BY_STORY_ID_UNLIKE = '/stories/{{story_id}}/unlike/';
@@ -47,7 +40,8 @@ export const URI_STORYLINES_BY_STORYLINE_ID = '/storylines/{{storyline_id}}/';
 export const URI_STORYLINES_BY_STORYLINE_ID_STORIES =
   '/storylines/{{storyline_id}}/stories/';
 export const URI_BOOKMARKS = '/bookmarks/';
-export const URI_BOOKMARKS_BY_STORY_ID = '/bookmarks/{{story_id}}/';
+export const URI_BOOKMARKS_BY_BOOKMARK_ID = '/bookmarks/{{bookmark_id}}/';
+export const URI_BOOKMARKS_STORY_BY_STORY_ID = '/bookmarks/story/{{story_id}}/';
 export const URI_USERS = '/users/';
 export const URI_USERS_BY_PK = '/users/{{pk}}/';
 export const URI_USERS_UNFOLLOWED = '/users/unfollowed/';
