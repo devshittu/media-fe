@@ -1,4 +1,9 @@
-import React, { CSSProperties, ForwardedRef, MouseEventHandler, ReactNode } from 'react';
+import React, {
+  CSSProperties,
+  ForwardedRef,
+  MouseEventHandler,
+  ReactNode,
+} from 'react';
 import { Icon, LoaderIcon } from '../illustrations';
 
 export type ButtonProps = {
