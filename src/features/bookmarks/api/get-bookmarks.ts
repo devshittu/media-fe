@@ -5,7 +5,11 @@ import { apiClient } from '@/lib/api-client';
 import { BookmarkListResponse } from '../types';
 import { URI_BOOKMARKS } from '@/config/api-constants';
 import { QUERY_KEYS } from '@/config/query';
-import { ApiCallResultType, CacheRefType, PaginatedListQueryParams } from '@/types';
+import {
+  ApiCallResultType,
+  CacheRefType,
+  PaginatedListQueryParams,
+} from '@/types';
 import { InfiniteBookmarksResponse } from '../components/types';
 const { GET_BOOKMARKS } = QUERY_KEYS;
 
@@ -17,8 +21,6 @@ type GetBookmarksOptions = {
   initialData?: any;
 };
 
-
-
 export const getBookmarks = ({
   params,
 }: GetBookmarksOptions): Promise<BookmarkListResponse> => {
@@ -29,10 +31,7 @@ export const getBookmarks = ({
 };
 
 export const useGetBookmarks = ({ params }: GetBookmarksOptions) => {
-  const queryKey: CacheRefType = [
-    GET_BOOKMARKS,
-    ApiCallResultType.DISCRETE,
-  ];
+  const queryKey: CacheRefType = [GET_BOOKMARKS, ApiCallResultType.DISCRETE];
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
     queryFn: () => getBookmarks({ params }),
@@ -49,36 +48,40 @@ export const useGetBookmarks = ({ params }: GetBookmarksOptions) => {
 export const useInfiniteBookmarks = ({
   params,
 }: GetBookmarksOptions): InfiniteBookmarksResponse => {
-    const queryKey: CacheRefType = [
+  const queryKey: CacheRefType = [
     GET_BOOKMARKS,
     ApiCallResultType.INFINITE,
-    params?.category
+    params?.category,
   ];
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage,
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isFetching,
-    isFetched, } =
-    useInfiniteQuery(
-      queryKey,
-      async ({ pageParam = 1 }) => {
-        const response = await getBookmarks({
-          params: { ...params, page: pageParam },
-        });
-        return response;
+    isFetched,
+  } = useInfiniteQuery(
+    queryKey,
+    async ({ pageParam = 1 }) => {
+      const response = await getBookmarks({
+        params: { ...params, page: pageParam },
+      });
+      return response;
+    },
+    {
+      getNextPageParam: (lastPage: BookmarkListResponse) => {
+        return lastPage.current_page < lastPage.total_pages
+          ? lastPage.current_page + 1
+          : undefined;
       },
-      {
-        getNextPageParam: (lastPage: BookmarkListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
-        },
 
-        // initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
-      },
-    );
+      // initialData: { pages: [initialData], pageParams: [1] },
+      //TODO: Keep data fresh for 5 minutes
+      staleTime: 1000 * 60 * 5,
+      // Keep data in cache for 10 minutes
+      cacheTime: 1000 * 60 * 10,
+    },
+  );
 
   return {
     queryKey,
