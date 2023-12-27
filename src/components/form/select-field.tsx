@@ -94,7 +94,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
           // ${disabled ? 'cursor-not-allowed' : ''} ${
           //     error ? 'border-red-500' : ''
           //   }`}
-          name={name} 
+          name={name}
           className={`${selectClasses}`}
           ref={ref}
           {...selectProps}
