@@ -10,7 +10,7 @@ import { formatDate } from '@/utils';
 import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { useAnalytics } from '@/stores/analytics/analytics';
 import { AnalyticsData, InteractionType } from '@/features/analytics/types';
-
+import { StoryDebug } from '../debug';
 
 export const StoryListItem = React.memo(
   ({ story, className, cacheRefQueryKey }: StoryListItemProps) => {
@@ -66,10 +66,7 @@ export const StoryListItem = React.memo(
           </div>
 
           {/* Context Menu Trigger */}
-          <ContextMenu
-            story={story}
-            cacheRefQueryKey={cacheRefQueryKey}
-          />
+          <ContextMenu story={story} cacheRefQueryKey={cacheRefQueryKey} />
         </div>
 
         <Link href={`/stories/${story?.slug}`}>
@@ -92,6 +89,7 @@ export const StoryListItem = React.memo(
           organization={`Reporter, ${'Default Team'}`}
           pub_datetime={formatDate(story?.updated_at)}
         />
+        <StoryDebug story={story} cacheRefQueryKey={cacheRefQueryKey} />
       </article>
     );
   },
