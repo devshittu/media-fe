@@ -31,33 +31,33 @@ import { useUndislikeStory } from '../../api/post-undislike-story';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 import { usePrompts } from '@/stores/ui/prompts';
 import { AttentionType, CacheRefType } from '@/types';
-import { useDeleteBookmark } from '@/features/bookmarks/api/delete-bookmark';
+import { useDeleteBookmarkByStoryId } from '@/features/bookmarks/api/delete-bookmark-by-story-id';
+import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
+import { InteractionType } from '@/features/analytics/types';
 
 type ContextMenuProps = {
   story: Story;
   cacheRefQueryKey: CacheRefType;
 };
 
-export const ContextMenu = ({
-  story,
-  cacheRefQueryKey,
-}: ContextMenuProps) => {
+export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
   const { show: showPopup, close: closePopup } = usePopup();
   const { showNotification } = useNotifications();
   const { showPrompt } = usePrompts();
   const { id, slug, has_disliked } = story;
 
-
-  const { handleSimpleAction: handleDislikeStory, isLoading: isDislikeLoading } =
-    useStoryActionLogic({
-      basePayload: {
-        story_id: id,
-      },
-      action: StoryAction.DISLIKE,
-      apiFunction: useDislikeStory, // Replace with your actual API function
-      cacheRefQueryKey: cacheRefQueryKey,
-    });
+  const {
+    handleSimpleAction: handleDislikeStory,
+    isLoading: isDislikeLoading,
+  } = useStoryActionLogic({
+    basePayload: {
+      story_id: id,
+    },
+    action: StoryAction.DISLIKE,
+    apiFunction: useDislikeStory, // Replace with your actual API function
+    cacheRefQueryKey: cacheRefQueryKey,
+  });
 
   const {
     handleSimpleAction: handleUndislikeStory,
@@ -78,7 +78,7 @@ export const ContextMenu = ({
       story_id: id,
     },
     action: StoryAction.DELETE_BOOKMARK,
-    apiFunction: useDeleteBookmark, // Replace with your actual API function
+    apiFunction: useDeleteBookmarkByStoryId, // Replace with your actual API function
     cacheRefQueryKey: cacheRefQueryKey,
   });
 
@@ -199,6 +199,23 @@ export const ContextMenu = ({
     // modal.open();
   };
 
+  const { logAnalytics } = useLogAnalytics();
+
+  const handleShareClick = (platform: 'WhatsApp' | 'Twitter') => {
+    // Log the share interaction
+    logAnalytics({
+      analytics_store_id: '', // This will be generated in the store
+      event: InteractionType.SHARE_STORY,
+      interaction_type: InteractionType.SHARE_STORY,
+      story: id,
+      timestamp: Date.now(),
+      metadata: {
+        story_id: story.id.toString(),
+        source_page: window.location.href,
+        platform,
+      },
+    });
+  };
   return (
     <Popover open={open} onOpenChange={setOpen} placement="bottom-end">
       <PopoverTrigger onClick={() => setOpen((v) => !v)}>
@@ -209,16 +226,30 @@ export const ContextMenu = ({
           <MenuHeader>
             <h3 className="text-lg font-bold">Share</h3>
           </MenuHeader>
-          <MenuLinkItem
+          {/* <MenuLinkItem
             url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
             data-action="share/whatsapp/share"
             label="Whatsapp"
-            icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
+            icon={<Icon icon={<WhatsappColoredIcon />}
+           className="w-6" />}
           />
           <MenuLinkItem
             url="https://twitter.com/intent/tweet"
             label="Twitter"
             icon={<Icon icon={<TwitterColoredIcon />} className="w-6" />}
+          /> */}
+
+          <MenuLinkItem
+            url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
+            label="Whatsapp"
+            icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
+            onClick={() => handleShareClick('WhatsApp')}
+          />
+          <MenuLinkItem
+            url="https://twitter.com/intent/tweet"
+            label="Twitter"
+            icon={<Icon icon={<TwitterColoredIcon />} className="w-6" />}
+            onClick={() => handleShareClick('Twitter')}
           />
           <MenuButtonItem
             label={!!story?.has_bookmarked ? 'Unbookmark' : 'Bookmark'}
@@ -265,7 +296,6 @@ export const ContextMenu = ({
             tag={<Tag variant="green">Pro</Tag>}
           /> */}
         </Menu>
-        
       </PopoverContent>
     </Popover>
   );
