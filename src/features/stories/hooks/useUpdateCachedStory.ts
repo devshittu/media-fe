@@ -61,7 +61,6 @@ function updateStoryDataInResults(
   return {
     ...data,
     results: data.results.map((story) => {
-      console.log(' story.id=', story.id, ' story_id=', story_id);
       if (story.id === story_id) {
         return updateStoryBasedOnAction(story, actionType);
       }
