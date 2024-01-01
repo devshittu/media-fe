@@ -4,7 +4,7 @@ import { Button } from '../button';
 type ObjectTreeViewProps = {
   data: any;
   level?: number;
-}
+};
 
 const ObjectTreeNode: React.FC<ObjectTreeViewProps> = ({ data, level = 0 }) => {
   const [expandedKeys, setExpandedKeys] = useState<Record<string, boolean>>({});
