@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 
 export const useUserActivityTracking = (
   storyId: string,
-  addData: (data: AnalyticsData) => void,
+  addData: (data: AnalyticsData | any) => void,
 ) => {
   const activityRef = useRef<HTMLDivElement>(null);
   const startTimeRef = useRef<number | null>(null); // Initialize useRef
@@ -17,21 +17,23 @@ export const useUserActivityTracking = (
         startTimeRef.current = Date.now();
       } else if (startTimeRef.current !== null) {
         const timeSpent = Date.now() - startTimeRef.current;
-        // if (timeSpent >= 2000) {
-        // Only add data if timeInView is at least 2 seconds
+        if (timeSpent >= 2000) {
+          // Only add data if timeInView is at least 2 seconds
 
-        let analyticsData: AnalyticsData = {
-          story: storyId,
-          interaction_type: InteractionType.STORY_VIEW,
-          metadata: {
-            event: 'storyViewed',
+          const analyticsData = {
+            analytics_store_id: '', // This will be generated in the store
+            story: storyId,
+            interaction_type: InteractionType.STORY_VIEW,
+            event: InteractionType.STORY_VIEW,
             timestamp: Date.now(),
-            storyId,
-            timeInView: timeSpent,
-          },
-        };
-        addData(analyticsData);
-        // }
+            metadata: {
+              story_id: storyId,
+              time_in_view: timeSpent,
+              timestamp: Date.now(),
+            },
+          };
+          addData(analyticsData);
+        }
         startTimeRef.current = null; // Reset startTimeRef
       }
     };
