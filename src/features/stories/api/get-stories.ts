@@ -1,17 +1,11 @@
-import {
-  useInfiniteQuery,
-  useQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
 import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES } from '@/config/api-constants';
-import {
-  GetStoriesOptions,
-  InfiniteStoriesResponse,
-} from '../components';
+import { GetStoriesOptions, InfiniteStoriesResponse } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
 const { GET_STORIES } = QUERY_KEYS;
 
