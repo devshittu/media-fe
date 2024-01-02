@@ -1,7 +1,4 @@
-import {
-  useInfiniteQuery,
-  useQuery,
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { apiClient } from '@/lib/api-client';
 
@@ -60,7 +57,9 @@ export const useInfiniteUserInvertedFeedStories = ({
   } = useInfiniteQuery<StoryListResponse>(
     queryKey,
     async ({ pageParam = 1 }) =>
-     await getUserInvertedFeedStories({ params: { ...params, page: pageParam } }),
+      await getUserInvertedFeedStories({
+        params: { ...params, page: pageParam },
+      }),
     {
       getNextPageParam: (lastPage, allPages) => {
         // Check if there are more pages to load
