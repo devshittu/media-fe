@@ -20,7 +20,7 @@ export type PayloadType = LikeStoryPayload | AddBookmarkPayload;
 export type StoryActionLogicParameterType = {
   basePayload: BasePayload;
   action: StoryAction;
-  apiFunction: any//(args: any) => { submit: (data: PayloadType) => void; isLoading: boolean };
+  apiFunction: any; //(args: any) => { submit: (data: PayloadType) => void; isLoading: boolean };
   cacheRefQueryKey: CacheRefType;
 };
 
@@ -30,8 +30,16 @@ export const useStoryActionLogic = ({
   apiFunction,
   cacheRefQueryKey,
 }: StoryActionLogicParameterType) => {
-  const { onSuccess, onError } = useStoryNotification(basePayload.story_id, action);
-  const { submit, isLoading } = apiFunction({ story_id:basePayload.story_id, onSuccess, onError, cacheRefQueryKey });
+  const { onSuccess, onError } = useStoryNotification(
+    basePayload.story_id,
+    action,
+  );
+  const { submit, isLoading } = apiFunction({
+    story_id: basePayload.story_id,
+    onSuccess,
+    onError,
+    cacheRefQueryKey,
+  });
 
   // For actions that only require the base payload (e.g., story_id)
   const handleSimpleAction = () => {
@@ -43,7 +51,9 @@ export const useStoryActionLogic = ({
   };
 
   // For actions that require additional data
-  const handleActionWithAdditionalData = (additionalData: Partial<PayloadType>) => {
+  const handleActionWithAdditionalData = (
+    additionalData: Partial<PayloadType>,
+  ) => {
     if (!basePayload.story_id) {
       console.error('Story ID is required in the payload.');
       return;
