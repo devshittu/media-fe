@@ -2,14 +2,17 @@ import { StoriesPageHeader } from '@/components/blocks/headers';
 import UserLayout from '@/layouts/user-layout';
 import React, { ReactElement, useMemo, useState } from 'react';
 import { SidePanel } from '@/components/blocks/side-panel';
-import { Bookmark, BookmarkCategory, BookmarksQueryParams, getBookmarks, useGetBookmarks, useInfiniteBookmarks } from '@/features/bookmarks';
-import { useListGrouping, useListSorting } from '@/hooks';
 import {
-  BookmarkSorter,
-  BookmarkMoment,
-  BookmarkMomentLoadingPlaceholder,
+  Bookmark,
+  BookmarkCategory,
+  BookmarksQueryParams,
+  getBookmarks,
+  useGetBookmarks,
+  useInfiniteBookmarks,
+} from '@/features/bookmarks';
+import {
   BookmarkList,
-} from '@/features/bookmarks/components/';
+} from '@/features/bookmarks/components';
 import { StoriesPageFrame } from '@/components/frames';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { cleanObject } from '@/utils';
@@ -27,7 +30,6 @@ const BookmarksPage = ({
   queryParams,
   error,
 }: PublicBookmarkPageProps) => {
- 
   // Define asynchronous functions for each tab
   const fetchDataForYou = async () => {
     // Async operation for the "For You" tab
@@ -43,11 +45,11 @@ const BookmarksPage = ({
     save: {
       content: (
         <>
-            <BookmarkList
+          <BookmarkList
             useBookmarksHook={useInfiniteBookmarks}
-              queryParams={{ ...queryParams, category: BookmarkCategory.Save }}
+            queryParams={{ ...queryParams, category: BookmarkCategory.Save }}
             loadMoreOnScroll
-            />
+          />
         </>
       ),
       fetchData: fetchDataForYou,
@@ -55,12 +57,15 @@ const BookmarksPage = ({
     'read-later': {
       content: (
         <>
-            <BookmarkList
+          <BookmarkList
             useBookmarksHook={useInfiniteBookmarks}
-              // data={{ ...bookmarks, results: readLaterBookmarks }}
-              queryParams={{ ...queryParams, category: BookmarkCategory.ReadLater }}
+            // data={{ ...bookmarks, results: readLaterBookmarks }}
+            queryParams={{
+              ...queryParams,
+              category: BookmarkCategory.ReadLater,
+            }}
             loadMoreOnScroll
-            />
+          />
         </>
       ),
       fetchData: fetchDataFollowing,
@@ -68,12 +73,15 @@ const BookmarksPage = ({
     favorite: {
       content: (
         <>
-            <BookmarkList
+          <BookmarkList
             useBookmarksHook={useInfiniteBookmarks}
-              // data={{ ...bookmarks, results: favoriteBookmarks }}
-              queryParams={{ ...queryParams, category: BookmarkCategory.Favorites }}
+            // data={{ ...bookmarks, results: favoriteBookmarks }}
+            queryParams={{
+              ...queryParams,
+              category: BookmarkCategory.Favorites,
+            }}
             loadMoreOnScroll
-            />
+          />
         </>
       ),
       fetchData: fetchDataFollowing,
@@ -96,7 +104,7 @@ const BookmarksPage = ({
       />
 
       <div ref={contentRef} onScroll={handleScroll} className="tab-content">
-        {error && <p className="error-message">{error}</p>}
+        {/* {error && <p className="error-message">{error}</p>} */}
 
         {renderTabContent()}
       </div>
