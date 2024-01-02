@@ -1,18 +1,19 @@
 import React from 'react';
 import { Bookmark } from '../../types';
 import { Link } from '@/components/labs';
-import {
-  BarChartIcon,
-  EyeIcon,
-  FlagIcon,
-  Icon,
-  ShareIcon,
-} from '@/components/illustrations';
+
 import { Tag } from '@/components/blocks/tag';
+import { CacheRefType } from '@/types';
+import { BookmarkDebug } from '../debug';
+import { ContextMenu } from '../context-menu';
 type BookmarkBlockProps = {
   bookmark: Bookmark;
+  cacheRefQueryKey: CacheRefType;
 };
-export const BookmarkItem = ({ bookmark }: BookmarkBlockProps) => {
+export const BookmarkItem = ({
+  bookmark,
+  cacheRefQueryKey,
+}: BookmarkBlockProps) => {
   return (
     <div key={bookmark?.id}>
       <Link
@@ -30,6 +31,10 @@ export const BookmarkItem = ({ bookmark }: BookmarkBlockProps) => {
           </p>
         </div>
       </Link>
+
+      {/* Context Menu Trigger */}
+      <ContextMenu bookmark={bookmark} cacheRefQueryKey={cacheRefQueryKey} />
+      <BookmarkDebug bookmark={bookmark} cacheRefQueryKey={cacheRefQueryKey} />
     </div>
   );
 };
