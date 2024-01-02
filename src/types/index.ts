@@ -7,9 +7,10 @@ export type ObjectItem = {
   id: string;
 };
 
-export type ApiResponse = {
-  status: string;
+export type ApiResponse = ResponseStatus & {
+  // status: string;
   // data: ApiResponseData;
+  data: any;
 };
 
 export enum ResponseStatusType {
