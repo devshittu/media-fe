@@ -1,6 +1,3 @@
-import { AuthUser } from '@/features/auth';
-import { setItem, getItem, removeItem } from '@/utils/localStorage';
-import { queryClient } from '@/lib/react-query';
 import { AuthStore } from '@/stores/auth';
 import { apiClient } from '@/lib/api-client';
 import { URI_AUTH_LOGOUT } from '@/config/api-constants';
