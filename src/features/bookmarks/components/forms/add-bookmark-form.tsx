@@ -27,12 +27,13 @@ export const AddBookmarkForm = ({
     story_id: id,
     story_slug: slug.toString(),
   };
-    const { register, handleSubmit, formState, getValues } = useForm<AddBookmarkFormData>({
-    defaultValues: addBookmarkPayload,
-    // mode: 'onChange',
-    mode: 'onBlur',
-  });
-const {
+  const { register, handleSubmit, formState, getValues } =
+    useForm<AddBookmarkFormData>({
+      defaultValues: addBookmarkPayload,
+      // mode: 'onChange',
+      mode: 'onBlur',
+    });
+  const {
     handleActionWithAdditionalData: handleAddBookmarkStory,
     isLoading: isAddBookmarkLoading,
   } = useStoryActionLogic({
@@ -49,7 +50,7 @@ const {
   };
   const onSubmit = (data: AddBookmarkFormData) => {
     // submit(data);
-    console.log(`Form data on submit: ${JSON.stringify(data)}`);
+    // console.log(`Form data on submit: ${JSON.stringify(data)}`);
     handleAddBookmarkStory(data);
     handleCancel(); // close the form modal/window
   };
