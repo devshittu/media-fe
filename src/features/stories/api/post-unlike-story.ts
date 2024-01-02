@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
 import {
   URI_STORIES_BY_STORY_ID_UNLIKE,
-  URI_STORIES_BY_STORY_SLUG_UNLIKE,
+  // URI_STORIES_BY_STORY_SLUG_UNLIKE,
 } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { ApiResponse } from '@/types';
@@ -14,6 +14,8 @@ import {
   UseLikeStoryOptions,
 } from '../components';
 import { useUpdateCachedStory } from '../hooks/useUpdateCachedStory';
+import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
+import { InteractionType } from '@/features/analytics/types';
 const { UNLIKE_STORY } = QUERY_KEYS;
 
 export const unlikeStory = ({
@@ -25,10 +27,6 @@ export const unlikeStory = ({
   if (story_id) {
     uri = uriTemplate(URI_STORIES_BY_STORY_ID_UNLIKE, {
       story_id: story_id.toString(),
-    });
-  } else if (story_slug) {
-    uri = uriTemplate(URI_STORIES_BY_STORY_SLUG_UNLIKE, {
-      story_slug,
     });
   } else {
     throw new Error('Either story_id or story_slug must be provided.');
@@ -47,17 +45,33 @@ export const useUnlikeStory = ({
   cacheRefQueryKey,
 }: UseLikeStoryOptions) => {
   const updateCachedStory = useUpdateCachedStory();
+  const { logAnalytics } = useLogAnalytics();
   const { mutate: submit, isLoading } = useMutation({
     mutationKey: [UNLIKE_STORY, story_id],
     mutationFn: unlikeStory,
-    onSuccess: (data) => {
+    onSuccess: (response) => {
       // updateStoryInCache(story_id, StoryAction.UNLIKE);
       // To update a story in the user feed stories cache
       updateCachedStory(cacheRefQueryKey, story_id, StoryAction.UNLIKE);
-      onSuccess?.(data);
+
+      const analyticsData = {
+        analytics_store_id: '', // This will be generated in the store
+        event: InteractionType.REMOVE_LIKE,
+        story: story_id,
+        interaction_type: InteractionType.REMOVE_LIKE,
+        timestamp: Date.now(),
+        metadata: {
+          story_id: story_id,
+          //   bookmark_id, // Example bookmark ID
+        },
+      };
+      // Log add bookmark
+      logAnalytics(analyticsData);
+
+      onSuccess?.(response);
     },
-    onError: (data) => {
-      onError?.(data);
+    onError: (error) => {
+      onError?.(error);
     },
   });
 
