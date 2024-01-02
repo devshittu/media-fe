@@ -1,9 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-
 import { apiClient } from '@/lib/api-client';
 import { queryClient } from '@/lib/react-query';
-
-import { AuthUser, AuthResponse, PasswordSigninData } from '../types';
+import { AuthResponse, PasswordSigninData } from '../types';
 import { URI_AUTH_TOKEN } from '@/config/api-constants';
 import { AuthStore } from '@/stores/auth';
 import { getAuthUser } from './get-auth-user';
@@ -16,9 +14,7 @@ type UsePasswordSigninOptions = {
   onSuccess?: (auth: AuthResponse) => void;
 };
 
-export const usePasswordSignin = ({
-  onSuccess,
-}: UsePasswordSigninOptions = {}) => {
+export const usePasswordSignin = ({ onSuccess }: UsePasswordSigninOptions) => {
   const { mutate: submit, isLoading } = useMutation({
     mutationFn: signin,
 
