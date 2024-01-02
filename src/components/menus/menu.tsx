@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import { Button } from '@/components/button';
 import { Link } from '@/components/labs/typography';
-import { Icon } from '../illustrations';
 
 type MenuProps = {
   children: ReactNode;
