@@ -32,7 +32,6 @@ export const StoryStats = ({ story, cacheRefQueryKey }: StoryStatsProps) => {
     // ... add other necessary data for like action ...
   };
 
-
   const { handleSimpleAction: handleLikeStory, isLoading: isLikeLoading } =
     useStoryActionLogic({
       basePayload: likePayload,
@@ -48,7 +47,6 @@ export const StoryStats = ({ story, cacheRefQueryKey }: StoryStatsProps) => {
       apiFunction: useUnlikeStory,
       cacheRefQueryKey: cacheRefQueryKey,
     });
-
 
   const viewCount = 1200;
   const commentCount = 6;
@@ -112,20 +110,20 @@ export const StoryStats = ({ story, cacheRefQueryKey }: StoryStatsProps) => {
         </div>
       </div>
       <>
-      {IS_DEBUG_MODE && (
-        <pre className="text-sm whitespace-pre-wrap">
-          <p>
-            {`has_liked = ${JSON.stringify(
-              has_liked,
-            )} likes_count = ${JSON.stringify(likes_count)}`}
-          </p>
-          <p>
-            {`has_disliked = ${JSON.stringify(
-              has_disliked,
-            )} dislikes_count = ${JSON.stringify(dislikes_count)}`}
-          </p>
-          <p>{`has_bookmarked = ${JSON.stringify(has_bookmarked)} `}</p>
-        </pre>
+        {IS_DEBUG_MODE && (
+          <pre className="text-sm whitespace-pre-wrap">
+            <p>
+              {`has_liked = ${JSON.stringify(
+                has_liked,
+              )} likes_count = ${JSON.stringify(likes_count)}`}
+            </p>
+            <p>
+              {`has_disliked = ${JSON.stringify(
+                has_disliked,
+              )} dislikes_count = ${JSON.stringify(dislikes_count)}`}
+            </p>
+            <p>{`has_bookmarked = ${JSON.stringify(has_bookmarked)} `}</p>
+          </pre>
         )}
       </>
     </div>
