@@ -9,6 +9,8 @@ import { useUpdateCachedStory } from '@/features/stories/hooks/useUpdateCachedSt
 import { DeleteBookmarkFormData } from '../types';
 import { useUpdateCachedBookmark } from '../hooks/useUpdateCachedBookmark';
 import { BookmarkAction } from '../components/types';
+import { InteractionType } from '@/features/analytics/types';
+import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
 const { DESTROY_BOOKMARK } = QUERY_KEYS;
 
 export const deleteBookmark = (
@@ -33,7 +35,7 @@ export const useDeleteBookmark = ({
   onError,
   cacheRefQueryKey,
 }: UseDeleteBookmarkOptions) => {
-  // const updateCachedStory = useUpdateCachedStory();
+  const { logAnalytics } = useLogAnalytics();
   const updateCachedBookmark = useUpdateCachedBookmark();
   const mutationKey = [DESTROY_BOOKMARK, bookmark_id];
   const { mutate: submit, isLoading } = useMutation({
@@ -45,6 +47,21 @@ export const useDeleteBookmark = ({
         bookmark_id,
         BookmarkAction.DELETE_BOOKMARK,
       );
+
+      // TODO: get the correct id for story and replace off the bookmark_id
+      const analyticsData = {
+        analytics_store_id: '', // This will be generated in the store
+        event: InteractionType.UNBOOKMARK,
+        story: bookmark_id,
+        interaction_type: InteractionType.UNBOOKMARK,
+        timestamp: Date.now(),
+        metadata: {
+          story_id: bookmark_id,
+          //   bookmark_id, // Example bookmark ID
+        },
+      };
+      // Log add bookmark
+      logAnalytics(analyticsData);
       onSuccess?.(response);
     },
     onError: (data) => {
