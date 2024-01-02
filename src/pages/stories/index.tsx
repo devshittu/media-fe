@@ -21,9 +21,9 @@ import { useTabContentManager } from '@/components/blocks/tab';
 import { useHomePageTabs } from '@/stores/tabs';
 import { Discover } from '@/features/trends/components/discover/discover';
 
-import {
-  useInfiniteUserInvertedFeedStories,
-} from '@/features/stories/api/get-user-inverse-feed-stories';
+import { useInfiniteUserInvertedFeedStories } from '@/features/stories/api/get-user-inverse-feed-stories';
+import { LoadingFallingGlyph, LoadingSplash } from '@/components/loading';
+import { TwitterIcon } from '@/components/illustrations';
 
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -56,7 +56,8 @@ const StoriesPage = ({
       content: (
         <>
           <Discover />
-
+          <LoadingSplash />
+          <LoadingFallingGlyph />
           <StoryList
             useStoriesHook={useInfiniteUserInvertedFeedStories}
             queryParams={{ page: 1, page_size: 3 }}
@@ -99,7 +100,6 @@ const StoriesPage = ({
         {error && <p className="error-message">{error}</p>}
 
         {renderTabContent()}
-
       </div>
     </>
   );
