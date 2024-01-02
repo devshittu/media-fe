@@ -11,6 +11,7 @@ import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { useAnalytics } from '@/stores/analytics/analytics';
 import { AnalyticsData, InteractionType } from '@/features/analytics/types';
 import { StoryDebug } from '../debug';
+import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
 
 export const StoryListItem = React.memo(
   ({ story, className, cacheRefQueryKey }: StoryListItemProps) => {
@@ -33,18 +34,11 @@ export const StoryListItem = React.memo(
       },
     };
 
-    const { addData } = useAnalytics();
+    const { logAnalytics } = useLogAnalytics();
 
-    const saveMetrics = useCallback(
-      (metrics: AnalyticsData) => {
-        console.log(`metrics:// ${JSON.stringify(metrics)}`);
-        addData(metrics);
-      },
-      [addData],
-    );
     const activityRef = useUserActivityTracking(
       story.id.toString(),
-      saveMetrics,
+      logAnalytics,
     );
 
     return (
