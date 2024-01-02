@@ -1,8 +1,5 @@
 import { Button } from '@/components/button';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@/components/illustrations';
+import { ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
 import React from 'react';
 import { DiscoverSection } from './discover-section';
 import { GridItemData } from '@/components/labs/display/types';
@@ -162,62 +159,64 @@ export const Discover = () => {
         ]}
       />
 
-      {IS_DEBUG_MODE && (<><DiscoverSectionGrid
-        title="Readers Around You"
-        gridProps={{
-          items: randomUsers,
-          numColumns: 5,
-          numRows: 1,
-          itemWidth: 'more-than-2/3',
-          renderItem: (user: User, index: number) => (
-            <UserListItem key={index} user={user} />
-          ),
-        }}
-        actions={[
-          {
-            label: 'Scroll Left',
-            onClick: () => {},
-            icon: <ChevronLeftIcon />,
-            id: 'scrollLeft',
-          },
-          {
-            label: 'Scroll Right',
-            onClick: () => {},
-            icon: <ChevronRightIcon />,
-            id: 'scrollRight',
-          },
-          // ... other actions ...
-        ]}
-      />
+      {IS_DEBUG_MODE && (
+        <>
+          <DiscoverSectionGrid
+            title="Readers Around You"
+            gridProps={{
+              items: randomUsers,
+              numColumns: 5,
+              numRows: 1,
+              itemWidth: 'more-than-2/3',
+              renderItem: (user: User, index: number) => (
+                <UserListItem key={index} user={user} />
+              ),
+            }}
+            actions={[
+              {
+                label: 'Scroll Left',
+                onClick: () => {},
+                icon: <ChevronLeftIcon />,
+                id: 'scrollLeft',
+              },
+              {
+                label: 'Scroll Right',
+                onClick: () => {},
+                icon: <ChevronRightIcon />,
+                id: 'scrollRight',
+              },
+              // ... other actions ...
+            ]}
+          />
 
-      <DiscoverSectionGrid
-        title="Explore by Locations"
-        gridProps={{
-          items: mockCities,
-          numColumns: 6,
-          numRows: 2,
-          itemWidth: 'more-than-2/3',
-          renderItem: (city: City, index: number) => (
-            <CityListItem key={index} city={city} />
-          ),
-        }}
-        actions={[
-          {
-            label: 'Scroll Left',
-            onClick: () => {},
-            icon: <ChevronLeftIcon />,
-            id: 'scrollLeft',
-          },
-          {
-            label: 'Scroll Right',
-            onClick: () => {},
-            icon: <ChevronRightIcon />,
-            id: 'scrollRight',
-          },
-          // ... other actions ...
-        ]}
-      />
-      </>
+          <DiscoverSectionGrid
+            title="Explore by Locations"
+            gridProps={{
+              items: mockCities,
+              numColumns: 6,
+              numRows: 2,
+              itemWidth: 'more-than-2/3',
+              renderItem: (city: City, index: number) => (
+                <CityListItem key={index} city={city} />
+              ),
+            }}
+            actions={[
+              {
+                label: 'Scroll Left',
+                onClick: () => {},
+                icon: <ChevronLeftIcon />,
+                id: 'scrollLeft',
+              },
+              {
+                label: 'Scroll Right',
+                onClick: () => {},
+                icon: <ChevronRightIcon />,
+                id: 'scrollRight',
+              },
+              // ... other actions ...
+            ]}
+          />
+        </>
       )}
 
       <DiscoverSection
