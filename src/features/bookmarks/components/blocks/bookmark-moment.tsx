@@ -22,7 +22,7 @@ export const BookmarkMoment = ({ time, momentData }: BookmarkMomentProps) => {
         <time className="ml-4 text-lg font-semibold text-slate-900 dark:text-white">
           {time}
         </time>
-        <BookmarkList data={momentData} />
+        {/* <BookmarkList bookmark={momentData} /> */}
       </div>
     </section>
   );
