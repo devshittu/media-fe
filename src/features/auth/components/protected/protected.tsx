@@ -32,6 +32,7 @@ export const Protected = ({ children }: ProtectedProps) => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center h-full">
+        from protected routes
         <Loading />
       </div>
     );
