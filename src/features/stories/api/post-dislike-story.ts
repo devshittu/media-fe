@@ -1,13 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
-import {
-  URI_STORIES_BY_STORY_ID_DISLIKE,
-  URI_STORIES_BY_STORY_SLUG_DISLIKE,
-} from '@/config/api-constants';
+import { URI_STORIES_BY_STORY_ID_DISLIKE } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { ApiResponse } from '@/types';
-import { LikeStoryFormData, UseLikeStoryOptions } from '../components';
+import {
+  LikeStoryFormData,
+  StoryAction,
+  UseLikeStoryOptions,
+} from '../components';
+import { InteractionType } from '@/features/analytics/types';
+import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
+import { useUpdateCachedStory } from '../hooks/useUpdateCachedStory';
 const { DISLIKE_STORY } = QUERY_KEYS;
 
 export const dislikeStory = ({
@@ -20,12 +24,8 @@ export const dislikeStory = ({
     uri = uriTemplate(URI_STORIES_BY_STORY_ID_DISLIKE, {
       story_id: story_id.toString(),
     });
-  } else if (story_slug) {
-    uri = uriTemplate(URI_STORIES_BY_STORY_SLUG_DISLIKE, {
-      story_slug,
-    });
   } else {
-    throw new Error('Either story_id or story_slug must be provided.');
+    throw new Error('story_id must be provided.');
   }
 
   return apiClient.post(uri, {
@@ -37,17 +37,36 @@ export const useDislikeStory = ({
   story_id,
   onSuccess,
   onError,
+  cacheRefQueryKey,
 }: UseLikeStoryOptions) => {
+  const { logAnalytics } = useLogAnalytics();
+  const updateCachedStory = useUpdateCachedStory();
   const { mutate: submit, isLoading } = useMutation({
     mutationKey: [DISLIKE_STORY, story_id],
     mutationFn: dislikeStory,
-    onSuccess: (data) => {
+    onSuccess: (response) => {
+      // To update a story in the stories cache
+      updateCachedStory(cacheRefQueryKey, story_id, StoryAction.DISLIKE);
+
+      const analyticsData = {
+        analytics_store_id: '', // This will be generated in the store
+        event: InteractionType.DISLIKE,
+        story: story_id,
+        interaction_type: InteractionType.DISLIKE,
+        timestamp: Date.now(),
+        metadata: {
+          story_id: story_id,
+          //   bookmark_id, // Example bookmark ID
+        },
+      };
+      // Log add bookmark
+      logAnalytics(analyticsData);
       // Invalidate and refetch something when a post is unbookmarked
       //   queryClient.invalidateQueries('someQueryKey');
-      onSuccess?.(data);
+      onSuccess?.(response);
     },
-    onError: (data) => {
-      onError?.(data);
+    onError: (error) => {
+      onError?.(error);
     },
   });
 

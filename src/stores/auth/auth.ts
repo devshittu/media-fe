@@ -41,24 +41,24 @@ export const AuthStore = createStore<authStore>((set, get) => ({
   },
 
   initializeAuth: async () => {
-    console.log(`authdebug: initializeAuth begins`);
+    console.log(`authdebug: initializeAuth: begins`);
     const storedToken = getItem<string>(ACCESS_TOKEN_KEY);
     const storedAuthUserDetails = getItem<AuthUser>(AUTH_USER_DETAILS_KEY);
     if (storedToken && storedAuthUserDetails) {
       console.log(
-        `authdebug: storedToken:${storedToken} and storedAuthUserDetails.display_name: ${JSON.stringify(
+        `authdebug: initializeAuth: storedToken:${storedToken} and storedAuthUserDetails.display_name: ${JSON.stringify(
           storedAuthUserDetails.display_name,
         )} is here before fetching from server:`,
       );
       set({ [ACCESS_TOKEN_KEY]: storedToken });
       set({ [AUTH_USER_DETAILS_KEY]: storedAuthUserDetails });
     } else {
-      console.log('authdebug: doing await refreshToken');
+      console.log('authdebug: initializeAuth: doing await refreshToken');
       try {
         const response = await refreshToken();
         const newAccessToken = response.access_token;
         console.log(
-          `authdebug: set new Token(newAccessToken) ${newAccessToken} is stored`,
+          `authdebug: initializeAuth: set new Token(newAccessToken) ${newAccessToken} is stored`,
         );
 
         set({ [ACCESS_TOKEN_KEY]: newAccessToken });
@@ -72,23 +72,18 @@ export const AuthStore = createStore<authStore>((set, get) => ({
             getAuthUser,
           );
           console.log(
-            'authdebug: fetching from server authUserData',
+            'authdebug: initializeAuth: fetching from server authUserData',
             authUserData,
           );
 
           set({ [AUTH_USER_DETAILS_KEY]: authUserData });
           setItem(AUTH_USER_DETAILS_KEY, authUserData);
         }
-
-        // if (newAccessToken) {
-        //   get().setAccessToken(newAccessToken);
-        // }
-
-        // if (authUserData) {
-        //   get().setAuthUserDetails(authUserData);
-        // }
       } catch (error) {
-        console.error(`authdebug: Failed to refresh token:`, error);
+        console.error(
+          `authdebug: initializeAuth: Failed to refresh token:`,
+          error,
+        );
         get().setAccessToken(null);
         get().setAuthUserDetails(null);
         // Show notification that Cannot login.

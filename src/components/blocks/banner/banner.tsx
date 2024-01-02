@@ -84,6 +84,7 @@ export const Banner = ({
         </p>
         {dismissible && (
           <Button
+            id={`close-banner`}
             onClick={handleDismiss}
             className="ml-4 text-slate-700 hover:text-slate-800 dark:text-slate-300 dark:hover:text-slate-200"
           >

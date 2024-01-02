@@ -104,6 +104,7 @@ export const AddFeedbackForm = ({
 
             <div className="flex space-x-3">
               <Button
+                id={`add-feedback-button`}
                 type="primary"
                 loading={!!isLoading}
                 disabled={isLoading}
@@ -119,6 +120,7 @@ export const AddFeedbackForm = ({
               <Space />
               <Space />
               <Button
+                id={`cancel-feedback-button`}
                 nativeType="button"
                 outlined
                 type={`adaptive`}

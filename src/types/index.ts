@@ -7,9 +7,10 @@ export type ObjectItem = {
   id: string;
 };
 
-export type ApiResponse = {
-  status: string;
+export type ApiResponse = ResponseStatus & {
+  // status: string;
   // data: ApiResponseData;
+  data: any;
 };
 
 export enum ResponseStatusType {
@@ -59,3 +60,19 @@ export enum AttentionType {
   WARNING = 'warning',
   INFO = 'info',
 }
+
+export enum DeviceType {
+  ANY = 'any',
+  DESKTOP = 'desktop',
+  TABLET = 'tablet',
+  MOBILE = 'mobile',
+}
+//to call with only a specified number of the page_size and no pagination, though it is an array of response where the page_size is specified.
+export enum ApiCallResultType {
+  SINGLE = 'single', //single result and non-arrayed result and non-paginated results
+  DISCRETE = 'discrete', // for non-paginated arrayed results with page_size specified
+  INFINITE = 'infinite', //for paginated arrayed results
+}
+// export type CacheRefType = QueryKey;
+export type CacheRefType = [string, ApiCallResultType, ...any[]];
+// Path: src/types/index.ts

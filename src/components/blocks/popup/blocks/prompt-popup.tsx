@@ -92,10 +92,15 @@ export const PromptPopup = ({
             </p>
           </div>
           <div className="flex space-x-3 mt-4">
-            <Button type="primary" onClick={handleOk}>
+            <Button id={`action-proceed`} type="primary" onClick={handleOk}>
               <span className="font-extrabold text-xl">Proceed</span>
             </Button>
-            <Button outlined type="adaptive" onClick={handleClose}>
+            <Button
+              id={`action-cancel`}
+              outlined
+              type="adaptive"
+              onClick={handleClose}
+            >
               <span className="font-extrabold text-xl">Cancel</span>
             </Button>
           </div>

@@ -2,14 +2,17 @@ import { StoriesPageHeader } from '@/components/blocks/headers';
 import UserLayout from '@/layouts/user-layout';
 import React, { ReactElement, useMemo, useState } from 'react';
 import { SidePanel } from '@/components/blocks/side-panel';
-import { Bookmark, getBookmarks, useGetBookmarks } from '@/features/bookmarks';
-import { useListGrouping, useListSorting } from '@/hooks';
 import {
-  BookmarkSorter,
-  BookmarkMoment,
-  BookmarkMomentLoadingPlaceholder,
+  Bookmark,
+  BookmarkCategory,
+  BookmarksQueryParams,
+  getBookmarks,
+  useGetBookmarks,
+  useInfiniteBookmarks,
+} from '@/features/bookmarks';
+import {
   BookmarkList,
-} from '@/features/bookmarks/components/';
+} from '@/features/bookmarks/components';
 import { StoriesPageFrame } from '@/components/frames';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { cleanObject } from '@/utils';
@@ -27,25 +30,6 @@ const BookmarksPage = ({
   queryParams,
   error,
 }: PublicBookmarkPageProps) => {
-  // Filter bookmarks for each category
-  const savedBookmarks = useMemo(
-    () =>
-      bookmarks.results?.filter((b) => b.bookmark_category === 'Save') || [],
-    [bookmarks.results],
-  );
-  const readLaterBookmarks = useMemo(
-    () =>
-      bookmarks.results?.filter((b) => b.bookmark_category === 'Read Later') ||
-      [],
-    [bookmarks.results],
-  );
-  const favoriteBookmarks = useMemo(
-    () =>
-      bookmarks.results?.filter((b) => b.bookmark_category === 'Favorites') ||
-      [],
-    [bookmarks.results],
-  );
-
   // Define asynchronous functions for each tab
   const fetchDataForYou = async () => {
     // Async operation for the "For You" tab
@@ -61,14 +45,11 @@ const BookmarksPage = ({
     save: {
       content: (
         <>
-          <h1>Save</h1>
-          {!savedBookmarks.length && <NotFound />}
-          {savedBookmarks.length > 0 && (
-            <BookmarkList
-              data={{ ...bookmarks, results: savedBookmarks }}
-              queryParams={queryParams}
-            />
-          )}
+          <BookmarkList
+            useBookmarksHook={useInfiniteBookmarks}
+            queryParams={{ ...queryParams, category: BookmarkCategory.Save }}
+            loadMoreOnScroll
+          />
         </>
       ),
       fetchData: fetchDataForYou,
@@ -76,14 +57,15 @@ const BookmarksPage = ({
     'read-later': {
       content: (
         <>
-          <h1>Read Later</h1>
-          {!readLaterBookmarks.length && <NotFound />}
-          {readLaterBookmarks.length > 0 && (
-            <BookmarkList
-              data={{ ...bookmarks, results: readLaterBookmarks }}
-              queryParams={queryParams}
-            />
-          )}
+          <BookmarkList
+            useBookmarksHook={useInfiniteBookmarks}
+            // data={{ ...bookmarks, results: readLaterBookmarks }}
+            queryParams={{
+              ...queryParams,
+              category: BookmarkCategory.ReadLater,
+            }}
+            loadMoreOnScroll
+          />
         </>
       ),
       fetchData: fetchDataFollowing,
@@ -91,14 +73,15 @@ const BookmarksPage = ({
     favorite: {
       content: (
         <>
-          <h1>Favorites</h1>
-          {!favoriteBookmarks.length && <NotFound />}
-          {favoriteBookmarks.length > 0 && (
-            <BookmarkList
-              data={{ ...bookmarks, results: favoriteBookmarks }}
-              queryParams={queryParams}
-            />
-          )}
+          <BookmarkList
+            useBookmarksHook={useInfiniteBookmarks}
+            // data={{ ...bookmarks, results: favoriteBookmarks }}
+            queryParams={{
+              ...queryParams,
+              category: BookmarkCategory.Favorites,
+            }}
+            loadMoreOnScroll
+          />
         </>
       ),
       fetchData: fetchDataFollowing,
@@ -121,13 +104,9 @@ const BookmarksPage = ({
       />
 
       <div ref={contentRef} onScroll={handleScroll} className="tab-content">
-        {error && <p className="error-message">{error}</p>}
+        {/* {error && <p className="error-message">{error}</p>} */}
 
         {renderTabContent()}
-        {/* {!bookmarks.results && <NotFound />}
-      {bookmarks.results?.length > 0 && (
-        <BookmarkList data={bookmarks} queryParams={queryParams} />
-      )} */}
       </div>
     </>
   );
@@ -144,7 +123,7 @@ BookmarksPage.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
-  const queryParams: PaginatedListQueryParams = cleanObject({
+  const queryParams: BookmarksQueryParams = cleanObject({
     page: 1,
     per_page: PAGINATE_STORIES_LIMIT,
   });

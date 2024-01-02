@@ -1,18 +1,26 @@
 import { useNotifications, NotificationType } from '@/stores/notifications';
+import { StoryAction } from '../components/types';
 
-export const useStoryNotification = (storySlug: string, action: string) => {
+export const useStoryNotification = (
+  storySlug: number | string,
+  action: StoryAction,
+) => {
   const { showNotification } = useNotifications();
 
   const getSuccessMessage = () => {
     switch (action) {
-      case 'like':
+      case StoryAction.LIKE:
         return `You liked ${storySlug} story.`;
-      case 'dislike':
+      case StoryAction.DISLIKE:
         return `You disliked ${storySlug} story.`;
-      case 'unlike':
+      case StoryAction.UNLIKE:
         return `You unlike ${storySlug} story.`;
-      case 'undislike':
+      case StoryAction.UNDISLIKE:
         return `You undisliked ${storySlug} story.`;
+      case StoryAction.ADD_BOOKMARK:
+        return `Bookmark added successfully.`;
+      case StoryAction.DELETE_BOOKMARK:
+        return `Bookmark removed successfully.`;
       default:
         return '';
     }

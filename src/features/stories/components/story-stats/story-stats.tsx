@@ -1,61 +1,56 @@
 import React from 'react';
 import { Link } from '@/components/labs/typography';
 import {
-  EyeIcon,
-  MessageSquareIcon,
   ExternalLinkIcon,
   ThumbsUpIcon,
-  ThumbsDownIcon,
-  ListIcon,
   ClockIcon,
 } from '@/components/illustrations';
 import { Button } from '@/components/button';
-import { Story } from '../../types';
 import { ControlledPopper } from '@/components/blocks/popup';
 import { StorylineMiniPopup } from '@/features/storylines/components';
 import { useStoryActionLogic } from '../../hooks';
 import { useLikeStory } from '../../api/post-like-story';
-import { StoryAction } from '../types';
+import { StoryAction, StoryStatsProps } from '../types';
 import { useUnlikeStory } from '../../api/post-unlike-story';
-import { useDislikeStory } from '../../api/post-dislike-story';
-import { useUndislikeStory } from '../../api/post-undislike-story';
+import { IS_DEBUG_MODE } from '@/config/constants';
 
-type StoryStatsProps = {
-  story: Story;
-};
-
-export const StoryStats = ({ story }: StoryStatsProps) => {
+export const StoryStats = ({ story, cacheRefQueryKey }: StoryStatsProps) => {
   const {
     storylines_count,
-    dislikes_count,
     likes_count,
-    storyline_id,
     source_link,
     id,
     slug,
     has_liked,
+    has_bookmarked,
     has_disliked,
+    dislikes_count,
   } = story;
+  const likePayload = {
+    story_id: id,
+    story_slug: slug,
+    // ... add other necessary data for like action ...
+  };
 
-  const { handleStoryAction: handleLikeStory, isLoading: isLikeLoading } =
-    useStoryActionLogic(id, slug, StoryAction.LIKE, useLikeStory);
+  const { handleSimpleAction: handleLikeStory, isLoading: isLikeLoading } =
+    useStoryActionLogic({
+      basePayload: likePayload,
+      action: StoryAction.LIKE,
+      apiFunction: useLikeStory,
+      cacheRefQueryKey: cacheRefQueryKey,
+    });
 
-  const { handleStoryAction: handleUnlikeStory, isLoading: isUnlikeLoading } =
-    useStoryActionLogic(id, slug, StoryAction.UNLIKE, useUnlikeStory);
-
-  const { handleStoryAction: handleDislikeStory, isLoading: isDislikeLoading } =
-    useStoryActionLogic(id, slug, StoryAction.DISLIKE, useDislikeStory);
-
-  const {
-    handleStoryAction: handleUndislikeStory,
-    isLoading: isUndislikeLoading,
-  } = useStoryActionLogic(id, slug, StoryAction.DISLIKE, useUndislikeStory);
-
-  const handleStorylinePop = () => alert('Storyline');
+  const { handleSimpleAction: handleUnlikeStory, isLoading: isUnlikeLoading } =
+    useStoryActionLogic({
+      basePayload: likePayload,
+      action: StoryAction.UNLIKE,
+      apiFunction: useUnlikeStory,
+      cacheRefQueryKey: cacheRefQueryKey,
+    });
 
   const viewCount = 1200;
   const commentCount = 6;
-  // const closeIcon = <ClockIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />;
+
   const closeIcon = (
     <div className="inline-flex items-center leading-none ">
       <ClockIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />
@@ -75,30 +70,6 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
       </Link>
 
       <div className="flex justify-end">
-        {/* Number of views */}
-        {/* <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
-        <Link
-          href={`/storylines/${storyline_id}`}
-          className="inline-flex items-center leading-none "
-          target="_blank"
-        >
-          <EyeIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />
-          {viewCount || 0}
-        </Link>
-      </div> */}
-
-        {/* Number of comments */}
-        {/* <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
-        <Link
-          href={`#`}
-          className="inline-flex items-center leading-none "
-          target="_blank"
-        >
-          <MessageSquareIcon className="w-6 h-6 mr-2" strokeWidth={2.5} />
-          {commentCount || 0}
-        </Link>
-      </div> */}
-
         {/* Number of storylines */}
 
         <div className=" inline-flex items-center leading-none font-inter text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100  mr-3 pr-3 py-1 border-r-2 border-slate-200 dark:border-slate-700">
@@ -129,6 +100,7 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
         {/* {`has_liked: ${has_liked} now would use ${ !has_liked ? 'handleLikeStory' : 'handleUnlikeStory' }`} */}
         <div className="inline-flex items-center leading-none text-base md:text-lg lg:text-xl font-semibold text-slate-900 dark:text-slate-100">
           <Button
+            id={`like-button`}
             onClick={!has_liked ? handleLikeStory : handleUnlikeStory}
             className="inline-flex items-center leading-none "
           >
@@ -137,6 +109,23 @@ export const StoryStats = ({ story }: StoryStatsProps) => {
           </Button>
         </div>
       </div>
+      <>
+        {IS_DEBUG_MODE && (
+          <pre className="text-sm whitespace-pre-wrap">
+            <p>
+              {`has_liked = ${JSON.stringify(
+                has_liked,
+              )} likes_count = ${JSON.stringify(likes_count)}`}
+            </p>
+            <p>
+              {`has_disliked = ${JSON.stringify(
+                has_disliked,
+              )} dislikes_count = ${JSON.stringify(dislikes_count)}`}
+            </p>
+            <p>{`has_bookmarked = ${JSON.stringify(has_bookmarked)} `}</p>
+          </pre>
+        )}
+      </>
     </div>
   );
 };

@@ -46,7 +46,7 @@ export const HelpCenterSection = ({ categories }: HelpCenterSectionProps) => {
         ))}
       </div>
       <div className="flex mx-auto jus">
-        <Button size="large" type={'primary'} outlined>
+        <Button id={`id-button`} size="large" type={'primary'} outlined>
           Button
         </Button>
       </div>

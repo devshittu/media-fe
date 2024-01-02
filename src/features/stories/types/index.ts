@@ -6,6 +6,7 @@ import {
   PaginatedListQueryParams,
   PaginatedResponse,
 } from '@/types';
+import { MultimediaItem } from '../components';
 
 export type Story = {
   storylines_count: number;
@@ -14,7 +15,7 @@ export type Story = {
   has_disliked: boolean | null;
   has_bookmarked: boolean | null;
   user: User;
-  multimedia: any[]; // You can replace 'any' with the appropriate type if you have more details about the multimedia structure
+  multimedia: MultimediaItem[]; // You can replace 'any' with the appropriate type if you have more details about the multimedia structure
   likes_count: number;
   dislikes_count: number;
   id: number;
@@ -26,7 +27,7 @@ export type Story = {
   slug: string;
   body: string;
   category: Category;
-  parent_story: any | null; // You can replace 'any' with the appropriate type if you have more details about the parent_story structure
+  parent_story: string | null; // You can replace 'any' with the appropriate type if you have more details about the parent_story structure
   source_link: string;
   event_occurred_at: number | null;
   event_reported_at: number;
@@ -42,9 +43,9 @@ export type StoriesQueryParams = PaginatedListQueryParams & {
 
 export type StoryListResponse = PaginatedResponse<Story>;
 
-// export type CreateStoryData = Pick<
-//   Story,
-//   'position' | 'department' | 'location' | 'info'
-// >;
+export type PaginatedStoryListResponse = {
+  pages: StoryListResponse[];
+  pageParams: number[];
+};
 
 // Path: media-fe/src/features/stories/types/index.ts

@@ -82,8 +82,8 @@ apiClient.interceptors.response.use(
 
       try {
         const response = await refreshToken();
-        const newAccessToken = response.access_token;
-        AuthStore.getState().setAccessToken(newAccessToken);
+        const newAccessToken = response?.access_token;
+        AuthStore.getState().setAccessToken(newAccessToken || null);
         originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
         return apiClient(originalRequest);
       } catch (refreshError: any) {

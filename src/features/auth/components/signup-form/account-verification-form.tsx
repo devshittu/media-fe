@@ -87,6 +87,7 @@ export const AccountVerificationForm = ({
             </div>
             <br />
             <Button
+              id={`button-verify-account`}
               type="primary"
               loading={!!isLoading}
               disabled={isLoading}

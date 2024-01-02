@@ -17,9 +17,8 @@ export const useAnalyticsSync = ({
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const storedAnalyticsData = AnalyticsStore.getState().getDataAboveTime({
-        ms: 2000,
-      });
+
+      const storedAnalyticsData = AnalyticsStore.getState().getAllData();
       console.log(`analyticsdebug: Ready to sync data`, storedAnalyticsData);
       if (storedAnalyticsData.length > 0) {
         console.log('syncing to server://', storedAnalyticsData.length);
@@ -31,10 +30,6 @@ export const useAnalyticsSync = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // return {
-  //   // syncData,
-  //   isLoading,
-  // };
 };
 
 // src/features/analytics/hooks/useAnalyticsSync.ts

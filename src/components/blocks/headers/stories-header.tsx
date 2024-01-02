@@ -6,6 +6,7 @@ import { Drawer, DrawerSide } from '../drawer';
 import { useScrollSync } from '@/hooks/useScrollSync';
 import { Tab, TabList } from '../tab';
 import { TabStore } from '@/stores/tabs/hooks';
+import { DeviceType } from '@/types';
 type BaseProps = {
   pageTitle: string;
   parallax?: boolean;
@@ -121,6 +122,7 @@ export const StoriesPageHeader = ({
               tabs={tabs}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
+              device={DeviceType.DESKTOP}
             />
           </>
         )}
@@ -167,6 +169,7 @@ export const StoriesPageHeader = ({
               tabs={tabs}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
+              device={DeviceType.MOBILE}
             />
           </>
         )}

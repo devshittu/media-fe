@@ -52,6 +52,7 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
               className="w-7 h-7  text-slate-900 dark:text-slate-950 mb-3 justify-start items-start"
             />
             <Button
+              id={`action-close`}
               className="self-start text-black text-base hover:underline"
               onClick={props.onClose}
             >
@@ -70,6 +71,7 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
           <CardFooter>
             {props.previousLabel ? (
               <Button
+                id={`action-previous`}
                 icon={<ChevronLeftIcon />}
                 className="inline-flex items-center text-blue-600 hover:underline"
                 onClick={props.onPrevious}
@@ -84,6 +86,7 @@ const TourBubble: React.FC<TourBubbleProps> = (props) => {
 
             {props.nextLabel ? (
               <Button
+                id={`action-next`}
                 iconPosition="right"
                 icon={<ChevronRightIcon />}
                 className="inline-flex items-center text-blue-600 hover:underline"

@@ -137,6 +137,7 @@ SettingsSectionProps) => {
           </SettingsField>
           <SettingsFieldsetFooter>
             <Button
+              id={`update-settings-button`}
               loading={!!updateSettings.isLoading}
               disabled={updateSettings.isLoading}
               nativeType="submit"

@@ -105,6 +105,7 @@ export const SecuritySettings = ({
 
             <SettingsFieldsetFooter>
               <Button
+                id={`update-settings-button`}
                 loading={!!updateUserPassword.isLoading}
                 disabled={updateUserPassword.isLoading}
                 nativeType="submit"

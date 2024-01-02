@@ -73,4 +73,4 @@ export const useInfiniteStorylines = ({
     isFetchingNextPage,
   };
 };
-//Path: src/features/stories/api/get-stories.ts
+//Path: src/features/stories/api/get-storylines.ts

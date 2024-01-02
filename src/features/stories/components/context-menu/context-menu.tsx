@@ -9,7 +9,6 @@ import {
   TwitterColoredIcon,
   FlagIcon,
   BookmarkIcon,
-  GoogleColoredIcon,
   Icon,
   MoreHorizontalIcon,
   ThumbsDownIcon,
@@ -20,11 +19,7 @@ import Menu, {
   MenuLinkItem,
   MenuButtonItem,
 } from '@/components/menus/menu';
-import { Toast, ToastPosition, ToastType } from '@/components/blocks/toast';
-import { Button } from '@/components/button';
-import { Modal } from '@/components/blocks/modal';
 import { Story } from '../../types';
-import { useBookmark } from '@/features/bookmarks/hooks/useBookmark';
 import { usePopup } from '@/stores/ui';
 import { FormPopup, PromptPopup } from '@/components/blocks/popup/blocks/';
 import { AddBookmarkSection } from '@/features/bookmarks';
@@ -35,49 +30,75 @@ import { useDislikeStory } from '../../api/post-dislike-story';
 import { useUndislikeStory } from '../../api/post-undislike-story';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 import { usePrompts } from '@/stores/ui/prompts';
-import { AttentionType } from '@/types';
+import { AttentionType, CacheRefType } from '@/types';
+import { useDeleteBookmarkByStoryId } from '@/features/bookmarks/api/delete-bookmark-by-story-id';
+import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
+import { InteractionType } from '@/features/analytics/types';
 
 type ContextMenuProps = {
   story: Story;
-  initialBookmarkState: boolean;
+  cacheRefQueryKey: CacheRefType;
 };
 
-export const ContextMenu = ({
-  story,
-  initialBookmarkState,
-}: ContextMenuProps) => {
+export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
   const { show: showPopup, close: closePopup } = usePopup();
   const { showNotification } = useNotifications();
   const { showPrompt } = usePrompts();
   const { id, slug, has_disliked } = story;
 
-  const { handleStoryAction: handleDislikeStory, isLoading: isDislikeLoading } =
-    useStoryActionLogic(id, slug, StoryAction.DISLIKE, useDislikeStory);
+  const {
+    handleSimpleAction: handleDislikeStory,
+    isLoading: isDislikeLoading,
+  } = useStoryActionLogic({
+    basePayload: {
+      story_id: id,
+    },
+    action: StoryAction.DISLIKE,
+    apiFunction: useDislikeStory, // Replace with your actual API function
+    cacheRefQueryKey: cacheRefQueryKey,
+  });
 
   const {
-    handleStoryAction: handleUndislikeStory,
+    handleSimpleAction: handleUndislikeStory,
     isLoading: isUndislikeLoading,
-  } = useStoryActionLogic(id, slug, StoryAction.DISLIKE, useUndislikeStory);
-
-  const { isBookmarked, handleBookmark, handleUnbookmark } = useBookmark(
-    story.id.toString(),
-    (initialBookmarkState = !!story?.has_bookmarked),
-  );
+  } = useStoryActionLogic({
+    basePayload: {
+      story_id: id,
+    },
+    action: StoryAction.UNDISLIKE,
+    apiFunction: useUndislikeStory, // Replace with your actual API function
+    cacheRefQueryKey: cacheRefQueryKey,
+  });
+  const {
+    handleSimpleAction: handleDeleteBookmark,
+    isLoading: isDeleteBookmarkLoading,
+  } = useStoryActionLogic({
+    basePayload: {
+      story_id: id,
+    },
+    action: StoryAction.DELETE_BOOKMARK,
+    apiFunction: useDeleteBookmarkByStoryId, // Replace with your actual API function
+    cacheRefQueryKey: cacheRefQueryKey,
+  });
 
   const addBookmark = () => {
-    if (isBookmarked) {
-      // handleUnbookmark();
-      showPopup(<PromptPopup onOk={handleUnbookmark} onClose={closePopup} />);
+    if (!!story?.has_bookmarked) {
+      showPopup(
+        <PromptPopup onOk={handleDeleteBookmark} onClose={closePopup} />,
+      );
     } else {
-      // handleBookmark();
       showPopup(
         <FormPopup
           title={`Add a Bookmark`}
           subtitle={`Save your favorite news stories to revisit later.`}
           onClose={closePopup}
         >
-          <AddBookmarkSection story={story} onCancel={closePopup} />
+          <AddBookmarkSection
+            story={story}
+            onCancel={closePopup}
+            cacheRefQueryKey={cacheRefQueryKey}
+          />
         </FormPopup>,
       );
     }
@@ -90,7 +111,7 @@ export const ContextMenu = ({
     //   children: (
     //     <div>
     //       <AddBookmarkForm onSuccess={()=> alert('on success')}/>
-    //       Hello <Button onClick={ShowToast}>Show Toast</Button>
+    //       Hello <Button  id={`update-settings-button`}  onClick={ShowToast}>Show Toast</Button>
     //     </div>
     //   ),
     //   // type: 'success',
@@ -170,7 +191,7 @@ export const ContextMenu = ({
     //   size: 'full',
     //   children: (
     //     <div>
-    //       Hello <Button onClick={ShowToast}>Show Toast</Button>
+    //       Hello <Button   id={`update-settings-button`}  onClick={ShowToast}>Show Toast</Button>
     //     </div>
     //   ),
     // });
@@ -178,6 +199,23 @@ export const ContextMenu = ({
     // modal.open();
   };
 
+  const { logAnalytics } = useLogAnalytics();
+
+  const handleShareClick = (platform: 'WhatsApp' | 'Twitter') => {
+    // Log the share interaction
+    logAnalytics({
+      analytics_store_id: '', // This will be generated in the store
+      event: InteractionType.SHARE_STORY,
+      interaction_type: InteractionType.SHARE_STORY,
+      story: id,
+      timestamp: Date.now(),
+      metadata: {
+        story_id: story.id.toString(),
+        source_page: window.location.href,
+        platform,
+      },
+    });
+  };
   return (
     <Popover open={open} onOpenChange={setOpen} placement="bottom-end">
       <PopoverTrigger onClick={() => setOpen((v) => !v)}>
@@ -188,19 +226,33 @@ export const ContextMenu = ({
           <MenuHeader>
             <h3 className="text-lg font-bold">Share</h3>
           </MenuHeader>
-          <MenuLinkItem
+          {/* <MenuLinkItem
             url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
             data-action="share/whatsapp/share"
             label="Whatsapp"
-            icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
+            icon={<Icon icon={<WhatsappColoredIcon />}
+           className="w-6" />}
           />
           <MenuLinkItem
             url="https://twitter.com/intent/tweet"
             label="Twitter"
             icon={<Icon icon={<TwitterColoredIcon />} className="w-6" />}
+          /> */}
+
+          <MenuLinkItem
+            url={`whatsapp://send?text=Open this \n ${story.title} \n on WhatsApp`}
+            label="Whatsapp"
+            icon={<Icon icon={<WhatsappColoredIcon />} className="w-6" />}
+            onClick={() => handleShareClick('WhatsApp')}
+          />
+          <MenuLinkItem
+            url="https://twitter.com/intent/tweet"
+            label="Twitter"
+            icon={<Icon icon={<TwitterColoredIcon />} className="w-6" />}
+            onClick={() => handleShareClick('Twitter')}
           />
           <MenuButtonItem
-            label={isBookmarked ? 'Unbookmark' : 'Bookmark'}
+            label={!!story?.has_bookmarked ? 'Unbookmark' : 'Bookmark'}
             onClick={addBookmark}
             icon={
               <Icon
@@ -244,9 +296,6 @@ export const ContextMenu = ({
             tag={<Tag variant="green">Pro</Tag>}
           /> */}
         </Menu>
-        {/* <PopoverHeading>My popover heading</PopoverHeading>
-          <PopoverDescription>My popover description</PopoverDescription>
-          <PopoverClose>Close</PopoverClose> */}
       </PopoverContent>
     </Popover>
   );

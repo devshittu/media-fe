@@ -65,6 +65,7 @@ export const Nav = () => {
           </li>
           <li>
             <Button
+              id={`nav-sign-up`}
               className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-whitex transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
               aria-label="Sign up"
               outlined
@@ -75,6 +76,7 @@ export const Nav = () => {
         </ul>
         <div className="ml-auto lg:hidden">
           <Button
+            id={`nav-menu-button`}
             aria-label="Open Menu"
             title="Open Menu"
             className="p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"

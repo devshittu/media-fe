@@ -10,23 +10,12 @@ import { formatDate } from '@/utils';
 import { useUserActivityTracking } from '@/hooks/useUserActivityTracking';
 import { useAnalytics } from '@/stores/analytics/analytics';
 import { AnalyticsData, InteractionType } from '@/features/analytics/types';
+import { StoryDebug } from '../debug';
+import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
 
 export const StoryListItem = React.memo(
-  ({ story, className }: StoryListItemProps) => {
-    const carouselItems: CarouselItem[] = [
-      {
-        id: '1',
-        media:
-          'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=470&amp;q=10',
-        caption: '1 ' + story?.title,
-      },
-      {
-        id: '2',
-        media:
-          'https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=399&q=10',
-        caption: '2 ' + story?.title,
-      },
-    ];
+  ({ story, className, cacheRefQueryKey }: StoryListItemProps) => {
+    const carouselItems: CarouselItem[] = story.multimedia;
 
     const carouselOptions: CarouselOptions = {
       // autoplay: true,
@@ -45,18 +34,11 @@ export const StoryListItem = React.memo(
       },
     };
 
-    const { addData } = useAnalytics();
+    const { logAnalytics } = useLogAnalytics();
 
-    const saveMetrics = useCallback(
-      (metrics: AnalyticsData) => {
-        console.log(`metrics:// ${JSON.stringify(metrics)}`);
-        addData(metrics);
-      },
-      [addData],
-    );
     const activityRef = useUserActivityTracking(
       story.id.toString(),
-      saveMetrics,
+      logAnalytics,
     );
 
     return (
@@ -78,10 +60,7 @@ export const StoryListItem = React.memo(
           </div>
 
           {/* Context Menu Trigger */}
-          <ContextMenu
-            story={story}
-            initialBookmarkState={!!story.has_bookmarked}
-          />
+          <ContextMenu story={story} cacheRefQueryKey={cacheRefQueryKey} />
         </div>
 
         <Link href={`/stories/${story?.slug}`}>
@@ -98,12 +77,13 @@ export const StoryListItem = React.memo(
           carouselItems={carouselItems}
           carouselOptions={carouselOptions}
         />
-        <StoryStats story={story} />
+        <StoryStats story={story} cacheRefQueryKey={cacheRefQueryKey} />
         <UserDetails
           name={story?.user.display_name}
           organization={`Reporter, ${'Default Team'}`}
           pub_datetime={formatDate(story?.updated_at)}
         />
+        <StoryDebug story={story} cacheRefQueryKey={cacheRefQueryKey} />
       </article>
     );
   },

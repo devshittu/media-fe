@@ -8,6 +8,7 @@ type FooterProps = {
 export const SettingsFooter = ({ isLoading }: FooterProps) => (
   <SettingsFieldsetFooter>
     <Button
+      id={`update-settings`}
       loading={!!isLoading}
       disabled={isLoading}
       nativeType="submit"

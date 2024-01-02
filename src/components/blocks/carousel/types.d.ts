@@ -2,7 +2,7 @@ import { inter } from '@/utils/fonts';
 export type CarouselItem = {
   id: string;
   position?: number;
-  media: string; // URL of the image or video
+  media_url: string; // URL of the image or video
   caption?: string;
 };
 export type CarouselOptions = {

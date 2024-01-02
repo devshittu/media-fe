@@ -2,34 +2,57 @@ import React from 'react';
 import { InputField, SelectField, SelectFieldOption } from '@/components';
 import { Button } from '@/components/button';
 import { AddBookmarkFormData, BookmarkCategory } from '@/features/bookmarks';
-import { AppFormProps } from '@/types';
+import { AppFormProps, CacheRefType } from '@/types';
 import { useForm } from 'react-hook-form';
 import { useAddBookmark } from '../../api/post-add-bookmark';
-import { Story } from '@/features/stories';
+import { Story, useStoryActionLogic } from '@/features/stories';
+import { StoryAction } from '@/features/stories/components/types';
+
 import { Space } from '@/components/labs';
 
 export const AddBookmarkForm = ({
   story,
   onSuccess,
   onCancel,
-}: AppFormProps & { story: Story; onCancel?: () => void }) => {
-  const { submit, isLoading } = useAddBookmark({ onSuccess });
-  const { register, handleSubmit, formState } = useForm<AddBookmarkFormData>({
-    defaultValues: {
-      bookmark_category: BookmarkCategory.Save,
-      note: '',
-      story_id: story.id.toString(),
-    },
-    // mode: 'onChange',
-    mode: 'onBlur',
+  cacheRefQueryKey,
+}: AppFormProps & {
+  story: Story;
+  onCancel?: () => void;
+  cacheRefQueryKey: CacheRefType;
+}) => {
+  const { id, slug } = story;
+  const addBookmarkPayload = {
+    bookmark_category: BookmarkCategory.Save,
+    note: '',
+    story_id: id,
+    story_slug: slug.toString(),
+  };
+  const { register, handleSubmit, formState, getValues } =
+    useForm<AddBookmarkFormData>({
+      defaultValues: addBookmarkPayload,
+      // mode: 'onChange',
+      mode: 'onBlur',
+    });
+  const {
+    handleActionWithAdditionalData: handleAddBookmarkStory,
+    isLoading: isAddBookmarkLoading,
+  } = useStoryActionLogic({
+    basePayload: addBookmarkPayload,
+    action: StoryAction.ADD_BOOKMARK,
+    apiFunction: useAddBookmark, // Replace with your actual API function
+    cacheRefQueryKey,
   });
+
   const handleCancel = () => {
     if (onCancel) {
       onCancel();
     }
   };
   const onSubmit = (data: AddBookmarkFormData) => {
-    submit(data);
+    // submit(data);
+    // console.log(`Form data on submit: ${JSON.stringify(data)}`);
+    handleAddBookmarkStory(data);
+    handleCancel(); // close the form modal/window
   };
   const BookmarkCategories: SelectFieldOption[] = [
     { value: BookmarkCategory.Save, label: BookmarkCategory.Save },
@@ -73,9 +96,10 @@ export const AddBookmarkForm = ({
             <br />
             <div className="flex space-x-3">
               <Button
+                id={`add-bookmark`}
                 type="primary"
-                loading={!!isLoading}
-                disabled={isLoading}
+                loading={!!isAddBookmarkLoading}
+                disabled={isAddBookmarkLoading}
                 nativeType="submit"
 
                 // className="justify-center font-semibold mt-4 w-full md:h-12"
@@ -88,6 +112,7 @@ export const AddBookmarkForm = ({
               <Space />
               <Space />
               <Button
+                id={`cancel-add-bookmark`}
                 nativeType="button"
                 outlined
                 type={`adaptive`}
@@ -104,3 +129,5 @@ export const AddBookmarkForm = ({
     </>
   );
 };
+
+// Path: src/features/bookmarks/components/forms/add-bookmark-form.tsx

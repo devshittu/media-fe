@@ -43,10 +43,19 @@ export const Greetings = () => {
           </div>
           <div>
             <div className="inline-block align-bottom">
-              <Button className="font-bold" type={'adaptive'} outlined>
+              <Button
+                id={`discover-button-id`}
+                className="font-bold"
+                type={'adaptive'}
+                outlined
+              >
                 DISCOVER MORE
               </Button>
-              <Button onClick={goToNextStep} type={'adaptive'}>
+              <Button
+                id={`button-next`}
+                onClick={goToNextStep}
+                type={'adaptive'}
+              >
                 Next
               </Button>
             </div>

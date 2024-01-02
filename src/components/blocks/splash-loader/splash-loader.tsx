@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SplashLoaderComponent } from './splash-loader-component';
 import { useSplashLoader } from '@/stores/splash-loader';
 

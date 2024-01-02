@@ -23,18 +23,18 @@ export const StorylineMiniPopupLoadingPlaceholder = () => {
         <div className="border-t-2 "></div>
         <div className="flex justify-between">
           <div className="my-2">
-            <p className="font-semibold text-base mb-2">
+            <div className="font-semibold text-base mb-2">
               <LoadingHeadingName />
-            </p>
+            </div>
             <div className="flex space-x-2">
               <LoadingAvatar className="w-6 h-6 rounded-full text-slate-200 dark:text-slate-700" />
               <LoadingAvatar className="w-6 h-6 rounded-full text-slate-200 dark:text-slate-700" />
             </div>
           </div>
           <div className="my-2">
-            <p className="font-semibold text-base mb-2">
+            <div className="font-semibold text-base mb-2">
               <LoadingHeadingName />
-            </p>
+            </div>
             <div className="text-base text-slate-400 font-semibold">
               <LoadingSubheading />
             </div>

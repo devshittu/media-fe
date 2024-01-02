@@ -74,10 +74,14 @@ export const CookieConsentComponent = ({
           </p>
 
           <div className="flex space-x-3">
-            <Button outlined type={'adaptive'}>
+            <Button id={`customise-cookie`} outlined type={'adaptive'}>
               Customise
             </Button>
-            <Button type="adaptive" onClick={handleConsent}>
+            <Button
+              id={`accept-cookie`}
+              type="adaptive"
+              onClick={handleConsent}
+            >
               Accept and continue{' '}
             </Button>
           </div>
