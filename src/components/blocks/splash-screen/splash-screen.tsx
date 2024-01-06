@@ -1,7 +1,8 @@
 import React from 'react';
-import { IconBlockScale, IconGrow, LoadingFallingGlyph, LoadingSplash } from '@/components/loading';
+import { IconBlockScale, IconGrow } from '@/components/loading';
+import { SplashScreenProps } from './types';
 
-export const SplashScreen = ({ id = 'app-splash' }: { id?: string }) => {
+export const SplashScreen = ({ id = 'app-splash' }: SplashScreenProps) => {
 
   return (
       <>
