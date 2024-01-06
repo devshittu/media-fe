@@ -1,7 +1,5 @@
 import React from 'react';
 import { IconBlockScale, IconGrow, LoadingFallingGlyph, LoadingSplash } from '@/components/loading';
-import Portal from '@/hoc/Portal';
-import { AppLogoIcon, Icon } from '@/components/illustrations';
 
 export const SplashScreen = ({ id = 'app-splash' }: { id?: string }) => {
 
@@ -29,4 +27,4 @@ export const SplashScreen = ({ id = 'app-splash' }: { id?: string }) => {
 };
 export default SplashScreen;
 
-// Path: src/components/blocks/splash-loader/splash-loader.tsx
+// Path: /Users/mshittu/programming-projects/javascript/react/media-fe/src/components/blocks/splash-screen/splash-screen.tsx
