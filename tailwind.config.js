@@ -36,17 +36,17 @@ module.exports = {
         // New dash animation
         'loader-dash': {
           '0%': {
-            strokeDasharray: '-90', //-700
+            strokeDasharray: '-129', //-700
             strokeWidth: '2.5',
             fill: 'transparent',
           },
           '33%': {
-            strokeDasharray: '90', //700
+            strokeDasharray: '129', //700
             strokeWidth: '2.5',
             fill: 'transparent',
           },
           '66%': {
-            strokeDasharray: '90', //700
+            strokeDasharray: '129', //700
             strokeWidth: '0',
             fill: '#000000',
           },
