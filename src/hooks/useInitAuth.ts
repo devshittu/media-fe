@@ -3,10 +3,12 @@ import { AuthStore } from '@/stores/auth';
 
 export const useInitAuth = () => {
   useEffect(() => {
-    (async () => {
-      await AuthStore.getState().initializeAuth();
-    })();
+    const { initializeAuth, isRefreshingToken } = AuthStore.getState();
+
+    if (!isRefreshingToken) {
+      initializeAuth();
+    }
   }, []);
 };
 
-// Path: media-fe/src/hooks/useInitializeStore.ts
+// Path: media-fe/src/hooks/useInitAuth.ts
