@@ -1,19 +1,11 @@
+import { SplashScreenWrapper } from '@/components/blocks/splash-screen/';
 import { AppProvider } from '@/providers/app';
 import '@/styles/globals.css';
 import { inter, roboto_mono } from '@/utils/fonts';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ReactElement, ReactNode } from 'react';
-
-// Todo: Remove
-// const https = require('https');
-
-// https.get('https://api.mediaapp.local/api/stories/hashtag/Deforestation/', (res) => {
-//   console.log('statusCode:', res.statusCode);
-// }).on('error', (err) => {
-//   console.error(err);
-// });
+import React, { ReactElement, ReactNode } from 'react';
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'true') {
   require('@/testing/mocks/initialize');
@@ -31,29 +23,37 @@ type AppPropsWithLayout = AppProps & {
 };
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page);
-  // const layoutProps = pageProps.stories ? { stories: pageProps.stories } : {};
-  const pageContent = getLayout(<Component {...pageProps} />, pageProps);
+  const pageContent = (
+    <>
+      {getLayout(
+        React.createElement(Component as React.ComponentType<any>, pageProps),
+        pageProps,
+      )}
+    </>
+  );
 
   return (
     <>
-      <Head>
-        <meta
-          name="description"
-          content="Media App is a Next.js starter kit for building a media streaming app"
-        />
-        <title>Media App</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-        <style jsx global>
-          {`
-            :root {
-              --inter-font: ${inter.style.fontFamily};
-              --roboto-mono-font: ${roboto_mono.style.fontFamily};
-            }
-          `}
-        </style>
-      </Head>
-      <AppProvider>{pageContent}</AppProvider>
+      <SplashScreenWrapper>
+        <Head>
+          <meta
+            name="description"
+            content="Media App is a Next.js starter kit for building a media streaming app"
+          />
+          <title>Media App</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/favicon.ico" />
+          <style jsx global>
+            {`
+              :root {
+                --inter-font: ${inter.style.fontFamily};
+                --roboto-mono-font: ${roboto_mono.style.fontFamily};
+              }
+            `}
+          </style>
+        </Head>
+        <AppProvider>{pageContent}</AppProvider>
+      </SplashScreenWrapper>
     </>
   );
 };
