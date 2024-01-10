@@ -24,7 +24,7 @@ type AppProviderProps = {
 };
 
 export const AppProvider = ({ children, theme }: AppProviderProps) => {
-  useInitialSplashLoader();
+  // useInitialSplashLoader();
   // Initialize the Zustand store with default settings when the App component mounts
   useInitializeStore();
 
@@ -57,7 +57,7 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
 
           {/* The confetti effect and Splash loader effect to make it available through out the app */}
           <ConfettiEffect />
-          <SplashLoader />
+          {/* <SplashLoader /> */}
           {/* </RootLayout> */}
         </NavProvider>
       </ThemeProvider>
