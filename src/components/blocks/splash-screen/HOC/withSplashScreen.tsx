@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useSplashStore } from '../store/splash-screen-store';
 import SplashScreen from '../splash-screen';
@@ -62,6 +61,5 @@ function getDisplayName<P>(WrappedComponent: React.ComponentType<P>) {
 }
 
 export default withSplashScreen;
-
 
 // Path: src/components/blocks/splash-screen/HOC/withSplashScreen.tsx
