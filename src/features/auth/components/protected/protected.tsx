@@ -2,7 +2,11 @@ import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthStore } from '@/stores/auth';
 import { Loading } from '@/components/loading';
-import { NotificationType, notificationsStore, useNotifications } from '@/stores/notifications';
+import {
+  NotificationType,
+  notificationsStore,
+  useNotifications,
+} from '@/stores/notifications';
 
 export type ProtectedProps = {
   children: ReactNode;
