@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useSplashLoader } from '@/stores/splash-loader';
 import { CookieConsentComponent } from './cookie-consent-component';
 import { useCookieConsent } from '@/stores/ui/cookie-consent';
 import { DrawerComponent, DrawerSide } from '../drawer';
