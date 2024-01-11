@@ -5,18 +5,18 @@ import { SettingsIcon } from '@/components/illustrations';
 import { AuthUserContextMenu } from '../context-menu/auth-user-context-menu';
 import { ControlledPopper } from '@/components/blocks/popup';
 import { LoadingAvatar } from '@/components/loading';
-import { useAuth } from '@/stores/auth';
+import { useAuthStore } from '@/stores/auth';
 
 export const AuthUserTile = ({
   actionButtonText,
   closeIcon = <SettingsIcon className="w-6 h-6" strokeWidth={2.5} />,
 }: AuthUserTileProps) => {
-  const auth = useAuth();
+  const {authUserDetails} = useAuthStore();
   const defaultAvatar = '/avatars/avatar.svg';
-  const name = auth.authUserDetails?.display_name || 'Loading...';
-  const subName = auth.authUserDetails?.username || 'Loading...';
-  const description = auth.authUserDetails?.bio || 'Loading...';
-  const profileImageSrc = auth.authUserDetails?.avatar_url || defaultAvatar;
+  const name = authUserDetails?.display_name || 'Loading...';
+  const subName = authUserDetails?.username || 'Loading...';
+  const description = authUserDetails?.bio || 'Loading...';
+  const profileImageSrc = authUserDetails?.avatar_url || defaultAvatar;
 
   return (
     <>
