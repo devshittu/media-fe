@@ -52,10 +52,10 @@ SettingsSectionProps) => {
   const onSubmit = (data: NotificationSettingsData) => {
     console.log('data:', data);
 
-    const updatedData = updateDeep(initialSettingValues, {
+    const newData = {
       notification_settings: { email: data },
-    });
-    updateSettings.submit(updatedData);
+    };
+    updateSettings.submit(newData);
   };
   const isAccountChecked = watch('account');
   const isMarketingChecked = watch('marketing');
