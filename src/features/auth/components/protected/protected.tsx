@@ -1,52 +1,40 @@
+import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
-import { ReactNode, useEffect } from 'react';
-
+import { useAuthStore } from '@/stores/auth';
 import { Loading } from '@/components/loading';
-
-import { useAuthUser } from '../../api/get-auth-user';
-import { Link } from '@/components/labs';
+import { NotificationType, notificationsStore, useNotifications } from '@/stores/notifications';
 
 export type ProtectedProps = {
   children: ReactNode;
 };
 
 export const Protected = ({ children }: ProtectedProps) => {
-  const { replace, asPath } = useRouter();
-  const { data: authUser, isLoading, error } = useAuthUser();
+  const router = useRouter();
+  // const { showNotification } = useNotifications();
+  const { authUserDetails, accessToken, isRefreshingToken } = useAuthStore();
+  // Redirect to login if no access token and not refreshing token
+  if (!accessToken && !isRefreshingToken) {
+    router.replace('/auth/signin?redirect=' + router.asPath);
 
-  useEffect(() => {
-    if (error) {
-      console.error(
-        'authdebug: user.error:// ',
-        error,
-        'current url:// ',
-        asPath,
-      ); // Log the error for debugging
-      replace(`/auth/login?redirect=${asPath}`, undefined, { shallow: true });
-    }
-    // if (!user.data && !user.isLoading) {
-    //   replace(`/auth/login?redirect=${asPath}`, undefined, { shallow: true });
-    // }
-  }, [authUser, asPath, replace, error]);
+    notificationsStore.getState().showNotification({
+      type: NotificationType.WARNING,
+      title: 'Error',
+      duration: 5000,
+      message: 'You must login to continue.',
+    });
+    return null;
+  }
 
-  if (isLoading) {
+  // Show loading indicator while token is being refreshed or user details are being fetched
+  if (isRefreshingToken || !authUserDetails) {
     return (
       <div className="flex flex-col justify-center h-full">
-        from protected routes
         <Loading />
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div>
-        Please <Link href="/">log in</Link> to continue.
-      </div>
-    );
-  }
-  if (!authUser && !isLoading) return null;
-
+  // Render children if user is authenticated
   return <>{children}</>;
 };
 
