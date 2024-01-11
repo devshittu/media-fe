@@ -8,6 +8,7 @@ import {
 import getConfig from 'next/config';
 import { handleLogoutAndRedirect, handleTokenRefresh, signOut } from '@/utils';
 import { ErrorCode } from '@/config/error-codes';
+import Router from 'next/router';
 
 // Get our configuration of our runtimes
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
@@ -51,13 +52,48 @@ apiClient.interceptors.response.use(
     );
     const isLogoutUrl = originalRequest.url.includes(URI_AUTH_LOGOUT);
 
+    // if (
+    //   (errorCode === ErrorCode.InvalidAccessToken ||
+    //     errorCode === ErrorCode.AuthCredentialNotProvided ||
+    //     errorCode === ErrorCode.TokenNotProvided) &&
+    //   (!isRefreshTokenUrl || !isLogoutUrl)
+    // ) {
+    //   console.error(
+    //     `(errorCode === ErrorCode.TokenNotProvided) = ${
+    //       errorCode === ErrorCode.TokenNotProvided
+    //     } 
+    //     !isRefreshTokenUrl || !isLogoutUrl`,
+    //   );
+    //   // Handle the specific case of 'token_not_provided' during token refresh
+    //   originalRequest._retry = true; // Set the retry flag
+    //   // const { setIsRefreshingToken } = AuthStore.getState();
+
+    //   // setIsRefreshingToken(false);
+    //   return handleTokenRefresh(originalRequest);
+    //   // return Promise.reject(error);
+    // }
+
+    // // Check if the error is 'token_not_provided' during a token refresh operation
+    // if (errorCode === ErrorCode.TokenNotProvided && isRefreshTokenUrl) {
+    //   // Handle the specific case of 'token_not_provided' during token refresh
+    //   AuthStore.getState().clearAuth();
+    //   Router.push('/auth/signin');
+    //   notificationsStore.getState().showNotification({
+    //     type: NotificationType.ERROR,
+    //     title: 'Session Expired',
+    //     message: 'Please log in again.',
+    //     duration: 5000,
+    //   });
+    //   return Promise.reject(error);
+    // }
+
     // Prevent retrying the refresh token and logout endpoints
     if (isRefreshTokenUrl || isLogoutUrl) {
       console.error(
         `isRefreshTokenUrl || isLogoutUrl: stop redirecting to ${'another page'}`,
       );
       if (errorCode === ErrorCode.TokenNotProvided) {
-        // handleLogoutAndRedirect();
+        console.log('authdebug: Token not provided');
       }
 
       return Promise.reject(error);
@@ -81,7 +117,6 @@ apiClient.interceptors.response.use(
       !originalRequest._retry
     ) {
       originalRequest._retry = true; // Set the retry flag
-
       return handleTokenRefresh(originalRequest);
     }
 
@@ -91,6 +126,7 @@ apiClient.interceptors.response.use(
     // then redirect to the '/' for user name and password input from the user.
     // Provide helpful message
     // If it's a retry and still fails, or if the token was not provided, handle the error without retrying
+
     if (originalRequest._retry || errorCode === ErrorCode.TokenNotProvided) {
       handleLogoutAndRedirect();
       return Promise.reject(error);
