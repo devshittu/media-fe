@@ -1,9 +1,7 @@
 import { ReactElement, useMemo } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import {
-  StoryList
-} from '@/features/stories/components';
+import { StoryList } from '@/features/stories/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import {
   StoriesQueryParams,
