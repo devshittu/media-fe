@@ -32,7 +32,7 @@ export const LoadingFallingGlyph: React.FC = () => {
   const animation8 = ' animate-flake8 ';
 
   return (
-    <div className="bg-[#1D9F75] text-slate-700 dark:text-slate-100 ">
+    <div className="bg-[#1D9F75]x text-slate-700 dark:text-slate-100 ">
       {'Glyphs'}
       <section id="flake">
         <div className={`w-[400px] block m-auto h-96 `}>

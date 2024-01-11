@@ -1,15 +1,13 @@
 import Axios from 'axios';
-import Router from 'next/router';
 import { NotificationType, notificationsStore } from '@/stores/notifications';
 import { AuthStore } from '@/stores/auth';
 import {
   URI_AUTH_LOGOUT,
   URI_AUTH_TOKEN_REFRESH,
 } from '@/config/api-constants';
-
 import getConfig from 'next/config';
-import { refreshToken } from '@/features/auth/api/post-refresh-token';
-import { signOut } from '@/utils';
+import { handleLogoutAndRedirect, handleTokenRefresh, signOut } from '@/utils';
+import { ErrorCode } from '@/config/error-codes';
 
 // Get our configuration of our runtimes
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
@@ -28,18 +26,6 @@ export const apiClient = Axios.create({
   // withCredentials: true,
 });
 
-const handleLogoutAndRedirect = async () => {
-  try {
-    await signOut();
-  } catch (error) {
-    console.error('Error during signout:', error);
-  } finally {
-    // AuthStore.getState().setAccessToken(null);
-    // AuthStore.getState().setAuthUserDetails(null);
-    Router.push('/');
-  }
-};
-
 apiClient.interceptors.request.use((config) => {
   if (config.requiresAuth) {
     // Check if requiresAuth flag is set
@@ -54,48 +40,59 @@ apiClient.interceptors.request.use((config) => {
 });
 
 apiClient.interceptors.response.use(
-  (response) => {
-    return response.data;
-  },
+  (response) => response.data,
   async (error) => {
     const originalRequest = error.config;
+    const errorCode = error.response?.data?.error?.code;
 
-    // If 401 response and not a retry request, try to refresh token
-    if (
-      error.response &&
-      error.response.status === 401 &&
-      !originalRequest._retry &&
-      originalRequest.url !== URI_AUTH_TOKEN_REFRESH && // Ensure we're not retrying the refresh token endpoint itself
-      originalRequest.url !== URI_AUTH_LOGOUT // Ensure we're not retrying the signout endpoint itself
-    ) {
-      const currentAccessToken = AuthStore.getState().accessToken;
+    // Check if the URL contains the path for refresh token and logout endpoints
+    const isRefreshTokenUrl = originalRequest.url.includes(
+      URI_AUTH_TOKEN_REFRESH,
+    );
+    const isLogoutUrl = originalRequest.url.includes(URI_AUTH_LOGOUT);
 
-      console.log(`authdebug: the currentAccessToken = ${currentAccessToken}`);
-      // If there's no access token in the store, handle signout and exit
-      if (!currentAccessToken) {
-        console.error('No access token available.');
+    // Prevent retrying the refresh token and logout endpoints
+    if (isRefreshTokenUrl || isLogoutUrl) {
+      console.error(
+        `isRefreshTokenUrl || isLogoutUrl: stop redirecting to ${'another page'}`,
+      );
+      if (errorCode === ErrorCode.TokenNotProvided) {
         // handleLogoutAndRedirect();
-        return; // Exit the interceptor
       }
 
-      originalRequest._retry = true;
+      return Promise.reject(error);
+    }
 
-      try {
-        const response = await refreshToken();
-        const newAccessToken = response?.access_token;
-        AuthStore.getState().setAccessToken(newAccessToken || null);
-        originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
-        return apiClient(originalRequest);
-      } catch (refreshError: any) {
-        console.error(
-          'Refresh token error:',
-          refreshError?.response?.data || refreshError.message || refreshError,
-        );
-        // AuthStore.getState().setAccessToken(null);
-        handleLogoutAndRedirect();
-      }
-    } else if (originalRequest._retry) {
-      // If it's a retry request and still fails, just reject the promise
+    // Check for expired access token error code
+    // if code is "invalid_access_token" access token is invalid, return then retry refresh the token it means it is expired
+
+    // Check for the error code
+    // if the code returned is "auth_credential_not_provided",
+    // it means the access token was not provided
+    // then try using the refresh token to get a new access and retry
+    // only after then and it is unsuccessful then,
+    //redirect to the '/' for user name and password input from the user.
+    // Provide helpful message
+
+    // Check for expired or invalid access token error code
+    if (
+      (errorCode === ErrorCode.InvalidAccessToken ||
+        errorCode === ErrorCode.AuthCredentialNotProvided) &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true; // Set the retry flag
+
+      return handleTokenRefresh(originalRequest);
+    }
+
+    // Check for refresh token error code
+    // if the code returned is "token_not_provided",
+    // it means the refresh token was not provided
+    // then redirect to the '/' for user name and password input from the user.
+    // Provide helpful message
+    // If it's a retry and still fails, or if the token was not provided, handle the error without retrying
+    if (originalRequest._retry || errorCode === ErrorCode.TokenNotProvided) {
+      handleLogoutAndRedirect();
       return Promise.reject(error);
     }
 
@@ -120,7 +117,6 @@ apiClient.interceptors.response.use(
     if (error.response?.data) {
       return Promise.reject(error.response.data);
     }
-
     return Promise.reject(error);
   },
 );

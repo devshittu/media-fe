@@ -5,6 +5,8 @@ import { AuthResponse, PasswordSigninData } from '../types';
 import { URI_AUTH_TOKEN } from '@/config/api-constants';
 import { AuthStore } from '@/stores/auth';
 import { getAuthUser } from './get-auth-user';
+import { QUERY_KEYS } from '@/config/query';
+const { AUTH_USER } = QUERY_KEYS;
 
 export const signin = (data: PasswordSigninData): Promise<AuthResponse> => {
   return apiClient.post(`${URI_AUTH_TOKEN}`, data);
@@ -20,15 +22,29 @@ export const usePasswordSignin = ({ onSuccess }: UsePasswordSigninOptions) => {
 
     onSuccess: async (response) => {
       const newAccessToken = response.access_token;
-      const { setAccessToken } = AuthStore.getState();
+      const { setAccessToken, setAuthUserDetails } = AuthStore.getState();
       setAccessToken(newAccessToken);
 
-      const authUserData = await queryClient.fetchQuery(
-        ['auth-user'],
-        getAuthUser,
-      );
-      const { setAuthUserDetails } = AuthStore.getState();
-      setAuthUserDetails(authUserData);
+      // Fetch user details after login
+      // queryClient.invalidateQueries([AUTH_USER]);
+
+      try {
+        const authUserData = await queryClient.fetchQuery(
+          [AUTH_USER],
+          getAuthUser,
+        );
+
+        if (authUserData) {
+          setAuthUserDetails(authUserData);
+        } else {
+          console.error('Failed to fetch auth user data: Data is undefined');
+        }
+      } catch (error) {
+        console.error(
+          'An error occurred while fetching the auth user data:',
+          error,
+        );
+      }
 
       onSuccess?.(response);
     },

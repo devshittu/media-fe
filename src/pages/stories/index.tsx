@@ -2,8 +2,7 @@ import { ReactElement, useMemo } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import {
-  StoryList,
-  StoryListLoadingPlaceholder,
+  StoryList
 } from '@/features/stories/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import {
@@ -15,15 +14,12 @@ import {
 } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { StoriesPageFrame } from '@/components/frames';
-import { NotFound } from '@/components/not-found';
 import { cleanObject } from '@/utils';
 import { useTabContentManager } from '@/components/blocks/tab';
 import { useHomePageTabs } from '@/stores/tabs';
 import { Discover } from '@/features/trends/components/discover/discover';
 
 import { useInfiniteUserInvertedFeedStories } from '@/features/stories/api/get-user-inverse-feed-stories';
-import { LoadingFallingGlyph, LoadingSplash } from '@/components/loading';
-import { TwitterIcon } from '@/components/illustrations';
 
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -56,8 +52,8 @@ const StoriesPage = ({
       content: (
         <>
           <Discover />
-          <LoadingSplash />
-          <LoadingFallingGlyph />
+          {/* <LoadingSplash />
+          <LoadingFallingGlyph /> */}
           <StoryList
             useStoriesHook={useInfiniteUserInvertedFeedStories}
             queryParams={{ page: 1, page_size: 3 }}
@@ -120,11 +116,6 @@ export const getServerSideProps = async (
     page: 1,
     page_size: PAGINATE_STORIES_LIMIT,
   });
-  // const accessToken = await refreshToken();
-  // const accessToken = await refreshAccessToken();
-
-  // console.log('accessToken:', accessToken);
-  // console.log('context.req.headers:', context.req.headers);
   console.log('context.req.headers.cookie:', context.req.headers.cookie);
 
   try {

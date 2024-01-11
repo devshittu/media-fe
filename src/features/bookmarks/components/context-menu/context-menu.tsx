@@ -11,11 +11,7 @@ import {
   EditIcon,
   Trash2Icon,
 } from '@/components/illustrations/';
-import { Tag } from '@/components/blocks/tag';
-import Menu, {
-  MenuHeader,
-  MenuButtonItem,
-} from '@/components/menus/menu';
+import Menu, { MenuHeader, MenuButtonItem } from '@/components/menus/menu';
 import { Bookmark, BookmarkCategory } from '../../types';
 import { usePopup } from '@/stores/ui';
 import { FormPopup, PromptPopup } from '@/components/blocks/popup/blocks/';

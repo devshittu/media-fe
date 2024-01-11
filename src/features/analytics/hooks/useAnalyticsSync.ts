@@ -17,7 +17,6 @@ export const useAnalyticsSync = ({
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-
       const storedAnalyticsData = AnalyticsStore.getState().getAllData();
       console.log(`analyticsdebug: Ready to sync data`, storedAnalyticsData);
       if (storedAnalyticsData.length > 0) {
@@ -29,7 +28,6 @@ export const useAnalyticsSync = ({
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 };
 
 // src/features/analytics/hooks/useAnalyticsSync.ts
