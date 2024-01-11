@@ -51,7 +51,7 @@ export const AppProvider = ({ children, theme }: AppProviderProps) => {
               <GlobalPopup />
 
               <Tour />
-              {/* <CookieConsent /> */}
+              <CookieConsent />
             </CategoriesProvider>
           </QueryClientProvider>
 
