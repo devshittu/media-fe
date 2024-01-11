@@ -21,13 +21,10 @@ type AppProviderProps = {
 };
 
 export const AppProvider = ({ children, theme }: AppProviderProps) => {
-  // useInitialSplashLoader();
+
   // Initialize the Zustand store with default settings when the App component mounts
   useInitializeStore();
-
   useInitAuth();
-
-  // useAppInitialize();
 
   return (
     <>
