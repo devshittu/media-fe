@@ -53,7 +53,7 @@ const SettingsPage = () => {
               <SettingsFieldLink
                 id={'notification-settings-link'}
                 title="Notification Settings"
-                linkHref={`/settings/notification`}
+                linkHref={`/settings/notifications`}
                 description={`Choose which types of notifications you'd like to receive and how.`}
               />
               <SettingsFieldLink
