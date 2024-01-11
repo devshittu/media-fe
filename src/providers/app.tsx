@@ -1,7 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { NavProvider, BodyStyleUpdater } from '@/components/blocks/nav/';
-import RootLayout from '@/layouts/root-layout';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -11,8 +10,6 @@ import { Notifications } from '@/components/notifications';
 import { GlobalPopup } from '@/components/blocks/popup';
 import { Tour } from '@/components/blocks/tour';
 import { ConfettiEffect } from '@/components/confetti';
-import SplashLoader from '@/components/blocks/splash-loader/splash-loader';
-import { useInitialSplashLoader } from '@/components/blocks/splash-loader/hooks/useInitialSplashLoader';
 import { useInitAuth, useInitializeStore } from '@/hooks';
 import { CookieConsent } from '@/components/blocks/cookie-consent';
 import { GlobalBanner } from '@/components/blocks/banner';
