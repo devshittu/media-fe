@@ -1,24 +1,18 @@
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import UserLayout from '@/layouts/user-layout';
-import React, { ReactElement, useMemo, useState } from 'react';
-import { SidePanel } from '@/components/blocks/side-panel';
+import React, { ReactElement } from 'react';
 import {
   Bookmark,
   BookmarkCategory,
   BookmarksQueryParams,
   getBookmarks,
-  useGetBookmarks,
   useInfiniteBookmarks,
 } from '@/features/bookmarks';
-import {
-  BookmarkList,
-} from '@/features/bookmarks/components';
+import { BookmarkList } from '@/features/bookmarks/components';
 import { StoriesPageFrame } from '@/components/frames';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { cleanObject } from '@/utils';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { NotFound } from '@/components/not-found';
-import { PaginatedListQueryParams } from '@/types';
 import { useBookmarkPageTabs } from '@/stores/tabs';
 import { useTabContentManager } from '@/components/blocks/tab';
 
@@ -105,7 +99,6 @@ const BookmarksPage = ({
 
       <div ref={contentRef} onScroll={handleScroll} className="tab-content">
         {/* {error && <p className="error-message">{error}</p>} */}
-
         {renderTabContent()}
       </div>
     </>
