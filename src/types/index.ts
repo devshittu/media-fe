@@ -1,3 +1,5 @@
+import { ErrorCode } from "@/config/error-codes";
+
 export type Entity = {
   id: string;
   created_at: number;
@@ -11,6 +13,18 @@ export type ApiResponse = ResponseStatus & {
   // status: string;
   // data: ApiResponseData;
   data: any;
+};
+
+// If you know the possible types of `detail`, list them here
+type DetailType = string | string[] | { [key: string]: any } | null;
+
+export type ApiResponseError = {
+  status: ResponseStatusType;
+  status_code: number;
+  error: {
+    code: ErrorCode;
+    detail: DetailType;
+  };
 };
 
 export enum ResponseStatusType {
