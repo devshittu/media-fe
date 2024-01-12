@@ -52,6 +52,18 @@ apiClient.interceptors.response.use(
     );
     const isLogoutUrl = originalRequest.url.includes(URI_AUTH_LOGOUT);
 
+    // Handle specific error code 'token_not_provided'
+    if (errorCode === ErrorCode.TokenNotProvided) {
+      // If the error is not from the refresh token or logout endpoints
+      if (!isRefreshTokenUrl && !isLogoutUrl) {
+        // Quietly refresh the token and retry the original request
+        return handleTokenRefresh(originalRequest);
+      } else {
+        // If the error is from the refresh token or logout endpoints, handle logout
+        handleLogoutAndRedirect();
+        return Promise.reject(error);
+      }
+    }
     // if (
     //   (errorCode === ErrorCode.InvalidAccessToken ||
     //     errorCode === ErrorCode.AuthCredentialNotProvided ||
@@ -61,7 +73,7 @@ apiClient.interceptors.response.use(
     //   console.error(
     //     `(errorCode === ErrorCode.TokenNotProvided) = ${
     //       errorCode === ErrorCode.TokenNotProvided
-    //     } 
+    //     }
     //     !isRefreshTokenUrl || !isLogoutUrl`,
     //   );
     //   // Handle the specific case of 'token_not_provided' during token refresh
