@@ -9,7 +9,6 @@ export default async function sitemapHandler(
   try {
     const sitemap = await generateDynamicSitemap();
     res.setHeader('Content-Type', 'application/xml');
-    console.log('sitemap://', sitemap, res);
     res.status(200).send(sitemap);
   } catch (e) {
     console.error(e);
