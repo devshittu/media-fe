@@ -6,7 +6,6 @@ export async function generateDynamicSitemap() {
   // Fetch your article data. This could be from a database, API, etc.
   //   const articles = await fetchAllArticles(); // Replace with actual data fetching logic
   const articles = await getStories({ params: { page_size: 100 } }); // Replace with actual data fetching logic
-  console.log('sitemap://', articles);
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${articles.results
