@@ -1,4 +1,4 @@
-import { Seo } from '@/components/seo';
+import { SEO } from '@/components/seo';
 import React, { ReactElement, useMemo } from 'react';
 import LandingLayout from '@/layouts/landing-layout';
 import { Footer, Explore } from '@/components/labs/LandingPage/';
@@ -20,9 +20,21 @@ type PublicHomePageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
 export default function Home({ stories, queryParams }: PublicHomePageProps) {
+  const schemaOrgJSONLD = {
+    '@context': 'http://schema.org',
+    '@type': 'NewsArticle',
+    headline: 'Home',
+    description: 'Home page',
+    // ... other structured data properties
+  };
   return (
     <>
-      <Seo title="Home" />
+      <SEO
+        title="Home"
+        description="Home page"
+        schemaOrgJSONLD={schemaOrgJSONLD}
+        canonicalUrl={'/'}
+      />
       <Explore hashtag={queryParams.hashtag}>
         {!stories.results && <NotFound />}
         {stories.results?.length > 0 && (
