@@ -1,11 +1,19 @@
 import { useRouter } from 'next/router';
-import { Seo } from '@/components/seo';
+import { SEO } from '@/components/seo';
 import { SigninForm } from '@/features/auth';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 
 const SigninPage = () => {
   const router = useRouter();
   const { showNotification } = useNotifications();
+
+  const schemaOrgJSONLD = {
+    '@context': 'http://schema.org',
+    '@type': 'NewsArticle',
+    headline: 'Home',
+    description: 'Home page',
+    // ... other structured data properties
+  };
 
   const onSuccess = () => {
     showNotification({
@@ -21,7 +29,12 @@ const SigninPage = () => {
 
   return (
     <>
-      <Seo title="Sign In" />
+      <SEO
+        title="Signup"
+        description="Signup page"
+        schemaOrgJSONLD={schemaOrgJSONLD}
+        canonicalUrl={'/auth/signup'}
+      />
       <div className="container mx-auto flex flex-col px-5 py-14 justify-center items-center">
         <SigninForm onSuccess={onSuccess} />
       </div>
