@@ -53,10 +53,7 @@ const authStoreCreator: StateCreator<
 
       // Fetch auth user information (only if not already stored)
       if (!authUserDetails) {
-        await queryClient.fetchQuery(
-          [AUTH_USER],
-          getAuthUser,
-        );
+        await queryClient.fetchQuery([AUTH_USER], getAuthUser);
       }
     }
 

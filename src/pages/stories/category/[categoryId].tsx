@@ -2,13 +2,16 @@ import { ReactElement } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { StoriesQueryParams, Story } from '@/features/stories';
+import { StoriesQueryParams, Story, StoryList } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import { StoriesPageFrame } from '@/components/frames';
 import { cleanObject } from '@/utils';
 import { NotFound } from '@/components/not-found';
 import { CategorizedStoryList } from '@/features/stories/components/blocks/categorised-story-list';
-import { getStoriesByCategory } from '@/features/stories/api/get-stories-by-category';
+import {
+  getStoriesByCategory,
+  useInfiniteStoriesByCategory,
+} from '@/features/stories/api/get-stories-by-category';
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
 >;
@@ -19,11 +22,12 @@ const StoriesByCategoryPage = ({
   return (
     <>
       <StoriesPageHeader pageTitle={`:${queryParams.categoryId}`} />
-      {/* TODO: no stories to display */}
-      {!stories.results && <NotFound />}
-      {stories.results?.length > 0 && (
-        <CategorizedStoryList data={stories} queryParams={queryParams} />
-      )}{' '}
+
+      <StoryList
+        useStoriesHook={useInfiniteStoriesByCategory}
+        queryParams={{ page: 1, page_size: 10 }}
+        loadMoreOnScroll
+      />
     </>
   );
 };

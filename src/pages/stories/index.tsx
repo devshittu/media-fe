@@ -1,9 +1,7 @@
 import { ReactElement, useMemo } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
-import {
-  StoryList
-} from '@/features/stories/components';
+import { StoryList } from '@/features/stories/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import {
   StoriesQueryParams,
@@ -20,6 +18,7 @@ import { useHomePageTabs } from '@/stores/tabs';
 import { Discover } from '@/features/trends/components/discover/discover';
 
 import { useInfiniteUserInvertedFeedStories } from '@/features/stories/api/get-user-inverse-feed-stories';
+import { SEO } from '@/components';
 
 type PublicStoriesPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -31,6 +30,13 @@ const StoriesPage = ({
   queryParams,
   error,
 }: PublicStoriesPageProps) => {
+  const schemaOrgJSONLD = {
+    '@context': 'http://schema.org',
+    '@type': 'NewsArticle',
+    headline: 'Home',
+    description: 'Home page',
+    // ... other structured data properties
+  };
   // Define asynchronous functions for each tab
   const fetchDataForYou = useMemo(
     () => async () => {
@@ -85,6 +91,12 @@ const StoriesPage = ({
 
   return (
     <>
+      <SEO
+        title="Stories"
+        description="Stories page"
+        schemaOrgJSONLD={schemaOrgJSONLD}
+        canonicalUrl={'/stories'}
+      />
       <StoriesPageHeader
         pageTitle="Home"
         showTab

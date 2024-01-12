@@ -1,4 +1,4 @@
-import { ErrorCode } from "@/config/error-codes";
+import { ErrorCode } from '@/config/error-codes';
 
 export type Entity = {
   id: string;

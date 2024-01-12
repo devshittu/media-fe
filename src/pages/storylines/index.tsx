@@ -23,7 +23,7 @@ const StorylinesPage = ({
 }: PublicStoriesPageProps) => {
   return (
     <>
-      <StoriesPageHeader pageTitle="Home" showTab parallax />
+      <StoriesPageHeader pageTitle="Storylines" />
       {error && <p className="error-message">{error}</p>}
 
       {/* TODO: no storylines to display */}
@@ -53,7 +53,6 @@ export const getServerSideProps = async ({
 
   try {
     const storylines = await getStorylines({ params: queryParams });
-    console.log('Fetched storylines:', storylines);
 
     // Check if the results are empty
     if (!storylines.results || storylines.results.length === 0) {

@@ -2,10 +2,9 @@ import { ErrorCode } from '@/config/error-codes';
 import { NotificationType, notificationsStore } from '@/stores/notifications';
 import { ApiResponseError, ResponseStatusType } from '@/types';
 
-
 export const parseError = (errorResponse: any): ApiResponseError | null => {
   try {
-    if (errorResponse && errorResponse.response && errorResponse.response.data) {
+    if (errorResponse?.response?.data) {
       const errorData: ApiResponseError = errorResponse.response.data;
       if (errorData.status === 'failed' && errorData.error) {
         // Show notification for specific error codes

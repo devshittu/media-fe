@@ -9,6 +9,7 @@ import {
   URI_STORIES_HASHTAG_BY_HASHTAG_NAME,
 } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
+import { ApiCallResultType, CacheRefType } from '@/types';
 const { GET_STORIES_BY_HASHTAG } = QUERY_KEYS;
 
 type GetStoriesByHashtagOptions = {
@@ -31,6 +32,10 @@ export const getStoriesByHashtag = ({
 };
 
 export const useStoriesByHashtag = ({ params }: GetStoriesByHashtagOptions) => {
+  const queryKey: CacheRefType = [
+    GET_STORIES_BY_HASHTAG,
+    ApiCallResultType.DISCRETE,
+  ];
   const { data, isFetching, isFetched } = useQuery({
     queryKey: [GET_STORIES_BY_HASHTAG, params?.hashtag],
     queryFn: () => getStoriesByHashtag({ params }),
@@ -39,6 +44,7 @@ export const useStoriesByHashtag = ({ params }: GetStoriesByHashtagOptions) => {
   });
 
   return {
+    queryKey,
     data,
     isLoading: isFetching && !isFetched,
   };
@@ -48,35 +54,42 @@ export const useInfiniteStoriesByHashtag = ({
   params,
   initialData,
 }: GetStoriesByHashtagOptions) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [GET_STORIES_BY_HASHTAG, params?.hashtag],
-      async ({ pageParam = 2 }) => {
-        const response = await getStoriesByHashtag({
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
-      {
-        getNextPageParam: (lastPage: StoryListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
-        },
-
-        initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
-      },
-    );
-
-  return {
+  const queryKey: CacheRefType = [
+    GET_STORIES_BY_HASHTAG,
+    ApiCallResultType.INFINITE,
+  ];
+  const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isFetched,
+    isFetching,
+  } = useInfiniteQuery<StoryListResponse>(
+    queryKey,
+    async ({ pageParam = 1 }) =>
+      await getStoriesByHashtag({ params: { ...params, page: pageParam } }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        // Check if there are more pages to load
+        if (lastPage.current_page < lastPage.total_pages) {
+          return lastPage.current_page + 1;
+        }
+        return undefined; // No more pages
+      },
+      // Keep data fresh for 5 minutes
+      staleTime: 1000 * 60 * 5,
+      // Keep data in cache for 10 minutes
+      cacheTime: 1000 * 60 * 10,
+    },
+  );
+  return {
+    queryKey,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isFetching && !isFetched,
   };
 };
 //Path: src/features/stories/api/get-stories-by-hashtag.ts

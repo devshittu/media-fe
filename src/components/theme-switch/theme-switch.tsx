@@ -35,14 +35,19 @@ const ThemeSwitch = ({
     });
 
   if (!mounted) return null;
+
+  const handleThemeSelection = (theme: Theme) => {
+    handleThemeChange(theme); // Existing theme change logic
+    onChange?.(theme); // Update the form state in react-hook-form
+  };
+
   return (
     <>
       <AnalogSwitch className={className}>
         <AnalogSwitchItem
           title="Light"
           isSelected={currentTheme === THEME_LIGHT}
-          // onClick={() => setTheme(THEME_LIGHT)}
-          onClick={() => handleThemeChange(Theme.LIGHT)}
+          onClick={() => handleThemeSelection(Theme.LIGHT)}
           icon={<SunIcon />}
           disabled={disabled}
           ariaLabel="Light Theme"
@@ -50,8 +55,7 @@ const ThemeSwitch = ({
         <AnalogSwitchItem
           title="System"
           isSelected={currentTheme === THEME_SYSTEM}
-          // onClick={() => setTheme(THEME_SYSTEM)}
-          onClick={() => handleThemeChange(Theme.SYSTEM)}
+          onClick={() => handleThemeSelection(Theme.SYSTEM)}
           icon={<MonitorIcon />}
           disabled={disabled}
           ariaLabel="System Theme"
@@ -59,8 +63,7 @@ const ThemeSwitch = ({
         <AnalogSwitchItem
           title="Dark"
           isSelected={currentTheme === THEME_DARK}
-          // onClick={() => setTheme(THEME_DARK)}
-          onClick={() => handleThemeChange(Theme.DARK)}
+          onClick={() => handleThemeSelection(Theme.DARK)}
           icon={<MoonIcon />}
           disabled={disabled}
           ariaLabel="Dark Theme"

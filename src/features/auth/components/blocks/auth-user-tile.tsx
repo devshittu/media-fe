@@ -11,7 +11,7 @@ export const AuthUserTile = ({
   actionButtonText,
   closeIcon = <SettingsIcon className="w-6 h-6" strokeWidth={2.5} />,
 }: AuthUserTileProps) => {
-  const {authUserDetails} = useAuthStore();
+  const { authUserDetails } = useAuthStore();
   const defaultAvatar = '/avatars/avatar.svg';
   const name = authUserDetails?.display_name || 'Loading...';
   const subName = authUserDetails?.username || 'Loading...';

@@ -18,6 +18,7 @@ export const Copyright = ({ text, links, themeComponent }: CopyrightProps) => {
           label: 'Support Center',
         },
         { url: '/faq', label: 'F.A.Q' },
+        { url: '/api/sitemap.xml', label: 'Sitemap' },
         {
           url: `/legal/${APP_SUPPORT_VERSION}/privacy`,
           label: 'Privacy Policy',

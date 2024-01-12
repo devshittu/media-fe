@@ -2,9 +2,12 @@ import { ReactElement, useMemo } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { StoriesQueryParams, Story } from '@/features/stories';
+import { StoriesQueryParams, Story, StoryList } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { getStoriesByHashtag } from '@/features/stories/api/get-stories-by-hashtag';
+import {
+  getStoriesByHashtag,
+  useInfiniteStoriesByHashtag,
+} from '@/features/stories/api/get-stories-by-hashtag';
 import { StoriesPageFrame } from '@/components/frames';
 import { cleanObject } from '@/utils';
 import { NotFound } from '@/components/not-found';
@@ -21,11 +24,11 @@ const StoriesByHashtagPage = ({
     <>
       <StoriesPageHeader pageTitle={`#${queryParams.hashtag}`} />
       {error && <p className="error-message">{error}</p>}
-      {/* TODO: no stories to display */}
-      {!stories.results && <NotFound />}
-      {stories.results?.length > 0 && (
-        <HashtaggedStoryList data={stories} queryParams={queryParams} />
-      )}{' '}
+      <StoryList
+        useStoriesHook={useInfiniteStoriesByHashtag}
+        queryParams={{ page: 1, page_size: 10 }}
+        loadMoreOnScroll
+      />
     </>
   );
 };

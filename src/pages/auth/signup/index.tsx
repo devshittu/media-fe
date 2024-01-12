@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import { Seo } from '@/components/seo';
+import { SEO } from '@/components/seo';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 // import { AuthLayout } from '@/layouts/auth-layout';
 import { SignupForm } from '@/features/auth/components/signup-form/signup-form';
@@ -22,9 +22,21 @@ const SignupPage = () => {
     // router.replace(redirect || '/stories');
     router.push(`/auth/signup/verify-account`);
   };
+  const schemaOrgJSONLD = {
+    '@context': 'http://schema.org',
+    '@type': 'NewsArticle',
+    headline: 'Sign up',
+    description: 'Sign up page',
+    // ... other structured data properties
+  };
   return (
     <div className="h-screen">
-      <Seo title="Signup" />
+      <SEO
+        title="Signup"
+        description="Signup page"
+        schemaOrgJSONLD={schemaOrgJSONLD}
+        canonicalUrl={'/auth/signup'}
+      />
       <div className="container mx-auto flex flex-col px-5 py-14 justify-center items-center">
         <SignupForm onSuccess={onSuccess} />
       </div>

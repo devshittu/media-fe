@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { CarouselProps } from './types';
 import { ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
 import { Image } from '@/components/labs';
+import { LoadingPhoto } from '@/components/loading';
+import { Button } from '@/components/button';
 
 export const Carousel = ({ items, options = {} }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -59,6 +61,7 @@ export const Carousel = ({ items, options = {} }: CarouselProps) => {
                 src={item.media_url}
                 alt=""
                 loading="eager"
+                loaderSvg={<LoadingPhoto />}
               />
             )}
             <div className="absolute bottom-0 left-0 z-[10] w-full p-4 bg-black/30 backdrop-blur-md bg-opacity-50 text-white">
@@ -72,6 +75,7 @@ export const Carousel = ({ items, options = {} }: CarouselProps) => {
           <>
             <button
               type="button"
+              id={'prev'}
               className="absolute top-0 left-0 z-[6] flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
               data-carousel-prev
               onClick={prev}
@@ -84,8 +88,10 @@ export const Carousel = ({ items, options = {} }: CarouselProps) => {
                 <span className="sr-only">Previous</span>
               </span>
             </button>
+
             <button
               type="button"
+              id={'next'}
               className="absolute top-0 right-0 z-[6] flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
               data-carousel-next
               onClick={next}
