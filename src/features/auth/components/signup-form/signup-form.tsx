@@ -141,6 +141,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
             />
 
             <Button
+            id={'signup-button'}
               type="primary"
               loading={!!isLoading}
               disabled={isLoading}
