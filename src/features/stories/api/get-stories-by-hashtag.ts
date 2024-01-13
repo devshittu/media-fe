@@ -83,9 +83,12 @@ export const useInfiniteStoriesByHashtag = ({
       cacheTime: 1000 * 60 * 10,
     },
   );
+  // Extract count from the first page
+  const count = data?.pages[0]?.count;
   return {
     queryKey,
     data,
+    count,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
