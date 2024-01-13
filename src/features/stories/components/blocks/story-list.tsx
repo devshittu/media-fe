@@ -9,6 +9,7 @@ import {
 import { StoryListLoadingPlaceholder } from '@/features/stories/components/loading';
 import { StoryListItem } from './story-list-item';
 import { InteractiveLoader } from '@/components/loading/';
+import ResponseStatusWidget from '@/components/blocks/response-status/response-status';
 
 export const StoryList = ({
   useStoriesHook,
@@ -18,6 +19,7 @@ export const StoryList = ({
 }: StoryListProps) => {
   const hookResponse = useStoriesHook({ params: queryParams });
 
+  console.log('hookResponse://',hookResponse)
   const isResponseInfinite = 'fetchNextPage' in hookResponse;
   const dataFromStories = isResponseInfinite
     ? hookResponse.data
@@ -46,11 +48,21 @@ export const StoryList = ({
         cacheRefQueryKey={hookResponse.queryKey}
       />
     ));
+      const Nodata = (
+    <ResponseStatusWidget
+      title="No Record match"
+      subtitle='No Record match'
+      isSuccess
+      // ctaText="Continue"
+      // ctaOnClick={handleStartAccountSetupSequence}
+    />
+  );
 
   return (
     <div>
       {/* {`hookResponse.isLoading: ${hookResponse.isLoading} hookResponse.isFetchingNextPage: ${hookResponse.isFetchingNextPage}`} */}
       {hookResponse.isLoading && <StoryListLoadingPlaceholder />}
+      {(!hookResponse.isLoading && hookResponse.count === 0) && Nodata}
       {dataFromStories?.pages.map((page, i) => (
         <React.Fragment key={i}>{renderStories(page)}</React.Fragment>
       ))}
