@@ -27,8 +27,12 @@ export const getTrendingStories = ({
 };
 
 export const useTrendingStories = ({ params }: GetStoriesOptions) => {
+  const queryKey: CacheRefType = [
+    GET_TRENDING_STORIES,
+    ApiCallResultType.DISCRETE,
+  ];
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_TRENDING_STORIES, params],
+    queryKey,
     queryFn: () => getTrendingStories({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as StoryListResponse,
@@ -73,8 +77,8 @@ export const useInfiniteTrendingStories = ({
       // Keep data in cache for 10 minutes
       cacheTime: 1000 * 60 * 10,
     },
-    );
-// Extract count from the first page
+  );
+  // Extract count from the first page
   const count = data?.pages[0]?.count;
   return {
     queryKey,
