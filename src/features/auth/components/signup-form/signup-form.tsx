@@ -51,11 +51,11 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
 
   const onSubmit = async (data: SignupData) => {
     console.log(data);
-    // TODO: allow saving in the signup store
+    //  allow saving in the signup store
     setBasicInformation(data);
-    //TODO: when real data is expected to be submited to the server uncomment this and delete the onSuccess callback
+    //when real data is expected to be submited to the server uncomment this and delete the onSuccess callback
     submit(data);
-    // TODO: deletes this when real data is submitted
+   
     onSuccess();
   };
 
@@ -141,7 +141,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
             />
 
             <Button
-            id={'signup-button'}
+              id={'signup-button'}
               type="primary"
               loading={!!isLoading}
               disabled={isLoading}
