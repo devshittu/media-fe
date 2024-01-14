@@ -19,7 +19,6 @@ export const StoryList = ({
 }: StoryListProps) => {
   const hookResponse = useStoriesHook({ params: queryParams });
 
-  console.log('hookResponse://',hookResponse)
   const isResponseInfinite = 'fetchNextPage' in hookResponse;
   const dataFromStories = isResponseInfinite
     ? hookResponse.data
@@ -48,10 +47,10 @@ export const StoryList = ({
         cacheRefQueryKey={hookResponse.queryKey}
       />
     ));
-      const Nodata = (
+  const Nodata = (
     <ResponseStatusWidget
       title="No Record match"
-      subtitle='No Record match'
+      subtitle="No Record match"
       isSuccess
       // ctaText="Continue"
       // ctaOnClick={handleStartAccountSetupSequence}
@@ -62,7 +61,7 @@ export const StoryList = ({
     <div>
       {/* {`hookResponse.isLoading: ${hookResponse.isLoading} hookResponse.isFetchingNextPage: ${hookResponse.isFetchingNextPage}`} */}
       {hookResponse.isLoading && <StoryListLoadingPlaceholder />}
-      {(!hookResponse.isLoading && hookResponse.count === 0) && Nodata}
+      {!hookResponse.isLoading && hookResponse.count === 0 && Nodata}
       {dataFromStories?.pages.map((page, i) => (
         <React.Fragment key={i}>{renderStories(page)}</React.Fragment>
       ))}
