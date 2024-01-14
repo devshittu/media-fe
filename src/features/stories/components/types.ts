@@ -45,7 +45,7 @@ export type InfiniteStoriesResponse = {
   hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
   isLoading: boolean;
-  count: number
+  count: number;
 };
 export type LikeStoryFormData = {
   story_slug?: string;
