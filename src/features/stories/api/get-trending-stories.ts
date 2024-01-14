@@ -9,7 +9,8 @@ import { apiClient } from '@/lib/api-client';
 import { StoriesQueryParams, Story, StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_TRENDING_STORIES } from '@/config/api-constants';
-import { StoryAction } from '../components';
+import { InfiniteStoriesResponse, StoryAction } from '../components';
+import { ApiCallResultType, CacheRefType } from '@/types';
 const { GET_TRENDING_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
@@ -26,8 +27,12 @@ export const getTrendingStories = ({
 };
 
 export const useTrendingStories = ({ params }: GetStoriesOptions) => {
+  const queryKey: CacheRefType = [
+    GET_TRENDING_STORIES,
+    ApiCallResultType.DISCRETE,
+  ];
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_TRENDING_STORIES, params],
+    queryKey,
     queryFn: () => getTrendingStories({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as StoryListResponse,
@@ -42,36 +47,47 @@ export const useTrendingStories = ({ params }: GetStoriesOptions) => {
 export const useInfiniteTrendingStories = ({
   params,
   initialData,
-}: GetStoriesOptions) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [GET_TRENDING_STORIES, 'all'],
-      async ({ pageParam = 2 }) => {
-        const response = await getTrendingStories({
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
-      {
-        getNextPageParam: (lastPage: StoryListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
-        },
-
-        initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
-      },
-    );
-
-  return {
+}: GetStoriesOptions): InfiniteStoriesResponse => {
+  const queryKey: CacheRefType = [
+    GET_TRENDING_STORIES,
+    ApiCallResultType.INFINITE,
+  ];
+  const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isFetched,
+    isFetching,
+  } = useInfiniteQuery<StoryListResponse>(
+    queryKey,
+
+    async ({ pageParam = 1 }) =>
+      await getTrendingStories({ params: { ...params, page: pageParam } }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        // Check if there are more pages to load
+        if (lastPage.current_page < lastPage.total_pages) {
+          return lastPage.current_page + 1;
+        }
+        return undefined; // No more pages
+      },
+      // Keep data fresh for 5 minutes
+      staleTime: 1000 * 60 * 5,
+      // Keep data in cache for 10 minutes
+      cacheTime: 1000 * 60 * 10,
+    },
+  );
+  // Extract count from the first page
+  const count = data?.pages[0]?.count;
+  return {
+    queryKey,
+    data,
+    count: count || 0,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isFetching && !isFetched,
   };
 };
 

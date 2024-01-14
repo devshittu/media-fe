@@ -79,15 +79,16 @@ export const PersonalSettings = ({
       typeof item === 'string' ? item : item.id.toString(),
     );
 
-    // Update the personal_settings with the extracted IDs
-    const updatedData = updateDeep(initialSettingValues, {
+    const newData = {
       personal_settings: {
         ...data,
         favorite_categories: selectedCategoryIds,
       },
-    });
+    };
+    // Update the personal_settings with the extracted IDs
+    // const updatedData = updateDeep(initialSettingValues, newData);
 
-    updateSettings.submit(updatedData);
+    updateSettings.submit(newData);
   };
 
   const userSelectedCategoriesId = useMemo(() => {

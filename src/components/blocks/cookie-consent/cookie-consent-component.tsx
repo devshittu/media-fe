@@ -2,19 +2,23 @@ import { XIcon } from '@/components/illustrations';
 import { Link } from '@/components/labs';
 import { useBrowserStorage } from '@/hooks/useBrowserStorage';
 import React, { HTMLAttributes } from 'react';
-import { useCookieConsent } from '@/stores/ui';
+import { useCookieConsentStore } from '@/stores/ui';
 import { Button } from '@/components/button';
 type CookieConsentComponentProps = {
+  id: string;
+  onClose: () => void;
   className?: string;
 } & HTMLAttributes<HTMLDivElement>;
 export const CookieConsentComponent = ({
+  id,
+  onClose,
   ...props
 }: CookieConsentComponentProps) => {
   const {
     isOpen: open,
     show: showConsent,
     close: closeConsent,
-  } = useCookieConsent();
+  } = useCookieConsentStore();
   const [shouldShowConsentBox, setShouldShowConsentBox] = useBrowserStorage(
     'shouldShowConsentBox',
     true,
@@ -27,10 +31,12 @@ export const CookieConsentComponent = ({
   const handleConsent = () => {
     setUserHasAgreed(true);
     setShouldShowConsentBox(false);
+    onClose();
   };
 
   const handleClose = () => {
     setShouldShowConsentBox(false);
+    onClose();
   };
 
   return (
@@ -62,7 +68,10 @@ export const CookieConsentComponent = ({
         
         </>
       )} */}
-      <div className="text-base md:max-w-lg lg:max-w-2xl text-slate-700 dark:text-slate-300">
+      <div
+        className="text-base md:max-w-lg lg:max-w-2xl text-slate-700 dark:text-slate-300"
+        id={id}
+      >
         <div className="space-y-4 flex flex-col">
           <p>
             {`We utilize cookies to enrich your experience, providing seamless
@@ -74,9 +83,14 @@ export const CookieConsentComponent = ({
           </p>
 
           <div className="flex space-x-3">
-            <Button id={`customise-cookie`} outlined type={'adaptive'}>
+            {/* <Button
+              id={`customise-cookie`}
+              onClick={handleClose}
+              outlined
+              type={'adaptive'}
+            >
               Customise
-            </Button>
+            </Button> */}
             <Button
               id={`accept-cookie`}
               type="adaptive"

@@ -8,9 +8,10 @@
       "type": "chrome",
       "request": "launch",
       "name": "Run Chrome",
-      // "url": "http://localhost:3000",
       "url": "https://app.mediaapp.local",
-      "webRoot": "${workspaceFolder}/src"
+      "webRoot": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
     }
   ]
+  // .vscode/launch.json
 }

@@ -53,7 +53,6 @@ export const SecuritySettings = ({
     defaultValues: localSettings,
   });
   const onSubmit = (data: UpdatePasswordData) => {
-    console.log('data:', data);
     // const updatedData = updateDeep(initialSettingValues, {
     //   account_settings: data,
     // });

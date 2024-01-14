@@ -50,8 +50,6 @@ SettingsSectionProps) => {
       defaultValues: localSettings,
     });
   const onSubmit = (data: NotificationSettingsData) => {
-    console.log('data:', data);
-
     const newData = {
       notification_settings: { email: data },
     };
