@@ -9,8 +9,16 @@ export async function generateDynamicSitemap() {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${articles.results
-        .map(({ id, slug, event_reported_at, storyline_id, created_at, title }) => {
-          return `
+        .map(
+          ({
+            id,
+            slug,
+            event_reported_at,
+            storyline_id,
+            created_at,
+            title,
+          }) => {
+            return `
             <url>
               <title>${title}</title>
               <loc>${APP_URL}/stories/${slug}</loc>
@@ -19,7 +27,8 @@ export async function generateDynamicSitemap() {
               <priority>0.7</priority>
             </url>
           `;
-        })
+          },
+        )
         .join('')}
     </urlset>
   `;
