@@ -117,7 +117,7 @@ export const StorylineMiniPopup = React.forwardRef<
         className={`flex items-center md:hidden md:ml-auto space-x-8 lg:flex`}
       >
         <Link
-          href={`/storylines/${storylineId}`}
+          href={`/storylines/${storylineId}/?current_story=${slug}`}
           className="font-mediumx font-bold tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:underline"
           aria-label="Go to storyline"
         >
