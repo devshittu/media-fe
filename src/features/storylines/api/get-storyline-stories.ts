@@ -6,22 +6,23 @@ import { StoriesQueryParams, StoryListResponse } from '../../stories/types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORYLINES_BY_STORYLINE_ID_STORIES } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
-const { GET_STORIES } = QUERY_KEYS;
+import { ApiCallResultType, CacheRefType } from '@/types';
+const { GET_STORYLINES_STORIES } = QUERY_KEYS;
 
 type GetStorylineStoriesOptions = {
-  storylineId: string;
+  // storylineId: string;
   params?: StoriesQueryParams;
-  initialData?: any;
+  // initialData?: any;
 };
 
 export const getStorylineStories = ({
-  storylineId,
+  // storylineId,
   params,
 }: GetStorylineStoriesOptions): Promise<StoryListResponse> => {
   const uri =
-    storylineId &&
+    params?.storylineId &&
     uriTemplate(URI_STORYLINES_BY_STORYLINE_ID_STORIES, {
-      storyline_id: storylineId,
+      storyline_id: params?.storylineId,
     });
 
   return apiClient.get(`${uri}`, {
@@ -30,17 +31,22 @@ export const getStorylineStories = ({
 };
 
 export const useStorylineStories = ({
-  storylineId,
+  // storylineId,
   params,
 }: GetStorylineStoriesOptions) => {
+   const queryKey: CacheRefType = [
+    GET_STORYLINES_STORIES,
+    ApiCallResultType.DISCRETE,
+    params
+  ];
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_STORIES, params],
+    queryKey,
     queryFn: () =>
       getStorylineStories({
-        storylineId,
+        // storylineId,
         params,
       }),
-    // enabled: !!params?.category_id,
+    enabled: !!params?.storylineId,
     initialData: {} as StoryListResponse,
   });
 
@@ -51,16 +57,24 @@ export const useStorylineStories = ({
 };
 
 export const useInfiniteStorylineStories = ({
-  storylineId,
+  // storylineId,
   params,
-  initialData,
+  // initialData,
 }: GetStorylineStoriesOptions) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    const queryKey: CacheRefType = [
+    GET_STORYLINES_STORIES,
+    ApiCallResultType.INFINITE,
+    params?.storylineId && params.storylineId
+  ];
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage,
+    isFetched,
+    isFetching, } =
+  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
-      [GET_STORIES, 'all'],
-      async ({ pageParam = 2 }) => {
+      queryKey,
+      async ({ pageParam = 1 }) => {
         const response = await getStorylineStories({
-          storylineId,
+          // params?.storylineId,
           params: { ...params, page: pageParam },
         });
         return response;
@@ -72,16 +86,21 @@ export const useInfiniteStorylineStories = ({
             : undefined;
         },
 
-        initialData: { pages: [initialData], pageParams: [1] },
+    enabled: !!params?.storylineId,
+        // initialData: { pages: [initialData], pageParams: [1] },
         //TODO: Keep data fresh for 5 minutes
         staleTime: 1000 * 60 * 5,
         // Keep data in cache for 10 minutes
         cacheTime: 1000 * 60 * 10,
       },
     );
+// Extract count from the first page
+  const count = data?.pages[0]?.count;
 
   return {
+    queryKey,
     data,
+    count: count || 0,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
