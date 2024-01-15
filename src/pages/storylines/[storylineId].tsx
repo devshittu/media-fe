@@ -11,10 +11,12 @@ import { TimelineScrollbar } from '@/components/blocks/timeline-scroller';
 import { StoriesQueryParams, Story, StoryList } from '@/features/stories';
 import { cleanObject } from '@/utils';
 import { getStoryline } from '@/features/storylines/api/get-storyline';
-import { getStorylineStories } from '@/features/storylines/api/get-storyline-stories';
+import { getStorylineStories, useInfiniteStorylineStories } from '@/features/storylines/api/get-storyline-stories';
 import { StorylinePane } from '@/features/storylines/components/';
 import { getStorylineHashtags } from '@/features/storylines/api/get-storyline-hashtags';
 import { Hashtag } from '@/features/hashtags';
+import { useInfiniteStorylines } from '@/features/storylines/api/get-storylines';
+import { useRouter } from 'next/router';
 
 type PublicStoryPageProps = InferGetServerSidePropsType<
   typeof getServerSideProps
@@ -28,34 +30,43 @@ const StorylinePage = ({
   storylineId,
   queryParams,
 }: PublicStoryPageProps) => {
-  const [currentStoryId, setCurrentStoryId] = useState<string | null>(null);
-  useEffect(() => {
-    console.log('about setting setCurrentStoryId:// ', storylineId);
-    setCurrentStoryId(storylineId);
-  }, [storylineId]);
 
+  const router = useRouter();
+  const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(undefined);
+
+  // Extract current_story from the URL
   useEffect(() => {
-    if (currentStoryId && storylineStories?.results?.length > 0) {
+    const currentStory = router.query.current_story;
+    if (currentStory && typeof currentStory === 'string') {
+      setCurrentStoryId(currentStory);
+    }
+  }, [router.query]);
+
+// Scroll to the element
+  useEffect(() => {
+    if (currentStoryId) {
       const element = document.getElementById(`scroll-to-${currentStoryId}`);
       if (element) {
-        const rect = element.getBoundingClientRect();
-        window.scrollTo({
-          top: rect.top + window.scrollY,
-          behavior: 'auto',
-        });
+        element.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  }, [currentStoryId, storyline]);
+  }, [currentStoryId]);
 
   return (
     <>
       <StoriesPageHeader pageTitle="Storyline" />
 
       {/* TODO: no stories to display */}
-      {!storylineStories.results && <NotFound />}
+      {/* {!storylineStories.results && <NotFound />}
       {storylineStories.results?.length > 0 && (
         <StoryList data={storylineStories} queryParams={queryParams} />
-      )}
+      )} */}
+      <StoryList
+        useStoriesHook={useInfiniteStorylineStories}
+        currentStoryId={currentStoryId}
+        queryParams={{ storylineId: storylineId, page: 1, page_size: 100 }}
+        loadMoreOnScroll
+      />
     </>
   );
 };
