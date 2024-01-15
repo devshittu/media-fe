@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import {
   Story,
@@ -10,6 +10,7 @@ import { StoryListLoadingPlaceholder } from '@/features/stories/components/loadi
 import { StoryListItem } from './story-list-item';
 import { InteractiveLoader } from '@/components/loading/';
 import ResponseStatusWidget from '@/components/blocks/response-status/response-status';
+import { motion, useAnimation } from 'framer-motion';
 
 export const StoryList = ({
   useStoriesHook,
@@ -73,9 +74,30 @@ export const StoryList = ({
       }
     }
   }, [currentStoryId, hookResponse.isLoading, hookResponse.count]);
+  const controls = useAnimation();
+  const listRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const animateList = async () => {
+      await controls.start({ y: 48 });
+      controls.start({ y: 0 });
+    };
+
+    if (listRef.current) {
+      animateList();
+    }
+  }, [controls]);
 
   return (
     <div>
+    <motion.div
+      ref={listRef}
+      animate={controls}
+      initial={{ y: 0 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+      className="story-list-container"
+    >
       {/* {`hookResponse.isLoading: ${hookResponse.isLoading} hookResponse.isFetchingNextPage: ${hookResponse.isFetchingNextPage}`} */}
       {hookResponse.isLoading && <StoryListLoadingPlaceholder />}
       {(!hookResponse.isLoading && hookResponse.count === 0 && hookResponse?.data?.pages?.length) && Nodata}
@@ -92,6 +114,7 @@ export const StoryList = ({
           loadingPlaceholder={<StoryListLoadingPlaceholder />}
         />
       )}
+    </motion.div>
     </div>
   );
 };
