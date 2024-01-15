@@ -5,6 +5,7 @@ export const QUERY_KEYS = {
   GET_CATEGORIES: 'get-categories',
   GET_STORIES: 'get-stories',
   GET_STORYLINES_BY_STORY_SLUG: 'get-storylines-by-story-slug',
+  GET_STORYLINES_STORIES: 'get-storylines-stories',
   LIKE_STORY: 'like-story',
   UNLIKE_STORY: 'unlike-story',
   DISLIKE_STORY: 'dislike-story',

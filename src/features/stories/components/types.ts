@@ -21,6 +21,7 @@ export type StoryListProps = {
   cacheRefQueryKey?: CacheRefType;
   queryParams: StoriesQueryParams;
   isFinite?: boolean;
+  currentStoryId?: string;
   loadMoreOnScroll?: boolean;
   useStoriesHook: (options: GetStoriesOptions) => InfiniteStoriesResponse;
 };

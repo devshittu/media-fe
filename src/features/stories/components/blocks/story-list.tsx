@@ -16,6 +16,7 @@ export const StoryList = ({
   queryParams,
   isFinite,
   loadMoreOnScroll = false, // Default value is true
+  currentStoryId
 }: StoryListProps) => {
   const hookResponse = useStoriesHook({ params: queryParams });
 
@@ -57,11 +58,27 @@ export const StoryList = ({
     />
   );
 
+  // Scroll to the story item after it's rendered
+  console.log(`hookResponse.data:// `, hookResponse?.data?.pages.length)
+  useEffect(() => {
+    if (currentStoryId && !hookResponse.isLoading && hookResponse.count > 0) {
+      const element = document.getElementById(`scroll-to-${currentStoryId}`);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const offsetTop = rect.top + window.scrollY - 100; // Adjusting the top position
+        window.scrollTo({
+          top: offsetTop > 0 ? offsetTop : 0, // Ensure it doesn't scroll to a negative value
+          behavior: 'smooth',
+        });
+      }
+    }
+  }, [currentStoryId, hookResponse.isLoading, hookResponse.count]);
+
   return (
     <div>
       {/* {`hookResponse.isLoading: ${hookResponse.isLoading} hookResponse.isFetchingNextPage: ${hookResponse.isFetchingNextPage}`} */}
       {hookResponse.isLoading && <StoryListLoadingPlaceholder />}
-      {!hookResponse.isLoading && hookResponse.count === 0 && Nodata}
+      {(!hookResponse.isLoading && hookResponse.count === 0 && hookResponse?.data?.pages?.length) && Nodata}
       {dataFromStories?.pages.map((page, i) => (
         <React.Fragment key={i}>{renderStories(page)}</React.Fragment>
       ))}
