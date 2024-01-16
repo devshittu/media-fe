@@ -55,7 +55,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
     setBasicInformation(data);
     //when real data is expected to be submited to the server uncomment this and delete the onSuccess callback
     submit(data);
-   
+
     onSuccess();
   };
 
