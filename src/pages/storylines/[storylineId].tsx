@@ -11,7 +11,10 @@ import { TimelineScrollbar } from '@/components/blocks/timeline-scroller';
 import { StoriesQueryParams, Story, StoryList } from '@/features/stories';
 import { cleanObject } from '@/utils';
 import { getStoryline } from '@/features/storylines/api/get-storyline';
-import { getStorylineStories, useInfiniteStorylineStories } from '@/features/storylines/api/get-storyline-stories';
+import {
+  getStorylineStories,
+  useInfiniteStorylineStories,
+} from '@/features/storylines/api/get-storyline-stories';
 import { StorylinePane } from '@/features/storylines/components/';
 import { getStorylineHashtags } from '@/features/storylines/api/get-storyline-hashtags';
 import { Hashtag } from '@/features/hashtags';
@@ -30,9 +33,10 @@ const StorylinePage = ({
   storylineId,
   queryParams,
 }: PublicStoryPageProps) => {
-
   const router = useRouter();
-  const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(undefined);
+  const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(
+    undefined,
+  );
 
   // Extract current_story from the URL
   useEffect(() => {
@@ -41,16 +45,6 @@ const StorylinePage = ({
       setCurrentStoryId(currentStory);
     }
   }, [router.query]);
-
-// Scroll to the element
-  useEffect(() => {
-    if (currentStoryId) {
-      const element = document.getElementById(`scroll-to-${currentStoryId}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [currentStoryId]);
 
   return (
     <>
@@ -121,7 +115,7 @@ export const getServerSideProps = async ({
       params: queryParams,
     });
     const storylineStories = await getStorylineStories({
-      storylineId,
+      // storylineId,
       params: queryParams,
     });
 
@@ -201,4 +195,4 @@ export const getServerSideProps = async ({
 };
 export default StorylinePage;
 
-// Path: src/pages/stories/[storyId]
+// Path: src/pages/storylines/[storylineId].tsx
