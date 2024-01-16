@@ -140,6 +140,9 @@ const MainMenu = () => {
 
         <span className="w-35"></span>
       </div>
+      <div>
+        <div className="my-2 ml-2 h-px w-7 bg-gray-700"></div>
+      </div>
       <MenuList menu={mainMenuList} />
       <ThemeSwitch />
       <FlashCard
