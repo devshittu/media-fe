@@ -85,7 +85,6 @@ export const useInfiniteStorylineStories = ({
       },
       {
         getNextPageParam: (lastPage, allPages) => {
-          console.log(`lastPage://`, lastPage);
           // Check if there are more pages to load
           if (lastPage?.current_page < lastPage?.total_pages) {
             return lastPage.current_page + 1;
