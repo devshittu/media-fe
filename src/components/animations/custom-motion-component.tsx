@@ -6,6 +6,8 @@ interface CustomMotionComponentProps extends MotionProps {
   children: React.ReactNode;
   preset?: keyof typeof animationPresets;
   customProps?: Partial<MotionProps>;
+  className?: string;
+  id?: string;
 }
 
 const CustomMotionComponentInner: React.ForwardRefRenderFunction<HTMLDivElement, CustomMotionComponentProps> = 
@@ -35,6 +37,8 @@ interface AnimateAndPresenceComponentProps extends MotionProps {
   customProps?: Partial<MotionProps>;
   isPresent: boolean;
   key?: React.Key; // Unique key for AnimatePresence
+  className?: string;
+  id?: string;
 }
 
 const AnimateAndPresenceComponentInner: React.ForwardRefRenderFunction<HTMLDivElement, AnimateAndPresenceComponentProps> = 
