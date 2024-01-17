@@ -9,9 +9,12 @@ export * from './api/post-like-story';
 
 // components:
 export * from './components/';
+export * from './components/blocks/story-list';
 
 // hooks:
 export * from './hooks/';
 
 // types:
 export * from './types';
+
+// Path: src/features/stories/index.ts
