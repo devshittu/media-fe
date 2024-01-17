@@ -22,7 +22,6 @@ import { usePrompts } from '@/stores/ui/prompts';
 import { AttentionType, CacheRefType } from '@/types';
 import { useDeleteBookmark } from '@/features/bookmarks/api/delete-bookmark';
 import { useUpdateBookmark } from '../../api/patch-update-bookmark';
-import { AddBookmarkSection } from '../forms';
 import { EditBookmarkSection } from '../forms/edit-bookmark-section';
 
 type ContextMenuProps = {
@@ -35,7 +34,7 @@ export const ContextMenu = ({
   cacheRefQueryKey,
 }: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
-  const { show: showPopup, close: closePopup } = usePopup();
+  const { show: showPopup, isOpen, close: closePopup } = usePopup();
   const { showNotification } = useNotifications();
   const { showPrompt } = usePrompts();
   const { id } = bookmark;
@@ -55,17 +54,7 @@ export const ContextMenu = ({
   const submitAction = (bookmarkCategory: BookmarkCategory) => {
     handleMoveToSave({ bookmark_id: id, bookmark_category: bookmarkCategory });
   };
-  // const {
-  //   handleSimpleAction: handleUndislikeStory,
-  //   isLoading: isUndislikeLoading,
-  // } = useBookmarkActionLogic({
-  //   basePayload: {
-  //     bookmark_id: id,
-  //   },
-  //   action: BookmarkAction.MOVE_TO_READ_LATER,
-  //   apiFunction: useUpdateBookmark, // Replace with your actual API function
-  //   cacheRefQueryKey: cacheRefQueryKey,
-  // });
+
   const {
     handleSimpleAction: handleDeleteBookmark,
     isLoading: isDeleteBookmarkLoading,
@@ -96,13 +85,14 @@ export const ContextMenu = ({
         title={`Edit Bookmark`}
         subtitle={`Save your favorite news stories to revisit later.`}
         onClose={closePopup}
+        isOpen={isOpen}
       >
         <EditBookmarkSection
           bookmark={bookmark}
           onCancel={closePopup}
           cacheRefQueryKey={cacheRefQueryKey}
         />
-      </FormPopup>,
+      </FormPopup>  
     );
   };
   const deleteBookmark = () => {
