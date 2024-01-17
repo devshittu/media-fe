@@ -5,8 +5,9 @@ import { Story, StoryListProps, StoryListResponse } from '@/features/stories';
 import { StoryListLoadingPlaceholder } from '@/features/stories/components/loading';
 import { StoryListItem } from './story-list-item';
 import { InteractiveLoader } from '@/components/loading/';
-import ResponseStatusWidget from '@/components/blocks/response-status/response-status';
+import { ResponseStatusWidget } from '@/components/blocks/response-status/response-status';
 import { useElementAvailable } from '@/hooks';
+import { CustomMotionComponent } from '@/components/animations';
 
 export const StoryList = React.memo(
   ({
@@ -88,7 +89,7 @@ export const StoryList = React.memo(
 
     return (
       <div>
-        <motion.div
+        <CustomMotionComponent
           ref={listRef}
           animate={controls}
           initial={{ y: 0 }}
@@ -117,12 +118,11 @@ export const StoryList = React.memo(
               loadingPlaceholder={<StoryListLoadingPlaceholder />}
             />
           )}
-        </motion.div>
+        </CustomMotionComponent>
       </div>
     );
   },
 );
 
 StoryList.displayName = 'StoryList';
-
 // Path: src/features/stories/components/blocks/story-list.tsx
