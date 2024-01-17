@@ -10,18 +10,20 @@ import {
 } from '@/components/blocks/dialog';
 
 import { usePopupContext } from '@/components/blocks/popup';
+import { AnimateAndPresenceComponent, CustomMotionComponent } from '@/components/animations';
 
 export const FormPopup = ({
   title,
   subtitle,
   children,
   onClose,
+  isOpen,
 }: PopupProps & {
   children: React.ReactElement;
   title: string | null;
   subtitle: string | null;
 }) => {
-  const { setOpen } = usePopupContext();
+  const { setOpen, open } = usePopupContext();
 
   const handleClose = () => {
     if (onClose) {
@@ -39,27 +41,29 @@ export const FormPopup = ({
   return (
     <Dialog>
       <DialogOverlay />
-      <DialogContainer width="medium">
-        <DialogHeader>
-          <>
-            <div className="flex justify-between items-start">
-              <nav className="flex flex-col items-start space-y-2 md:space-y-4">
-                <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 text-slate-900 dark:text-slate-100">
-                  {title}
-                </h1>
-                <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
-                  {subtitle}
-                </p>
-              </nav>
-              <DialogCloseButton onClose={handleClose} />
-            </div>
-          </>
-        </DialogHeader>
-        <DialogBody>
-          {/* Clone children and pass the onClose prop */}
-          {React.cloneElement(children, { onCancel: handleClose })}
-        </DialogBody>
-      </DialogContainer>
+      <AnimateAndPresenceComponent preset="slideDown" key={'form-popup'} isPresent={isOpen || open}>
+        <DialogContainer width="medium">
+          <DialogHeader>
+            <>
+              <div className="flex justify-between items-start">
+                <nav className="flex flex-col items-start space-y-2 md:space-y-4">
+                  <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 text-slate-900 dark:text-slate-100">
+                    {title}
+                  </h1>
+                  <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
+                    {subtitle}
+                  </p>
+                </nav>
+                <DialogCloseButton onClose={handleClose} />
+              </div>
+            </>
+          </DialogHeader>
+          <DialogBody>
+            {/* Clone children and pass the onClose prop */}
+            {React.cloneElement(children, { onCancel: handleClose })}
+          </DialogBody>
+        </DialogContainer>
+      </AnimateAndPresenceComponent>
     </Dialog>
   );
 };
