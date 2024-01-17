@@ -10,7 +10,7 @@ type ResponseStatusWidgetProps = {
   ctaOnClick?: () => void;
 };
 
-const ResponseStatusWidget = ({
+export const ResponseStatusWidget = ({
   isSuccess,
   title,
   subtitle,
@@ -61,5 +61,3 @@ const ResponseStatusWidget = ({
     </section>
   );
 };
-
-export default ResponseStatusWidget;
