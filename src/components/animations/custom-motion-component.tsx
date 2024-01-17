@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, MotionProps, AnimatePresence } from 'framer-motion';
 import { animationPresets } from './animation-presets';
 
-interface CustomMotionComponentProps extends Omit<MotionProps, 'animate'> {
+interface CustomMotionComponentProps extends MotionProps {
   children: React.ReactNode;
   preset?: keyof typeof animationPresets;
   customProps?: Partial<MotionProps>;
@@ -29,7 +29,7 @@ export const CustomMotionComponent = React.memo(React.forwardRef(CustomMotionCom
 CustomMotionComponent.displayName = 'CustomMotionComponent';
 
 
-interface AnimateAndPresenceComponentProps extends Omit<MotionProps, 'animate'> {
+interface AnimateAndPresenceComponentProps extends MotionProps {
   children: React.ReactNode;
   preset?: keyof typeof animationPresets;
   customProps?: Partial<MotionProps>;
