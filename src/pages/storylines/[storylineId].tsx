@@ -2,12 +2,11 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { NotFound } from '@/components/not-found';
+
 import { StoriesPageFrame } from '@/components/frames';
 import { PaneConfig } from '@/components/blocks/side-panel/types';
 import { UserSuggestionList } from '@/features/users/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { TimelineScrollbar } from '@/components/blocks/timeline-scroller';
 import { StoriesQueryParams, Story, StoryList } from '@/features/stories';
 import { cleanObject } from '@/utils';
 import { getStoryline } from '@/features/storylines/api/get-storyline';
@@ -18,7 +17,6 @@ import {
 import { StorylinePane } from '@/features/storylines/components/';
 import { getStorylineHashtags } from '@/features/storylines/api/get-storyline-hashtags';
 import { Hashtag } from '@/features/hashtags';
-import { useInfiniteStorylines } from '@/features/storylines/api/get-storylines';
 import { useRouter } from 'next/router';
 
 type PublicStoryPageProps = InferGetServerSidePropsType<
@@ -50,11 +48,6 @@ const StorylinePage = ({
     <>
       <StoriesPageHeader pageTitle="Storyline" />
 
-      {/* TODO: no stories to display */}
-      {/* {!storylineStories.results && <NotFound />}
-      {storylineStories.results?.length > 0 && (
-        <StoryList data={storylineStories} queryParams={queryParams} />
-      )} */}
       <StoryList
         useStoriesHook={useInfiniteStorylineStories}
         currentStoryId={currentStoryId}
