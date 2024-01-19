@@ -13,7 +13,7 @@ import {
 } from '@/components/illustrations/';
 import Menu, { MenuHeader, MenuButtonItem } from '@/components/menus/menu';
 import { Bookmark, BookmarkCategory } from '../../types';
-import { usePopup } from '@/stores/ui';
+import { usePopupStore } from '@/stores/ui';
 import { FormPopup, PromptPopup } from '@/components/blocks/popup/blocks/';
 import { useBookmarkActionLogic } from '../../hooks';
 import { BookmarkAction } from '../types';
@@ -34,7 +34,12 @@ export const ContextMenu = ({
   cacheRefQueryKey,
 }: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
-  const { show: showPopup, isOpen, close: closePopup } = usePopup();
+  const {
+    show: showPopup,
+    isOpen,
+    isClosing: popupIsClosing,
+    close: closePopup,
+  } = usePopupStore();
   const { showNotification } = useNotifications();
   const { showPrompt } = usePrompts();
   const { id } = bookmark;
@@ -73,6 +78,8 @@ export const ContextMenu = ({
         type={AttentionType.INFO}
         onOk={() => submitAction(bookmarkCategory)}
         onClose={closePopup}
+        isOpen={isOpen}
+        isClosing={popupIsClosing}
         title={'Heads Up!'}
         message={`This bookmark will be moved to the ${bookmarkCategory} category. Are you sure you want to proceed?`}
         onOkComplete={onMoveSuccess}
@@ -86,18 +93,21 @@ export const ContextMenu = ({
         subtitle={`Save your favorite news stories to revisit later.`}
         onClose={closePopup}
         isOpen={isOpen}
+        isClosing={popupIsClosing}
       >
         <EditBookmarkSection
           bookmark={bookmark}
           onCancel={closePopup}
           cacheRefQueryKey={cacheRefQueryKey}
         />
-      </FormPopup>  
+      </FormPopup>,
     );
   };
   const deleteBookmark = () => {
     showPopup(
       <PromptPopup
+        isOpen={isOpen}
+        isClosing={popupIsClosing}
         onOk={handleDeleteBookmark}
         onClose={closePopup}
         title={'Heads Up!'}
