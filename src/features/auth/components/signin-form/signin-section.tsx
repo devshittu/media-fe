@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { SigninForm } from './signin-form';
 import Wizard from '@/components/blocks/wizard/wizard';
 import { NotificationType, useNotifications } from '@/stores/notifications';
-import { usePopup } from '@/stores/ui';
+import { usePopupStore } from '@/stores/ui';
 import { SignupFlowSteps } from '@/features/auth/components/signup-flow';
 import { useTour } from '@/stores/tour';
 import { useAuthRedirect } from '../../hooks';
@@ -14,7 +14,7 @@ import { useConfetti } from '@/stores/confetti';
 export const SigninSection = () => {
   const router = useRouter();
   const { showNotification } = useNotifications();
-  const { show: showPopup, close: closePopup } = usePopup();
+  const { show: showPopup, close: closePopup } = usePopupStore();
   const { showTour } = useTour();
   const { playConfetti } = useConfetti();
 
