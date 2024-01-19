@@ -12,6 +12,7 @@ import {
   Icon,
   AppLogoIcon,
   ListIcon,
+  BellIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
 import { TourPopperType } from '../blocks/tour/tour-popper';
@@ -29,7 +30,7 @@ const MainMenu = () => {
     // },
     {
       name: 'Home',
-      icon: <FileTextIcon />,
+      icon: <HomeIcon />,
       url: '/stories',
       id: 'stories-page',
     },
@@ -51,6 +52,13 @@ const MainMenu = () => {
       icon: <ListIcon />,
       url: '/settings',
       id: 'topics-page',
+      tag: 'Coming soon',
+    },
+    {
+      name: 'Notifications',
+      icon: <BellIcon />,
+      url: '/notifications',
+      id: 'notification-page',
       tag: 'Coming soon',
     },
     {
