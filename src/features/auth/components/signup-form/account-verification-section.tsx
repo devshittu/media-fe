@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Wizard from '@/components/blocks/wizard/wizard';
 import { NotificationType, useNotifications } from '@/stores/notifications';
-import { usePopup } from '@/stores/ui';
+import { usePopupStore } from '@/stores/ui';
 import { SignupFlowSteps } from '@/features/auth/components/signup-flow';
 import { useTour } from '@/stores/tour';
 import { useAuthRedirect } from '../../hooks';
@@ -9,13 +9,13 @@ import { beginnerTourSequence } from '../signup-flow/beginner-tour-sequence';
 import { TourPopperType } from '@/components/blocks/tour/tour-popper';
 import { useConfetti } from '@/stores/confetti';
 import { AccountVerificationForm } from './account-verification-form';
-import ResponseStatusWidget from '@/components/blocks/response-status/response-status';
+import { ResponseStatusWidget } from '@/components/blocks/response-status/response-status';
 
 export const AccountVerificationSection = () => {
   const [isVerified, setIsVerified] = useState(false);
 
   const { showNotification } = useNotifications();
-  const { show: showPopup, close: closePopup } = usePopup();
+  const { show: showPopup, close: closePopup } = usePopupStore();
   const { showTour } = useTour();
   const { playConfetti } = useConfetti();
 
