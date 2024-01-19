@@ -12,7 +12,12 @@ export const animationPresets = {
     exit: { y: '-100%', opacity: 0 },
     transition: { type: 'spring', stiffness: 100, damping: 20, duration: 0.3 },
   }),
-
+  slideInFromLeft: () => ({
+    initial: { x: '-100%', opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: '-100%', opacity: 0 },
+    transition: { type: 'spring', stiffness: 100 },
+  }),
   // Add more presets as needed
 };
 
