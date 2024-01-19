@@ -20,7 +20,7 @@ import Menu, {
   MenuButtonItem,
 } from '@/components/menus/menu';
 import { Story } from '../../types';
-import { usePopup } from '@/stores/ui';
+import { usePopupStore } from '@/stores/ui';
 import { FormPopup, PromptPopup } from '@/components/blocks/popup/blocks/';
 import { AddBookmarkSection } from '@/features/bookmarks';
 import { AddFeedbackSection } from '@/features/feedbacks/components/forms';
@@ -42,7 +42,12 @@ type ContextMenuProps = {
 
 export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
   const [open, setOpen] = useState(false);
-  const { show: showPopup, close: closePopup } = usePopup();
+  const {
+    show: showPopup,
+    isOpen,
+    isClosing,
+    close: closePopup,
+  } = usePopupStore();
   const { showNotification } = useNotifications();
   const { showPrompt } = usePrompts();
   const { id, slug, has_disliked } = story;
@@ -85,11 +90,18 @@ export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
   const addBookmark = () => {
     if (!!story?.has_bookmarked) {
       showPopup(
-        <PromptPopup onOk={handleDeleteBookmark} onClose={closePopup} />,
+        <PromptPopup
+          isOpen={isOpen}
+          isClosing={isClosing}
+          onOk={handleDeleteBookmark}
+          onClose={closePopup}
+        />,
       );
     } else {
       showPopup(
         <FormPopup
+          isOpen={isOpen}
+          isClosing={isClosing}
           title={`Add a Bookmark`}
           subtitle={`Save your favorite news stories to revisit later.`}
           onClose={closePopup}
@@ -145,6 +157,8 @@ export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
       //  })
       showPopup(
         <PromptPopup
+          isOpen={isOpen}
+          isClosing={isClosing}
           type={AttentionType.WARNING}
           onOk={handleDislikeStory}
           // onOk={() => alert('Dislike!')}
@@ -163,6 +177,8 @@ export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
 
       showPopup(
         <PromptPopup
+          isOpen={isOpen}
+          isClosing={isClosing}
           onOk={handleUndislikeStory}
           onClose={closePopup}
           title={'Warning Message'}
@@ -178,6 +194,8 @@ export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
   const submitFeedbackAction = () => {
     showPopup(
       <FormPopup
+        isOpen={isOpen}
+        isClosing={isClosing}
         title={`Share Your Thoughts on the Story`}
         subtitle={`Provide feedback to help us deliver better news content for you.`}
         onClose={closePopup}

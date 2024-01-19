@@ -12,6 +12,7 @@ import {
   Icon,
   AppLogoIcon,
   ListIcon,
+  BellIcon,
 } from '@/components/illustrations';
 import { MenuItem, MenuList } from './menu-list';
 import { TourPopperType } from '../blocks/tour/tour-popper';
@@ -29,7 +30,7 @@ const MainMenu = () => {
     // },
     {
       name: 'Home',
-      icon: <FileTextIcon />,
+      icon: <HomeIcon />,
       url: '/stories',
       id: 'stories-page',
     },
@@ -51,6 +52,13 @@ const MainMenu = () => {
       icon: <ListIcon />,
       url: '/settings',
       id: 'topics-page',
+      tag: 'Coming soon',
+    },
+    {
+      name: 'Notifications',
+      icon: <BellIcon />,
+      url: '/notifications',
+      id: 'notification-page',
       tag: 'Coming soon',
     },
     {
@@ -139,6 +147,9 @@ const MainMenu = () => {
         <span className="w-35"></span>
 
         <span className="w-35"></span>
+      </div>
+      <div>
+        <div className="my-2 ml-2 h-px w-7 bg-gray-700"></div>
       </div>
       <MenuList menu={mainMenuList} />
       <ThemeSwitch />

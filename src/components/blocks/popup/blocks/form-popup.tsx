@@ -1,5 +1,5 @@
-import React from 'react';
-import { PopupProps } from '@/stores/ui';
+import React, { useEffect, useState } from 'react';
+import { PopupProps, usePopupStore } from '@/stores/ui';
 import {
   Dialog,
   DialogBody,
@@ -10,6 +10,10 @@ import {
 } from '@/components/blocks/dialog';
 
 import { usePopupContext } from '@/components/blocks/popup';
+import {
+  AnimateAndPresenceComponent,
+  CustomMotionComponent,
+} from '@/components/animations';
 
 export const FormPopup = ({
   title,
@@ -21,14 +25,33 @@ export const FormPopup = ({
   title: string | null;
   subtitle: string | null;
 }) => {
-  const { setOpen } = usePopupContext();
+  const { setOpen, open } = usePopupContext();
+
+  const { isOpen, isClosing, close } = usePopupStore();
+  const [shouldRender, setShouldRender] = useState(isOpen);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | number; // Declare the variable with the correct type
+
+    if (isClosing) {
+      // When isClosing is true, it takes precedence
+      timeoutId = setTimeout(() => setShouldRender(false), 300); // Duration of exit animation
+    } else {
+      // In all other cases, isOpen dictates the rendering
+      setShouldRender(isOpen);
+    }
+
+    return () => {
+      clearTimeout(timeoutId); // Clear the timeout when the component unmounts or the dependencies change
+    };
+  }, [isOpen, isClosing]);
 
   const handleClose = () => {
-    if (onClose) {
-      onClose();
-    }
-    return setOpen(false); //close the popup from the usePopupContext which is the floating-ui/react library.
+    onClose?.();
+    close();
+    // Trigger the closing process
   };
+
   // Ensure that children is a single React element
   if (React.Children.count(children) !== 1) {
     throw new Error(
@@ -38,30 +61,44 @@ export const FormPopup = ({
 
   return (
     <Dialog>
-      <DialogOverlay />
-      <DialogContainer width="medium">
-        <DialogHeader>
-          <>
-            <div className="flex justify-between items-start">
-              <nav className="flex flex-col items-start space-y-2 md:space-y-4">
-                <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 text-slate-900 dark:text-slate-100">
-                  {title}
-                </h1>
-                <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
-                  {subtitle}
-                </p>
-              </nav>
-              <DialogCloseButton onClose={handleClose} />
-            </div>
-          </>
-        </DialogHeader>
-        <DialogBody>
-          {/* Clone children and pass the onClose prop */}
-          {React.cloneElement(children, { onCancel: handleClose })}
-        </DialogBody>
-      </DialogContainer>
+      <AnimateAndPresenceComponent
+        id="form-popup-overlay"
+        preset="fadeInScaleUp"
+        key={'form-popup-overlay'}
+        isPresent={shouldRender}
+      >
+        <DialogOverlay />
+      </AnimateAndPresenceComponent>
+      <AnimateAndPresenceComponent
+        id="form-popup"
+        preset="fadeInScaleUp"
+        key={'form-popup'}
+        isPresent={shouldRender}
+      >
+        <DialogContainer width="medium">
+          <DialogHeader>
+            <>
+              <div className="flex justify-between items-start">
+                <nav className="flex flex-col items-start space-y-2 md:space-y-4">
+                  <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 text-slate-900 dark:text-slate-100">
+                    {title}
+                  </h1>
+                  <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
+                    {subtitle}
+                  </p>
+                </nav>
+                <DialogCloseButton onClose={handleClose} />
+              </div>
+            </>
+          </DialogHeader>
+          <DialogBody>
+            {/* Clone children and pass the onClose prop */}
+            {React.cloneElement(children, { onCancel: handleClose })}
+          </DialogBody>
+        </DialogContainer>
+      </AnimateAndPresenceComponent>
     </Dialog>
   );
 };
 
-// Psth: src/components/blocks/popup/blocks/form-popup.tsx
+// Path: src/components/blocks/popup/blocks/form-popup.tsx

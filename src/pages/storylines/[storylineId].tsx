@@ -2,20 +2,21 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import { NotFound } from '@/components/not-found';
+
 import { StoriesPageFrame } from '@/components/frames';
 import { PaneConfig } from '@/components/blocks/side-panel/types';
 import { UserSuggestionList } from '@/features/users/components';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { TimelineScrollbar } from '@/components/blocks/timeline-scroller';
 import { StoriesQueryParams, Story, StoryList } from '@/features/stories';
 import { cleanObject } from '@/utils';
 import { getStoryline } from '@/features/storylines/api/get-storyline';
-import { getStorylineStories, useInfiniteStorylineStories } from '@/features/storylines/api/get-storyline-stories';
+import {
+  getStorylineStories,
+  useInfiniteStorylineStories,
+} from '@/features/storylines/api/get-storyline-stories';
 import { StorylinePane } from '@/features/storylines/components/';
 import { getStorylineHashtags } from '@/features/storylines/api/get-storyline-hashtags';
 import { Hashtag } from '@/features/hashtags';
-import { useInfiniteStorylines } from '@/features/storylines/api/get-storylines';
 import { useRouter } from 'next/router';
 
 type PublicStoryPageProps = InferGetServerSidePropsType<
@@ -30,9 +31,10 @@ const StorylinePage = ({
   storylineId,
   queryParams,
 }: PublicStoryPageProps) => {
-
   const router = useRouter();
-  const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(undefined);
+  const [currentStoryId, setCurrentStoryId] = useState<string | undefined>(
+    undefined,
+  );
 
   // Extract current_story from the URL
   useEffect(() => {
@@ -42,25 +44,10 @@ const StorylinePage = ({
     }
   }, [router.query]);
 
-// Scroll to the element
-  useEffect(() => {
-    if (currentStoryId) {
-      const element = document.getElementById(`scroll-to-${currentStoryId}`);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [currentStoryId]);
-
   return (
     <>
       <StoriesPageHeader pageTitle="Storyline" />
 
-      {/* TODO: no stories to display */}
-      {/* {!storylineStories.results && <NotFound />}
-      {storylineStories.results?.length > 0 && (
-        <StoryList data={storylineStories} queryParams={queryParams} />
-      )} */}
       <StoryList
         useStoriesHook={useInfiniteStorylineStories}
         currentStoryId={currentStoryId}
@@ -121,7 +108,7 @@ export const getServerSideProps = async ({
       params: queryParams,
     });
     const storylineStories = await getStorylineStories({
-      storylineId,
+      // storylineId,
       params: queryParams,
     });
 
@@ -201,4 +188,4 @@ export const getServerSideProps = async ({
 };
 export default StorylinePage;
 
-// Path: src/pages/stories/[storyId]
+// Path: src/pages/storylines/[storylineId].tsx

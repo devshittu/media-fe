@@ -7,6 +7,7 @@ import { QUERY_KEYS } from '@/config/query';
 import { URI_STORYLINES_BY_STORYLINE_ID_STORIES } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import { InfiniteStoriesResponse } from '@/features/stories';
 const { GET_STORYLINES_STORIES } = QUERY_KEYS;
 
 type GetStorylineStoriesOptions = {
@@ -34,10 +35,10 @@ export const useStorylineStories = ({
   // storylineId,
   params,
 }: GetStorylineStoriesOptions) => {
-   const queryKey: CacheRefType = [
+  const queryKey: CacheRefType = [
     GET_STORYLINES_STORIES,
     ApiCallResultType.DISCRETE,
-    params
+    params,
   ];
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
@@ -57,19 +58,22 @@ export const useStorylineStories = ({
 };
 
 export const useInfiniteStorylineStories = ({
-  // storylineId,
   params,
-  // initialData,
-}: GetStorylineStoriesOptions) => {
-    const queryKey: CacheRefType = [
+}: GetStorylineStoriesOptions): InfiniteStoriesResponse => {
+  const queryKey: CacheRefType = [
     GET_STORYLINES_STORIES,
     ApiCallResultType.INFINITE,
-    params?.storylineId && params.storylineId
+    params?.storylineId && params.storylineId,
   ];
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage,
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isFetched,
-    isFetching, } =
-  // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    isFetching,
+  } =
+    // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
       queryKey,
       async ({ pageParam = 1 }) => {
@@ -80,13 +84,15 @@ export const useInfiniteStorylineStories = ({
         return response;
       },
       {
-        getNextPageParam: (lastPage: StoryListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
+        getNextPageParam: (lastPage, allPages) => {
+          // Check if there are more pages to load
+          if (lastPage?.current_page < lastPage?.total_pages) {
+            return lastPage.current_page + 1;
+          }
+          return undefined; // No more pages
         },
 
-    enabled: !!params?.storylineId,
+        enabled: !!params?.storylineId,
         // initialData: { pages: [initialData], pageParams: [1] },
         //TODO: Keep data fresh for 5 minutes
         staleTime: 1000 * 60 * 5,
@@ -94,7 +100,7 @@ export const useInfiniteStorylineStories = ({
         cacheTime: 1000 * 60 * 10,
       },
     );
-// Extract count from the first page
+  // Extract count from the first page
   const count = data?.pages[0]?.count;
 
   return {
@@ -104,6 +110,7 @@ export const useInfiniteStorylineStories = ({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isLoading: isFetching && !isFetched,
   };
 };
 

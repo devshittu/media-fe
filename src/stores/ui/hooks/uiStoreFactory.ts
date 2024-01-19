@@ -1,4 +1,3 @@
-// src/stores/ui/hooks/uiStoreFactory.ts
 import { createStore, StateCreator, StoreApi, useStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -6,6 +5,7 @@ import React from 'react';
 
 export type UIContentProps = {
   onClose: () => void;
+  isOpen: boolean;
 };
 
 export type UIContentComponent = React.ReactElement<UIContentProps>;
@@ -14,6 +14,7 @@ export type UIStore = {
   content: UIContentComponent | null;
   isOpen: boolean;
   show: (content: UIContentComponent) => void;
+  isClosing: boolean; // New state property
   close: () => void;
 };
 // type UIStoreType = { initialIsOpen?: boolean; closeDelay?: number };
@@ -23,10 +24,11 @@ interface UIStoreState {
   content: UIContentComponent | null;
   isOpen: boolean;
   show: (content: UIContentComponent) => void;
+  isClosing: boolean; // New state property
   close: () => void;
 }
 
-interface UIStoreOptions {
+export interface UIStoreOptions {
   initialIsOpen?: boolean;
   closeDelay?: number;
   persist?: boolean;
@@ -52,9 +54,14 @@ export const createUIStore = (
   const storeCreator: StateCreator<UIStoreState> = (set) => ({
     content: null,
     isOpen: initialIsOpen,
-    show: (content) => set({ content, isOpen: true }),
+    isClosing: false, // Initialize isClosing
+    show: (content) => set({ content, isOpen: true, isClosing: false }),
     close: () => {
-      setTimeout(() => set({ content: null, isOpen: false }), closeDelay);
+      set({ isClosing: true }); // Set isClosing to true
+
+      setTimeout(() => {
+        set({ content: null, isOpen: false, isClosing: false });
+      }, closeDelay);
     },
   });
 

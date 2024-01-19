@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Popup, PopupContent, PopupTrigger } from './';
 import { Placement } from '@floating-ui/react';
+import { usePopupStore } from '@/stores/ui';
 type PopperProps = {
   children: React.ReactNode;
   trigger?: React.ReactNode;
@@ -38,22 +39,36 @@ export const ControlledPopper = ({
 type PopperUncontrolledProps = PopperProps & {
   initOpen?: boolean;
 };
+// export const UncontrolledPopper = ({
+//   initOpen = false,
+//   children,
+//   width = '', // Default width
+// }: // showOnHover = false,
+// PopperUncontrolledProps) => {
+//   const [open, setOpen] = useState(initOpen);
+
+//   useEffect(() => {
+//     // const timeout = setTimeout(() => {
+//     setOpen(true);
+//     // }, 2000);
+//     // return () => clearTimeout(timeout);
+//   }, []);
+//   return (
+//     <Popup open={open} onOpenChange={setOpen} modal>
+//       <PopupContent className={`Popup ${width}`}>{children}</PopupContent>
+//     </Popup>
+//   );
+// };
+
 export const UncontrolledPopper = ({
   initOpen = false,
   children,
   width = '', // Default width
 }: // showOnHover = false,
 PopperUncontrolledProps) => {
-  const [open, setOpen] = useState(initOpen);
-
-  useEffect(() => {
-    // const timeout = setTimeout(() => {
-    setOpen(true);
-    // }, 2000);
-    // return () => clearTimeout(timeout);
-  }, []);
+  const { isOpen, close } = usePopupStore();
   return (
-    <Popup open={open} onOpenChange={setOpen} modal>
+    <Popup open={isOpen} onOpenChange={close} modal>
       <PopupContent className={`Popup ${width}`}>{children}</PopupContent>
     </Popup>
   );
