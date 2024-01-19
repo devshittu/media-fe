@@ -1,5 +1,5 @@
-import React from 'react';
-import { PopupProps } from '@/stores/ui';
+import React, { useEffect, useState } from 'react';
+import { PopupProps, usePopupStore } from '@/stores/ui';
 import {
   Dialog,
   DialogBody,
@@ -10,14 +10,16 @@ import {
 } from '@/components/blocks/dialog';
 
 import { usePopupContext } from '@/components/blocks/popup';
-import { AnimateAndPresenceComponent, CustomMotionComponent } from '@/components/animations';
+import {
+  AnimateAndPresenceComponent,
+  CustomMotionComponent,
+} from '@/components/animations';
 
 export const FormPopup = ({
   title,
   subtitle,
   children,
   onClose,
-  isOpen,
 }: PopupProps & {
   children: React.ReactElement;
   title: string | null;
@@ -25,12 +27,31 @@ export const FormPopup = ({
 }) => {
   const { setOpen, open } = usePopupContext();
 
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
+  const { isOpen, isClosing, close } = usePopupStore();
+  const [shouldRender, setShouldRender] = useState(isOpen);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | number; // Declare the variable with the correct type
+
+    if (isClosing) {
+      // When isClosing is true, it takes precedence
+      timeoutId = setTimeout(() => setShouldRender(false), 300); // Duration of exit animation
+    } else {
+      // In all other cases, isOpen dictates the rendering
+      setShouldRender(isOpen);
     }
-    return setOpen(false); //close the popup from the usePopupContext which is the floating-ui/react library.
+
+    return () => {
+      clearTimeout(timeoutId); // Clear the timeout when the component unmounts or the dependencies change
+    };
+  }, [isOpen, isClosing]);
+
+  const handleClose = () => {
+    onClose?.();
+    close();
+    // Trigger the closing process
   };
+
   // Ensure that children is a single React element
   if (React.Children.count(children) !== 1) {
     throw new Error(
@@ -40,8 +61,20 @@ export const FormPopup = ({
 
   return (
     <Dialog>
-      <DialogOverlay />
-      <AnimateAndPresenceComponent preset="slideDown" key={'form-popup'} isPresent={isOpen || open}>
+      <AnimateAndPresenceComponent
+        id="form-popup-overlay"
+        preset="fadeInScaleUp"
+        key={'form-popup-overlay'}
+        isPresent={shouldRender}
+      >
+        <DialogOverlay />
+      </AnimateAndPresenceComponent>
+      <AnimateAndPresenceComponent
+        id="form-popup"
+        preset="fadeInScaleUp"
+        key={'form-popup'}
+        isPresent={shouldRender}
+      >
         <DialogContainer width="medium">
           <DialogHeader>
             <>
@@ -68,4 +101,4 @@ export const FormPopup = ({
   );
 };
 
-// Psth: src/components/blocks/popup/blocks/form-popup.tsx
+// Path: src/components/blocks/popup/blocks/form-popup.tsx
