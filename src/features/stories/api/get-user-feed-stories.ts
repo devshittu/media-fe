@@ -1,12 +1,11 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-
 import { apiClient } from '@/lib/api-client';
-
 import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_USER_FEED } from '@/config/api-constants';
 import { GetStoriesOptions, InfiniteStoriesResponse } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { GET_USER_FEED_STORIES } = QUERY_KEYS;
 
 export const getUserFeedStories = ({
@@ -19,13 +18,21 @@ export const getUserFeedStories = ({
 };
 
 export const useUserFeedStories = ({ params }: GetStoriesOptions) => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [
     GET_USER_FEED_STORIES,
     ApiCallResultType.DISCRETE,
   ];
+
+  const fetchUserFeedStories = async ({
+    params,
+  }: GetStoriesOptions): Promise<StoryListResponse> => {
+    return await apiClientAuth.get(`${URI_USER_FEED}`, { params });
+  };
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
-    queryFn: () => getUserFeedStories({ params }),
+    // queryFn: () => getUserFeedStories({ params }),
+    queryFn: () => fetchUserFeedStories({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as StoryListResponse,
   });
@@ -40,10 +47,25 @@ export const useUserFeedStories = ({ params }: GetStoriesOptions) => {
 export const useInfiniteUserFeedStories = ({
   params,
 }: GetStoriesOptions): InfiniteStoriesResponse => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [
     GET_USER_FEED_STORIES,
     ApiCallResultType.INFINITE,
   ];
+
+  const fetchInfiniteUserFeedStories = async ({
+    pageParam = 1,
+  }): Promise<StoryListResponse> => {
+    // Directly returning the response from apiClientAuth.get
+    const response = await apiClientAuth.get<StoryListResponse>(
+      `${URI_USER_FEED}`,
+      {
+        params: { ...params, page: pageParam },
+      },
+    );
+    return response as unknown as StoryListResponse;
+  };
+
   const {
     data,
     fetchNextPage,
@@ -53,12 +75,14 @@ export const useInfiniteUserFeedStories = ({
     isFetching,
   } = useInfiniteQuery<StoryListResponse>(
     queryKey,
+
     async ({ pageParam = 1 }) =>
-      await getUserFeedStories({ params: { ...params, page: pageParam } }),
+      await fetchInfiniteUserFeedStories({ pageParam }),
+
     {
       getNextPageParam: (lastPage, allPages) => {
         // Check if there are more pages to load
-        if (lastPage.current_page < lastPage.total_pages) {
+        if (lastPage?.current_page < lastPage?.total_pages) {
           return lastPage.current_page + 1;
         }
         return undefined; // No more pages
