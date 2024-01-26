@@ -11,6 +11,7 @@ import { QUERY_KEYS } from '@/config/query';
 import { URI_TRENDING_STORIES } from '@/config/api-constants';
 import { InfiniteStoriesResponse, StoryAction } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { GET_TRENDING_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
@@ -27,18 +28,25 @@ export const getTrendingStories = ({
 };
 
 export const useTrendingStories = ({ params }: GetStoriesOptions) => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [
     GET_TRENDING_STORIES,
     ApiCallResultType.DISCRETE,
   ];
+
+  const fetchTrendingStories = async ({ params }: GetStoriesOptions): Promise<StoryListResponse> => {
+    return await apiClientAuth.get(`${URI_TRENDING_STORIES}`, { params });
+  };
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
-    queryFn: () => getTrendingStories({ params }),
+    // queryFn: () => getTrendingStories({ params }),
+    queryFn: () => fetchTrendingStories({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as StoryListResponse,
   });
 
   return {
+    queryKey,
     data,
     isLoading: isFetching && !isFetched,
   };
@@ -48,10 +56,21 @@ export const useInfiniteTrendingStories = ({
   params,
   initialData,
 }: GetStoriesOptions): InfiniteStoriesResponse => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [
     GET_TRENDING_STORIES,
     ApiCallResultType.INFINITE,
   ];
+
+  const fetchInfiniteTrendingStories = async ({
+    pageParam = 1,
+  }): Promise<StoryListResponse> => {
+    const response = await apiClientAuth.get(`${URI_TRENDING_STORIES}`, {
+      params: { ...params, page: pageParam },
+    });
+    return response as any;
+  };
+
   const {
     data,
     fetchNextPage,
@@ -61,13 +80,13 @@ export const useInfiniteTrendingStories = ({
     isFetching,
   } = useInfiniteQuery<StoryListResponse>(
     queryKey,
-
-    async ({ pageParam = 1 }) =>
-      await getTrendingStories({ params: { ...params, page: pageParam } }),
+    fetchInfiniteTrendingStories,
+    // async ({ pageParam = 1 }) =>
+    //   await getTrendingStories({ params: { ...params, page: pageParam } }),
     {
       getNextPageParam: (lastPage, allPages) => {
         // Check if there are more pages to load
-        if (lastPage.current_page < lastPage.total_pages) {
+        if (lastPage?.current_page < lastPage?.total_pages) {
           return lastPage.current_page + 1;
         }
         return undefined; // No more pages
