@@ -1,14 +1,16 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import { apiClient } from '@/lib/api-client';
+import { apiClient, apiClientAuth } from '@/lib/api-client';
 
 import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES } from '@/config/api-constants';
 import { GetStoriesOptions, InfiniteStoriesResponse } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { GET_STORIES } = QUERY_KEYS;
 
+//Caller function is responsible for making the actual network request
 export const getStories = ({
   params,
 }: GetStoriesOptions): Promise<StoryListResponse> => {
@@ -18,10 +20,18 @@ export const getStories = ({
 };
 
 export const useStories = ({ params }: GetStoriesOptions) => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [GET_STORIES, ApiCallResultType.DISCRETE];
+
+  const fetchStories = async ({
+    params,
+  }: GetStoriesOptions): Promise<StoryListResponse> => {
+    return await apiClientAuth.get(`${URI_STORIES}`, { params });
+  };
+
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
-    queryFn: () => getStories({ params }),
+    queryFn: () => fetchStories({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as StoryListResponse,
   });
@@ -36,7 +46,20 @@ export const useStories = ({ params }: GetStoriesOptions) => {
 export const useInfiniteStories = ({
   params,
 }: GetStoriesOptions): InfiniteStoriesResponse => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [GET_STORIES, ApiCallResultType.INFINITE];
+  const fetchInfiniteStories = async ({
+    pageParam = 1,
+  }): Promise<StoryListResponse> => {
+    // Directly returning the response from apiClientAuth.get
+    const response = await apiClientAuth.get<StoryListResponse>(
+      `${URI_STORIES}`,
+      {
+        params: { ...params, page: pageParam },
+      },
+    );
+    return response as unknown as StoryListResponse;
+  };
   const {
     data,
     fetchNextPage,
@@ -46,12 +69,13 @@ export const useInfiniteStories = ({
     isFetching,
   } = useInfiniteQuery(
     queryKey,
-    async ({ pageParam = 1 }) => {
-      const response = await getStories({
-        params: { ...params, page: pageParam },
-      });
-      return response;
-    },
+    // async ({ pageParam = 1 }) => {
+    //   const response = await getStories({
+    //     params: { ...params, page: pageParam },
+    //   });
+    //   return response;
+    // },
+    async ({ pageParam = 1 }) => await fetchInfiniteStories({ pageParam }),
     {
       getNextPageParam: (lastPage) => {
         return lastPage.current_page < lastPage.total_pages
