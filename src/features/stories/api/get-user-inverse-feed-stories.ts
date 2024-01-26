@@ -7,6 +7,7 @@ import { QUERY_KEYS } from '@/config/query';
 import { URI_USER_INVERSE_FEED } from '@/config/api-constants';
 import { GetStoriesOptions, InfiniteStoriesResponse } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { GET_USER_INVERSE_FEED_STORIES } = QUERY_KEYS;
 
 export const getUserInvertedFeedStories = ({
@@ -22,13 +23,23 @@ export const useUserInvertedFeedStories = ({
   params,
   initialData = {},
 }: GetStoriesOptions) => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [
     GET_USER_INVERSE_FEED_STORIES,
     ApiCallResultType.DISCRETE,
   ];
+
+  const fetchUserInvertedFeedStories = async (): Promise<StoryListResponse> => {
+    const response = await apiClientAuth.get(`${URI_USER_INVERSE_FEED}`, {
+      params,
+    });
+    return response.data;
+  };
+
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
-    queryFn: () => getUserInvertedFeedStories({ params }),
+    queryFn: fetchUserInvertedFeedStories,
+    // queryFn: () => getUserInvertedFeedStories({ params }),
     // enabled: !!params?.category_id,
     initialData: initialData as StoryListResponse,
   });
@@ -43,10 +54,18 @@ export const useUserInvertedFeedStories = ({
 export const useInfiniteUserInvertedFeedStories = ({
   params,
 }: GetStoriesOptions): InfiniteStoriesResponse => {
+  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [
     GET_USER_INVERSE_FEED_STORIES,
     ApiCallResultType.INFINITE,
   ];
+
+  const fetchInfiniteUserInvertedFeedStories = async ({ pageParam = 1 }) => {
+    const response = await apiClientAuth.get(`${URI_USER_INVERSE_FEED}`, {
+      params: { ...params, page: pageParam },
+    });
+    return response as unknown as StoryListResponse;
+  };
   const {
     data,
     fetchNextPage,
@@ -56,14 +75,16 @@ export const useInfiniteUserInvertedFeedStories = ({
     isFetched,
   } = useInfiniteQuery<StoryListResponse>(
     queryKey,
-    async ({ pageParam = 1 }) =>
-      await getUserInvertedFeedStories({
-        params: { ...params, page: pageParam },
-      }),
+    // async ({ pageParam = 1 }) =>
+    //   await getUserInvertedFeedStories({
+    //     params: { ...params, page: pageParam },
+    //   }),
+    fetchInfiniteUserInvertedFeedStories,
     {
       getNextPageParam: (lastPage, allPages) => {
+        console.log('fetchInfiniteUserInvertedFeedStories', lastPage, '');
         // Check if there are more pages to load
-        if (lastPage.current_page < lastPage.total_pages) {
+        if (lastPage?.current_page < lastPage?.total_pages) {
           return lastPage.current_page + 1;
         }
         return undefined; // No more pages
