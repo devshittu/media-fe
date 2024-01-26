@@ -74,6 +74,11 @@ export const UserSuggestionList = React.memo(
 
     return (
       <>
+        {`isLoading ${isLoading}`}
+        <br></br>
+        {`allSuggestionList ${JSON.stringify(allSuggestionList)}`}
+        <br></br>
+        {`suggestionList ${JSON.stringify(suggestionList)}`}
         {isLoading && <UserListLoadingPlaceholder />}
         <div
           className="divide-y divide-slate-200 dark:divide-slate-700"
