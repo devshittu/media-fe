@@ -16,6 +16,15 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 // Use the correct url depending on if it's server or public
 const apiUrl = serverRuntimeConfig.apiUrl || publicRuntimeConfig.apiUrl;
 
+export const refresherApiClient = Axios.create({
+  baseURL: apiUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+
+  // Add withCredentials here if you want it to be the default for all requests
+  withCredentials: true,
+});
 export const apiClient = Axios.create({
   baseURL: apiUrl,
   headers: {
@@ -26,6 +35,16 @@ export const apiClient = Axios.create({
   // Add withCredentials here if you want it to be the default for all requests
   // withCredentials: true,
 });
+
+export const apiClientAuth = Axios.create({
+  baseURL: apiUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  requiresAuth: true,
+});
+
+//Path: src/lib/api-client.ts
 
 apiClient.interceptors.request.use((config) => {
   if (config.requiresAuth) {
