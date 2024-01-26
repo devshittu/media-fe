@@ -5,6 +5,7 @@ import { QUERY_KEYS } from '@/config/query';
 import { URI_AUTH_ME } from '@/config/api-constants';
 import { useAuthStore } from '@/stores/auth';
 import { parseError } from '@/utils';
+import useApiClientAuth from '../hooks/useApiClientAuth';
 const { AUTH_USER } = QUERY_KEYS;
 
 export const getAuthUser = async (): Promise<AuthUser> => {
@@ -12,12 +13,19 @@ export const getAuthUser = async (): Promise<AuthUser> => {
 };
 
 export const useAuthUser = () => {
+  const apiClientAuth = useApiClientAuth();
+
+  const fetchAuthUser = async () => {
+    const response = await apiClientAuth.get(`${URI_AUTH_ME}`);
+    return response.data;
+  };
+
   const { accessToken, setAccessToken, authUserDetails, setAuthUserDetails } =
     useAuthStore();
 
   const { data, isLoading, error } = useQuery({
     queryKey: [AUTH_USER],
-    queryFn: () => getAuthUser(),
+    queryFn: () => fetchAuthUser(),
     enabled: !!accessToken, // Only run if we have an access token
     onSuccess: (data) => setAuthUserDetails(data),
     onError: (error: any) => {
