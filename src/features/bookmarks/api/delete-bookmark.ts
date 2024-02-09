@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
-import { ApiResponse, CacheRefType } from '@/types';
+import { ApiCallMutationStatus, ApiResponse, CacheRefType } from '@/types';
 import { URI_BOOKMARKS_BY_BOOKMARK_ID } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { StoryAction } from '@/features/stories/components/types';
@@ -38,7 +38,7 @@ export const useDeleteBookmark = ({
   const { logAnalytics } = useLogAnalytics();
   const updateCachedBookmark = useUpdateCachedBookmark();
   const mutationKey = [DESTROY_BOOKMARK, bookmark_id];
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutate: submit, isPending, isSuccess } = useMutation({
     mutationKey: mutationKey,
     mutationFn: deleteBookmark,
     onSuccess: (response) => {
@@ -72,7 +72,7 @@ export const useDeleteBookmark = ({
   return {
     mutationKey,
     submit,
-    isLoading,
+    isLoading: isPending && !isSuccess,
   };
 };
 
