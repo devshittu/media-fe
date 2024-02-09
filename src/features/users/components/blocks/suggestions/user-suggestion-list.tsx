@@ -12,7 +12,7 @@ type UserSuggestionListProps = HTMLAttributes<HTMLDivElement> & {
 export const UserSuggestionList = React.memo(
   ({ numSuggestions = 3, ...props }: UserSuggestionListProps) => {
     const { showNotification } = useNotifications();
-    const { data: responseData, isLoading } = useGetUsers({});
+    const { data: responseData, isLoading } = useGetUsers({params: { page_size: 3 },});
     const allSuggestionList = useMemo(
       () => responseData?.results,
       [responseData?.results],
@@ -74,11 +74,6 @@ export const UserSuggestionList = React.memo(
 
     return (
       <>
-        {`isLoading ${isLoading}`}
-        <br></br>
-        {`allSuggestionList ${JSON.stringify(allSuggestionList)}`}
-        <br></br>
-        {`suggestionList ${JSON.stringify(suggestionList)}`}
         {isLoading && <UserListLoadingPlaceholder />}
         <div
           className="divide-y divide-slate-200 dark:divide-slate-700"
