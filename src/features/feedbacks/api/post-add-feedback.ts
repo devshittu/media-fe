@@ -1,10 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
-import { ApiResponse } from '@/types';
+import { ApiCallResultType, ApiResponse, CacheRefType } from '@/types';
 import { URI_FEEDBACKS_REPORT } from '@/config/api-constants';
 import { AddFeedbackFormData } from '../types';
-import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { ADD_FEEDBACK } = QUERY_KEYS;
 
 export const addFeedback = (
@@ -18,23 +17,15 @@ type UseAddFeedbackOptions = {
 };
 
 export const useAddFeedback = ({
-  // data,
   onSuccess,
   onError,
 }: UseAddFeedbackOptions) => {
-  const apiClientAuth = useApiClientAuth();
+  const mutationKey: CacheRefType = [ADD_FEEDBACK, ApiCallResultType.SINGLE];
 
-  const addFeedbackInternal = async (
-    data: AddFeedbackFormData,
-  ): Promise<ApiResponse> => {
-    const response = await apiClientAuth.post(`${URI_FEEDBACKS_REPORT}`, data);
-    return response.data;
-  };
-
-  const { mutate: submit, isLoading } = useMutation({
-    mutationKey: [ADD_FEEDBACK],
-    // mutationFn: addFeedback,
-    mutationFn: addFeedbackInternal,
+  const { mutate: submit, isPending, isSuccess, isError, isIdle, isPaused } = useMutation({
+    mutationKey,
+    mutationFn: addFeedback,
+    // mutationFn: addFeedbackInternal,
     onSuccess: (data) => {
       // Invalidate and refetch something when a post is unbookmarked
       //   queryClient.invalidateQueries('someQueryKey');
@@ -44,6 +35,9 @@ export const useAddFeedback = ({
       onError?.(data);
     },
   });
+  // Compute custom isLoading
+  const isLoading = isPending || isIdle || isPaused;
+
 
   return {
     submit,
