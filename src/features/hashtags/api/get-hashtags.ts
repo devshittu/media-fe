@@ -9,7 +9,6 @@ import {
   CacheRefType,
   PaginatedListQueryParams,
 } from '@/types';
-import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { GET_HASHTAGS } = QUERY_KEYS;
 
 type GetHashtagsOptions = {
@@ -27,23 +26,21 @@ export const getHashtags = ({
 };
 
 export const useHashtags = ({ params }: GetHashtagsOptions) => {
-  const apiClientAuth = useApiClientAuth();
   const queryKey: CacheRefType = [
     GET_HASHTAGS,
     ApiCallResultType.DISCRETE,
     params,
   ];
 
-  const fetchHashtags = async ({
-    params,
-  }: GetHashtagsOptions): Promise<HashtagListResponse> => {
-    return await apiClientAuth.get(`${URI_STORIES_TRENDING}`, { params });
-  };
+  // console.log(`fetching useHashtags using key ${queryKey}`);
+
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
-    queryFn: () => fetchHashtags({ params }),
-    initialData: {} as HashtagListResponse,
+    queryFn: () => getHashtags({ params }),
+    enabled: !!params,
+    // initialData: {} as HashtagListResponse,
   });
+  // console.log(`fetching useHashtags data`, data);
 
   return {
     queryKey,
