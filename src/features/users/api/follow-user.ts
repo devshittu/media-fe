@@ -17,11 +17,13 @@ export const followUser = (data: {
 };
 
 export const useFollowUser = () => {
-  const { mutate: submit, isLoading: isFollowLoading } = useMutation({
+  const { mutate: submit, isPending, isIdle, isSuccess, isPaused } = useMutation({
     mutationKey: [FOLLOW_USER],
     mutationFn: followUser,
   });
 
+ const isFollowLoading = isPending || isIdle || isPaused;
+ 
   return {
     submit,
     isFollowLoading,
