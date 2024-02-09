@@ -2,7 +2,7 @@
 import React from 'react';
 import { SidePanel } from '@/components/blocks/side-panel/side-panel';
 import { HashtagList } from '@/features/hashtags';
-import { UserList, UserSuggestionList } from '@/features/users/components';
+import { UserSuggestionList } from '@/features/users/components';
 import { PaneConfig } from '../blocks/side-panel/types';
 import { TrendsList } from '@/features/trends/components/blocks/trends-list';
 
