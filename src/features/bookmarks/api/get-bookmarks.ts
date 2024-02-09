@@ -60,32 +60,30 @@ export const useInfiniteBookmarks = ({
     isFetchingNextPage,
     isFetching,
     isFetched,
-  } = useInfiniteQuery(
+  } = useInfiniteQuery({
     queryKey,
-    async ({ pageParam = 1 }) => {
+    queryFn: async ({ pageParam = 1 }) => {
+      const page = pageParam as number;
       const response = await getBookmarks({
-        params: { ...params, page: pageParam },
+        params: { ...params, page },
       });
       return response;
     },
-    {
-      getNextPageParam: (lastPage: BookmarkListResponse) => {
-        return lastPage.current_page < lastPage.total_pages
-          ? lastPage.current_page + 1
-          : undefined;
-      },
 
-      // initialData: { pages: [initialData], pageParams: [1] },
-      //TODO: Keep data fresh for 5 minutes
-      staleTime: 1000 * 60 * 5,
-      // Keep data in cache for 10 minutes
-      cacheTime: 1000 * 60 * 10,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: BookmarkListResponse) => {
+      return lastPage.current_page < lastPage.total_pages
+        ? lastPage.current_page + 1
+        : undefined;
     },
-  );
+  });
 
+  // Extract count from the first page
+  const count = data?.pages[0]?.count;
   return {
     queryKey,
     data,
+    count: count || 0,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

@@ -87,6 +87,13 @@ export enum ApiCallResultType {
   DISCRETE = 'discrete', // for non-paginated arrayed results with page_size specified
   INFINITE = 'infinite', //for paginated arrayed results
 }
+
+export enum ApiCallMutationStatus {
+  PENDING = 'pending',
+  IDLE = 'idle',
+  ERROR = 'error',
+  SUCCESS = 'success',
+}
 // export type CacheRefType = QueryKey;
 export type CacheRefType = [string, ApiCallResultType, ...any[]];
 // Path: src/types/index.ts

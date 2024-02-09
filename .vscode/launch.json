@@ -5,6 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "name": "Run Firefox",
+      "url": "https://app.mediaapp.local",
+      "webRoot": "${workspaceFolder}",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
+    },
+
+    {
       "type": "chrome",
       "request": "launch",
       "name": "Run Chrome",

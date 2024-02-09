@@ -1,14 +1,21 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  infiniteQueryOptions,
+  queryOptions,
+  useInfiniteQuery,
+  useQuery,
+} from '@tanstack/react-query';
 
-import { apiClient } from '@/lib/api-client';
+import { apiClient, apiClientAuth } from '@/lib/api-client';
 
 import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES } from '@/config/api-constants';
 import { GetStoriesOptions, InfiniteStoriesResponse } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
+
 const { GET_STORIES } = QUERY_KEYS;
 
+//Caller function is responsible for making the actual network request
 export const getStories = ({
   params,
 }: GetStoriesOptions): Promise<StoryListResponse> => {
@@ -16,9 +23,9 @@ export const getStories = ({
     params,
   });
 };
-
 export const useStories = ({ params }: GetStoriesOptions) => {
   const queryKey: CacheRefType = [GET_STORIES, ApiCallResultType.DISCRETE];
+
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
     queryFn: () => getStories({ params }),
@@ -37,6 +44,7 @@ export const useInfiniteStories = ({
   params,
 }: GetStoriesOptions): InfiniteStoriesResponse => {
   const queryKey: CacheRefType = [GET_STORIES, ApiCallResultType.INFINITE];
+
   const {
     data,
     fetchNextPage,
@@ -44,28 +52,24 @@ export const useInfiniteStories = ({
     isFetchingNextPage,
     isFetched,
     isFetching,
-  } = useInfiniteQuery(
+  } = useInfiniteQuery<StoryListResponse>({
     queryKey,
-    async ({ pageParam = 1 }) => {
+    queryFn: async ({ pageParam = 1 }) => {
+      // Assert pageParam as number before using it
+      const page = pageParam as number;
       const response = await getStories({
-        params: { ...params, page: pageParam },
+        params: { ...params, page },
       });
       return response;
     },
-    {
-      getNextPageParam: (lastPage) => {
-        return lastPage.current_page < lastPage.total_pages
-          ? lastPage.current_page + 1
-          : undefined;
-      },
 
-      // initialData: { pages: [initialData], pageParams: [1] },
-      // Keep data fresh for 5 minutes
-      staleTime: 1000 * 60 * 5,
-      // Keep data in cache for 10 minutes
-      cacheTime: 1000 * 60 * 10,
+    getNextPageParam: (lastPage) => {
+      return lastPage.current_page < lastPage.total_pages
+        ? lastPage.current_page + 1
+        : undefined;
     },
-  );
+    initialPageParam: 1,
+  });
   // Extract count from the first page
   const count = data?.pages[0]?.count;
   return {

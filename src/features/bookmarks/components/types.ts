@@ -11,6 +11,7 @@ export type InfiniteBookmarksResponse = {
   hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
   isLoading: boolean;
+  count: number;
 };
 
 export enum BookmarkAction {

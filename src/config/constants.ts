@@ -31,3 +31,11 @@ export const ACCESS_TOKEN_KEY = 'accessToken';
 export const AUTH_USER_DETAILS_KEY = 'authUserDetails';
 export const APP_SUPPORT_VERSION =
   (process.env.NEXT_PUBLIC_APP_SUPPORT_VERSION as string) ?? `v1.0`;
+
+export const SECOND = 1000;
+export const MINUTE = 60 * 1000;
+export const HOUR = 60 * 60 * 1000;
+
+//Defaults
+export const DEFAULT_ACCESS_TOKEN_KEY_EXPIRES_AT = 2 * HOUR;
+export const DEFAULT_BUFFER_START_PERCENTAGE = 15;

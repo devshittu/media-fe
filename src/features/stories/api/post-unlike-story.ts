@@ -46,7 +46,7 @@ export const useUnlikeStory = ({
 }: UseLikeStoryOptions) => {
   const updateCachedStory = useUpdateCachedStory();
   const { logAnalytics } = useLogAnalytics();
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutate: submit, status, isPaused, isPending, isIdle } = useMutation({
     mutationKey: [UNLIKE_STORY, story_id],
     mutationFn: unlikeStory,
     onSuccess: (response) => {
@@ -74,6 +74,9 @@ export const useUnlikeStory = ({
       onError?.(error);
     },
   });
+
+  // Compute custom isLoading
+  const isLoading = isPending || isIdle || isPaused;
 
   return {
     submit,

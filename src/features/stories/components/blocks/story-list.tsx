@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { motion, useAnimation } from 'framer-motion';
+import { useAnimation } from 'framer-motion';
 import { Story, StoryListProps, StoryListResponse } from '@/features/stories';
 import { StoryListLoadingPlaceholder } from '@/features/stories/components/loading';
 import { StoryListItem } from './story-list-item';

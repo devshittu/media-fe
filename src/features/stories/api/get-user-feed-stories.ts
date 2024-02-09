@@ -1,7 +1,5 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-
 import { apiClient } from '@/lib/api-client';
-
 import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_USER_FEED } from '@/config/api-constants';
@@ -23,10 +21,11 @@ export const useUserFeedStories = ({ params }: GetStoriesOptions) => {
     GET_USER_FEED_STORIES,
     ApiCallResultType.DISCRETE,
   ];
+
+
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
     queryFn: () => getUserFeedStories({ params }),
-    // enabled: !!params?.category_id,
     initialData: {} as StoryListResponse,
   });
 
@@ -44,6 +43,7 @@ export const useInfiniteUserFeedStories = ({
     GET_USER_FEED_STORIES,
     ApiCallResultType.INFINITE,
   ];
+
   const {
     data,
     fetchNextPage,
@@ -51,26 +51,28 @@ export const useInfiniteUserFeedStories = ({
     isFetchingNextPage,
     isFetched,
     isFetching,
-  } = useInfiniteQuery<StoryListResponse>(
+  } = useInfiniteQuery<StoryListResponse>({
     queryKey,
-    async ({ pageParam = 1 }) =>
-      await getUserFeedStories({ params: { ...params, page: pageParam } }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        // Check if there are more pages to load
-        if (lastPage.current_page < lastPage.total_pages) {
-          return lastPage.current_page + 1;
-        }
-        return undefined; // No more pages
-      },
-      // Keep data fresh for 5 minutes
-      staleTime: 1000 * 60 * 5,
-      // Keep data in cache for 10 minutes
-      cacheTime: 1000 * 60 * 10,
+    queryFn: async ({ pageParam = 1 }) => {
+      // Assert pageParam as number before using it
+      const page = pageParam as number;
+      const response = await getUserFeedStories({
+        params: { ...params, page },
+      });
+      return response;
     },
-  );
+    getNextPageParam: (lastPage: any) => {
+      // Check if there are more pages to load
+      if (lastPage?.current_page < lastPage?.total_pages) {
+        return lastPage.current_page + 1;
+      }
+      return undefined; // No more pages
+    },
+
+    initialPageParam: 1,
+  });
   // Extract count from the first page
-  const count = data?.pages[0]?.count;
+  const count = data?.pages[0]?.count ?? 0;
   return {
     queryKey,
     data,

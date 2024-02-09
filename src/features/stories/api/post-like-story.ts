@@ -1,11 +1,14 @@
-import { Story } from './../types/index';
 import { useMutation } from '@tanstack/react-query';
-
 import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES_BY_STORY_ID_LIKE } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
-import { ApiResponse } from '@/types';
+import {
+  ApiCallMutationStatus,
+  ApiCallResultType,
+  ApiResponse,
+  CacheRefType,
+} from '@/types';
 import {
   LikeStoryFormData,
   StoryAction,
@@ -15,7 +18,7 @@ import { useUpdateCachedStory } from '../hooks/useUpdateCachedStory';
 import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
 import { InteractionType } from '@/features/analytics/types';
 const { LIKE_STORY } = QUERY_KEYS;
-
+//Caller function is responsible for making the actual network request
 export const likeStory = ({
   story_slug,
   story_id,
@@ -47,8 +50,12 @@ export const useLikeStory = ({
 }: UseLikeStoryOptions) => {
   const { logAnalytics } = useLogAnalytics();
   const updateCachedStory = useUpdateCachedStory();
-  const mutationKey = [LIKE_STORY, story_id];
-  const { mutate: submit, isLoading } = useMutation({
+  const mutationKey: CacheRefType = [
+    LIKE_STORY,
+    ApiCallResultType.SINGLE,
+    story_id,
+  ];
+  const { mutate: submit, status, isPending, isIdle, isPaused } = useMutation({
     mutationKey: mutationKey,
     mutationFn: likeStory,
     onSuccess: (response) => {
@@ -78,6 +85,9 @@ export const useLikeStory = ({
       onError?.(error);
     },
   });
+
+  // Compute custom isLoading
+  const isLoading = isPending || isIdle || isPaused;
 
   return {
     submit,

@@ -3,7 +3,7 @@ import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES_BY_STORY_ID_DISLIKE } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
-import { ApiResponse } from '@/types';
+import { ApiCallMutationStatus, ApiResponse } from '@/types';
 import {
   LikeStoryFormData,
   StoryAction,
@@ -41,7 +41,14 @@ export const useDislikeStory = ({
 }: UseLikeStoryOptions) => {
   const { logAnalytics } = useLogAnalytics();
   const updateCachedStory = useUpdateCachedStory();
-  const { mutate: submit, isLoading } = useMutation({
+  const {
+    mutate: submit,
+    isPending,
+    isSuccess,
+    isIdle,
+    isPaused,
+    status,
+  } = useMutation({
     mutationKey: [DISLIKE_STORY, story_id],
     mutationFn: dislikeStory,
     onSuccess: (response) => {
@@ -69,6 +76,9 @@ export const useDislikeStory = ({
       onError?.(error);
     },
   });
+
+  // Compute custom isLoading
+  const isLoading = isPending || isIdle || isPaused;
 
   return {
     submit,

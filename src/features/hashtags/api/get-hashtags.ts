@@ -4,7 +4,11 @@ import { apiClient } from '@/lib/api-client';
 import { URI_STORIES_TRENDING } from '@/config/api-constants';
 import { HashtagListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
-import { PaginatedListQueryParams } from '@/types';
+import {
+  ApiCallResultType,
+  CacheRefType,
+  PaginatedListQueryParams,
+} from '@/types';
 const { GET_HASHTAGS } = QUERY_KEYS;
 
 type GetHashtagsOptions = {
@@ -22,13 +26,24 @@ export const getHashtags = ({
 };
 
 export const useHashtags = ({ params }: GetHashtagsOptions) => {
+  const queryKey: CacheRefType = [
+    GET_HASHTAGS,
+    ApiCallResultType.DISCRETE,
+    params,
+  ];
+
+  // console.log(`fetching useHashtags using key ${queryKey}`);
+
   const { data, isFetching, isFetched } = useQuery({
-    queryKey: [GET_HASHTAGS, params],
+    queryKey,
     queryFn: () => getHashtags({ params }),
-    initialData: {} as HashtagListResponse,
+    enabled: !!params,
+    // initialData: {} as HashtagListResponse,
   });
+  // console.log(`fetching useHashtags data`, data);
 
   return {
+    queryKey,
     data,
     isLoading: isFetching && !isFetched,
   };

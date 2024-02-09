@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
-import { ApiResponse } from '@/types';
+import { ApiCallResultType, ApiResponse, CacheRefType } from '@/types';
 import { URI_FEEDBACKS_REPORT } from '@/config/api-constants';
 import { AddFeedbackFormData } from '../types';
 const { ADD_FEEDBACK } = QUERY_KEYS;
@@ -17,13 +17,15 @@ type UseAddFeedbackOptions = {
 };
 
 export const useAddFeedback = ({
-  // data,
   onSuccess,
   onError,
 }: UseAddFeedbackOptions) => {
-  const { mutate: submit, isLoading } = useMutation({
-    mutationKey: [ADD_FEEDBACK],
+  const mutationKey: CacheRefType = [ADD_FEEDBACK, ApiCallResultType.SINGLE];
+
+  const { mutate: submit, isPending, isSuccess, isError, isIdle, isPaused } = useMutation({
+    mutationKey,
     mutationFn: addFeedback,
+    // mutationFn: addFeedbackInternal,
     onSuccess: (data) => {
       // Invalidate and refetch something when a post is unbookmarked
       //   queryClient.invalidateQueries('someQueryKey');
@@ -33,9 +35,14 @@ export const useAddFeedback = ({
       onError?.(data);
     },
   });
+  // Compute custom isLoading
+  const isLoading = isPending || isIdle || isPaused;
+
 
   return {
     submit,
     isLoading,
   };
 };
+
+// Path: src/features/feedbacks/api/post-add-feedback.ts

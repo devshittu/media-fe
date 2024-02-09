@@ -72,34 +72,29 @@ export const useInfiniteStorylineStories = ({
     isFetchingNextPage,
     isFetched,
     isFetching,
-  } =
-    // const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      queryKey,
-      async ({ pageParam = 1 }) => {
-        const response = await getStorylineStories({
-          // params?.storylineId,
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
-      {
-        getNextPageParam: (lastPage, allPages) => {
-          // Check if there are more pages to load
-          if (lastPage?.current_page < lastPage?.total_pages) {
-            return lastPage.current_page + 1;
-          }
-          return undefined; // No more pages
-        },
+  } = useInfiniteQuery<StoryListResponse>({
+    queryKey,
+    queryFn: async ({ pageParam = 1 }) => {
+      // Assert pageParam as number before using it
+      const page = pageParam as number;
+      const response = await getStorylineStories({
+        // params?.storylineId,
+        params: { ...params, page },
+      });
+      return response;
+    },
+    initialPageParam: 1,
 
-        enabled: !!params?.storylineId,
-        // initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
-      },
-    );
+    getNextPageParam: (lastPage, allPages) => {
+      // Check if there are more pages to load
+      if (lastPage?.current_page < lastPage?.total_pages) {
+        return lastPage.current_page + 1;
+      }
+      return undefined; // No more pages
+    },
+
+    enabled: !!params?.storylineId,
+  });
   // Extract count from the first page
   const count = data?.pages[0]?.count;
 

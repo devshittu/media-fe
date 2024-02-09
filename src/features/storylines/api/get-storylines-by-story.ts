@@ -7,7 +7,8 @@ import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES_BY_SLUG_STORYLINES } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { StorylineListResponse } from '../types';
-const { GET_STORIES } = QUERY_KEYS;
+import { ApiCallResultType, CacheRefType } from '@/types';
+const { GET_STORIES, GET_STORYLINES_BY_STORY_SLUG } = QUERY_KEYS;
 
 type GetStorylinesByStoryOptions = {
   storySlug: string;
@@ -55,36 +56,47 @@ export const useInfiniteStorylinesByStory = ({
   params,
   initialData,
 }: GetStorylinesByStoryOptions) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [GET_STORIES, 'all'],
-      async ({ pageParam = 2 }) => {
-        const response = await getStorylinesByStory({
-          storySlug,
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
-      {
-        getNextPageParam: (lastPage: StorylineListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
-        },
-
-        initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
-      },
-    );
-
-  return {
+  const queryKey: CacheRefType = [
+    GET_STORYLINES_BY_STORY_SLUG,
+    ApiCallResultType.INFINITE,
+  ];
+  const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isFetched,
+    isFetching,
+  } = useInfiniteQuery<StorylineListResponse>({
+    queryKey,
+    queryFn: async ({ pageParam = 1 }) => {
+      const page = pageParam as number;
+      const response = await getStorylinesByStory({
+        storySlug,
+        params: { ...params, page },
+      });
+      return response;
+    },
+
+    initialPageParam: 1,
+
+    getNextPageParam: (lastPage: StorylineListResponse) => {
+      return lastPage.current_page < lastPage.total_pages
+        ? lastPage.current_page + 1
+        : undefined;
+    },
+  });
+  // Extract count from the first page
+  const count = data?.pages[0]?.count;
+
+  return {
+    queryKey,
+    data,
+    count: count || 0,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isFetching && !isFetched,
   };
 };
 

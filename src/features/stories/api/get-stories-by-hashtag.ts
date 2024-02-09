@@ -65,24 +65,25 @@ export const useInfiniteStoriesByHashtag = ({
     isFetchingNextPage,
     isFetched,
     isFetching,
-  } = useInfiniteQuery<StoryListResponse>(
+  } = useInfiniteQuery<StoryListResponse>({
     queryKey,
-    async ({ pageParam = 1 }) =>
-      await getStoriesByHashtag({ params: { ...params, page: pageParam } }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        // Check if there are more pages to load
-        if (lastPage.current_page < lastPage.total_pages) {
-          return lastPage.current_page + 1;
-        }
-        return undefined; // No more pages
-      },
-      // Keep data fresh for 5 minutes
-      staleTime: 1000 * 60 * 5,
-      // Keep data in cache for 10 minutes
-      cacheTime: 1000 * 60 * 10,
+    queryFn: async ({ pageParam = 1 }) => {
+      // Assert pageParam as number before using it
+      const page = pageParam as number;
+      const response = await getStoriesByHashtag({
+        params: { ...params, page },
+      });
+      return response;
     },
-  );
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      // Check if there are more pages to load
+      if (lastPage.current_page < lastPage.total_pages) {
+        return lastPage.current_page + 1;
+      }
+      return undefined; // No more pages
+    },
+  });
   // Extract count from the first page
   const count = data?.pages[0]?.count;
   return {
