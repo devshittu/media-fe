@@ -9,8 +9,9 @@ const { AUTH_USER } = QUERY_KEYS;
 
 type AuthStoreType = {
   accessToken: string | null;
+  expiresAt: number;
   authUserDetails: AuthUser | null;
-  setAccessToken: (token: string | null) => void;
+  setAccessToken: (token: string | null, expiresAt: number) => void;
   setAuthUserDetails: (userDetails: AuthUser | null) => void;
   initializeAuth: () => Promise<void>;
   clearAuth: () => void;
@@ -24,17 +25,24 @@ const authStoreCreator: StateCreator<
   [['zustand/persist', unknown]]
 > = (set, get) => ({
   accessToken: null,
+  expiresAt: 0,
   isRefreshingToken: false,
   authUserDetails: null,
-  setAccessToken: (token) => set(() => ({ accessToken: token })),
+  setAccessToken: (token, expiresAt) =>
+    set(() => ({ accessToken: token, expiresAt })),
   setAuthUserDetails: (userDetails: AuthUser | null) => {
     set({ authUserDetails: userDetails });
   },
   setIsRefreshingToken: (isRefreshing) => {
-    set(() => ({ isRefreshingToken: isRefreshing }));
+    set({ isRefreshingToken: isRefreshing });
   },
 
-  clearAuth: () => set(() => ({ accessToken: null, authUserDetails: null })),
+  clearAuth: () =>
+    set(() => ({
+      accessToken: null,
+      authUserDetails: null,
+      expiresAt: 0,
+    })),
   initializeAuth: async () => {
     // console.log(`authdebug: initializeAuth: begins`);
     const { accessToken, authUserDetails, clearAuth, isRefreshingToken } =
@@ -45,7 +53,9 @@ const authStoreCreator: StateCreator<
       return;
     }
     if (accessToken && authUserDetails) {
-      // console.log(`authdebug: initializeAuth: Token and user details are already in the store.`);
+      // console.log(
+      //   `authdebug: initializeAuth: Token and user details are already in the store.`,
+      // );
     } else {
       if (!accessToken && !isRefreshingToken) {
         await handleTokenRefresh();
@@ -53,7 +63,10 @@ const authStoreCreator: StateCreator<
 
       // Fetch auth user information (only if not already stored)
       if (!authUserDetails) {
-        await queryClient.fetchQuery([AUTH_USER], getAuthUser);
+        await queryClient.fetchQuery({
+          queryKey: [AUTH_USER],
+          queryFn: getAuthUser,
+        });
       }
     }
 
