@@ -6,6 +6,8 @@ import { URI_AUTH_TOKEN } from '@/config/api-constants';
 import { AuthStore } from '@/stores/auth';
 import { getAuthUser } from './get-auth-user';
 import { QUERY_KEYS } from '@/config/query';
+import { DEFAULT_ACCESS_TOKEN_KEY_EXPIRES_AT } from '@/config/constants';
+import { ApiCallMutationStatus } from '@/types';
 const { AUTH_USER } = QUERY_KEYS;
 
 export const signin = (data: PasswordSigninData): Promise<AuthResponse> => {
@@ -17,22 +19,33 @@ type UsePasswordSigninOptions = {
 };
 
 export const usePasswordSignin = ({ onSuccess }: UsePasswordSigninOptions) => {
-  const { mutate: submit, isLoading } = useMutation({
+  const {
+    mutate: submit,
+    isPending,
+    status,
+
+    isSuccess,
+    // isFetching, isFetched
+  } = useMutation({
     mutationFn: signin,
 
     onSuccess: async (response) => {
-      const newAccessToken = response.access_token;
+      const newAccessToken = response?.access_token;
+      const newAccessTokenExpiry = response?.access_token_expires_at;
       const { setAccessToken, setAuthUserDetails } = AuthStore.getState();
-      setAccessToken(newAccessToken);
+      setAccessToken(
+        newAccessToken,
+        newAccessTokenExpiry || DEFAULT_ACCESS_TOKEN_KEY_EXPIRES_AT,
+      );
 
       // Fetch user details after login
       // queryClient.invalidateQueries([AUTH_USER]);
 
       try {
-        const authUserData = await queryClient.fetchQuery(
-          [AUTH_USER],
-          getAuthUser,
-        );
+        const authUserData = await queryClient.fetchQuery({
+          queryKey: [AUTH_USER],
+          queryFn: getAuthUser,
+        });
 
         if (authUserData) {
           setAuthUserDetails(authUserData);
@@ -50,7 +63,10 @@ export const usePasswordSignin = ({ onSuccess }: UsePasswordSigninOptions) => {
     },
   });
 
-  return { submit, isLoading };
+  return {
+    submit,
+    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess,
+  };
 };
 
 // Path: src/features/auth/api/post-password-signin.ts
