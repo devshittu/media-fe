@@ -17,7 +17,6 @@ import {
 import { useUpdateCachedStory } from '../hooks/useUpdateCachedStory';
 import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
 import { InteractionType } from '@/features/analytics/types';
-import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { LIKE_STORY } = QUERY_KEYS;
 //Caller function is responsible for making the actual network request
 export const likeStory = ({
