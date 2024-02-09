@@ -16,7 +16,6 @@ type GetStorylineOptions = {
 };
 
 export const getStorylines = ({
-  // storyFor,
   params,
 }: GetStorylineOptions): Promise<StoryListResponse> => {
   return apiClient.get(`${URI_STORYLINES}`, {
@@ -57,29 +56,23 @@ export const useInfiniteStorylines = ({
     isFetchingNextPage,
     isFetched,
     isFetching,
-  } = useInfiniteQuery(
+  } = useInfiniteQuery({
     queryKey,
-    async ({ pageParam = 1 }) => {
+    queryFn: async ({ pageParam = 1 }) => {
+      // Assert pageParam as number before using it
+      const page = pageParam as number;
       const response = await getStorylines({
-        // storyFor,
-        params: { ...params, page: pageParam },
+        params: { ...params, page },
       });
       return response;
     },
-    {
-      getNextPageParam: (lastPage: StoryListResponse) => {
-        return lastPage.current_page < lastPage.total_pages
-          ? lastPage.current_page + 1
-          : undefined;
-      },
-
-      // initialData: { pages: [initialData], pageParams: [1] },
-      //TODO: Keep data fresh for 5 minutes
-      staleTime: 1000 * 60 * 5,
-      // Keep data in cache for 10 minutes
-      cacheTime: 1000 * 60 * 10,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: StoryListResponse) => {
+      return lastPage?.current_page < lastPage?.total_pages
+        ? lastPage.current_page + 1
+        : undefined;
     },
-  );
+  });
   // Extract count from the first page
   const count = data?.pages[0]?.count;
 
