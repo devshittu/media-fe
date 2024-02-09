@@ -6,9 +6,8 @@ import {
   URI_AUTH_TOKEN_REFRESH,
 } from '@/config/api-constants';
 import getConfig from 'next/config';
-import { handleLogoutAndRedirect, handleTokenRefresh, signOut } from '@/utils';
+import { handleLogoutAndRedirect, handleTokenRefresh } from '@/utils';
 import { ErrorCode } from '@/config/error-codes';
-import Router from 'next/router';
 
 // Get our configuration of our runtimes
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
@@ -30,7 +29,7 @@ export const apiClient = Axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  requiresAuth: true,
+  requiresAuth: false,
 
   // Add withCredentials here if you want it to be the default for all requests
   // withCredentials: true,
@@ -45,6 +44,115 @@ export const apiClientAuth = Axios.create({
 });
 
 //Path: src/lib/api-client.ts
+
+// interface QueueItem {
+//   resolve: (token: string) => void; // Accepts string only
+//   reject: (error: any) => void;
+// }
+
+// let failedQueue: QueueItem[] = [];
+
+// const processQueue = (error: any, token: string | null = null): void => {
+//   failedQueue.forEach((prom) => {
+//     if (error || token === null) {
+//       prom.reject(error || new Error("Token refresh failed"));
+//     } else {
+//       prom.resolve(token); // token is guaranteed to be non-null here
+//     }
+//   });
+
+//   failedQueue = [];
+// };
+
+// apiClient.interceptors.request.use(
+//   async (config) => {
+//     const { accessToken, isRefreshingToken } = AuthStore.getState();
+
+//     if (isRefreshingToken) {
+//       try {
+//         const tokenPromise = new Promise((resolve, reject) => {
+//           failedQueue.push({ resolve, reject });
+//         });
+
+//         const newToken = await tokenPromise;
+//         config.headers['Authorization'] = 'Bearer ' + newToken;
+//         return config;
+//       } catch (error) {
+//         return Promise.reject(error);
+//       }
+//     } else {
+//       if (accessToken) {
+//         config.headers['Authorization'] = `Bearer ${accessToken}`;
+//       }
+//       return config;
+//     }
+//   },
+//   (error) => Promise.reject(error),
+// );
+
+// apiClient.interceptors.response.use(
+//   (response) => response, // Success responses pass through
+//   async (error) => {
+//     const originalRequest = error.config;
+//     const {
+//       accessToken,
+//       expiresAt,
+//       isRefreshingToken,
+//       setIsRefreshingToken,
+//       setAccessToken,
+//     } = AuthStore.getState();
+
+//     // Check if error is due to expired token
+//     if (error.response?.status === 401 && !originalRequest._retry) {
+//       // Check if the token is within the buffer period for refresh and not already refreshing
+//       if (!isRefreshingToken && calculateBufferStatus(expiresAt, 15)) {
+//         // Assuming 15% as buffer
+//         setIsRefreshingToken(true);
+//         originalRequest._retry = true; // Mark the request for retry
+
+//         try {
+//           const response = await refreshToken(); // Implement this to actually refresh the token
+//           const newAccessToken = response?.access_token ?? null; // Ensures string or null
+//           const newAccessTokenExpiresAt =
+//             response?.access_token_expires_at ??
+//             DEFAULT_ACCESS_TOKEN_KEY_EXPIRES_AT; // Ensures number or null
+
+//           // Update the store with the new token and expiry time
+//           setAccessToken(newAccessToken, newAccessTokenExpiresAt);
+//           AuthStore.getState().setIsRefreshingToken(false);
+
+//           // Update the authorization header for the original request
+//           originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+//           processQueue(null, newAccessToken); // Process the queue with the new token
+//           // return apiClient(originalRequest);
+//           return apiClient(originalRequest); // Retry the original request with the new token
+//         } catch (refreshError) {
+//           processQueue(refreshError, null); // Process the queue with the error
+
+//         console.error('Failed to refresh token:', refreshError);
+//         setIsRefreshingToken(false);
+//         AuthStore.getState().clearAuth();
+//         // Router.push('/auth/signin');
+//           return Promise.reject(refreshError); // Refresh failed, reject the promise
+//         }
+//       } else if (isRefreshingToken) {
+//         // If the token is already refreshing, queue this request
+//         return new Promise((resolve, reject) => {
+//           failedQueue.push({
+//             resolve: (token: string) => {
+//               originalRequest.headers['Authorization'] = `Bearer ${token}`;
+//               resolve(apiClient(originalRequest));
+//             },
+//             reject,
+//           });
+//         });
+//       }
+//     }
+
+//     // For errors not related to token expiration, just reject the promise
+//     return Promise.reject(error);
+//   },
+// );
 
 apiClient.interceptors.request.use((config) => {
   if (config.requiresAuth) {
