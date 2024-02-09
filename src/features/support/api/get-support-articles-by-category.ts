@@ -5,7 +5,11 @@ import { apiClient } from '@/lib/api-client';
 import { SupportArticleListResponse } from '../types';
 import { URI_SUPPORT_BY_VERSION_ARTICLES_CATEGORY_BY_CATEGORY_SLUG } from '@/config/api-constants';
 import { QUERY_KEYS } from '@/config/query';
-import { PaginatedListQueryParams } from '@/types';
+import {
+  ApiCallResultType,
+  CacheRefType,
+  PaginatedListQueryParams,
+} from '@/types';
 import { uriTemplate } from '@/utils';
 import { LegalURIParams } from './get-legal-document';
 const { GET_SUPPORT_ARTICLES } = QUERY_KEYS;
@@ -49,34 +53,44 @@ export const useGetSupportArticlesByCategory = ({
 
 export const useInfiniteSupportArticlesByCategory = ({
   params,
-  initialData,
 }: GetSupportArticlesByCategoryOptions) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [GET_SUPPORT_ARTICLES, 'all'],
-      async ({ pageParam = 2 }) => {
-        const response = await getSupportArticlesByCategory({
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
-      {
-        getNextPageParam: (lastPage: SupportArticleListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
-        },
-
-        initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
-      },
-    );
-
-  return {
+  const queryKey: CacheRefType = [
+    GET_SUPPORT_ARTICLES,
+    ApiCallResultType.INFINITE,
+  ];
+  const {
     data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isFetched,
+    isFetching,
+  } = useInfiniteQuery<SupportArticleListResponse>({
+    queryKey,
+    queryFn: async ({ pageParam = 1 }) => {
+      // Assert pageParam as number before using it
+      const page = pageParam as number;
+      const response = await getSupportArticlesByCategory({
+        params: { ...params, page },
+      });
+      return response;
+    },
+    initialPageParam: 1,
+
+    getNextPageParam: (lastPage: SupportArticleListResponse) => {
+      return lastPage.current_page < lastPage.total_pages
+        ? lastPage.current_page + 1
+        : undefined;
+    },
+  });
+
+  // Extract count from the first page
+  const count = data?.pages[0]?.count;
+  return {
+    queryKey,
+    data,
+    count: count || 0,
+    isLoading: isFetching && !isFetched,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
