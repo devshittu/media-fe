@@ -5,7 +5,11 @@ import { apiClient } from '@/lib/api-client';
 import { StorylineListResponse } from '../types';
 import { URI_STORYLINES } from '@/config/api-constants';
 import { QUERY_KEYS } from '@/config/query';
-import { PaginatedListQueryParams } from '@/types';
+import {
+  ApiCallResultType,
+  CacheRefType,
+  PaginatedListQueryParams,
+} from '@/types';
 const { GET_STORYLINES } = QUERY_KEYS;
 
 type GetStorylinesOptions = {
@@ -38,32 +42,39 @@ export const useInfiniteStorylines = ({
   params,
   initialData,
 }: GetStorylinesOptions) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [GET_STORYLINES, 'all'],
-      async ({ pageParam = 2 }) => {
-        const response = await getStorylines({
-          params: { ...params, page: pageParam },
-        });
-        return response;
-      },
-      {
-        getNextPageParam: (lastPage: StorylineListResponse) => {
-          return lastPage.current_page < lastPage.total_pages
-            ? lastPage.current_page + 1
-            : undefined;
-        },
-
-        initialData: { pages: [initialData], pageParams: [1] },
-        //TODO: Keep data fresh for 5 minutes
-        staleTime: 1000 * 60 * 5,
-        // Keep data in cache for 10 minutes
-        cacheTime: 1000 * 60 * 10,
-      },
-    );
-
-  return {
+  const queryKey: CacheRefType = [GET_STORYLINES, ApiCallResultType.INFINITE];
+  const {
     data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isFetched,
+    isFetching,
+  } = useInfiniteQuery<StorylineListResponse>({
+    queryKey,
+    queryFn: async ({ pageParam = 1 }) => {
+      const page = pageParam as number;
+      const response = await getStorylines({
+        params: { ...params, page },
+      });
+      return response;
+    },
+
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: StorylineListResponse) => {
+      return lastPage.current_page < lastPage.total_pages
+        ? lastPage.current_page + 1
+        : undefined;
+    },
+  });
+
+  // Extract count from the first page
+  const count = data?.pages[0]?.count;
+  return {
+    queryKey,
+    data,
+    count: count || 0,
+    isLoading: isFetching && !isFetched,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
