@@ -6,7 +6,6 @@ import { UserListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_USERS } from '@/config/api-constants';
 import { ApiCallResultType, CacheRefType } from '@/types';
-import useApiClientAuth from '@/features/auth/hooks/useApiClientAuth';
 const { GET_USERS } = QUERY_KEYS;
 
 type GetUsersOptions = {
@@ -24,17 +23,19 @@ export const getUsers = ({
 };
 
 export const useGetUsers = ({ params }: GetUsersOptions) => {
-  const apiClientAuth = useApiClientAuth();
-  const queryKey: CacheRefType = [GET_USERS, ApiCallResultType.DISCRETE];
-  const fetchUsers = async ({
+  const queryKey: CacheRefType = [
+    GET_USERS,
+    ApiCallResultType.DISCRETE,
     params,
-  }: GetUsersOptions): Promise<UserListResponse> => {
-    return await apiClientAuth.get(`${URI_USERS}`, { params });
-  };
+  ];
+
+  // console.log(`fetching useGetUsers using key ${queryKey}`);
+
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
-    queryFn: () => fetchUsers({ params }),
-    initialData: {} as UserListResponse,
+    queryFn: () => getUsers({ params }),
+    enabled: !!params,
+    // initialData: {} as UserListResponse,
   });
 
   return {
@@ -43,3 +44,5 @@ export const useGetUsers = ({ params }: GetUsersOptions) => {
     isLoading: isFetching && !isFetched,
   };
 };
+
+// Path: src/features/users/api/get-users.ts
