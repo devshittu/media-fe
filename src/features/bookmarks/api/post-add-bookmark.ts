@@ -31,7 +31,7 @@ export const useAddBookmark = ({
   const { logAnalytics } = useLogAnalytics();
   const updateCachedStory = useUpdateCachedStory();
   const mutationKey = [ADD_BOOKMARK, story_id];
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutate: submit, status, isPending, isSuccess } = useMutation({
     mutationKey: mutationKey,
     mutationFn: addBookmark,
     onSuccess: (response) => {
@@ -64,7 +64,7 @@ export const useAddBookmark = ({
   return {
     mutationKey,
     submit,
-    isLoading,
+    isLoading: isPending && !isSuccess,
   };
 };
 
