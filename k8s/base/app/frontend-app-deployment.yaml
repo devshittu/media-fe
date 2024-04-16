@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+        - name: frontend-app
+          image: frontend-app-image:0.0.1
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "1024Mi"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          envFrom:
+          - configMapRef:
+              name: frontend-app-configmap
+          - secretRef:
+              name: frontend-app-secret
+      restartPolicy: Always
+      # volumes:
+      #   - name: frontend-app-pvc
+      #     persistentVolumeClaim:
+      #       claimName: frontend-app-pvc
+      #   - name: media-volume
+
+
+# k8s/base/app/frontend-app-deployment.yaml
