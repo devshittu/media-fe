@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../base/app/
+
+patches:
+  - path: frontend-app-deployment-patch.yaml
+    target:
+      kind: Deployment
+      name: frontend-app
+  - path: frontend-app-service-patch.yaml
+    target:
+      kind: Service
+      name: frontend-app-service
+
+images:
+  - name: frontend-app-image
+    newName: frontend-app-image
+    newTag: dev-0.0.1
+
+# commonLabels:
+#   app: frontend-app
+
+# k8s/overlays/dev/app/kustomization.yaml
