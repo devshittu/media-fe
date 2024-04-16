@@ -5,7 +5,7 @@ services:
     container_name: media-fe
     build:
       context: ./ #./media-fe
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile.dev
 
     # Set environment variables directly in the docker-compose file
     environment:
