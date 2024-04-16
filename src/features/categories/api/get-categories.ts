@@ -5,7 +5,11 @@ import { Category, CategoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { useEffect, useMemo } from 'react';
 import { URI_CATEGORIES } from '@/config/api-constants';
-import { ApiCallResultType, CacheRefType, PaginatedListQueryParams } from '@/types';
+import {
+  ApiCallResultType,
+  CacheRefType,
+  PaginatedListQueryParams,
+} from '@/types';
 const { GET_CATEGORIES } = QUERY_KEYS;
 type GetCategoriesOptions = {
   params?: PaginatedListQueryParams & {
@@ -24,7 +28,10 @@ export const useCategories = ({ params }: GetCategoriesOptions) => {
 
   // const  queryKey: CacheRefType =  [GET_CATEGORIES, ApiCallResultType.INFINITE, params];
 
-  const queryKey = useMemo(() => [GET_CATEGORIES, ApiCallResultType.INFINITE, params], [params]);
+  const queryKey = useMemo(
+    () => [GET_CATEGORIES, ApiCallResultType.INFINITE, params],
+    [params],
+  );
 
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
