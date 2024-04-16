@@ -46,7 +46,13 @@ export const useUnlikeStory = ({
 }: UseLikeStoryOptions) => {
   const updateCachedStory = useUpdateCachedStory();
   const { logAnalytics } = useLogAnalytics();
-  const { mutate: submit, status, isPaused, isPending, isIdle } = useMutation({
+  const {
+    mutate: submit,
+    status,
+    isPaused,
+    isPending,
+    isIdle,
+  } = useMutation({
     mutationKey: [UNLIKE_STORY, story_id],
     mutationFn: unlikeStory,
     onSuccess: (response) => {
