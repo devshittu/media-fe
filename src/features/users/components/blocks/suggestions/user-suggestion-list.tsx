@@ -12,7 +12,9 @@ type UserSuggestionListProps = HTMLAttributes<HTMLDivElement> & {
 export const UserSuggestionList = React.memo(
   ({ numSuggestions = 3, ...props }: UserSuggestionListProps) => {
     const { showNotification } = useNotifications();
-    const { data: responseData, isLoading } = useGetUsers({params: { page_size: 3 },});
+    const { data: responseData, isLoading } = useGetUsers({
+      params: { page_size: 3 },
+    });
     const allSuggestionList = useMemo(
       () => responseData?.results,
       [responseData?.results],

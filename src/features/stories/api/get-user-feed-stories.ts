@@ -22,7 +22,6 @@ export const useUserFeedStories = ({ params }: GetStoriesOptions) => {
     ApiCallResultType.DISCRETE,
   ];
 
-
   const { data, isFetching, isFetched } = useQuery({
     queryKey,
     queryFn: () => getUserFeedStories({ params }),

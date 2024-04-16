@@ -31,7 +31,12 @@ export const useAddBookmark = ({
   const { logAnalytics } = useLogAnalytics();
   const updateCachedStory = useUpdateCachedStory();
   const mutationKey = [ADD_BOOKMARK, story_id];
-  const { mutate: submit, status, isPending, isSuccess } = useMutation({
+  const {
+    mutate: submit,
+    status,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationKey: mutationKey,
     mutationFn: addBookmark,
     onSuccess: (response) => {

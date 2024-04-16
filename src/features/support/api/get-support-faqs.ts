@@ -44,33 +44,35 @@ export const useGetSupportFAQs = ({ params }: GetSupportFAQsOptions) => {
   };
 };
 
-export const useInfiniteSupportFAQs = ({
-  params,
-}: GetSupportFAQsOptions) => {
+export const useInfiniteSupportFAQs = ({ params }: GetSupportFAQsOptions) => {
   const queryKey: CacheRefType = [
     GET_SUPPORT_ARTICLES,
     ApiCallResultType.INFINITE,
   ];
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage,
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isFetched,
-    isFetching, } =
-    useInfiniteQuery<FAQListResponse>({
-      queryKey,
-      queryFn: async ({ pageParam = 1 }) => {
-        const page = pageParam as number;
-        const response = await getSupportFAQs({
-          params: { ...params, page },
-        });
-        return response;
-      },
+    isFetching,
+  } = useInfiniteQuery<FAQListResponse>({
+    queryKey,
+    queryFn: async ({ pageParam = 1 }) => {
+      const page = pageParam as number;
+      const response = await getSupportFAQs({
+        params: { ...params, page },
+      });
+      return response;
+    },
 
-      initialPageParam: 1,
-      getNextPageParam: (lastPage: FAQListResponse) => {
-        return lastPage.current_page < lastPage.total_pages
-          ? lastPage.current_page + 1
-          : undefined;
-      },
-    });
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: FAQListResponse) => {
+      return lastPage.current_page < lastPage.total_pages
+        ? lastPage.current_page + 1
+        : undefined;
+    },
+  });
 
   // Extract count from the first page
   const count = data?.pages[0]?.count;

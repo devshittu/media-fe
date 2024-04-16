@@ -54,7 +54,8 @@ Home.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = async ({
   params,
 }: GetServerSidePropsContext) => {
-  const hashtag = 'Deforestation'; //TODO: add at random.
+  const hashtag = 'FiscalManagement'; //TODO: add at random.
+  // const hashtag = 'Deforestation'; //TODO: add at random.
   const queryParams: StoriesQueryParams = cleanObject({
     page: 1,
     per_page: PAGINATE_STORIES_LIMIT,

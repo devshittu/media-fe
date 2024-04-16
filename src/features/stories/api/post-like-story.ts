@@ -55,7 +55,13 @@ export const useLikeStory = ({
     ApiCallResultType.SINGLE,
     story_id,
   ];
-  const { mutate: submit, status, isPending, isIdle, isPaused } = useMutation({
+  const {
+    mutate: submit,
+    status,
+    isPending,
+    isIdle,
+    isPaused,
+  } = useMutation({
     mutationKey: mutationKey,
     mutationFn: likeStory,
     onSuccess: (response) => {

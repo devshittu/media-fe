@@ -50,4 +50,9 @@ yarn-error.log*
 next-env.d.ts
 
 
+#  k8s
+**/*-secret.yaml
+**/secrets.env
+**/*.properties
+
 # Path: media-fe/.gitignore

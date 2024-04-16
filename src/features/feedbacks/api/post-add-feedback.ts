@@ -22,7 +22,14 @@ export const useAddFeedback = ({
 }: UseAddFeedbackOptions) => {
   const mutationKey: CacheRefType = [ADD_FEEDBACK, ApiCallResultType.SINGLE];
 
-  const { mutate: submit, isPending, isSuccess, isError, isIdle, isPaused } = useMutation({
+  const {
+    mutate: submit,
+    isPending,
+    isSuccess,
+    isError,
+    isIdle,
+    isPaused,
+  } = useMutation({
     mutationKey,
     mutationFn: addFeedback,
     // mutationFn: addFeedbackInternal,
@@ -37,7 +44,6 @@ export const useAddFeedback = ({
   });
   // Compute custom isLoading
   const isLoading = isPending || isIdle || isPaused;
-
 
   return {
     submit,

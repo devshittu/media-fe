@@ -6,9 +6,7 @@ import { URI_BOOKMARKS_STORY_BY_STORY_ID } from '@/config/api-constants';
 import { uriTemplate } from '@/utils';
 import { StoryAction } from '@/features/stories/components/types';
 import { useUpdateCachedStory } from '@/features/stories/hooks/useUpdateCachedStory';
-import {
-  DeleteBookmarkByStoryIdFormData,
-} from '../types';
+import { DeleteBookmarkByStoryIdFormData } from '../types';
 import { InteractionType } from '@/features/analytics/types';
 import { useLogAnalytics } from '@/features/analytics/hooks/useLogAnalytics';
 const { DESTROY_BOOKMARK_BY_STORY_ID } = QUERY_KEYS;
@@ -38,7 +36,12 @@ export const useDeleteBookmarkByStoryId = ({
   const updateCachedStory = useUpdateCachedStory();
   const { logAnalytics } = useLogAnalytics();
   const mutationKey = [DESTROY_BOOKMARK_BY_STORY_ID, story_id];
-  const { mutate: submit, status, isPending, isSuccess } = useMutation({
+  const {
+    mutate: submit,
+    status,
+    isPending,
+    isSuccess,
+  } = useMutation({
     mutationKey: mutationKey,
     mutationFn: deleteBookmarkByStoryId,
     onSuccess: (response) => {

@@ -38,9 +38,7 @@ export const useGetStorylines = ({ params }: GetStorylinesOptions) => {
   };
 };
 
-export const useInfiniteStorylines = ({
-  params,
-}: GetStorylinesOptions) => {
+export const useInfiniteStorylines = ({ params }: GetStorylinesOptions) => {
   const queryKey: CacheRefType = [GET_STORYLINES, ApiCallResultType.INFINITE];
   const {
     data,

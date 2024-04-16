@@ -1,0 +1,15 @@
+# ./k8s/base/app/kustomization.yaml
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - frontend-app-configmap.yaml
+  - frontend-app-deployment.yaml
+  # - frontend-app-pvc.yaml
+  - frontend-app-secret.yaml
+  - frontend-app-service.yaml
+commonLabels:
+  role: app-gui
+
+
+# k8s/base/app/kustomization.yaml
