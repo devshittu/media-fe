@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../../base/app/
-  - frontend-app-pv.yaml
 
 patches:
   - path: frontend-app-deployment-patch.yaml
@@ -15,13 +14,8 @@ patches:
       kind: Service
       name: frontend-app-service
 
-  # - path: frontend-app-pvc-patch.yaml
-  #   target:
-  #     kind: PersistentVolumeClaim
-  #     name: frontend-app-pvc
-
 images:
-  - name: frontend-app-image
+  - name: web-app-image
     newName: europe-west2-docker.pkg.dev/media-app-418813/media-app-repo/frontend-app-image
     newTag: staging-0.0.1
 
