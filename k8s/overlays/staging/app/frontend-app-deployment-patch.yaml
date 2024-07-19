@@ -1,0 +1,14 @@
+# # ./k8s/overlays/dev/frontend-app-deployment-patch.yaml
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: frontend-app
+# spec:
+#   template:
+#     spec:
+#       containers:
+#       - name: frontend-app
+#         image: frontend-app-image:0.0.1
+
+# # k8s/overlays/dev/app/frontend-app-deployment-patch.yaml

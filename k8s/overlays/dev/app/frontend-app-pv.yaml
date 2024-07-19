@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+namespace: development
+metadata:
+  name: frontend-app-pv
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 500M
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/data" ## the volume is at /mnt/data on the cluster's node
+
+# k8s/overlays/dev/app/frontend-app-pvc-patch.yaml

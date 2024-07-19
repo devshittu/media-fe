@@ -1,0 +1,75 @@
+name: CD Pipeline for Docker Compose
+
+on:
+  workflow_run:
+    workflows: ['CI Pipeline']
+    branches:
+      - staging
+    types:
+      - completed
+  pull_request:
+    branches:
+      - staging
+  workflow_dispatch:
+
+env:
+  DOCKER_INTERNAL_NETWORK_NAME: 'my_media_network'
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted
+    environment: staging
+
+    steps:
+      - name: Fix permissions before checkout
+        run: sudo chown -R $USER:$USER /home/mediavmuser/actions-runner-frontend/_work/media-fe/
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }} # Dynamically checkout the branch that triggered the workflow
+
+      - name: Set up environment variables
+        run: |
+          echo "NEXT_PUBLIC_APP_SUPPORT_VERSION=${{ vars.NEXT_PUBLIC_APP_SUPPORT_VERSION }}" >> .env.docker-compose
+          echo "NEXT_PUBLIC_SHOW_LOGGER=${{ vars.NEXT_PUBLIC_SHOW_LOGGER }}" >> .env.docker-compose
+          echo "NEXT_SERVER_API_URL=${{ vars.NEXT_SERVER_API_URL }}" >> .env.docker-compose
+          echo "NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}" >> .env.docker-compose
+          echo "NEXT_PUBLIC_APP_URL=${{ vars.NEXT_PUBLIC_APP_URL }}" >> .env.docker-compose
+          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> .env.docker-compose
+          echo "NEXTAUTH_URL=${{ vars.NEXTAUTH_URL }}" >> .env.docker-compose
+          echo "NEXT_PUBLIC_API_MOCKING=${{ secrets.NEXT_PUBLIC_API_MOCKING }}" >> .env.docker-compose
+          echo "ENV_VARIABLE=${{ vars.ENV_VARIABLE }}" >> .env.docker-compose
+          echo "NEXT_PUBLIC_ENV_VARIABLE=${{ vars.NEXT_PUBLIC_ENV_VARIABLE }}" >> .env.docker-compose
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | sudo docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+      - name: Create Docker network if not exists
+        run: |
+          if ! sudo docker network ls | grep -q ${{ env.DOCKER_INTERNAL_NETWORK_NAME }}; then
+            sudo docker network create ${{ env.DOCKER_INTERNAL_NETWORK_NAME }};
+          fi
+      - name: Pull Docker image
+        run: |
+          sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/mediaapp:frontend-app-latest
+
+      - name: Delete Old docker container for frontend app
+        run: sudo docker compose -f docker-compose.staging.yml down frontend-app || true
+
+      - name: Run Docker Container for frontend app
+        run: sudo docker compose --env-file .env.docker-compose -f docker-compose.staging.yml up -d
+
+      # - name: Run init-frontend-app.sh in backend-app container
+      #   run: sudo docker exec backend-app bash -c "./k8s/scripts/init-frontend-app.sh"
+
+    #   - name: Remove Untagged Docker Images
+    #     run: |
+    #       dangling_images=$(sudo docker images -f "dangling=true" -q)
+    #       if [ -n "$dangling_images" ]; then
+    #         sudo docker rmi $dangling_images
+    #       else
+    #         echo "No dangling images to remove"
+    #       fi
+# .github/workflows/cd-vm-deploy.yml
