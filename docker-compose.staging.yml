@@ -29,8 +29,8 @@ services:
       - 3000:3000
     networks:
       - my_media_network
-    depends_on:
-      - web-app
+    # depends_on:
+    #   - web-app
 
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
