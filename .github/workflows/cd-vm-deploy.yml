@@ -50,6 +50,7 @@ jobs:
         run: |
           if ! sudo docker network ls | grep -q ${{ env.DOCKER_INTERNAL_NETWORK_NAME }}; then
             sudo docker network create ${{ env.DOCKER_INTERNAL_NETWORK_NAME }};
+            
           fi
       - name: Pull Docker image
         run: |
