@@ -19,11 +19,6 @@ services:
     env_file:
       - .env.docker-compose
 
-    # volumes:
-    # - /Users/mshittu/programming-projects/javascript/react/media-fe/src:/app/src
-    # - /Users/mshittu/programming-projects/javascript/react/media-fe/public:/app/public
-    # - frontend-node-modules:/app/node_modules
-
     restart: always
     ports:
       - 3000:3000
