@@ -28,7 +28,7 @@ export const useFollowUser = () => {
     mutationFn: followUser,
   });
 
-  const isFollowLoading = isPending || isIdle || isPaused;
+  const isFollowLoading = isPending;
 
   return {
     submit,
