@@ -1,5 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 import NextImage from 'next/image';
+import { LoadingPhotoFailed } from '@/components/loading';
 
 export type ImageProps = {
   src: string;
@@ -33,7 +34,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
       onLoad,
       onError,
       loaderSvg,
-      fallbackSrc = '/path/to/default-image.jpg', // Default fallback image
+      fallbackSrc = '', //'/path/to/default-image.jpg', // Default fallback image
       errorMessage = 'Image failed to load.', // Default error message
 
       ...props
@@ -57,12 +58,28 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
       console.error(`Error loading image: ${src}`); // Error logging
     };
 
+    const brokenImageSvg = (
+      <svg
+        width={safeWidth}
+        height={safeHeight}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+      >
+        <path
+          d="M21 3H3C1.89 3 1.01 3.9 1.01 5L1 19C1 20.1 1.89 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM21 19H3V5H21V19ZM19 17H5L10 11L12.5 14L14 12L19 17Z"
+          fill="currentColor"
+        />
+      </svg>
+    );
+
     return (
       <>
         {!isLoaded && !hasError && loaderSvg}
         {hasError ? (
           <div>
-            <NextImage
+            {/* <NextImage
               src={fallbackSrc}
               alt="Fallback"
               width={safeWidth}
@@ -70,7 +87,37 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
               priority={priority}
               className={className}
               loading={loading}
-            />
+            /> */}
+
+            
+            {fallbackSrc ? (
+              <NextImage
+                src={fallbackSrc}
+                alt="Fallback"
+                width={safeWidth}
+                height={safeHeight}
+                priority={priority}
+                className={className}
+                loading={loading}
+              />
+            ) : (
+              <>
+              <LoadingPhotoFailed />
+              {/* <svg
+        width={safeWidth}
+        height={safeHeight}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+      >
+        <path
+          d="M21 3H3C1.89 3 1.01 3.9 1.01 5L1 19C1 20.1 1.89 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM21 19H3V5H21V19ZM19 17H5L10 11L12.5 14L14 12L19 17Z"
+          fill="currentColor"
+        />
+      </svg> */}
+              </>
+            )}
             <p>{errorMessage}</p>
           </div>
         ) : (
