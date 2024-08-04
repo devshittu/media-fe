@@ -66,3 +66,5 @@ const Checkbox = ({
 };
 
 export default Checkbox;
+
+// Path: src/components/form/checkbox.tsx:
