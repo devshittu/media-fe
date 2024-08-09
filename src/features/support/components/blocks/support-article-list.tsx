@@ -1,3 +1,4 @@
+'use client';
 // ArticleList.tsx
 import React, { useMemo } from 'react';
 import { SupportArticleItem } from './support-article-item';

@@ -1,3 +1,4 @@
+'use client';
 import { TourPopperType } from '@/components/blocks/tour/tour-popper';
 import { TourSequenceItem } from '@/components/blocks/tour/types';
 import { createStore, useStore } from 'zustand';

@@ -1,3 +1,4 @@
+'use client';
 import { InputField } from '@/components';
 import { SearchIcon } from '@/components/illustrations';
 import { TopicContentSection } from '@/components/labs/public-page';
