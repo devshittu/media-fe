@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { DeepPartial, updateDeep } from '@/utils';
 import { useUpdateUserSettings } from '../api/patch-update-user-settings';
