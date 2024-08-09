@@ -1,3 +1,4 @@
+'use client';
 import { ChevronRightIcon, Icon } from '@/components/illustrations';
 import { Markdown } from '@/components/markdown';
 import React, { useState } from 'react';
