@@ -85,9 +85,9 @@
 // export default Breadcrumb;
 
 // // Path: src/components/blocks/breadcrumb/breadcrumb.tsx
-
+'use client';
 import React from 'react';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { ArrowRightIcon, HomeIcon } from '@/components/illustrations';
 import { Link } from '@/components/labs';
 
@@ -101,24 +101,25 @@ type BreadcrumbProps = {
 };
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ trails }) => {
-  const router = useRouter();
-  const { asPath } = router;
+  const pathname = usePathname();
 
   // Automatically generate breadcrumb trail if not provided
   const autoTrail =
     trails ||
-    asPath
-      .split('/')
-      .filter((path) => path)
-      .map((path, index, arr) => {
-        // Transform the path segment into a user-friendly label
-        const label = path
-          .replace(/-/g, ' ')
-          .replace(/\b\w/g, (l) => l.toUpperCase());
-        // Construct the href for each breadcrumb segment
-        const href = '/' + arr.slice(0, index + 1).join('/');
-        return { label, href };
-      });
+    (pathname
+      ? pathname
+          .split('/')
+          .filter((path) => path)
+          .map((path, index, arr) => {
+            // Transform the path segment into a user-friendly label
+            const label = path
+              .replace(/-/g, ' ')
+              .replace(/\b\w/g, (l) => l.toUpperCase());
+            // Construct the href for each breadcrumb segment
+            const href = '/' + arr.slice(0, index + 1).join('/');
+            return { label, href };
+          })
+      : []);
 
   return (
     <nav
@@ -140,7 +141,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ trails }) => {
             <Link
               href={item.href}
               className={`flex items-center px-1 capitalize ${
-                asPath === item.href
+                pathname === item.href
                   ? 'hover:no-underline cursor-default'
                   : 'hover:underline'
               }`}
@@ -155,3 +156,5 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ trails }) => {
 };
 
 export default Breadcrumb;
+
+// Path: src/components/blocks/breadcrumb/breadcrumb.tsx

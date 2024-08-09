@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Tag } from '../tag';
 import { ArrowRightIcon, XIcon } from '@/components/illustrations';

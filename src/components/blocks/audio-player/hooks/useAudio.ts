@@ -1,3 +1,4 @@
+'use client';
 // useAudio.ts
 import { useState, useEffect } from 'react';
 import { AudioService } from '../audioService';
