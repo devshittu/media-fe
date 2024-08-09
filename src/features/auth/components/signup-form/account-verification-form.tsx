@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { Button } from '@/components/button';
 import { useForm } from 'react-hook-form';

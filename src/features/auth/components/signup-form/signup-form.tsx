@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { Button } from '@/components/button';
 import { useSignup } from '../../api/post-user-signup';
@@ -13,11 +14,11 @@ import {
   TwitterColoredIcon,
 } from '@/components/illustrations';
 import { ServerErrorResponse } from '@/types';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useSignupStore } from '@/stores/auth';
 
 export type SignupFormProps = {
-  onSuccess: () => void;
+  onSuccess?: () => void;
 };
 export const SignupForm = ({ onSuccess }: SignupFormProps) => {
   const router = useRouter();

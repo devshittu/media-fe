@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import Wizard from '@/components/blocks/wizard/wizard';
 import { NotificationType, useNotifications } from '@/stores/notifications';
