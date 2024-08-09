@@ -1,3 +1,4 @@
+'use client';
 import { useContext } from 'react';
 import { NavContext } from './providers/nav-provider';
 import { useBodyStyle } from './hooks/useBodyEl';

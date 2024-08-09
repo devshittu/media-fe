@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { useToggle } from '@/hooks';
 import { Badge, BadgeSize, BadgeType } from '@/components/blocks/badge';

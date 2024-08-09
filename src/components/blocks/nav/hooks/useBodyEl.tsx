@@ -1,3 +1,4 @@
+'use client';
 import { useEffect } from 'react';
 
 export const useBodyStyle = (isNavOpen: boolean, lockScroll: boolean) => {
