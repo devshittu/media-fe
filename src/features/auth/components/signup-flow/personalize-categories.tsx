@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback } from 'react';
 import { useForm, Controller, FieldError } from 'react-hook-form';
 import CustomCheckboxGroup, {

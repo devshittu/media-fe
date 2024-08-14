@@ -1,3 +1,4 @@
+'use client';
 import { useWizardStepValidation } from '@/components/blocks/wizard/hooks';
 import { StepProps } from '@/components/blocks/wizard/types';
 import { useSignupStore } from '@/stores/auth';

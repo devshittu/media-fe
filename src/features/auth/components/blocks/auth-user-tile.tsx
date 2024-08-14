@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { AuthUserTileProps } from '../../types';
 import Image from 'next/image';
@@ -6,17 +7,29 @@ import { AuthUserContextMenu } from '../context-menu/auth-user-context-menu';
 import { ControlledPopper } from '@/components/blocks/popup';
 import { LoadingAvatar } from '@/components/loading';
 import { useAuthStore } from '@/stores/auth';
+import { useSession } from 'next-auth/react';
 
 export const AuthUserTile = ({
   actionButtonText,
   closeIcon = <SettingsIcon className="w-6 h-6" strokeWidth={2.5} />,
 }: AuthUserTileProps) => {
-  const { authUserDetails } = useAuthStore();
+  const { data: session } = useSession();
+  console.log('session (client side)', session);
+
+  const role = session?.user?.role || undefined;
+  // const {} =
+  // const { user:authUserDetails } = session;
   const defaultAvatar = '/avatars/avatar.svg';
-  const name = authUserDetails?.display_name || 'Loading...';
-  const subName = authUserDetails?.username || 'Loading...';
-  const description = authUserDetails?.bio || 'Loading...';
-  const profileImageSrc = authUserDetails?.avatar_url || defaultAvatar;
+  const name = session?.user?.name || 'Loading...';
+  const subName = session?.user?.username || 'Loading...';
+  const description = session?.user?.bio || 'Loading...';
+  const profileImageSrc = session?.user?.image || defaultAvatar;
+  // const { authUserDetails } = useAuthStore();
+  // const defaultAvatar = '/avatars/avatar.svg';
+  // const name = authUserDetails?.display_name || 'Loading...';
+  // const subName = authUserDetails?.username || 'Loading...';
+  // const description = authUserDetails?.bio || 'Loading...';
+  // const profileImageSrc = authUserDetails?.avatar_url || defaultAvatar;
 
   return (
     <>
@@ -64,3 +77,6 @@ export const AuthUserTile = ({
     </>
   );
 };
+
+
+// src/features/auth/components/blocks/auth-user-tile.tsx
