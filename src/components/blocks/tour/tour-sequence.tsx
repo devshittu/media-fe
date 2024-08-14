@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import TourBubble from './tour-bubble';
 import { TourPopperType } from './tour-popper';

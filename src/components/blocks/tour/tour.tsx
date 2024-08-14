@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import TourSequence from './tour-sequence';
 import { TourPopperType } from './tour-popper';
