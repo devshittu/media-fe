@@ -212,3 +212,5 @@ export default async function StoriesPage() {
 //     </UserLayout>
 //   );
 // };
+
+// src/app/(protected-routes)/stories/page.tsx
