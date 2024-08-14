@@ -11,8 +11,7 @@ import React, {
 import WavesurferPlayer, { useWavesurfer } from '@wavesurfer/react';
 const AudioPage = ({}) => {
   // const src = "https://cdn.pixabay.com/audio/2024/01/14/audio_79bd546f34.mp3";
-  const src =
-    'https://cdn.pixabay.com/audio/2024/01/14/audio_79bd546f34.mp3';
+  const src = 'https://cdn.pixabay.com/audio/2024/01/14/audio_79bd546f34.mp3';
 
   //   const [wavesurfer, setWavesurfer] = useState(null)
   //   const [isPlaying, setIsPlaying] = useState(false)

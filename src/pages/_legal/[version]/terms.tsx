@@ -142,4 +142,4 @@ export const getServerSideProps = async ({
   }
 };
 
-//Path: src/pages/faq/index.tsx
+//Path: src/pages/legal/[version]/terms.tsx
