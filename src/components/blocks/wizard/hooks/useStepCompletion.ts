@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect } from 'react';
 
 // Define a TypeScript type for the hook parameters
