@@ -1,7 +1,8 @@
+'use client';
 import React, { ReactNode, useContext, useRef } from 'react';
 import { NavContext, NavMain } from '@/components/blocks/nav';
 import MainMenu from '@/components/menus/main-menu';
-import { Protected } from '@/features/auth';
+import { Protected } from '@/features/auth/components/protected/protected';
 
 type UserLayoutProps = {
   children: ReactNode;
@@ -10,16 +11,14 @@ type UserLayoutProps = {
 
 const UserLayout = ({ children }: UserLayoutProps) => {
   return (
-    <Protected>
-      <div
-        className={`relative container lg:grid lg:grid-cols-10 lg:max-w-7xl mx-auto`}
-      >
-        <NavMain>
-          <MainMenu />
-        </NavMain>
-        <main className={`w-full lg:col-span-8`}>{children}</main>
-      </div>
-    </Protected>
+    <div
+      className={`relative container lg:grid lg:grid-cols-10 lg:max-w-7xl mx-auto`}
+    >
+      <NavMain>
+        <MainMenu />
+      </NavMain>
+      <main className={`w-full lg:col-span-8`}>{children}</main>
+    </div>
   );
 };
 

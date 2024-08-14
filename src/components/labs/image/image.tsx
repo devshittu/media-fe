@@ -1,3 +1,4 @@
+'use client';
 import React, { forwardRef, useState } from 'react';
 import NextImage from 'next/image';
 import { LoadingPhotoFailed } from '@/components/loading';
@@ -89,7 +90,6 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
               loading={loading}
             /> */}
 
-            
             {fallbackSrc ? (
               <NextImage
                 src={fallbackSrc}
@@ -102,8 +102,8 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
               />
             ) : (
               <>
-              <LoadingPhotoFailed />
-              {/* <svg
+                <LoadingPhotoFailed />
+                {/* <svg
         width={safeWidth}
         height={safeHeight}
         viewBox="0 0 24 24"

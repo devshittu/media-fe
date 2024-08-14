@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { Bookmark, BookmarkListProps, BookmarkListResponse } from '../../types';
 import { BookmarkItem } from './bookmark-item';
