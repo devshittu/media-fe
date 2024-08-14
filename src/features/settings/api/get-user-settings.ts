@@ -17,7 +17,10 @@ type GetUserSettingsOptions = {
 export const getUserSettings = ({
   params,
 }: GetUserSettingsOptions): Promise<Setting> => {
-  return apiClient.get(`${URI_AUTH_ME_SETTINGS}`);
+  return apiClient.get(`${URI_AUTH_ME_SETTINGS}`, {
+    params,
+    requiresAuth: true,
+  });
 };
 
 export const useUserSettings = ({ params }: GetUserSettingsOptions) => {

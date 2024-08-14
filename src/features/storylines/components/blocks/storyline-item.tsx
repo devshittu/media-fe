@@ -1,3 +1,4 @@
+'use client';
 import React, { memo, useState } from 'react';
 import { Storyline } from '../../types';
 import { Link } from '@/components/labs';
