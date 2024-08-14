@@ -1,3 +1,4 @@
+'use client';
 import React, { createContext, useContext, useMemo } from 'react';
 import { useCategories } from '../api/get-categories';
 import { Category } from '../types';
@@ -63,5 +64,6 @@ export const CategoriesProvider = ({ children }: CategoriesProviderProps) => {
 export const useCategoryContext = () => {
   return useContext(CategoriesContext);
 };
-
+// Ensure default export for context
+export default CategoriesContext;
 //Path: src/features/categories/hooks/categories-context.tsx

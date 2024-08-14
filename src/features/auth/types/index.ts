@@ -4,6 +4,8 @@ import { Entity } from '@/types';
 export type AuthResponse = {
   access_token: string;
   access_token_expires_at: number;
+  refresh_token: string;
+  token_id: string;
 };
 
 export type VerifyOTPAndAuthResponse = AuthResponse & {
