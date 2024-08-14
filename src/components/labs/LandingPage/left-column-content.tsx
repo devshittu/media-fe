@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { useCategoryContext } from '@/features/categories/hooks';
 import { HomeIcon, Icon, AppLogoIcon } from '@/components/illustrations';
