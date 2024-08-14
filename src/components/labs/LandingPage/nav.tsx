@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/button';
 import { AppLogoIcon, Icon } from '@/components/illustrations';
 import { Link } from '@/components/labs/typography';
