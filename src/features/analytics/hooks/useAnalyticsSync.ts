@@ -1,3 +1,4 @@
+'use client';
 import { useEffect } from 'react';
 import { AnalyticsStore } from '@/stores/analytics/analytics';
 import { useAddBatchAnalytics } from '../api/post-add-batch-analytics';

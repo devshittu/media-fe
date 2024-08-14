@@ -1,3 +1,4 @@
+'use client';
 import { useAnalytics } from '@/stores/analytics/analytics';
 import {
   AnalyticsData,
