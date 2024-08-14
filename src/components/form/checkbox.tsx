@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import formStyles from './forms.module.css';
 import { CheckboxProps } from './types';
