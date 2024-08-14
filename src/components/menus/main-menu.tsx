@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import {

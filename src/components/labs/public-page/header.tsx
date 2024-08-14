@@ -1,3 +1,4 @@
+'use client';
 import {
   AppLogoIcon,
   ChevronLeftIcon,
@@ -8,7 +9,7 @@ import {
 import React from 'react';
 import { Link } from '@/components/labs'; // Import your Button component
 import { Button } from '@/components/button';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   menuLinks: { href: string; label: string }[];
