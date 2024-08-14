@@ -2,11 +2,13 @@
 
 import { useMemo } from 'react';
 import { StoryList } from '@/features/stories/components';
-import { Story, useInfiniteUserFeedStories } from '@/features/stories';
+import { StoriesQueryParams, Story, useInfiniteUserFeedStories } from '@/features/stories';
 import { useTabContentManager } from '@/components/blocks/tab';
 import { useHomePageTabs } from '@/stores/tabs';
 import { Discover } from '@/features/trends/components/discover/discover';
 import { useInfiniteUserInvertedFeedStories } from '@/features/stories/api/get-user-inverse-feed-stories';
+import { cleanObject } from '@/utils';
+import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 
 type ClientStoriesContentProps = {
   stories: Story[];
@@ -25,7 +27,10 @@ export default function ClientStoriesContent({
     },
     [],
   );
-
+const queryParams: StoriesQueryParams = cleanObject({
+    page: 1,
+    page_size: PAGINATE_STORIES_LIMIT,
+  });
   const fetchDataDiscover = useMemo(
     () => async () => {
       // Async operation for the "Discover" tab
@@ -52,7 +57,7 @@ export default function ClientStoriesContent({
         <>
           <StoryList
             useStoriesHook={useInfiniteUserFeedStories}
-            queryParams={{ page: 1, page_size: 3 }}
+            queryParams={queryParams}
             loadMoreOnScroll
           />
         </>
@@ -73,3 +78,5 @@ export default function ClientStoriesContent({
     </div>
   );
 }
+
+// src/app/(protected-routes)/stories/ClientStoriesContent.tsx
