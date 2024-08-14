@@ -9,7 +9,7 @@ const logger = pino({
       level: 'info',
       send: (level, logEvent) => {
         if (isBrowser) {
-          console.log(logEvent.messages[0]);  // Log to the browser console
+          console.log(logEvent.messages[0]); // Log to the browser console
         }
       },
     },

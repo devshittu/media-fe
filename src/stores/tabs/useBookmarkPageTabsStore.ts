@@ -1,3 +1,4 @@
+'use client';
 import { createTabStore, useTabStore } from './hooks';
 
 const BookmarkPageTabs = createTabStore({
