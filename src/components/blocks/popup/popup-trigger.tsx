@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { usePopupContext } from './hooks/usePopupContext';
 import { useMergeRefs } from '@floating-ui/react';

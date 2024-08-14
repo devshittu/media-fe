@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { usePopupContext } from '../popup';
 import { useId } from '@floating-ui/react';

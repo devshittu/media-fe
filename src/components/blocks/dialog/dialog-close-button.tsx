@@ -1,3 +1,4 @@
+'use client';
 import { Icon, XIcon } from '@/components/illustrations';
 import React from 'react';
 

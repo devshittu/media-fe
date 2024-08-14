@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import { useId } from '@floating-ui/react';
 import { Dialog } from '../dialog';

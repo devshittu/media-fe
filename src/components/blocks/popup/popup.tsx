@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import { usePopup } from './hooks/usePopup';
 import { PopupOptions } from './types';
