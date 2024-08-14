@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Popup, PopupContent, PopupTrigger } from './';
 import { Placement } from '@floating-ui/react';

@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { CookieConsentComponent } from './cookie-consent-component';
 import { useCookieConsentStore } from '@/stores/ui/cookie-consent';

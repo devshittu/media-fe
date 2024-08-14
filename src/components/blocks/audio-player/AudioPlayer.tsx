@@ -1,3 +1,4 @@
+'use client';
 // components/AudioPlayer.tsx
 
 import React, { useRef, useEffect } from 'react';

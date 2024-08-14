@@ -1,3 +1,4 @@
+'use client';
 import { useReducer, useEffect, useState } from 'react';
 import { Step, StepProps } from '../types';
 import { useWizardContext } from '../wizard-context';

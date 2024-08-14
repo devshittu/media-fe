@@ -7,8 +7,10 @@ export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const IS_TEST = process.env.NODE_ENV === 'test';
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-export const IS_DEBUG_MODE = process.env.NEXT_PUBLIC_DEBUG === 'true' ?? false;
+export const NEXT_PUBLIC_APP_CODE_NAME = (process.env.NEXT_PUBLIC_APP_CODE_NAME ?? `mediaapp`) as string;
+export const COOKIES_PREFIX = (process.env.NODE_ENV === `development` ? `__Dev-` : ``) + `${NEXT_PUBLIC_APP_CODE_NAME}`;
 
+export const IS_DEBUG_MODE = process.env.NEXT_PUBLIC_DEBUG === 'true';
 export const IS_BROWSER = typeof window !== 'undefined';
 export const IS_SERVER = typeof window === 'undefined';
 
@@ -39,3 +41,11 @@ export const HOUR = 60 * 60 * 1000;
 //Defaults
 export const DEFAULT_ACCESS_TOKEN_KEY_EXPIRES_AT = 2 * HOUR;
 export const DEFAULT_BUFFER_START_PERCENTAGE = 15;
+
+export const privateRoutes: string[] = [
+  '/stories',
+  '/settings',
+  '/bookmarks',
+  '/lists',
+];
+

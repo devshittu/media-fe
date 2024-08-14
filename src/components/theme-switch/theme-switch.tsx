@@ -1,3 +1,4 @@
+'use client';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { THEME_DARK, THEME_LIGHT, THEME_SYSTEM } from '@/config/constants';

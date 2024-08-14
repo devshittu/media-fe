@@ -1,3 +1,4 @@
+'use client';
 import { InputField } from '@/components/form/input-field';
 import React, { useState } from 'react';
 

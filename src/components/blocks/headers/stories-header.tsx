@@ -1,3 +1,4 @@
+'use client';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
 import MainMenu from '@/components/menus/main-menu';
 import { Link } from '@/components/labs/typography';

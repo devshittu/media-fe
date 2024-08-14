@@ -1,3 +1,4 @@
+'use client';
 import { LoadingButtonTextList } from '@/components/loading';
 import { SupportArticle, useGetSupportArticles } from '../../';
 import React, { useMemo } from 'react';

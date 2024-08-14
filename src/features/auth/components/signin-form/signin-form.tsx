@@ -1,9 +1,10 @@
+'use client';
 import { Button } from '@/components/button';
 import { usePasswordSignin } from '../../api/post-password-signin';
 import { useForm } from 'react-hook-form';
 import { PasswordSigninData } from '../../types';
 import { InputField } from '@/components';
-
+import { signIn } from 'next-auth/react';
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
 import {
@@ -12,9 +13,13 @@ import {
   TwitterColoredIcon,
 } from '@/components/illustrations';
 import { AppFormProps } from '@/types';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Route } from 'next';
 
 export const SigninForm = ({ onSuccess }: AppFormProps) => {
   const signin = usePasswordSignin({ onSuccess });
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const { register, handleSubmit, formState } = useForm<PasswordSigninData>({
     defaultValues: {
       username_or_email: 'testuser2@test.com',
@@ -24,8 +29,36 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
     mode: 'onBlur',
   });
   // console.log('formState:// ',formState.isValid);
-  const onSubmit = (data: PasswordSigninData) => {
-    signin.submit(data);
+  // const onSubmit = (data: PasswordSigninData) => {
+  //   signin.submit(data);
+  // };
+
+  const onSubmit = async (data: PasswordSigninData) => {
+    // whatever your type
+    const callbackUrl = searchParams?.get('callbackUrl');
+
+    await signIn('credentials', {
+      redirect: false,
+      email: data.username_or_email,
+      password: data.password,
+    }).then((res: any | undefined) => {
+      if (!res) {
+        alert('No response!');
+        return;
+      }
+
+      if (!res.ok) alert('Something went wrong!');
+      else if (res.error) {
+        console.log(res.error);
+
+        if (res.error == 'CallbackRouteError')
+          alert('Could not login! Please check your credentials.');
+        else alert(`Internal Server Error: ${res.error}`);
+      } else {
+        if (callbackUrl) router.push(callbackUrl as Route);
+        else router.push('/stories');
+      }
+    });
   };
 
   return (
@@ -121,3 +154,5 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
     </>
   );
 };
+
+// src/features/auth/components/signin-form/signin-form.tsx

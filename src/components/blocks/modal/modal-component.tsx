@@ -1,3 +1,4 @@
+'use client';
 import { useKeyPress } from '@/hooks';
 import React, { useEffect, useState } from 'react';
 import { ModalProps } from './types';

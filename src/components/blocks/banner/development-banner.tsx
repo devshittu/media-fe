@@ -1,4 +1,5 @@
 // bannerElement.tsx
+'use client';
 import React from 'react';
 import { Banner, BannerType } from '@/components/blocks/banner';
 

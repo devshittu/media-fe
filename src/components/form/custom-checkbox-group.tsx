@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import CustomCheckbox, { RenderAs } from './custom-checkbox';
 import { ChangeHandler, FieldError, UseFormRegister } from 'react-hook-form';

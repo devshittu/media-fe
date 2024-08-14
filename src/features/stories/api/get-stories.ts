@@ -5,7 +5,7 @@ import {
   useQuery,
 } from '@tanstack/react-query';
 
-import { apiClient, apiClientAuth } from '@/lib/api-client';
+import { apiClient } from '@/lib/api-client';
 
 import { StoryListResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';

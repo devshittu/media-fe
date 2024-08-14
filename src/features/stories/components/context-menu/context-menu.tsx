@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import {
   Popover,
@@ -23,7 +24,7 @@ import { Story } from '../../types';
 import { usePopupStore } from '@/stores/ui';
 import { FormPopup, PromptPopup } from '@/components/blocks/popup/blocks/';
 import { AddBookmarkSection } from '@/features/bookmarks';
-import { AddFeedbackSection } from '@/features/feedbacks/components/forms';
+import { AddFeedbackSection } from '@/features/feedbacks/components/';
 import { useStoryActionLogic } from '../../hooks';
 import { StoryAction } from '../types';
 import { useDislikeStory } from '../../api/post-dislike-story';
@@ -200,7 +201,9 @@ export const ContextMenu = ({ story, cacheRefQueryKey }: ContextMenuProps) => {
         subtitle={`Provide feedback to help us deliver better news content for you.`}
         onClose={closePopup}
       >
-        <AddFeedbackSection story={story} onCancel={closePopup} />
+        <>
+          <AddFeedbackSection story={story} onCancel={closePopup} />
+        </>
       </FormPopup>,
     );
     // const modal = new Modal({

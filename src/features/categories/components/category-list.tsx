@@ -1,3 +1,4 @@
+'use client';
 import { LoadingButtonTextList } from '@/components/loading/';
 import { CategoryListItem } from './category-list-item';
 import React, { useMemo } from 'react';

@@ -1,3 +1,4 @@
+'use client'
 import React, { forwardRef } from 'react';
 import { CloudOffIcon, Icon } from '../illustrations';
 
@@ -9,7 +10,10 @@ type LoadingPhotoFailedProps = {
   className?: string;
 };
 
-export const LoadingPhotoFailed = forwardRef<HTMLDivElement, LoadingPhotoFailedProps>(
+export const LoadingPhotoFailed = forwardRef<
+  HTMLDivElement,
+  LoadingPhotoFailedProps
+>(
   (
     {
       bgHeight = 'h-48', // Default height
@@ -33,7 +37,7 @@ export const LoadingPhotoFailed = forwardRef<HTMLDivElement, LoadingPhotoFailedP
         />
       </div>
     );
-  }
+  },
 );
 
 LoadingPhotoFailed.displayName = 'LoadingPhotoFailed';

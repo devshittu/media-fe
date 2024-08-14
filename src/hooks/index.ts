@@ -1,3 +1,4 @@
+'use client';
 export * from './useScrollBehavior';
 export { default as useKeyPress } from './useKeyPress';
 export { default as useDebounce } from './useDebounce';
@@ -8,5 +9,5 @@ export * from './useListGrouping';
 export * from './useListSorting';
 export * from './useInitializeStore';
 export * from './useToggle';
-export * from './useInitAuth';
 export * from './useElementAvailable';
+// src/hooks/index.ts

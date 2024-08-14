@@ -1,3 +1,4 @@
+'use client';
 import React, {
   createContext,
   useState,
@@ -108,6 +109,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
   return (
     // <div className="absolute bottom-0 left-0 z-50 w-full h-16x m-4 bg-whitex border-tx border-slate-200 dark:bg-slate-700 dark:border-slate-600">
+    // </div>
     <div
       className={`card-footer ${
         open ? ' open' : ''
@@ -118,7 +120,6 @@ const CardFooter: React.FC<CardFooterProps> = ({
         cloneElement(child as React.ReactElement, { open }),
       )}
     </div>
-    // </div>
   );
 };
 

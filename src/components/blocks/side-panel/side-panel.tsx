@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { InputField } from '@/components/form';
 import { useScrollBehavior } from '@/hooks';

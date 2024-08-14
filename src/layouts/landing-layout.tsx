@@ -20,3 +20,4 @@ const LandingLayout = ({ children }: LandingLayoutProps) => {
 };
 
 export default LandingLayout;
+// src/layouts/landing-layout.tsx

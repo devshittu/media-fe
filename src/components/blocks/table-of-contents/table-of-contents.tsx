@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Headings } from './headings';
 import useHeadingsData from '@/components/blocks/table-of-contents/hooks/useHeadingsData';

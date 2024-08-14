@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { RadioGroupProps } from './types';
 import Radio from './radio';

@@ -1,3 +1,4 @@
+'use client';
 import { TabStore } from '@/stores/tabs/hooks';
 import { useCallback, useEffect, useRef } from 'react';
 // import { TabStore } from '@/components/blocks/tab/store';

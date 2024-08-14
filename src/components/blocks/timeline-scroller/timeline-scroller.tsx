@@ -1,3 +1,4 @@
+'use client';
 import { useIntersectionObserver } from '../table-of-contents/hooks/';
 import React, { useEffect, useState } from 'react';
 import { Headings } from '../table-of-contents/headings';

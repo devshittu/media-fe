@@ -1,4 +1,5 @@
 // components/frames/StoriesPageFrame.tsx
+'use client';
 import React from 'react';
 import { SidePanel } from '@/components/blocks/side-panel/side-panel';
 import { HashtagList } from '@/features/hashtags';

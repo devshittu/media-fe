@@ -1,3 +1,4 @@
+'use client';
 // components/AudioWaveform.tsx
 import React, { useEffect, useState } from 'react';
 

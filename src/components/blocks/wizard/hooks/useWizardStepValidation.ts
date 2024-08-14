@@ -1,3 +1,4 @@
+'use client';
 import { useEffect } from 'react';
 import { useWizardContext } from '../wizard-context'; // Adjust the import path as needed
 

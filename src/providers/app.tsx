@@ -1,4 +1,5 @@
-import { ReactNode, useEffect } from 'react';
+'use client';
+import React, { ReactNode, useEffect, Suspense } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { NavProvider, BodyStyleUpdater } from '@/components/blocks/nav/';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -10,10 +11,11 @@ import { Notifications } from '@/components/notifications';
 import { GlobalPopup } from '@/components/blocks/popup';
 import { Tour } from '@/components/blocks/tour';
 import { ConfettiEffect } from '@/components/confetti';
-import { useInitAuth, useInitializeStore } from '@/hooks';
+import { useInitializeStore } from '@/hooks';
 import { CookieConsent } from '@/components/blocks/cookie-consent';
 import { GlobalBanner } from '@/components/blocks/banner';
 import { AnalyticsSyncWrapper } from '@/features/analytics/components';
+import { Loading } from '@/components/loading';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -23,39 +25,26 @@ type AppProviderProps = {
 export const AppProvider = ({ children, theme }: AppProviderProps) => {
   // Initialize the Zustand store with default settings when the App component mounts
   useInitializeStore();
-  useInitAuth();
 
   return (
-    <>
-      <ThemeProvider attribute="class" forcedTheme={theme || undefined}>
-        <NavProvider>
-          {/* <RootLayout> */}
-          <BodyStyleUpdater />
-          <Notifications />
-          <QueryClientProvider client={queryClient}>
-            {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
-
-            <CategoriesProvider>
-              <GlobalBanner />
-
-              {/* Now useAnalyticsSync will be called within a component that is a child of QueryClientProvider */}
-              <AnalyticsSyncWrapper />
-              {children}
-              <GlobalPopup />
-
-              <Tour />
-              <CookieConsent />
-            </CategoriesProvider>
-          </QueryClientProvider>
-
-          {/* The confetti effect and Splash loader effect to make it available through out the app */}
-          <ConfettiEffect />
-          {/* <SplashLoader /> */}
-          {/* </RootLayout> */}
-        </NavProvider>
-      </ThemeProvider>
-    </>
+    <ThemeProvider attribute="class" forcedTheme={theme || undefined}>
+      <NavProvider>
+        <BodyStyleUpdater />
+        <Notifications />
+        <QueryClientProvider client={queryClient}>
+          {IS_DEVELOPMENT && <ReactQueryDevtools initialIsOpen={false} />}
+          <CategoriesProvider>
+            <GlobalBanner />
+            <AnalyticsSyncWrapper />
+            <Suspense fallback={<Loading />}>{children}</Suspense>
+            <GlobalPopup />
+            <Tour />
+            <CookieConsent />
+          </CategoriesProvider>
+        </QueryClientProvider>
+        <ConfettiEffect />
+      </NavProvider>
+    </ThemeProvider>
   );
 };
-
 // Path: src/providers/app.tsx

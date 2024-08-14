@@ -1,3 +1,4 @@
+'use client';
 import { AuthStore } from '@/stores/auth';
 import { apiClient } from '@/lib/api-client';
 import Router from 'next/router';

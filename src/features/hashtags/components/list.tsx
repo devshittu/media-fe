@@ -1,3 +1,4 @@
+'use client';
 import React, { memo, useMemo, useState } from 'react';
 import { HashtagListItem } from './list-item';
 import { HashtagListProps } from './types';

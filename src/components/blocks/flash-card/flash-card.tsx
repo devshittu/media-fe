@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { XIcon } from '@/components/illustrations';
 import { Button } from '@/components/button';

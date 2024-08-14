@@ -1,3 +1,4 @@
+'use client';
 import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import { DrawerProps, DrawerSide } from './index';
 import { Icon, XIcon } from '@/components/illustrations';

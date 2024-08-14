@@ -1,3 +1,4 @@
+'use client';
 import React, { useCallback } from 'react';
 import { Link } from '@/components/labs/typography';
 import { StoryListItemProps } from '../types';

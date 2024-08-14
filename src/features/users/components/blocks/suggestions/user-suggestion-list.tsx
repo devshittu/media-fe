@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useMemo, HTMLAttributes } from 'react';
 import { useGetUsers } from '@/features/users/api/get-users';
 import { User } from '@/features/auth';
