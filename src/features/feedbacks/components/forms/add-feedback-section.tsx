@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { NotificationType, useNotifications } from '@/stores/notifications';
 import { AddFeedbackForm } from './add-feedback-form';
@@ -44,3 +45,5 @@ export const AddFeedbackSection = ({
     </>
   );
 };
+
+// src/features/feedbacks/components/forms/add-feedback-section.tsx
