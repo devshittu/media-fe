@@ -2,27 +2,10 @@
 import React from 'react';
 
 import { SEO } from '@/components/seo';
-import { NotificationType, useNotifications } from '@/stores/notifications';
-
-import { SignupForm } from '@/features/auth/components/signup-form/signup-form';
-import { useSignupStore } from '@/stores/auth';
+import { SignupSection } from '@/features/auth/components/signup-form/signup-section';
 
 const SignupPage = () => {
-  // const router = useRouter();
-  // const { showNotification } = useNotifications();
-
-  const onSuccess = () => {
-    // showNotification({
-    //   type: NotificationType.SUCCESS,
-    //   title: 'Success',
-    //   duration: 5000,
-    //   message: 'Your user account created successfully!',
-    // });
-    // // const redirect = router.query.redirect as string;
-    // // router.replace(redirect || '/stories');
-    // TODO: add the continuation of the signup such that reg can continue on the wizard.
-    // router.push(`/auth/signup/verify-account`);
-  };
+  
   const schemaOrgJSONLD = {
     '@context': 'http://schema.org',
     '@type': 'NewsArticle',
@@ -39,8 +22,7 @@ const SignupPage = () => {
         canonicalUrl={'/auth/signup'}
       />
       <div className="container mx-auto flex flex-col px-5 py-14 justify-center items-center">
-        {/* <SignupForm onSuccess={onSuccess} /> */}
-        <SignupForm />
+        <SignupSection />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { AuthStore } from '@/stores/auth';
 import { queryClient } from '@/lib/react-query';
 import { getAuthUser } from './get-auth-user';
 import { QUERY_KEYS } from '@/config/query';
-import { ApiResponseError } from '@/types';
+import { ApiCallMutationStatus, ApiResponseError } from '@/types';
 import { parseError } from '@/utils/parse-error';
 const { AUTH_USER } = QUERY_KEYS;
 
@@ -28,34 +28,14 @@ export const useVerifyAccount = ({
   onError,
 }: UseVerifyAccountOptions) => {
   const {
-    mutate: submit,
-    isLoading,
+    mutateAsync: submit,
+    isPending, 
+    status,
+    isSuccess,
     error,
   } = useMutation({
     mutationFn: verifyAccount,
     onSuccess: async (response) => {
-      // queryClient.setQueryData(['auth-user'], user);
-      const newAccessToken = response.access_token;
-      const { setAccessToken, setAuthUserDetails } = AuthStore.getState();
-      setAccessToken(newAccessToken);
-
-      try {
-        const authUserData = await queryClient.fetchQuery(
-          [AUTH_USER],
-          getAuthUser,
-        );
-
-        if (authUserData) {
-          setAuthUserDetails(authUserData);
-        } else {
-          console.error('Failed to fetch auth user data: Data is undefined');
-        }
-      } catch (error) {
-        console.error(
-          'An error occurred while fetching the auth user data:',
-          error,
-        );
-      }
       onSuccess?.(response);
     },
 
@@ -70,7 +50,8 @@ export const useVerifyAccount = ({
     },
   });
 
-  return { submit, isLoading, error };
+  return { submit, 
+    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess, error };
 };
 
-// Path: src/features/auth/api/post-user-verifyAccount.ts
+// Path: src/features/auth/api/post-verify-account.ts

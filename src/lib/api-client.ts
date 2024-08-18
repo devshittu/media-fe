@@ -44,9 +44,7 @@ apiClient.interceptors.request.use(
 
       // Get all cookies using nookies
       const allCookies = nookies.get(null);
-      console.log(`apiClient.interceptors.allCookies: `, allCookies)
-      const accessToken = allCookies['__Dev-mediaapp.access-token'];
-      console.log(`apiClient.interceptors.accessToken: `, accessToken)
+      const accessToken = allCookies['__Dev-mediaapp.access-token']
 
       if (accessToken && config.requiresAuth) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;

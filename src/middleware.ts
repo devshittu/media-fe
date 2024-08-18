@@ -9,6 +9,13 @@ export default auth((request: NextRequest) => {
   const { auth } = request;
   const { pathname } = request.nextUrl;
 
+  // Redirect to verify account if not active and setup not completed, but avoid redirect loop
+  if (auth?.user?.redirectToVerify && !pathname.startsWith('/auth/verify')) {
+    return NextResponse.redirect(
+      new URL('/auth/verify', request.nextUrl),
+    );
+  }
+
   const searchTerm = request.nextUrl.pathname.split('/').slice(0, 2).join('/');
 
   // TIP: this is how we can redirect unauthenticated users to login page
@@ -29,10 +36,10 @@ export default auth((request: NextRequest) => {
 
   // TIP: this is how we can redirect authenticated users to home page if they try to access login, forgot-password or signup pages
   if (
-    pathname.startsWith('/auth/') ||
-    pathname.startsWith('/login') ||
-    pathname.startsWith('/forgot-password') ||
-    pathname.startsWith('/signup')
+    // pathname.startsWith('/auth/') ||
+    pathname.startsWith('/auth/signin') ||
+    pathname.startsWith('/auth/forgot-password') ||
+    pathname.startsWith('/auth/signup')
   ) {
     const isLoggedIn = !!auth;
 
@@ -50,6 +57,7 @@ export default auth((request: NextRequest) => {
     },
   });
 });
+
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

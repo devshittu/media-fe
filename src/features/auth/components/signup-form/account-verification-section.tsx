@@ -34,6 +34,15 @@ export const AccountVerificationSection = () => {
     //TODO: handle change of the url without navigation
   };
 
+
+  const onError = (message: string) => {
+    showNotification({
+      type: NotificationType.ERROR,
+      title: 'Error',
+      duration: 5000,
+      message,
+    });
+  };
   const handleStartAccountSetupSequence = () => {
     showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleWizardFinish} />);
   };
@@ -64,7 +73,7 @@ export const AccountVerificationSection = () => {
       {isVerified ? (
         successfulActivation
       ) : (
-        <AccountVerificationForm onSuccess={onSuccess} />
+        <AccountVerificationForm onSuccess={onSuccess} onError={onError} />
       )}
     </>
   );
