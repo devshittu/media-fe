@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/button';
 import { useForm } from 'react-hook-form';
 import { VerifyAccountData } from '../../types';
@@ -9,28 +9,45 @@ import { PinInputStatus } from '@/components/form/pin-input/types';
 import { useVerifyAccount } from '../../api/post-verify-account';
 import { Hint } from '@/components/blocks/hint';
 import { useSignupStore } from '@/stores/auth';
+import { useSession } from 'next-auth/react';
+import { Link } from '@/components/labs'; 
+import { CountdownTimer } from '@/components/countdown/countdown-timer';
+import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
+import { useCountdownContext } from '@/components/countdown';
 export type AccountVerificationFormProps = {
   onSuccess: () => void;
+  onError?: (message: string) => void;
 };
 export const AccountVerificationForm = ({
-  onSuccess,
+  onSuccess, onError 
 }: AccountVerificationFormProps) => {
   // Access store methods.
   const { setOTP, basicInformation } = useSignupStore();
+  const { data: session } = useSession(); // Access the session data
   const { submit, isLoading, error } = useVerifyAccount({ onSuccess });
-  const { control, watch, register, handleSubmit, formState, setError } =
+  const { control, watch, register, handleSubmit, formState, setError, setValue } =
     useForm<VerifyAccountData>({
       defaultValues: {
         otp: '',
-        email: basicInformation?.email || '',
+        email: '',
+        // email: session?.user?.email || basicInformation?.email || '',
       },
       // mode: 'onChange',
       mode: 'onBlur',
     });
 
+
+  const { startCountdown, timeLeft, resetCountdown } = useCountdownContext();
+  const [canResend, setCanResend] = useState(false);
+
+useEffect(() => {
+  const email = session?.user?.email || basicInformation?.email || '';
+  setValue('email', email); // Update the email field value
+}, [session?.user?.email, basicInformation?.email, setValue]);
+
   useEffect(() => {
     if (error) {
-      const serverError = error as ServerErrorResponse;
+      const serverError = error as unknown as ServerErrorResponse;
       console.log('serverError', serverError);
       if (serverError?.status_code === 400 && serverError?.error) {
         for (const [key, messages] of Object.entries(serverError.error)) {
@@ -43,18 +60,129 @@ export const AccountVerificationForm = ({
     }
   }, [error, setError]);
 
+  useEffect(() => {
+    startCountdown(0, 2, 0); // Start a 2-minute countdown
+
+    const interval = setInterval(() => {
+      if (timeLeft === '00:00:00') {
+        setCanResend(true);
+        clearInterval(interval); // Stop the interval when the countdown ends
+      }
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [timeLeft, startCountdown]);
+
+  const handleEnd = () => {
+        console.log('Countdown ended in layout');
+        // Trigger metadata generation or other actions here
+    };
+
   const onSubmit = async (data: VerifyAccountData) => {
-    console.log(data);
+    console.log('VerifyAccountData:// ',data);
     setOTP(data.otp);
     // TODO uncomment when ready to submit to server.
-    submit(data);
-    onSuccess();
+    // submit(data);
+    // onSuccess();
+
+  try {
+    // Submit the signup data
+    await submit(data);
+  } catch (error) {
+  // Cast error to unknown first, then assert it as ServerErrorResponse
+  const serverError = error as unknown as ServerErrorResponse;
+
+  // Now you can access status_code and error properties safely
+  if (serverError?.status_code === 400) {
+    const errorMessage = Object.values(serverError.error).flat().join(', ');
+    onError?.(errorMessage);
+  } else {
+    onError?.('An unexpected error occurred. Please try again later.');
+  }
+  return;
+  }
+
+  // Call the onSuccess callback if submission is successful
+  onSuccess?.();
   };
 
   return (
     <>
+    
       <div className="w-full max-w-[500px]">
-        <>Email: {basicInformation?.email}</>
+
+<nav id="navbar" className=" flex w-full flex-row justify-end px-4x sm:justify-between">
+    
+      <div className="container flex justify-between h-16 mx-auto">
+        <div className="flex flex-row gap-4">
+          <Link
+            href="/"
+            aria-label="Back to homepage"
+            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+          >
+            <ChevronLeftIcon className="w-8 stroke-2" />
+            <ArrowLeftIcon className="w-6 stroke-2" />
+          </Link>
+          <Link
+            href="/"
+            aria-label="Back to homepage"
+            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+          >Home
+          </Link>
+        </div>
+        <div className="items-center flex-shrink-0 hidden lg:flex">
+          <ul className="flex items-center md:hidden md:ml-auto space-x-8 lg:flex">
+            <li>
+              <Link
+                href="/auth/signin"
+                aria-label="Sign in"
+                title="Sign in"
+                className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400"
+              >
+                <span className="font-inter ">Sign in</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/auth/signup"
+                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-slate-100 dark:text-slate-900 transition duration-200 shadow-md bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none"
+                aria-label="Sign up"
+                // outlined
+                // type="primary"
+              >
+                <span className="font-inter ">Sign up</span>
+              </Link>
+            </li>
+          </ul>
+          <Link
+            href="/"
+            aria-label="Back to homepage"
+            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+          >
+            <ChevronRightIcon className="w-8 stroke-2" />
+          </Link>
+        </div>
+      </div>
+</nav>
+              <header className="p-4 bg-gray-100 dark:bg-gray-800">
+                    <CountdownTimer
+                        hours={0}
+                        minutes={10}
+                        seconds={0}
+                        onEnd={handleEnd}
+                        className="text-lg"
+                    />
+                </header>
+                
+        <p className="text-lg">
+          {canResend ? 'You can now resend the verification link.' : `You can resend the verification link in ${timeLeft}.`}
+        </p>
+        {canResend && (
+          <button onClick={resetCountdown} className="mt-4 p-2 bg-blue-500 text-white rounded">
+            Resend Verification Link
+          </button>
+        )}
+        <>Email: {session?.user?.email || basicInformation?.email || ''}</>
         <form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
@@ -104,4 +232,4 @@ export const AccountVerificationForm = ({
   );
 };
 
-// Path: src/features/auth/components/signup-form/signup-form.tsx
+// Path: src/features/auth/components/signup-form/account-verification-form.tsx

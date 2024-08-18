@@ -19,17 +19,18 @@ import { useSignupStore } from '@/stores/auth';
 
 export type SignupFormProps = {
   onSuccess?: () => void;
+  onError?: (message: string) => void;
 };
-export const SignupForm = ({ onSuccess }: SignupFormProps) => {
+export const SignupForm = ({ onSuccess, onError }: SignupFormProps) => {
   const router = useRouter();
-  const { submit, isLoading, error } = useSignup({ onSuccess });
+  const { submit, isLoading, error } = useSignup({ onSuccess, onError });
   const { setBasicInformation } = useSignupStore();
   const { register, handleSubmit, formState, setError } = useForm<SignupData>({
     defaultValues: {
       display_name: 'Test User 20',
-      email: 'test20@test.com',
+      email: 'testuser20@test.com',
       password: 'commonPassword=1',
-      username: 'test20',
+      username: 'testuser20',
     },
     // mode: 'onChange',
     mode: 'onBlur',
@@ -37,7 +38,7 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
 
   useEffect(() => {
     if (error) {
-      const serverError = error as ServerErrorResponse;
+      const serverError = error as unknown as ServerErrorResponse;;
       console.log('serverError', serverError);
       if (serverError?.status_code === 400 && serverError?.error) {
         for (const [key, messages] of Object.entries(serverError.error)) {
@@ -51,13 +52,29 @@ export const SignupForm = ({ onSuccess }: SignupFormProps) => {
   }, [error, setError]);
 
   const onSubmit = async (data: SignupData) => {
-    console.log(data);
     //  allow saving in the signup store
     setBasicInformation(data);
     //when real data is expected to be submited to the server uncomment this and delete the onSuccess callback
-    submit(data);
 
-    onSuccess();
+  try {
+    // Submit the signup data
+    await submit(data);
+  } catch (error) {
+  // Cast error to unknown first, then assert it as ServerErrorResponse
+  const serverError = error as unknown as ServerErrorResponse;
+
+  // Now you can access status_code and error properties safely
+  if (serverError?.status_code === 400) {
+    const errorMessage = Object.values(serverError.error).flat().join(', ');
+    onError?.(errorMessage);
+  } else {
+    onError?.('An unexpected error occurred. Please try again later.');
+  }
+  return;
+  }
+
+  // Call the onSuccess callback if submission is successful
+  onSuccess?.();
   };
 
   return (

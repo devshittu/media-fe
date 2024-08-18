@@ -28,4 +28,4 @@ const AccountVerificationPage = () => {
 
 export default AccountVerificationPage;
 
-// Path: src/pages/auth/signup/verify-account.tsx
+// Path: src/app/(auth-routes)/auth/verify/page.tsx
