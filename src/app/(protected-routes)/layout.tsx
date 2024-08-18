@@ -10,3 +10,4 @@ export default function Layout({ children }: Props) {
     <Protected>{children}
     </Protected></SessionWrapper>;
 }
+// src/app/(protected-routes)/layout.tsx
