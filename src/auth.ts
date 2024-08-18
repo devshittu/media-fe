@@ -244,10 +244,12 @@ export const config = {
           role: token.role,
           bio: token.bio,
           username: token.username,
+          is_active: token.is_active,
           has_completed_setup: token.has_completed_setup,
           // cognitoGroups: token.cognitoGroups as string[],
           accessToken: token.accessToken as string,
           accessTokenExpires: token.accessTokenExpires as number,
+          redirectToVerify: !token.is_active && !token.has_completed_setup, // Redirect if not active and setup not completed
         },
         error: token.error,
       };
