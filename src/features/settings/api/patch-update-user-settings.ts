@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { Setting } from '../types';
-import { ApiResponse } from '@/types';
+import { ApiCallMutationStatus, ApiResponse } from '@/types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_AUTH_ME_SETTINGS } from '@/config/api-constants';
 const { UPDATE_USER_SETTINGS } = QUERY_KEYS;
@@ -23,7 +23,11 @@ export const useUpdateUserSettings = ({
   onSuccess,
   onError,
 }: UseUpdateUserSettingsOptions) => {
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutateAsync: submit, 
+    isPending, 
+    status,
+    isSuccess,
+    error } = useMutation({
     mutationKey: [UPDATE_USER_SETTINGS],
     mutationFn: updateUserSettings,
     onSuccess: (data) => {
@@ -38,7 +42,7 @@ export const useUpdateUserSettings = ({
 
   return {
     submit,
-    isLoading,
+    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess, error
   };
 };
 
