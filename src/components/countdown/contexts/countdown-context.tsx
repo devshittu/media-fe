@@ -2,11 +2,12 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { useCountdown } from '../hooks/useCountdown';
 
+// Modify the CountdownContextType
 type CountdownContextType = {
     timeLeft: string;
     startCountdown: (hours?: number, minutes?: number, seconds?: number) => void;
     stopCountdown: () => void;
-    resetCountdown: () => void;
+    resetCountdown: (hours?: number, minutes?: number, seconds?: number) => void; // Update this line
 };
 
 const CountdownContext = createContext<CountdownContextType | undefined>(undefined);
@@ -45,9 +46,10 @@ export const CountdownProvider = ({ children }: { children: ReactNode }) => {
         console.log('Countdown stopped');
     }, []);
 
-    const resetCountdown = useCallback(() => {
-        setInitialTime({ hours: 0, minutes: 0, seconds: 0 });
-        setTimerRunning(false);
+    const resetCountdown = useCallback((hours = 0, minutes = 0, seconds = 0) => {
+        setInitialTime({ hours, minutes, seconds });
+        setTimerRunning(false); // Stop the current timer
+        setTimeout(() => setTimerRunning(true), 0); // Start the new timer
         console.log('Countdown reset');
     }, []);
 
