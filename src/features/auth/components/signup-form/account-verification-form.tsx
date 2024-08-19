@@ -61,7 +61,7 @@ useEffect(() => {
   }, [error, setError]);
 
   useEffect(() => {
-    startCountdown(0, 2, 0); // Start a 2-minute countdown
+    startCountdown(0, 0, 5); // Start a 2-minute countdown
 
     const interval = setInterval(() => {
       if (timeLeft === '00:00:00') {
@@ -73,6 +73,10 @@ useEffect(() => {
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [timeLeft, startCountdown]);
 
+  const handleReset = () => {
+    resetCountdown(0, 0, 10); // Reset countdown to 5 minutes
+    setCanResend(false);
+  };
   const handleEnd = () => {
         console.log('Countdown ended in layout');
         // Trigger metadata generation or other actions here
@@ -175,10 +179,11 @@ useEffect(() => {
                 </header>
                 
         <p className="text-lg">
+        {`time left is ${timeLeft}.`}
           {canResend ? 'You can now resend the verification link.' : `You can resend the verification link in ${timeLeft}.`}
         </p>
         {canResend && (
-          <button onClick={resetCountdown} className="mt-4 p-2 bg-blue-500 text-white rounded">
+          <button onClick={handleReset} className="mt-4 p-2 bg-blue-500 text-white rounded">
             Resend Verification Link
           </button>
         )}
