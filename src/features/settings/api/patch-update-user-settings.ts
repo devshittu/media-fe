@@ -16,7 +16,8 @@ export const updateUserSettings = (
   data: Partial<Setting>,
 ): Promise<ApiResponse> => {
   console.log(`patch update: `, data);
-  return apiClient.patch(`${URI_AUTH_ME_SETTINGS}`, data);
+  return apiClient.patch(`${URI_AUTH_ME_SETTINGS}`, data,
+    { requiresAuth: true },);
 };
 export const useUpdateUserSettings = ({
   // data,
