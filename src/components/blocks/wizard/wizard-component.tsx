@@ -13,8 +13,9 @@ import {
   DialogOverlay,
 } from '../dialog';
 import { useWizardContext } from './wizard-context';
+import { ConditionalSessionWrapper } from '@/features/auth/components/session';
 
-const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
+const WizardComponent = ({ steps, onFinish, onClose, requiresSession = false }: WizardProps) => {
   const {
     loading,
     state,
@@ -44,6 +45,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
     return setOpen(false); //close the popup from the usePopupContext which is the floating-ui/react library.
   };
   return (
+    <ConditionalSessionWrapper requiresSession={requiresSession}>
     <Dialog>
       <DialogOverlay />
       <DialogContainer>
@@ -134,7 +136,7 @@ const WizardComponent = ({ steps, onFinish, onClose }: WizardProps) => {
           </WizardStep>
         </DialogBody>
       </DialogContainer>
-    </Dialog>
+    </Dialog></ConditionalSessionWrapper>
   );
 };
 
