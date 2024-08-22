@@ -28,6 +28,10 @@ export type VerifyAccountData = {
   otp: string;
 };
 
+export type ResendOtpData = {
+  email: string;
+};
+
 export type User = {
   id: number;
   display_name: string;
