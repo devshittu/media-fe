@@ -15,6 +15,7 @@ import { useStepCompletion } from '@/components/blocks/wizard/hooks/useStepCompl
 import { LoadingButtonTextList } from '@/components/loading';
 import { useSignupStore } from '@/stores/auth';
 import { useCategoryContext } from '@/features/categories/hooks';
+import { useSession } from 'next-auth/react';
 
 export const PersonalizeCategories = () => {
   const asyncOnCompleted = useCallback(async () => {
@@ -31,6 +32,9 @@ export const PersonalizeCategories = () => {
     useAccountSettingsStore();
   // Access store methods.
   const { setFavoriteCategories } = useSignupStore();
+  // Get user data from the session
+  const { data: session } = useSession();
+
   const {
     handleSubmit,
     control,
@@ -71,11 +75,26 @@ export const PersonalizeCategories = () => {
       ['personal_settings', 'favorite_categories'],
       selectedCategoryIds,
     );
-    // submit to favorites in the signup store
+    // // submit to favorites in the signup store
+    // setFavoriteCategories(selectedCategoryIds);
+
+    // console.log('modifiedSettings:// ', modifiedSettings);
+    // updateSettings.submit(modifiedSettings);
+
+    // Replace user_id and id with values from session
+    const finalSettings = {
+      ...modifiedSettings,
+      user_id: session?.user?.id || modifiedSettings.user_id,
+      id: session?.user?.id || modifiedSettings.id,
+    };
+
+    // Submit to favorites in the signup store
     setFavoriteCategories(selectedCategoryIds);
 
-    console.log('modifiedSettings:// ', modifiedSettings);
-    updateSettings.submit(modifiedSettings);
+    console.log('Final settings:// ', finalSettings);
+
+    // Submit the modified settings
+    updateSettings.submit(finalSettings);
   };
 
   const allCategories = (categories as Category[]).map((category) => ({
