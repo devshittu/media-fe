@@ -1,25 +1,21 @@
-import { ReactElement } from 'react';
-import UserLayout from '@/layouts/user-layout';
-import { StoriesPageFrame } from '@/components/frames';
-import SettingsSectionClient from '../_component/SettingsSectionClient';
+import { ReactNode } from 'react';
+import { StoriesPageHeader } from '@/components/blocks/headers';
+import SettingsSectionRenderer from '../_component/SettingsSectionRenderer';
 
-const sidePanelSections = [
-  {
-    id: 'settings-links',
-    title: 'Settings',
-    showLink: false,
-    component: <SettingsSectionClient />,
-  },
-];
+export default function SettingsSectionPage({
+  params,
+}: {
+  params: { section: string };
+}) {
+  const section = params.section;
 
-export default function SettingsPage() {
+
   return (
-      <>
-        <SettingsSectionClient />
-      {/* <UserLayout>
-        <StoriesPageFrame sidePanelSections={sidePanelSections}>
-        </StoriesPageFrame>
-      </UserLayout> */}
-      </>
+    <>
+      <StoriesPageHeader pageTitle={section} />
+      <SettingsSectionRenderer section={section} />
+    </>
   );
 }
+
+// Path: src/app/settings/[section]/page.tsx
