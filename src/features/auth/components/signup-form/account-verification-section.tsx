@@ -44,7 +44,7 @@ export const AccountVerificationSection = () => {
     });
   };
   const handleStartAccountSetupSequence = () => {
-    showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleWizardFinish} />);
+    showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleWizardFinish} requiresSession />);
   };
 
   const handleWizardFinish = async () => {
