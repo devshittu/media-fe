@@ -30,7 +30,8 @@ export const dislikeStory = ({
 
   return apiClient.post(uri, {
     data: story_id ? { story_id } : { story_slug },
-  });
+  },
+    { requiresAuth: true },);
 };
 
 export const useDislikeStory = ({
