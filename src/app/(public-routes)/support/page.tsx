@@ -32,7 +32,7 @@ import { getSupportCategory } from '@/features/support/api/get-support-category'
 import { PaginatedListQueryParams } from '@/types';
 import { APP_SUPPORT_VERSION } from '@/config/constants';
 import SupportCategoryList from '@/features/support/components/blocks/support-category-list';
-
+import { Metadata } from 'next';
 // type PublicSupportPageProps = InferGetServerSidePropsType<
 //   typeof getServerSideProps
 // >;
@@ -126,8 +126,6 @@ export default async function SupportPage() {
 SupportPage.getLayout = function getLayout(page: ReactElement) {
   return <PublicLayout>{page}</PublicLayout>;
 };
-
-import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Support',
