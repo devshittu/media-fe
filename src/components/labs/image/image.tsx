@@ -79,7 +79,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
       <>
         {!isLoaded && !hasError && loaderSvg}
         {hasError ? (
-          <div>
+          <>
             {/* <NextImage
               src={fallbackSrc}
               alt="Fallback"
@@ -118,8 +118,8 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
       </svg> */}
               </>
             )}
-            <p>{errorMessage}</p>
-          </div>
+            <span className='hidden'>{errorMessage}</span>
+          </>
         ) : (
           <NextImage
             src={src}
