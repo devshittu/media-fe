@@ -22,7 +22,7 @@ export const useAddBatchAnalytics = ({
   onSuccess,
   onError,
 }: UseAddBatchAnalyticsOptions) => {
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutateAsync: submit, isLoading } = useMutation({
     mutationKey: [ADD_BATCH_ANALYTICS],
     mutationFn: addBatchAnalytics,
     onSuccess: (data) => {
