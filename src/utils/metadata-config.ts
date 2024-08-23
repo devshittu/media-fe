@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata, Viewport } from 'next';
 
 export const defaultMetadata: Metadata = {
   title: {
@@ -7,8 +7,8 @@ export const defaultMetadata: Metadata = {
   },
   description:
     'Media App is a Next.js starter kit for building a media streaming app',
-  viewport:
-    'width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1',
+  // viewport:
+  //   'width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1',
   icons: {
     icon: [
       { rel: 'icon', url: '/favicon.ico', type: 'image/x-icon' },
@@ -33,7 +33,6 @@ export const defaultMetadata: Metadata = {
       { rel: 'mask-icon', url: '/safari-pinned-tab.svg', color: '#5bbad5' },
     ],
   },
-  themeColor: '#ffffff',
   appleWebApp: {
     capable: true,
     title: 'Media App',
@@ -42,7 +41,7 @@ export const defaultMetadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://www.myenterpriseapp.com/',
+    url: 'https://www.gong.ng/',
     siteName: 'Media App',
   },
   twitter: {
@@ -55,21 +54,16 @@ export const defaultMetadata: Metadata = {
   },
 };
 
-// type MetadataOverrides = Omit<Metadata, 'title'> & {
-//   title?: string;
-// };
+export const defaultViewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'cyan' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+};
 
-// export const generateMetadata = async (
-//   overrides: MetadataOverrides,
-//   parent?: ResolvingMetadata
-// ): Promise<Metadata> => {
-//   const titleTemplate = defaultMetadata.title?.template || '%s | Media App';
+// Path: src/utils/metadata-config.ts
 
-//   return {
-//     ...defaultMetadata,
-//     ...overrides,
-//     title: overrides.title ? { default: overrides.title, template: titleTemplate } : defaultMetadata.title,
-//   };
-// };
-
-// src/utils/metadata-config.ts

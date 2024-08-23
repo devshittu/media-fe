@@ -19,6 +19,7 @@ import {
 import { LegalURIParams } from '@/features/support/api/get-legal-document';
 import { Markdown } from '@/components/markdown';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
 type SupportArticlePageProps = {
   document: {
@@ -32,6 +33,11 @@ type SupportArticlePageProps = {
   }[];
   menuLinks: { href: string; label: string }[];
 };
+
+export const metadata: Metadata = {
+  title: 'Support',
+  description: 'Our legal documents',
+}
 
 export default async function SupportArticlePage({
   params,

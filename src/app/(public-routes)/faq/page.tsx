@@ -6,15 +6,13 @@ import Newsletter from '@/components/labs/public-page/newsletter';
 import { ContentSection } from '@/components/labs/public-page';
 import { Markdown } from '@/components/markdown';
 import { LegalURIParams, getLegalDocuments } from '@/features/support/api/get-legal-document';
-import { removeChars } from '@/utils';
 import { ReactElement } from 'react';
 import { notFound } from 'next/navigation';
 import {
   FAQList,
-  SearchSection,
-  ExtraArticles,
-  HelpCenterSection,
 } from '@/features/support';
+// import { generateMetadata } from '@/utils/metadata-config';
+import { Metadata } from 'next';
 
 type PublicFAQPageProps = {
   document: {
@@ -22,19 +20,25 @@ type PublicFAQPageProps = {
     content: string;
   };
 };
+export const metadata: Metadata = {
+  title: 'Frequently Asked Questions',
+  description: 'Learn more about our company and our values.',
+}
+
 
 export default async function PublicFAQPage({ params }: { params: { version: string } }) {
-  const version = params?.version;
-  const pathParams: LegalURIParams = {
-    document: 'terms',
-    version,
-  };
+  // const version = params?.version;
+  // const pathParams: LegalURIParams = {
+  //   document: 'terms',
+  //   // version,
+  // };
 
-  const document = await getLegalDocuments({ params: pathParams });
+  // const document = await getLegalDocuments({ params: pathParams });
 
-  if (!document) {
-    notFound();
-  }
+
+  // if (!document) {
+  //   notFound();
+  // }
 
   const breadcrumbTrail = [
     { href: '/parent1', label: 'Parent 1' },
@@ -72,11 +76,11 @@ export default async function PublicFAQPage({ params }: { params: { version: str
   return (
     <>
       <Header menuLinks={menuLinks} />
-      <Hero
+      {/* <Hero
         title={document.title || 'Legal document'}
         breadcrumbTrail={breadcrumbTrail}
         subtitle="Legal document"
-      />
+      /> */}
       <ContentSection>
         <FAQList />
       </ContentSection>
