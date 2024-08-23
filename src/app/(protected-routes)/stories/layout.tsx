@@ -9,3 +9,5 @@ export default function StoriesLayout({ children }: { children: ReactNode }) {
     </UserLayout>
   );
 }
+
+// src/app/(protected-routes)/stories/layout.tsx

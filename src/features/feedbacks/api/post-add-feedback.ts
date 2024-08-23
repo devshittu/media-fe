@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { QUERY_KEYS } from '@/config/query';
-import { ApiCallResultType, ApiResponse, CacheRefType } from '@/types';
+import { ApiCallMutationStatus, ApiCallResultType, ApiResponse, CacheRefType } from '@/types';
 import { URI_FEEDBACKS_REPORT } from '@/config/api-constants';
 import { AddFeedbackFormData } from '../types';
 const { ADD_FEEDBACK } = QUERY_KEYS;
@@ -23,8 +23,9 @@ export const useAddFeedback = ({
   const mutationKey: CacheRefType = [ADD_FEEDBACK, ApiCallResultType.SINGLE];
 
   const {
-    mutate: submit,
+    mutateAsync: submit,
     isPending,
+    status,
     isSuccess,
     isError,
     isIdle,
@@ -43,7 +44,7 @@ export const useAddFeedback = ({
     },
   });
   // Compute custom isLoading
-  const isLoading = isPending || isIdle || isPaused;
+  const isLoading = isPending && !isSuccess;
 
   return {
     submit,

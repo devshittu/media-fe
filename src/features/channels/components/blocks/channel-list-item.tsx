@@ -11,13 +11,14 @@ export const ChannelListItem = ({ channel }: ChannelListItemProps) => {
     <div className="mb-6 sm:w-1/2x rounded-lg bg-black dark:bg-white p-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
+          <div className='h-12 w-12'>
           <Image
             width={`32`}
             height={`32`}
             className="mr-2 h-10 w-10 rounded-full object-cover"
             src={avatar_url}
             alt={name}
-          />
+          /></div>
           <div>
             <h3 className="text-base font-semibold text-gray-100 dark:text-gray-900">
               {name}

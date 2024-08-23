@@ -4,10 +4,10 @@ import { WizardProvider, useWizardContext } from './wizard-context';
 import WizardComponent from './wizard-component';
 import { withWizard } from './HOC/withWizard';
 
-const Wizard = ({ steps, onFinish, onClose }: WizardProps) => {
+const Wizard = ({ steps, onFinish, onClose, requiresSession }: WizardProps) => {
   return (
     <WizardProvider>
-      <WizardComponent steps={steps} onFinish={onFinish} onClose={onClose} />
+      <WizardComponent steps={steps} onFinish={onFinish} onClose={onClose}  requiresSession={requiresSession} />
     </WizardProvider>
   );
 };

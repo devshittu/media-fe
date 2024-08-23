@@ -24,7 +24,7 @@ type UseSignupOptions = {
 
 export const useSignup = ({ onSuccess, onError }: UseSignupOptions = {}) => {
   const {
-    // mutate: submit,
+    // mutateAsync: submit,
     mutateAsync: submit,
     isPending, status, isSuccess,
     error,

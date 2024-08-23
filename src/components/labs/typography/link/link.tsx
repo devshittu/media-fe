@@ -73,3 +73,5 @@ export const Link = ({
     </NextLink>
   );
 };
+
+// src/components/labs/typography/link/link.tsx

@@ -7,7 +7,7 @@ type UseSignoutOptions = {
 };
 
 export const useSignout = ({ onSuccess }: UseSignoutOptions = {}) => {
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutateAsync: submit, isLoading } = useMutation({
     mutationFn: signOut,
     onSuccess: () => {
       queryClient.clear();

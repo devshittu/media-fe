@@ -56,7 +56,7 @@ export const useLikeStory = ({
     story_id,
   ];
   const {
-    mutate: submit,
+    mutateAsync: submit,
     status,
     isPending,
     isIdle,

@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/api-client';
 
 import { Setting } from '../types';
 
-import { ApiResponse } from '@/types';
+import { ApiCallResultType, ApiResponse, CacheRefType } from '@/types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_AUTH_ME_SETTINGS } from '@/config/api-constants';
 const { GET_USER_SETTINGS } = QUERY_KEYS;
@@ -24,14 +24,16 @@ export const getUserSettings = ({
 };
 
 export const useUserSettings = ({ params }: GetUserSettingsOptions) => {
+  const queryKey: CacheRefType = [GET_USER_SETTINGS, ApiCallResultType.DISCRETE, params];
   const { data, isFetching, isFetched } = useQuery<Setting>({
-    queryKey: [GET_USER_SETTINGS, params], // Updated queryKey type to string[]
+    queryKey, // Updated queryKey type to string[]
     queryFn: () => getUserSettings({ params }),
     // enabled: !!params?.category_id,
     initialData: {} as Setting, // Set initialData to an empty Setting object
   });
 
   return {
+    queryKey,
     data,
     isLoading: isFetching && !isFetched,
   };

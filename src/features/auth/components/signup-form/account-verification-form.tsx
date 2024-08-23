@@ -14,6 +14,8 @@ import { Link } from '@/components/labs';
 import { CountdownTimer } from '@/components/countdown/countdown-timer';
 import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
 import { useCountdownContext } from '@/components/countdown';
+import { useResendOtp } from '../../api/post-resend-otp';
+import { useSignout } from '@/features/auth/hooks/useSignout';
 export type AccountVerificationFormProps = {
   onSuccess: () => void;
   onError?: (message: string) => void;
@@ -21,11 +23,18 @@ export type AccountVerificationFormProps = {
 export const AccountVerificationForm = ({
   onSuccess, onError 
 }: AccountVerificationFormProps) => {
+  const { signout } = useSignout();
+
   // Access store methods.
   const { setOTP, basicInformation } = useSignupStore();
   const { data: session } = useSession(); // Access the session data
   const { submit, isLoading, error } = useVerifyAccount({ onSuccess });
-  const { control, watch, register, handleSubmit, formState, setError, setValue } =
+
+  const { submit: resend, isLoading: isResending, error: resendError } = useResendOtp({
+    onSuccess: () => handleReset(),
+    onError: (errorMessage) => console.error(errorMessage),
+  });
+  const { control, watch, register, handleSubmit, formState, setError, setValue, getValues } =
     useForm<VerifyAccountData>({
       defaultValues: {
         otp: '',
@@ -61,7 +70,7 @@ useEffect(() => {
   }, [error, setError]);
 
   useEffect(() => {
-    startCountdown(0, 2, 0); // Start a 2-minute countdown
+    startCountdown(0, 0, 5); // Start a 2-minute countdown
 
     const interval = setInterval(() => {
       if (timeLeft === '00:00:00') {
@@ -73,6 +82,10 @@ useEffect(() => {
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [timeLeft, startCountdown]);
 
+  const handleReset = () => {
+    resetCountdown(0, 0, 10); // Reset countdown to 5 minutes
+    setCanResend(false);
+  };
   const handleEnd = () => {
         console.log('Countdown ended in layout');
         // Trigger metadata generation or other actions here
@@ -81,9 +94,8 @@ useEffect(() => {
   const onSubmit = async (data: VerifyAccountData) => {
     console.log('VerifyAccountData:// ',data);
     setOTP(data.otp);
-    // TODO uncomment when ready to submit to server.
-    // submit(data);
-    // onSuccess();
+    // ready to submit to server.
+
 
   try {
     // Submit the signup data
@@ -106,6 +118,11 @@ useEffect(() => {
   onSuccess?.();
   };
 
+
+
+  const handleResendOtp = () => {
+    resend({ email: getValues('email') });
+  };
   return (
     <>
     
@@ -153,6 +170,19 @@ useEffect(() => {
                 <span className="font-inter ">Sign up</span>
               </Link>
             </li>
+            <li>
+
+    <Link href="#"
+                aria-label="Sign in"
+                title="Sign in"
+                className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400" onClick={(event) => {
+      event.preventDefault(); // Prevent default link behavior
+      signout(); // Call signout function
+    }}>
+      
+                <span className="font-inter ">Sign Out</span>
+    </Link>
+            </li>
           </ul>
           <Link
             href="/"
@@ -164,24 +194,21 @@ useEffect(() => {
         </div>
       </div>
 </nav>
-              <header className="p-4 bg-gray-100 dark:bg-gray-800">
-                    <CountdownTimer
-                        hours={0}
-                        minutes={10}
-                        seconds={0}
-                        onEnd={handleEnd}
-                        className="text-lg"
-                    />
-                </header>
-                
-        <p className="text-lg">
-          {canResend ? 'You can now resend the verification link.' : `You can resend the verification link in ${timeLeft}.`}
-        </p>
-        {canResend && (
-          <button onClick={resetCountdown} className="mt-4 p-2 bg-blue-500 text-white rounded">
-            Resend Verification Link
-          </button>
-        )}
+             
+         
+      <header className="p-4 bg-gray-100 dark:bg-gray-800">
+        <span className="text-lg">{`Time left is ${timeLeft}.`}</span>
+      </header>
+      
+      <p className="text-lg">
+        {canResend ? 'You can now resend the verification link.' : `You can resend the verification link in ${timeLeft}.`}
+      </p>
+      {canResend && (
+        <button onClick={handleResendOtp} disabled={isResending} className="mt-4 p-2 bg-blue-500 text-white rounded">
+          {isResending ? 'Resending...' : 'Resend OTP'}
+        </button>
+      )}
+
         <>Email: {session?.user?.email || basicInformation?.email || ''}</>
         <form
           onSubmit={handleSubmit(onSubmit)}

@@ -47,5 +47,6 @@ export const privateRoutes: string[] = [
   '/settings',
   '/bookmarks',
   '/lists',
+  '/storylines',
 ];
 

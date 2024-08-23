@@ -1,12 +1,8 @@
-'use client'
+'use client';
 import React, { forwardRef } from 'react';
 import { CloudOffIcon, Icon } from '../illustrations';
 
 type LoadingPhotoFailedProps = {
-  bgHeight?: string; // Background height
-  bgWidth?: string; // Background width
-  iconHeight?: string; // Icon height
-  iconWidth?: string; // Icon width
   className?: string;
 };
 
@@ -15,25 +11,18 @@ export const LoadingPhotoFailed = forwardRef<
   LoadingPhotoFailedProps
 >(
   (
-    {
-      bgHeight = 'h-48', // Default height
-      bgWidth = 'w-full', // Default width
-      iconHeight = 'h-12', // Default icon height
-      iconWidth = 'w-12', // Default icon width
-      className = '',
-      ...props
-    },
+    { className = '', ...props },
     ref,
   ) => {
     return (
       <div
         ref={ref}
-        className={`flex items-center justify-center mb-4 bg-slate-300 rounded dark:bg-slate-700 ${bgHeight} ${bgWidth} ${className}`}
+        className={`flex items-center justify-center w-full h-full bg-slate-300 dark:bg-slate-700 ${className}`}
         {...props}
       >
         <Icon
           icon={<CloudOffIcon />}
-          className={`${iconHeight} ${iconWidth} text-slate-200 dark:text-slate-600`}
+          className="w-12 h-12 text-slate-200 dark:text-slate-600"
         />
       </div>
     );
@@ -42,4 +31,4 @@ export const LoadingPhotoFailed = forwardRef<
 
 LoadingPhotoFailed.displayName = 'LoadingPhotoFailed';
 
-// src/components/loading/loading-photo-failed.tsx
+// Path: src/components/loading/loading-photo-failed.tsx

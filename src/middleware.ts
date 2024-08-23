@@ -9,12 +9,29 @@ export default auth((request: NextRequest) => {
   const { auth } = request;
   const { pathname } = request.nextUrl;
 
-  // Redirect to verify account if not active and setup not completed, but avoid redirect loop
-  if (auth?.user?.redirectToVerify && !pathname.startsWith('/auth/verify')) {
-    return NextResponse.redirect(
-      new URL('/auth/verify', request.nextUrl),
-    );
-  }
+  // // Redirect to verify account if not active and setup not completed, but avoid redirect loop
+  // if (auth?.user?.redirectToVerify && !pathname.startsWith('/auth/verify')) {
+  //   return NextResponse.redirect(
+  //     new URL('/auth/verify', request.nextUrl),
+  //   );
+  // }
+
+  // // Determine the user's login status and redirect accordingly
+  // if (auth?.user) {
+  //   // If the user is not active and setup is not completed, redirect to verify
+  //   if (!auth.user.is_active || !auth.user.has_completed_setup) {
+  //     if (!pathname.startsWith('/auth/verify')) {
+  //       return NextResponse.redirect(
+  //         new URL('/auth/verify', request.nextUrl)
+  //       );
+  //     }
+  //   } else {
+  //     // If the user is active and setup is completed, redirect to /stories
+  //     if (pathname.startsWith('/auth/')) {
+  //       return NextResponse.redirect(new URL('/stories', request.nextUrl));
+  //     }
+  //   }
+  // }
 
   const searchTerm = request.nextUrl.pathname.split('/').slice(0, 2).join('/');
 

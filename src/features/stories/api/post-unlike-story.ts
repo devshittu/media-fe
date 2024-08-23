@@ -47,7 +47,7 @@ export const useUnlikeStory = ({
   const updateCachedStory = useUpdateCachedStory();
   const { logAnalytics } = useLogAnalytics();
   const {
-    mutate: submit,
+    mutateAsync: submit,
     status,
     isPaused,
     isPending,

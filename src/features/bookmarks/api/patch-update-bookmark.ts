@@ -43,7 +43,7 @@ export const useUpdateBookmark = ({
   const updateCachedBookmark = useUpdateCachedBookmark();
   const mutationKey = [UPDATE_BOOKMARK, bookmark_id];
   const {
-    mutate: submit,
+    mutateAsync: submit,
     isPending,
     isSuccess,
   } = useMutation({
