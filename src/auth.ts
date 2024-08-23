@@ -201,10 +201,6 @@ export const config = {
         }
       }
 
-      console.log(`callback.jwt token dump before modification:`, token);
-      console.log(`callback.jwt user`, user);
-      console.log(`callback.jwt account`, account);
-
 
       // Return previous token if the access token has not expired yet
       console.log(

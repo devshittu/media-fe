@@ -43,3 +43,4 @@ export const useGetSupportArticleBySlug = ({
     isLoading: isFetching && !isFetched,
   };
 };
+// src/features/support/api/get-support-article-by-slug.ts

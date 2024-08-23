@@ -9,6 +9,7 @@ import { LegalURIParams, getLegalDocuments } from '@/features/support/api/get-le
 import { removeChars } from '@/utils';
 import { ReactElement } from 'react';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
 type PublicTermsPageProps = {
   document: {
@@ -16,6 +17,11 @@ type PublicTermsPageProps = {
     content: string;
   };
 };
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Our legal documents',
+}
 
 export default async function PublicTermsPage({ params }: { params: { version: string } }) {
   const version = params?.version;
