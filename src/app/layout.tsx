@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import { inter, roboto_mono } from '@/utils/fonts';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { AppProvider } from '@/providers/app';
 import { SplashScreenWrapper } from '@/components/blocks/splash-screen';
-import { defaultMetadata } from '@/utils/metadata-config';
+import { defaultMetadata, defaultViewport } from '@/utils/metadata-config';
 import GlobalStyles from '@/components/GlobalStyles';
 import '@/styles/globals.css';
 
@@ -12,6 +12,7 @@ import '@/styles/globals.css';
 // }
 
 export const metadata: Metadata = defaultMetadata;
+export const viewport: Viewport = defaultViewport;
 
 type Props = {
   children: ReactNode;
