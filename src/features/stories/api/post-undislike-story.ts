@@ -27,8 +27,9 @@ export const undislikeStory = ({
     throw new Error('Either story_id or story_slug must be provided.');
   }
 
-  return apiClient.post(uri, {
+  return apiClient.delete(uri, {
     data: story_id && { story_id },
+    requiresAuth: true
   });
 };
 
@@ -78,7 +79,7 @@ export const useUndislikeStory = ({
   });
 
   // Compute custom isLoading
-  const isLoading = isPending || isIdle || isPaused;
+  const isLoading = isPending && !isSuccess;
 
   return {
     submit,
