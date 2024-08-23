@@ -41,7 +41,7 @@ export const useUndislikeStory = ({
   const updateCachedStory = useUpdateCachedStory();
   const { logAnalytics } = useLogAnalytics();
   const {
-    mutate: submit,
+    mutateAsync: submit,
     status,
     isSuccess,
     isPaused,
