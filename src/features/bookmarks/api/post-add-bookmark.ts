@@ -32,7 +32,7 @@ export const useAddBookmark = ({
   const updateCachedStory = useUpdateCachedStory();
   const mutationKey = [ADD_BOOKMARK, story_id];
   const {
-    mutate: submit,
+    mutateAsync: submit,
     status,
     isPending,
     isSuccess,
