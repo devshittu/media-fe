@@ -39,7 +39,7 @@ export const useDeleteBookmark = ({
   const updateCachedBookmark = useUpdateCachedBookmark();
   const mutationKey = [DESTROY_BOOKMARK, bookmark_id];
   const {
-    mutate: submit,
+    mutateAsync: submit,
     isPending,
     isSuccess,
   } = useMutation({
