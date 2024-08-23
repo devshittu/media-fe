@@ -15,14 +15,20 @@ type UseUpdateUserPasswordOptions = {
 export const updateUserPassword = (
   data: UpdatePasswordData,
 ): Promise<ApiResponse> => {
-  return apiClient.put(`${URI_USERS_UPDATE_PASSWORD}`, data);
+  return apiClient.put(`${URI_USERS_UPDATE_PASSWORD}`, data, {
+    requiresAuth: true});
 };
 export const useUpdateUserPassword = ({
   // data,
   onSuccess,
   onError,
 }: UseUpdateUserPasswordOptions) => {
-  const { mutateAsync: submit, isLoading } = useMutation({
+  const { 
+    mutateAsync: submit,
+    status,
+    isSuccess,
+    isPaused,
+    isPending, } = useMutation({
     mutationKey: [UPDATE_USER_PASSWORD],
     mutationFn: updateUserPassword,
     onSuccess: (data) => {
@@ -34,6 +40,8 @@ export const useUpdateUserPassword = ({
       onError?.(data);
     },
   });
+  // Compute custom isLoading
+  const isLoading = isPending && !isSuccess;
 
   return {
     submit,
