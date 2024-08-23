@@ -22,7 +22,7 @@ export const useUpdateUserPassword = ({
   onSuccess,
   onError,
 }: UseUpdateUserPasswordOptions) => {
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutateAsync: submit, isLoading } = useMutation({
     mutationKey: [UPDATE_USER_PASSWORD],
     mutationFn: updateUserPassword,
     onSuccess: (data) => {
