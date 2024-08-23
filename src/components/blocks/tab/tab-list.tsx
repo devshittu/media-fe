@@ -28,7 +28,7 @@ export const TabList: React.FC<TabListProps> = ({
     <ul
       className={`flex ${
         !scrollable ? 'justify-around' : 'justify-start'
-      } -mb-px text-sm font-medium text-center overflow-hidden overflow-x-scroll`}
+      } -mb-px text-sm font-medium text-center overflow-hidden overflow-x-scrollx`}
       role="tablist"
       data-tabs-toggle="#myTabContent"
     >

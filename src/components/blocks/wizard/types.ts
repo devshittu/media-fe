@@ -19,4 +19,5 @@ export type WizardProps = {
   steps: Step[];
   onFinish?: () => void;
   onClose?: () => void;
+  requiresSession?: boolean;
 };

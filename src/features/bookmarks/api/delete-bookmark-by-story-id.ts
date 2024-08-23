@@ -37,7 +37,7 @@ export const useDeleteBookmarkByStoryId = ({
   const { logAnalytics } = useLogAnalytics();
   const mutationKey = [DESTROY_BOOKMARK_BY_STORY_ID, story_id];
   const {
-    mutate: submit,
+    mutateAsync: submit,
     status,
     isPending,
     isSuccess,

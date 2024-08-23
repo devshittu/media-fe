@@ -1,5 +1,3 @@
-// src/app/auth/verify/layout.tsx
-
 import { CountdownProvider } from '@/components/countdown';
 import SessionWrapper from '@/features/auth/components/session/session-wrapper';
 import { ReactNode } from 'react';
@@ -13,3 +11,4 @@ export default function Layout({ children }: Props) {
                 <CountdownProvider>{children}
                 </CountdownProvider></SessionWrapper>);
 }
+// src/app/(auth-routes)/auth/verify/layout.tsx

@@ -13,12 +13,12 @@ export const followUser = (data: {
   const uri = uriTemplate(URI_USERS_FOLLOW_BY_USER_ID, {
     user_id: data.user_id,
   });
-  return apiClient.post(`${uri}`, { data });
+  return apiClient.post(`${uri}`, {data}, { requiresAuth: true },);
 };
 
 export const useFollowUser = () => {
   const {
-    mutate: submit,
+    mutateAsync: submit,
     isPending,
     isIdle,
     isSuccess,
@@ -28,7 +28,7 @@ export const useFollowUser = () => {
     mutationFn: followUser,
   });
 
-  const isFollowLoading = isPending;
+  const isFollowLoading = isPending && !isSuccess;
 
   return {
     submit,

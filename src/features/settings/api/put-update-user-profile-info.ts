@@ -15,14 +15,20 @@ type UseUpdateUserProfileOptions = {
 export const updateUserProfile = (
   data: UpdateUserProfileData,
 ): Promise<ApiResponse> => {
-  return apiClient.put(`${URI_USERS_UPDATE_USER}`, data);
+  return apiClient.put(`${URI_USERS_UPDATE_USER}`, data, {
+    requiresAuth: true});
 };
 export const useUpdateUserProfile = ({
   // data,
   onSuccess,
   onError,
 }: UseUpdateUserProfileOptions) => {
-  const { mutate: submit, isLoading } = useMutation({
+  const { 
+    mutateAsync: submit,
+    status,
+    isSuccess,
+    isPaused,
+    isPending, } = useMutation({
     mutationKey: [UPDATE_USER_PROFILE_INFO],
     mutationFn: updateUserProfile,
     onSuccess: (data) => {
@@ -34,6 +40,9 @@ export const useUpdateUserProfile = ({
       onError?.(data);
     },
   });
+
+  // Compute custom isLoading
+  const isLoading = isPending && !isSuccess;
 
   return {
     submit,

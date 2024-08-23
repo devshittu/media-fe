@@ -30,7 +30,8 @@ export const dislikeStory = ({
 
   return apiClient.post(uri, {
     data: story_id ? { story_id } : { story_slug },
-  });
+  },
+    { requiresAuth: true },);
 };
 
 export const useDislikeStory = ({
@@ -42,7 +43,7 @@ export const useDislikeStory = ({
   const { logAnalytics } = useLogAnalytics();
   const updateCachedStory = useUpdateCachedStory();
   const {
-    mutate: submit,
+    mutateAsync: submit,
     isPending,
     isSuccess,
     isIdle,

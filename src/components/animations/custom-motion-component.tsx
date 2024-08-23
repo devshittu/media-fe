@@ -48,7 +48,7 @@ const AnimateAndPresenceComponentInner: React.ForwardRefRenderFunction<
   HTMLDivElement,
   AnimateAndPresenceComponentProps
 > = (
-  { children, preset, customProps, isPresent, key, ...motionProps },
+  { children, preset, customProps, isPresent, ...motionProps },
   ref,
 ) => {
   const presetProps = React.useMemo(() => {

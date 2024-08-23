@@ -29,6 +29,10 @@ export const useCountdown = ({
     );
 
     useEffect(() => {
+        setTotalSeconds(hours * 3600 + minutes * 60 + seconds);
+    }, [hours, minutes, seconds]); // This line ensures the countdown resets when new values are passed
+
+    useEffect(() => {
         if (totalSeconds > 0) {
             if (onStart) onStart();
 
@@ -61,3 +65,5 @@ export const useCountdown = ({
 
     return timeLeft;
 };
+
+// src/components/countdown/hooks/useCountdown.ts
