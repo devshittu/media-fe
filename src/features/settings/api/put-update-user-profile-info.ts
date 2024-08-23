@@ -22,7 +22,7 @@ export const useUpdateUserProfile = ({
   onSuccess,
   onError,
 }: UseUpdateUserProfileOptions) => {
-  const { mutate: submit, isLoading } = useMutation({
+  const { mutateAsync: submit, isLoading } = useMutation({
     mutationKey: [UPDATE_USER_PROFILE_INFO],
     mutationFn: updateUserProfile,
     onSuccess: (data) => {
