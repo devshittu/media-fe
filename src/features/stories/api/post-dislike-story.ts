@@ -42,7 +42,7 @@ export const useDislikeStory = ({
   const { logAnalytics } = useLogAnalytics();
   const updateCachedStory = useUpdateCachedStory();
   const {
-    mutate: submit,
+    mutateAsync: submit,
     isPending,
     isSuccess,
     isIdle,
