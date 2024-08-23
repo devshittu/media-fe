@@ -21,7 +21,7 @@ type UsePasswordSigninOptions = {
 
 export const usePasswordSignin = ({ onSuccess }: UsePasswordSigninOptions) => {
   const {
-    mutate: submit,
+    mutateAsync: submit,
     isPending,
     status,
 
