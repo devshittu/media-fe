@@ -32,6 +32,18 @@ export type ResendOtpData = {
   email: string;
 };
 
+export type ForgotPasswordData = {
+  email: string;
+};
+
+export type ResetPasswordData = {
+  token: string;
+  password: string;
+};
+
+export type ValidateTokenData = {
+  token: string;
+};
 export type User = {
   id: number;
   display_name: string;

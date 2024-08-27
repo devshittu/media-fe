@@ -8,8 +8,11 @@ export const URI_AUTH_TOKEN_REFRESH = '/auth/token/refresh/';
 export const URI_AUTH_TOKEN_VERIFY = '/auth/token/verify/';
 export const URI_AUTH_PASSWORD_RESET = '/auth/password-reset/';
 export const URI_AUTH_PASSWORD_RESET_CONFIRM = '/auth/password-reset-confirm/';
-export const URI_AUTH_VERIFY_OTP = '/auth/verify-otp/';
-export const URI_AUTH_VERIFY_OTP_AUTH = '/auth/verify-otp-auth/';
+export const URI_AUTH_VALIDATE_RESET_TOKEN = "/auth/validate-reset-token/";
+export const URI_AUTH_OTP_ACTIVATE_ACCOUNT = "/auth/otp/activate-account/";
+export const URI_AUTH_OTP_LOGIN = "/auth/otp/login/";
+export const URI_AUTH_OTP_VERIFY = "/auth/otp/verify/";
+
 export const URI_AUTH_RESEND_OTP = '/auth/resend-otp/';
 export const URI_AUTH_VERIFY_ACCOUNT_BY_TOKEN =
   '/auth/verify-account/{{token}}/';

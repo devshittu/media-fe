@@ -10,6 +10,7 @@ export enum ErrorCode {
   InvalidOrExpiredToken = 'invalid_or_expired_token',
   InvalidOtp = 'invalid_otp',
   InvalidEmail = 'invalid_email',
+  InvalidData = 'invalid_data',
   OtpAlreadySent = 'otp_already_sent',
   InvalidVerificationLink = 'invalid_verification_link',
   PasswordUpdateFailed = 'password_update_failed',
