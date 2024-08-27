@@ -130,6 +130,11 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
               </span>
             </Button>
             <LinedBackgroundText>or continue with</LinedBackgroundText>
+            <div className="flex justify-center -mx-2"><Link className="p-0 mx-2 shadowx" title="Forgot Password" href="/auth/forgot-password">
+                <span className="flex items-center justify-center w-full h-full px-4 py-3">
+                  Forgot password?
+                </span>
+              </Link></div>
             <div className="flex justify-center -mx-2">
               <Link className="p-0 mx-2 shadow" title="Facebook" href="#">
                 <span className="flex items-center justify-center w-full h-full px-4 py-3">
