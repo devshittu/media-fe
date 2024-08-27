@@ -1,10 +1,9 @@
 'use client';
 import { Button } from '@/components/button';
-import { usePasswordSignin } from '../../api/post-password-signin';
 import { useForm } from 'react-hook-form';
-import { PasswordSigninData } from '../../types';
+import { useForgotPassword } from '../../api/post-forgot-password';
+import { ForgotPasswordData } from '../../types';
 import { InputField } from '@/components';
-import { signIn } from 'next-auth/react';
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
 import {
@@ -13,54 +12,36 @@ import {
   TwitterColoredIcon,
 } from '@/components/illustrations';
 import { AppFormProps } from '@/types';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Route } from 'next';
+import { parseError } from '@/utils';
 
-export const SigninForm = ({ onSuccess }: AppFormProps) => {
-  const signin = usePasswordSignin({ onSuccess });
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const { register, handleSubmit, formState } = useForm<PasswordSigninData>({
+
+export const ForgotPasswordForm = ({ onSuccess, onError }: AppFormProps) => {
+  const {submit, isLoading} = useForgotPassword({ onSuccess });
+
+  const { register, handleSubmit, formState } = useForm<ForgotPasswordData>({
     defaultValues: {
-      username_or_email: 'testuser2@test.com',
-      password: 'commonPassword=1',
+      email: 'testuser2@test.com',
     },
     // mode: 'onChange',
     mode: 'onBlur',
   });
   // console.log('formState:// ',formState.isValid);
-  // const onSubmit = (data: PasswordSigninData) => {
-  //   signin.submit(data);
-  // };
+  const onSubmit = async (data: ForgotPasswordData) => {
 
-  const onSubmit = async (data: PasswordSigninData) => {
-    // whatever your type
-    const callbackUrl = searchParams?.get('callbackUrl');
-
-    await signIn('credentials', {
-      redirect: false,
-      email: data.username_or_email,
-      password: data.password,
-    }).then((res: any | undefined) => {
-      if (!res) {
-        alert('No response!');
-        return;
+  try {
+    // Submit the signup data
+    await submit(data);
+  } catch (error) { 
+    const parsedError = parseError(error); // Parse the error
+      if (parsedError && onError) {
+        onError(parsedError?.error?.detail); // Optionally handle the parsed error
       }
+  return;
+  }
 
-      if (!res.ok) alert('Something went wrong!');
-      else if (res.error) {
-        console.log(res.error);
-
-        if (res.error == 'CallbackRouteError')
-          alert('Could not login! Please check your credentials.');
-        else alert(`Internal Server Error: ${res.error}`);
-      } else {
-        if (callbackUrl) router.push(callbackUrl as Route);
-        else router.push('/stories');
-      }
-    });
+  // Call the onSuccess callback if submission is successful
+  onSuccess?.();
   };
-
   return (
     <>
       <div className="w-full max-w-[500px]">
@@ -71,16 +52,21 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
         >
           <div className="w-full p-6">
             <h1 className="mb-10 leading-tight text-4xl font-bold md:leading-normal sm:text-5xl text-center text-slate-900 dark:text-slate-100">
-              Sign in to continue
+              Password Reset
             </h1>
+
+      <h2>Forgot your password?</h2>
+             <p>
+        {"Enter your email address below, and we'll send you a link to reset your password. Make sure to check your inbox for the reset link."}
+      </p>
             <InputField
               required
               placeholder="Enter your email to continue..."
-              id="username_or_email"
+              id="email"
               label="Email"
               type="email"
               showLabel
-              {...register('username_or_email', {
+              {...register('email', {
                 required: 'Your email or username is required to continue',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
@@ -89,31 +75,18 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
               })}
               error={formState.errors.email}
             />
-            <br />
-            <InputField
-              required
-              placeholder="Enter your password"
-              id="password"
-              label="Password"
-              type="password"
-              showLabel
-              {...register('password', {
-                required: 'Your password is required to continue',
-              })}
-              error={formState.errors.password}
-            />
 
             <Button
               id={`button-sign-in`}
               type="primary"
-              loading={!!signin.isLoading}
-              disabled={signin.isLoading}
+              loading={!!isLoading}
+              disabled={isLoading}
               nativeType="submit"
               className="justify-center font-semibold mt-4 w-full md:h-12"
               // onClick={openModal}
             >
               <span className="opacity-100 transition-opacity font-extrabold text-xl">
-                Signin
+                Send Reset Link
               </span>{' '}
               <span
                 className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity"
@@ -130,11 +103,6 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
               </span>
             </Button>
             <LinedBackgroundText>or continue with</LinedBackgroundText>
-            <div className="flex justify-center -mx-2"><Link className="p-0 mx-2 shadowx" title="Forgot Password" href="/auth/forgot-password">
-                <span className="flex items-center justify-center w-full h-full px-4 py-3">
-                  Forgot password?
-                </span>
-              </Link></div>
             <div className="flex justify-center -mx-2">
               <Link className="p-0 mx-2 shadow" title="Facebook" href="#">
                 <span className="flex items-center justify-center w-full h-full px-4 py-3">
@@ -160,4 +128,4 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
   );
 };
 
-// src/features/auth/components/signin-form/signin-form.tsx
+// src/features/auth/components/password-reset-form/password-reset-form.tsx

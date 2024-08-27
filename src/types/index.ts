@@ -65,7 +65,7 @@ export type NewsChannel = {
 
 export type AppFormProps = {
   onSuccess: () => void;
-  onError?: () => void;
+  onError?: (message?: DetailType) => void;
 };
 
 export enum AttentionType {

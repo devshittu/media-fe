@@ -1,10 +1,11 @@
 'use client';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/button';
-import { usePasswordSignin } from '../../api/post-password-signin';
 import { useForm } from 'react-hook-form';
-import { PasswordSigninData } from '../../types';
+import { useResetPassword } from '../../api/post-reset-password';
+import { ResetPasswordData } from '../../types';
 import { InputField } from '@/components';
-import { signIn } from 'next-auth/react';
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
 import {
@@ -13,53 +14,60 @@ import {
   TwitterColoredIcon,
 } from '@/components/illustrations';
 import { AppFormProps } from '@/types';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Route } from 'next';
+import { parseError } from '@/utils';
 
-export const SigninForm = ({ onSuccess }: AppFormProps) => {
-  const signin = usePasswordSignin({ onSuccess });
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const { register, handleSubmit, formState } = useForm<PasswordSigninData>({
+
+type ResetPasswordFormProps = AppFormProps & {
+  token: string;
+};
+export const ResetPasswordForm = ({ token, onSuccess, onError }: ResetPasswordFormProps) => {
+  const pathname = usePathname();
+  // const [token, setToken] = useState<string | null>(null);
+  const {submit, isLoading} = useResetPassword({ onSuccess });
+
+  const { register, handleSubmit, formState } = useForm<ResetPasswordData>({
     defaultValues: {
-      username_or_email: 'testuser2@test.com',
       password: 'commonPassword=1',
     },
     // mode: 'onChange',
     mode: 'onBlur',
   });
   // console.log('formState:// ',formState.isValid);
-  // const onSubmit = (data: PasswordSigninData) => {
-  //   signin.submit(data);
-  // };
+  const onSubmit = async (data: ResetPasswordData) => {
+  if (!token) {
+      console.error('Token is missing.');
+      return;
+    }
+    try {
+      // Submit the signup data
+      await submit({ ...data, token });
+  } catch (error) {
+    const parsedError = parseError(error);
+    console.log(parsedError)
+    onError?.(parsedError?.error?.detail || 'An error occurred during password reset.');
+    return;
+  }
 
-  const onSubmit = async (data: PasswordSigninData) => {
-    // whatever your type
-    const callbackUrl = searchParams?.get('callbackUrl');
-
-    await signIn('credentials', {
-      redirect: false,
-      email: data.username_or_email,
-      password: data.password,
-    }).then((res: any | undefined) => {
-      if (!res) {
-        alert('No response!');
-        return;
-      }
-
-      if (!res.ok) alert('Something went wrong!');
-      else if (res.error) {
-        console.log(res.error);
-
-        if (res.error == 'CallbackRouteError')
-          alert('Could not login! Please check your credentials.');
-        else alert(`Internal Server Error: ${res.error}`);
-      } else {
-        if (callbackUrl) router.push(callbackUrl as Route);
-        else router.push('/stories');
-      }
-    });
+  // Call the onSuccess callback if submission is successful
+  onSuccess?.();
   };
+
+
+
+  // useEffect(() => {
+  //   if (pathname) {
+  //     const pathSegments: string[] = pathname.split('/').filter(Boolean);
+  //     const tokenFromPath: string | undefined = pathSegments.pop();
+
+  //     if (tokenFromPath) {
+  //       setToken(tokenFromPath);
+  //     } else {
+  //       console.error('Token not found in URL path');
+  //     }
+  //   } else {
+  //     console.error('Pathname is undefined');
+  //   }
+  // }, [pathname]);
 
   return (
     <>
@@ -71,24 +79,14 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
         >
           <div className="w-full p-6">
             <h1 className="mb-10 leading-tight text-4xl font-bold md:leading-normal sm:text-5xl text-center text-slate-900 dark:text-slate-100">
-              Sign in to continue
+              Reset Your Password
             </h1>
-            <InputField
-              required
-              placeholder="Enter your email to continue..."
-              id="username_or_email"
-              label="Email"
-              type="email"
-              showLabel
-              {...register('username_or_email', {
-                required: 'Your email or username is required to continue',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Invalid email or username address',
-                },
-              })}
-              error={formState.errors.email}
-            />
+
+      
+        <p className="text-lg mb-10">
+          Please enter a new password for your account. Once your password is reset, you will be redirected to the sign-in page to log in with your new credentials.
+        </p>
+            
             <br />
             <InputField
               required
@@ -102,18 +100,17 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
               })}
               error={formState.errors.password}
             />
-
             <Button
               id={`button-sign-in`}
               type="primary"
-              loading={!!signin.isLoading}
-              disabled={signin.isLoading}
+              loading={!!isLoading}
+              disabled={isLoading}
               nativeType="submit"
               className="justify-center font-semibold mt-4 w-full md:h-12"
               // onClick={openModal}
             >
               <span className="opacity-100 transition-opacity font-extrabold text-xl">
-                Signin
+                Reset Password
               </span>{' '}
               <span
                 className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity"
@@ -130,11 +127,6 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
               </span>
             </Button>
             <LinedBackgroundText>or continue with</LinedBackgroundText>
-            <div className="flex justify-center -mx-2"><Link className="p-0 mx-2 shadowx" title="Forgot Password" href="/auth/forgot-password">
-                <span className="flex items-center justify-center w-full h-full px-4 py-3">
-                  Forgot password?
-                </span>
-              </Link></div>
             <div className="flex justify-center -mx-2">
               <Link className="p-0 mx-2 shadow" title="Facebook" href="#">
                 <span className="flex items-center justify-center w-full h-full px-4 py-3">
@@ -160,4 +152,4 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
   );
 };
 
-// src/features/auth/components/signin-form/signin-form.tsx
+// src/features/auth/components/reset-password-form/reset-password-form.tsx

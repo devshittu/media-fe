@@ -1,10 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
 import { VerifyAccountData, VerifyOTPAndAuthResponse } from '../types';
-import { URI_AUTH_VERIFY_OTP_AUTH } from '@/config/api-constants';
-import { AuthStore } from '@/stores/auth';
-import { queryClient } from '@/lib/react-query';
-import { getAuthUser } from './get-auth-user';
+import { URI_AUTH_OTP_ACTIVATE_ACCOUNT } from '@/config/api-constants';
 import { QUERY_KEYS } from '@/config/query';
 import { ApiCallMutationStatus, ApiResponseError } from '@/types';
 import { parseError } from '@/utils/parse-error';
@@ -13,7 +10,7 @@ const { AUTH_USER } = QUERY_KEYS;
 export const verifyAccount = (
   data: VerifyAccountData,
 ): Promise<VerifyOTPAndAuthResponse> => {
-  return apiClient.post(`${URI_AUTH_VERIFY_OTP_AUTH}`, data, {
+  return apiClient.post(`${URI_AUTH_OTP_ACTIVATE_ACCOUNT}`, data, {
     requiresAuth: false,
   });
 };
