@@ -13,7 +13,7 @@ export const ForgotPasswordSection = () => {
       type: NotificationType.SUCCESS,
       title: 'Success',
       duration: 5000,
-      message: 'Login successful!',
+      message: 'Password reset email sent to your email successfully.',
     });
     // const redirect = searchParams?.get('redirect') as string;
     // router.replace(redirect || '/stories');
