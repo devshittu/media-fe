@@ -7,8 +7,11 @@ export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 export const IS_TEST = process.env.NODE_ENV === 'test';
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-export const NEXT_PUBLIC_APP_CODE_NAME = (process.env.NEXT_PUBLIC_APP_CODE_NAME ?? `mediaapp`) as string;
-export const COOKIES_PREFIX = (process.env.NODE_ENV === `development` ? `__Dev-` : ``) + `${NEXT_PUBLIC_APP_CODE_NAME}`;
+export const NEXT_PUBLIC_APP_CODE_NAME = (process.env
+  .NEXT_PUBLIC_APP_CODE_NAME ?? `mediaapp`) as string;
+export const COOKIES_PREFIX =
+  (process.env.NODE_ENV === `development` ? `__Dev-` : ``) +
+  `${NEXT_PUBLIC_APP_CODE_NAME}`;
 
 export const IS_DEBUG_MODE = process.env.NEXT_PUBLIC_DEBUG === 'true';
 export const IS_BROWSER = typeof window !== 'undefined';
@@ -49,4 +52,3 @@ export const privateRoutes: string[] = [
   '/lists',
   '/storylines',
 ];
-
