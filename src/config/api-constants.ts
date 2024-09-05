@@ -12,7 +12,6 @@ export const URI_AUTH_VALIDATE_RESET_TOKEN = '/auth/validate-reset-token/';
 export const URI_AUTH_OTP_ACTIVATE_ACCOUNT = '/auth/otp/activate-account/';
 export const URI_AUTH_OTP_LOGIN = '/auth/otp/login/';
 export const URI_AUTH_OTP_VERIFY = '/auth/otp/verify/';
-
 export const URI_AUTH_RESEND_OTP = '/auth/resend-otp/';
 export const URI_AUTH_VERIFY_ACCOUNT_BY_TOKEN =
   '/auth/verify-account/{{token}}/';
@@ -30,6 +29,9 @@ export const URI_STORIES_HASHTAG_BY_HASHTAG_NAME =
   '/stories/hashtag/{{hashtag_name}}/';
 export const URI_STORIES_TRENDING = '/stories/trending/';
 export const URI_STORIES_SEARCH = '/stories/search/';
+export const URI_STORIES_SEARCH_AUTOCOMPLETE = '/stories/search/autocomplete/';
+export const URI_STORIES_SEARCH_RECENT = '/stories/search/recent/';
+export const URI_STORIES_SEARCH_HISTORY = '/stories/search/history/';
 export const URI_STORYLINES_BY_STORYLINE_ID_HASHTAGS =
   '/storylines/{{storyline_id}}/hashtags/';
 export const URI_STORIES_BY_STORY_SLUG = '/stories/{{story_slug}}/';
