@@ -9,7 +9,7 @@ declare module 'next-auth' {
     exp: number;
     role: string;
   };
-  AuthUser
+  AuthUser;
 
   type Session = {
     user: User & DefaultSession['user'];
