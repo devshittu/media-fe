@@ -37,7 +37,7 @@ type SupportArticlePageProps = {
 export const metadata: Metadata = {
   title: 'Support',
   description: 'Our legal documents',
-}
+};
 
 export default async function SupportArticlePage({
   params,
