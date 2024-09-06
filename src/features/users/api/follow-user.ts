@@ -13,7 +13,7 @@ export const followUser = (data: {
   const uri = uriTemplate(URI_USERS_FOLLOW_BY_USER_ID, {
     user_id: data.user_id,
   });
-  return apiClient.post(`${uri}`, {data}, { requiresAuth: true },);
+  return apiClient.post(`${uri}`, { data }, { requiresAuth: true });
 };
 
 export const useFollowUser = () => {
