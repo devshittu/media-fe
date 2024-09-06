@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { SupportCategory, SupportArticleListResponse } from '@/features/support';
+import {
+  SupportCategory,
+  SupportArticleListResponse,
+} from '@/features/support';
 import { getSupportArticlesByCategory } from '@/features/support/api/get-support-articles-by-category';
 import { getSupportCategory } from '@/features/support/api/get-support-category';
 import Hero from '@/components/labs/public-page/hero';
@@ -24,7 +27,7 @@ export default function SupportArticleListPageContent({
 }: SupportArticleListPageContentProps) {
   const [category, setCategory] = useState<SupportCategory | null>(null);
   const [document, setDocument] = useState<SupportArticleListResponse | null>(
-    null
+    null,
   );
   const [error, setError] = useState<string | null>(null);
 
@@ -51,7 +54,9 @@ export default function SupportArticleListPageContent({
         setDocument(document);
       } catch (error) {
         console.error('Error fetching document:', error);
-        setError('There was an error fetching the document. Please try again later.');
+        setError(
+          'There was an error fetching the document. Please try again later.',
+        );
       }
     };
 
@@ -116,3 +121,4 @@ export default function SupportArticleListPageContent({
     </>
   );
 }
+// src/app/(public-routes)/support/[version]/articles/[slug]/page.tsx
