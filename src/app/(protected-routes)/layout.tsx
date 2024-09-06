@@ -6,8 +6,10 @@ type Props = {
   children: ReactNode;
 };
 export default function Layout({ children }: Props) {
-  return <SessionWrapper>
-    <Protected>{children}
-    </Protected></SessionWrapper>;
+  return (
+    <SessionWrapper>
+      <Protected>{children}</Protected>
+    </SessionWrapper>
+  );
 }
 // src/app/(protected-routes)/layout.tsx
