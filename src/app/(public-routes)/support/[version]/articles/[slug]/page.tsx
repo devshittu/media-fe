@@ -121,3 +121,4 @@ export default async function SupportArticlePage({
 SupportArticlePage.getLayout = function getLayout(page: React.ReactElement) {
   return <PublicLayout>{page}</PublicLayout>;
 };
+// src/app/(public-routes)/support/[version]/articles/[slug]/page.tsx
