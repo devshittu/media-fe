@@ -2,7 +2,11 @@
 
 import { useMemo } from 'react';
 import { StoryList } from '@/features/stories/components';
-import { StoriesQueryParams, Story, useInfiniteUserFeedStories } from '@/features/stories';
+import {
+  StoriesQueryParams,
+  Story,
+  useInfiniteUserFeedStories,
+} from '@/features/stories';
 import { useTabContentManager } from '@/components/blocks/tab';
 import { useHomePageTabs } from '@/stores/tabs';
 import { Discover } from '@/features/trends/components/discover/discover';
@@ -27,7 +31,7 @@ export default function ClientStoriesContent({
     },
     [],
   );
-const queryParams: StoriesQueryParams = cleanObject({
+  const queryParams: StoriesQueryParams = cleanObject({
     page: 1,
     page_size: PAGINATE_STORIES_LIMIT,
   });
