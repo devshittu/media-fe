@@ -45,3 +45,4 @@ export const useScrollSync = ({
     topPosition,
   };
 };
+// src/hooks/useScrollSync.tsx
