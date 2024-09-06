@@ -26,3 +26,5 @@ export function ClientStoryComponent({ storyId }: ClientStoryProps) {
 
   return <StoryListItem story={story} />;
 }
+
+// src/app/(protected-routes)/stories/_component/ClientStoryComponent.tsx
