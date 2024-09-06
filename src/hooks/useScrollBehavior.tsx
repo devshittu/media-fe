@@ -45,3 +45,4 @@ export const useScrollBehavior = () => {
 
   return { isScrolledUp, yPosition: y, screenHeight, initialScrollPosition };
 };
+// src/hooks/useScrollBehavior.tsx
