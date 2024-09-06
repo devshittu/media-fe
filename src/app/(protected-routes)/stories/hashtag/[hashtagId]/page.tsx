@@ -1,4 +1,3 @@
-
 import { StoriesPageHeader } from '@/components/blocks/headers';
 import { StoriesQueryParams } from '@/features/stories';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
@@ -19,7 +18,7 @@ export default async function StoriesByHashtagPage({
   const queryParams: StoriesQueryParams = {
     hashtag: params.hashtagId,
     page: 1,
-    per_page: PAGINATE_STORIES_LIMIT,
+    page_size: PAGINATE_STORIES_LIMIT,
   };
 
   try {
@@ -50,3 +49,4 @@ export default async function StoriesByHashtagPage({
     );
   }
 }
+// src/app/(protected-routes)/stories/hashtag/[hashtagId]/page.tsx
