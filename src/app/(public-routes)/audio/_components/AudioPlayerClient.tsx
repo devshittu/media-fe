@@ -31,7 +31,6 @@ export default function AudioPlayerClient({ src }: AudioPlayerClientProps) {
   );
 }
 
-
 // pages/audio.tsx
 // import { AudioPlayer, AudioWaveform } from '@/components/blocks/audio-player';
 // import { Button } from '@/components/button';
