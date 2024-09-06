@@ -9,7 +9,6 @@ export default function SettingsSectionPage({
 }) {
   const section = params.section;
 
-
   return (
     <>
       <StoriesPageHeader pageTitle={section} />
