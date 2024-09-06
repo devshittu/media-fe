@@ -16,7 +16,7 @@ export default function CategorizedStoryList({
       page: 1,
       page_size: 10,
     }),
-    []
+    [],
   );
 
   return (
@@ -28,3 +28,5 @@ export default function CategorizedStoryList({
     />
   );
 }
+
+// src/app/(protected-routes)/stories/_component/CategorizedStoryList.tsx
