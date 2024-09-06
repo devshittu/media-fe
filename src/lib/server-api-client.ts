@@ -8,7 +8,6 @@ const serverApiClient = Axios.create({
   withCredentials: true,
 });
 
-
 // serverApiClient.interceptors.request.use(
 //   async (config) => {
 //     // try {
@@ -37,6 +36,5 @@ const serverApiClient = Axios.create({
 //     return Promise.reject(error);
 //   }
 // );
-
 
 export default serverApiClient;
