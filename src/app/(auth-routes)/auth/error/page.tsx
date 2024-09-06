@@ -6,13 +6,12 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Error Occured',
   description: 'An unexpected error occurred.',
-}
+};
 type ErrorPageProps = {
   searchParams: {
     message?: string;
   };
-}
-
+};
 
 const ErrorPage = ({ searchParams }: ErrorPageProps) => {
   const message = searchParams.message || 'An unexpected error occurred.';
@@ -22,7 +21,10 @@ const ErrorPage = ({ searchParams }: ErrorPageProps) => {
       errorCode="400"
       title="Invalid or Expired Token"
       subtitle="Error"
-      description={message || "The password reset link you used is invalid or has expired. Please request a new password reset link."}
+      description={
+        message ||
+        'The password reset link you used is invalid or has expired. Please request a new password reset link.'
+      }
       primaryAction={{
         label: 'Try Again',
         href: '/auth/forgot-password',
