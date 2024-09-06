@@ -66,4 +66,3 @@ export const defaultViewport: Viewport = {
 };
 
 // Path: src/utils/metadata-config.ts
-
