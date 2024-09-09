@@ -3,7 +3,7 @@ import { Button } from '@/components/button';
 import { useForm } from 'react-hook-form';
 import { useForgotPassword } from '../../api/post-forgot-password';
 import { ForgotPasswordData } from '../../types';
-import { InputField } from '@/components';
+import { HookFormInputField, InputField } from '@/components';
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
 import {
@@ -14,33 +14,32 @@ import {
 import { AppFormProps } from '@/types';
 import { parseError } from '@/utils';
 
-
 export const ForgotPasswordForm = ({ onSuccess, onError }: AppFormProps) => {
-  const {submit, isLoading} = useForgotPassword({ onSuccess });
+  const { submit, isLoading } = useForgotPassword({ onSuccess });
 
-  const { register, handleSubmit, formState } = useForm<ForgotPasswordData>({
-    defaultValues: {
-      email: 'testuser2@test.com',
-    },
-    // mode: 'onChange',
-    mode: 'onBlur',
-  });
+  const { register, handleSubmit, formState, control } =
+    useForm<ForgotPasswordData>({
+      defaultValues: {
+        email: 'testuser2@test.com',
+      },
+      // mode: 'onChange',
+      mode: 'onBlur',
+    });
   // console.log('formState:// ',formState.isValid);
   const onSubmit = async (data: ForgotPasswordData) => {
-
-  try {
-    // Submit the signup data
-    await submit(data);
-  } catch (error) { 
-    const parsedError = parseError(error); // Parse the error
+    try {
+      // Submit the signup data
+      await submit(data);
+    } catch (error) {
+      const parsedError = parseError(error); // Parse the error
       if (parsedError && onError) {
         onError(parsedError?.error?.detail); // Optionally handle the parsed error
       }
-  return;
-  }
+      return;
+    }
 
-  // Call the onSuccess callback if submission is successful
-  onSuccess?.();
+    // Call the onSuccess callback if submission is successful
+    onSuccess?.();
   };
   return (
     <>
@@ -55,24 +54,28 @@ export const ForgotPasswordForm = ({ onSuccess, onError }: AppFormProps) => {
               Password Reset
             </h1>
 
-      <h2>Forgot your password?</h2>
-             <p>
-        {"Enter your email address below, and we'll send you a link to reset your password. Make sure to check your inbox for the reset link."}
-      </p>
-            <InputField
-              required
+            <h2>Forgot your password?</h2>
+            <p>
+              {
+                "Enter your email address below, and we'll send you a link to reset your password. Make sure to check your inbox for the reset link."
+              }
+            </p>
+            
+            <HookFormInputField
+              name="email"
+              control={control}
               placeholder="Enter your email to continue..."
               id="email"
               label="Email"
               type="email"
               showLabel
-              {...register('email', {
+              rules={{
                 required: 'Your email or username is required to continue',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   message: 'Invalid email or username address',
                 },
-              })}
+              }}
               error={formState.errors.email}
             />
 
@@ -114,8 +117,7 @@ export const ForgotPasswordForm = ({ onSuccess, onError }: AppFormProps) => {
                 <span className="flex items-center justify-center w-full h-full px-4 py-3">
                   <TwitterColoredIcon className="w-6 h-6 mr-2" />
                   Twitter
-                  {/* <Image className="w-auto h-full" src="https://assets.teamtailor-cdn.com/assets/connect/social/linkedin-1827062cef96d04650b14cb68f91f5e83bd5888170b386ac28b3482e6bad136d.png"> */}
-                </span>
+                  </span>
               </Link>
             </div>
           </div>
