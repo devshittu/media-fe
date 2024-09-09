@@ -26,15 +26,22 @@ export const useSignup = ({ onSuccess, onError }: UseSignupOptions = {}) => {
   const {
     // mutateAsync: submit,
     mutateAsync: submit,
-    isPending, status, isSuccess,
+    isPending,
+    status,
+    isSuccess,
     error,
   } = useMutation({
     mutationFn: signup,
 
     onSuccess: async (response, variables) => {
-      const user = response as unknown as AuthUser; 
+      const user = response as unknown as AuthUser;
       const { password } = variables;
-      console.log(`Will now attempt to login with User ${JSON.stringify(user)} has ${password}`, user.email)
+      console.log(
+        `Will now attempt to login with User ${JSON.stringify(
+          user,
+        )} has ${password}`,
+        user.email,
+      );
 
       // SignupDataStore.getState().setSignupData(user); // Update the access token in Zustand store
 
@@ -43,7 +50,7 @@ export const useSignup = ({ onSuccess, onError }: UseSignupOptions = {}) => {
         const signInResponse = await signIn('credentials', {
           redirect: false,
           email: user.email,
-          password: password,  // Password is securely retrieved from the user object
+          password: password, // Password is securely retrieved from the user object
         });
 
         if (signInResponse?.error) {
@@ -51,7 +58,7 @@ export const useSignup = ({ onSuccess, onError }: UseSignupOptions = {}) => {
           onError?.('There was an issue signing you in. Please try again.');
         } else {
           onSuccess?.(user, password);
-          return
+          return;
         }
       } catch (err) {
         console.error('Sign-in attempt failed:', err);
@@ -62,11 +69,14 @@ export const useSignup = ({ onSuccess, onError }: UseSignupOptions = {}) => {
     onError: (error) => {
       console.error('Signup error:', error);
       onError?.('An error occurred during signup. Please try again later.');
-    
     },
   });
 
-  return { submit, isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess, error };
+  return {
+    submit,
+    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess,
+    error,
+  };
 };
 
 // Path: src/features/auth/api/post-user-signup.ts
