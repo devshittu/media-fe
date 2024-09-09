@@ -16,19 +16,22 @@ export const updateUserSettings = (
   data: Partial<Setting>,
 ): Promise<ApiResponse> => {
   console.log(`patch update: `, data);
-  return apiClient.patch(`${URI_AUTH_ME_SETTINGS}`, data,
-    { requiresAuth: true },);
+  return apiClient.patch(`${URI_AUTH_ME_SETTINGS}`, data, {
+    requiresAuth: true,
+  });
 };
 export const useUpdateUserSettings = ({
   // data,
   onSuccess,
   onError,
 }: UseUpdateUserSettingsOptions) => {
-  const { mutateAsync: submit, 
-    isPending, 
+  const {
+    mutateAsync: submit,
+    isPending,
     status,
     isSuccess,
-    error } = useMutation({
+    error,
+  } = useMutation({
     mutationKey: [UPDATE_USER_SETTINGS],
     mutationFn: updateUserSettings,
     onSuccess: (data) => {
@@ -43,7 +46,8 @@ export const useUpdateUserSettings = ({
 
   return {
     submit,
-    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess, error
+    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess,
+    error,
   };
 };
 
