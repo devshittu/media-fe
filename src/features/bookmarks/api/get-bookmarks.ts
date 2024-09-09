@@ -27,7 +27,6 @@ export const getBookmarks = ({
   return apiClient.get(`${URI_BOOKMARKS}`, {
     params,
     requiresAuth: true,
-    
   });
 };
 
