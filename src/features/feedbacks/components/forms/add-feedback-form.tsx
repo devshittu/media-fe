@@ -1,6 +1,8 @@
 'use client';
 import React from 'react';
 import {
+  HookFormInputField,
+  HookFormSelectField,
   InputField,
   SelectField,
   SelectFieldOption,
@@ -22,7 +24,7 @@ export const AddFeedbackForm = ({
   onCancel,
 }: AppFormProps & { story: Story; onCancel?: () => void }) => {
   const { submit, isLoading } = useAddFeedback({ onSuccess, onError });
-  const { register, handleSubmit, formState, watch } =
+  const { register, handleSubmit, formState, watch, control } =
     useForm<AddFeedbackFormData>({
       defaultValues: {
         report_type: ReportType.Spam.toLowerCase(),
@@ -68,21 +70,26 @@ export const AddFeedbackForm = ({
             <input type="hidden" {...register('content_type_name')} />
             <input type="hidden" {...register('object_id')} />
 
-            <SelectField
+
+            <HookFormSelectField
+              name="report_type"
+              control={control}
               label="Report Type"
               id="report_type"
               options={ReportTypes}
               showLabel
-              {...register('report_type')}
+              rules={{ required: 'Report Type is required' }}
+              error={formState.errors.report_type}
             />
-            <InputField
-              required
-              placeholder="Your thoughts"
-              id="description"
-              label="Comment"
+
+            <HookFormInputField
+              name="description"
+              control={control}
+              placeholder="Enter your description"
+              id="name"
+              label="Description"
               type="textarea"
               showLabel
-              {...register('description')}
               error={formState.errors.description}
             />
             <ToggleSwitch
