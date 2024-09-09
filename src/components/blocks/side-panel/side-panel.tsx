@@ -5,6 +5,7 @@ import { useScrollBehavior } from '@/hooks';
 import { Pane } from './pane';
 import { useScrollSync } from '@/hooks/useScrollSync';
 import { PaneConfig } from './types';
+import { SearchBox } from '../search-box';
 
 type SidePanelProps = {
   sections: PaneConfig[];
@@ -33,6 +34,15 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
     minTop: sidePanelHeight,
   }); // top position set to 60
 
+  const handleSearchResults = (data: any) => {
+    // setSearchResults(data.results); // Store the search results
+    console.log('setSearchResults');
+  };
+
+  const handleClearSearch = () => {
+    // setSearchResults([]); // Clear search results
+    console.log('clearSearch');
+  };
   const renderedSections = useMemo(
     () =>
       sections.map((section) => (
@@ -52,11 +62,9 @@ export const SidePanel = ({ sections }: SidePanelProps) => {
     <div className="flex-1 pb-0 hidden lg:block lg:sticky top-0 min-h-screen">
       <div className={`sticky top-0 z-10 bg-white dark:bg-slate-900`}>
         <div className="py-4">
-          <InputField
-            id="app-search"
-            name="Search"
-            placeholder="Search app (coming soon)..."
-            className="mb-4"
+          <SearchBox
+            onResults={handleSearchResults}
+            onClear={handleClearSearch}
           />
         </div>
       </div>
