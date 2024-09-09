@@ -5,7 +5,7 @@ import {
   SettingsFieldset,
   SettingsFieldsetFooter,
 } from '../blocks';
-import { InputField } from '@/components';
+import { HookFormInputField } from '@/components';
 import {
   useNotifications,
   NotificationType,
@@ -45,9 +45,10 @@ export const AccountSettings = ({
 
   // const updateSettings = useUpdateUserSettings({ onSuccess });
   const updateSettings = useUpdateUserProfile({ onSuccess });
-  const { register, handleSubmit, formState } = useForm<UpdateUserProfileData>({
-    defaultValues: localSettings,
-  });
+  const { register, handleSubmit, formState, control } =
+    useForm<UpdateUserProfileData>({
+      defaultValues: localSettings,
+    });
   const onSubmit = (data: UpdateUserProfileData) => {
     console.log('data:', data);
     // const updatedData = updateDeep(initialSettingValues, {
@@ -84,11 +85,22 @@ Description: "Used for account security and essential notifications."
               title="Account email"
               description="Used for account security and essential notifications."
             >
-              <InputField
+              <HookFormInputField
+                name="email"
+                control={control}
+                placeholder="Enter your email to continue..."
+                id="email"
                 label="Email"
                 type="email"
-                {...register('email', { required: 'Required' })}
-                error={formState.errors['email']}
+                showLabel
+                rules={{
+                  required: 'Your email is required to continue',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: 'Invalid email address',
+                  },
+                }}
+                error={formState.errors.email}
               />
             </SettingsField>
             <SettingsField
@@ -96,11 +108,23 @@ Description: "Used for account security and essential notifications."
               title="Display Name"
               description="Your visible name to other users; choose something memorable."
             >
-              <InputField
-                label="Display name"
+
+              <HookFormInputField
+                name="display_name"
+                control={control}
+                placeholder="Enter your name"
+                id="name"
+                label="Your name"
                 type="text"
-                {...register('display_name', { required: 'Required' })}
-                error={formState.errors['display_name']}
+                showLabel
+                rules={{
+                  required: 'Your name is required to continue',
+                  pattern: {
+                    value: /^[\p{L}\p{N}\p{Z}\p{Pd}'’]+$/u,
+                    message: 'Invalid name format',
+                  },
+                }}
+                error={formState.errors.display_name}
               />
             </SettingsField>
 
@@ -109,11 +133,24 @@ Description: "Used for account security and essential notifications."
               title="Username"
               description="A distinct identifier for sign-in and profile reference."
             >
-              <InputField
-                label="username"
+
+              <HookFormInputField
+                name="username"
+                control={control}
+                placeholder="Enter your username"
+                id="username"
+                label="Username"
                 type="text"
-                {...register('username', { required: 'Required' })}
-                error={formState.errors['username']}
+                showLabel
+                rules={{
+                  required: 'Your username is required to continue',
+                  pattern: {
+                    value: /^[a-zA-Z0-9_]+$/,
+                    message:
+                      'Username can only contain letters, numbers, and underscores',
+                  },
+                }}
+                error={formState.errors.username}
               />
             </SettingsField>
 
