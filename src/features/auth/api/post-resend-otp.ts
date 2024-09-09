@@ -13,7 +13,9 @@ export const resendOtp = (
 ): Promise<{
   detail: string;
 }> => {
-  return apiClient.post(`${URI_AUTH_RESEND_OTP}`, data, { requiresAuth: false });
+  return apiClient.post(`${URI_AUTH_RESEND_OTP}`, data, {
+    requiresAuth: false,
+  });
 };
 
 type UseResendOtpOptions = {
@@ -21,8 +23,17 @@ type UseResendOtpOptions = {
   onError?: (error: any) => void;
 };
 
-export const useResendOtp = ({ onSuccess, onError }: UseResendOtpOptions = {}) => {
-  const { mutateAsync: submit, isPending, status, isSuccess, error } = useMutation({
+export const useResendOtp = ({
+  onSuccess,
+  onError,
+}: UseResendOtpOptions = {}) => {
+  const {
+    mutateAsync: submit,
+    isPending,
+    status,
+    isSuccess,
+    error,
+  } = useMutation({
     mutationFn: resendOtp,
 
     onSuccess: (response) => {
@@ -32,10 +43,16 @@ export const useResendOtp = ({ onSuccess, onError }: UseResendOtpOptions = {}) =
 
     onError: (error) => {
       console.error('Resend OTP error:', error);
-      onError?.('An error occurred while resending the OTP. Please try again later.');
+      onError?.(
+        'An error occurred while resending the OTP. Please try again later.',
+      );
     },
   });
 
-  return { submit, isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess, error };
+  return {
+    submit,
+    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess,
+    error,
+  };
 };
 // Path: src/features/auth/api/post-resend-otp.ts
