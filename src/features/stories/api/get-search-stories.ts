@@ -15,7 +15,6 @@ type GetStoriesOptions = {
 export const searchStories = ({
   params,
 }: GetStoriesOptions): Promise<StoryListResponse> => {
-  console.log('searchStories: search params', JSON.stringify(params));
   return apiClient.get(`${URI_STORIES_SEARCH}`, {
     params,
     requiresAuth: true,
@@ -33,7 +32,6 @@ export const useInfiniteSearchStories = ({
   const queryKey: CacheRefType = [
     SEARCH_STORIES,
     ApiCallResultType.INFINITE,
-    ,
     params, // include params to make the query key unique based on parameters
   ];
   const {
