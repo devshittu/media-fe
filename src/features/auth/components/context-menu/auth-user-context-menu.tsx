@@ -4,7 +4,6 @@ import { MenuButtonItem } from '@/components/menus/menu';
 import { useSignout } from '@/features/auth/hooks/useSignout';
 
 export const AuthUserContextMenu = () => {
-
   const { signout } = useSignout();
   return (
     <div className="w-48 text-slate-900 bg-white border-2 border-slate-600  shadow-md dark:shadow-slate-950 dark:bg-slate-950 dark:border-slate-400 dark:text-white">
