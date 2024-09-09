@@ -34,7 +34,6 @@ export const AccountVerificationSection = () => {
     //TODO: handle change of the url without navigation
   };
 
-
   const onError = (message: string) => {
     showNotification({
       type: NotificationType.ERROR,
@@ -44,7 +43,13 @@ export const AccountVerificationSection = () => {
     });
   };
   const handleStartAccountSetupSequence = () => {
-    showPopup(<Wizard steps={SignupFlowSteps} onFinish={handleWizardFinish} requiresSession />);
+    showPopup(
+      <Wizard
+        steps={SignupFlowSteps}
+        onFinish={handleWizardFinish}
+        requiresSession
+      />,
+    );
   };
 
   const handleWizardFinish = async () => {
