@@ -24,7 +24,11 @@ export const getUserSettings = ({
 };
 
 export const useUserSettings = ({ params }: GetUserSettingsOptions) => {
-  const queryKey: CacheRefType = [GET_USER_SETTINGS, ApiCallResultType.DISCRETE, params];
+  const queryKey: CacheRefType = [
+    GET_USER_SETTINGS,
+    ApiCallResultType.DISCRETE,
+    params,
+  ];
   const { data, isFetching, isFetched } = useQuery<Setting>({
     queryKey, // Updated queryKey type to string[]
     queryFn: () => getUserSettings({ params }),
