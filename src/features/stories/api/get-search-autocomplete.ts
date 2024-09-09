@@ -5,7 +5,7 @@ import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES_SEARCH_AUTOCOMPLETE } from '@/config/api-constants';
 import { InfiniteAutocompleteResponse } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
-const { SEARCH_STORIES } = QUERY_KEYS;
+const { GET_AUTOCOMPLETE_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
   params?: StoriesQueryParams;
@@ -23,7 +23,7 @@ export const getSearchAutocomplete = ({
 
 export const useSearchAutocomplete = ({ params }: GetStoriesOptions) => {
   const queryKey: CacheRefType = [
-    SEARCH_STORIES,
+    GET_AUTOCOMPLETE_STORIES,
     ApiCallResultType.DISCRETE,
     params
   ];
@@ -53,7 +53,7 @@ export const useInfiniteSearchAutocomplete = ({
     JSON.stringify(params),
   );
   const queryKey: CacheRefType = [
-    SEARCH_STORIES,
+    GET_AUTOCOMPLETE_STORIES,
     ApiCallResultType.INFINITE,
     params, // include params to make the query key unique based on parameters
   ];
@@ -101,4 +101,4 @@ export const useInfiniteSearchAutocomplete = ({
   };
 };
 
-// Path: src/features/stories/api/get-user-search-history.ts
+// Path: src/features/stories/api/get-search-autocomplete.ts
