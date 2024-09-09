@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Storyline,
   StorylineListProps,
@@ -10,6 +10,8 @@ import { useInfiniteStorylines } from '../../api/get-storylines';
 import { useInView } from 'react-intersection-observer';
 import { useUserFeedsStore } from '@/stores/feeds';
 import { InteractiveLoader } from '@/components/loading';
+import { ResponseStatusWidget } from '@/components/blocks/response-status/response-status';
+import { StorylineItemSkeleton } from '../loading/storyline-item-loading-placeholder';
 
 export const StorylineList = ({
   data = {} as StorylineListResponse,
@@ -20,6 +22,8 @@ export const StorylineList = ({
 
   const {
     data: dataFromStorylines,
+    isLoading,
+    count: resultCount,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -42,9 +46,24 @@ export const StorylineList = ({
     };
   }, []);
 
+  const Nodata = useMemo(
+    () => (
+      <ResponseStatusWidget
+        title="No Record match"
+        subtitle="No Record match"
+        isSuccess
+      />
+    ),
+    [],
+  );
   return (
     <>
       <div className="mt-3 divide-y divider-slate-200 dark:divide-slate-700">
+        {isLoading && <StorylineItemSkeleton />}
+        {!isLoading &&
+          resultCount === 0 &&
+          dataFromStorylines?.pages?.length &&
+          Nodata}
         {dataFromStorylines?.pages.map((page, i) => (
           <React.Fragment key={i}>
             {page?.results?.map((storyline: Storyline) => (
