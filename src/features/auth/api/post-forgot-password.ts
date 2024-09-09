@@ -12,7 +12,9 @@ import { ApiCallMutationStatus, ApiResponseError } from '@/types';
 import { parseError } from '@/utils';
 const { AUTH_USER } = QUERY_KEYS;
 
-export const forgotPassword = (data: ForgotPasswordData): Promise<AuthResponse> => {
+export const forgotPassword = (
+  data: ForgotPasswordData,
+): Promise<AuthResponse> => {
   return apiClient.post(`${URI_AUTH_PASSWORD_RESET}`, data);
 };
 
@@ -21,7 +23,10 @@ type UseForgotPasswordOptions = {
   onError?: (error?: ApiResponseError) => void;
 };
 
-export const useForgotPassword = ({ onSuccess, onError }: UseForgotPasswordOptions) => {
+export const useForgotPassword = ({
+  onSuccess,
+  onError,
+}: UseForgotPasswordOptions) => {
   const {
     mutateAsync: submit,
     isPending,
@@ -32,7 +37,6 @@ export const useForgotPassword = ({ onSuccess, onError }: UseForgotPasswordOptio
     mutationFn: forgotPassword,
 
     onSuccess: async (response) => {
-
       onSuccess?.(response);
     },
     onError: (error) => {
