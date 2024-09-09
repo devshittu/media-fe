@@ -26,7 +26,7 @@ export const useVerifyAccount = ({
 }: UseVerifyAccountOptions) => {
   const {
     mutateAsync: submit,
-    isPending, 
+    isPending,
     status,
     isSuccess,
     error,
@@ -47,8 +47,11 @@ export const useVerifyAccount = ({
     },
   });
 
-  return { submit, 
-    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess, error };
+  return {
+    submit,
+    isLoading: status === ApiCallMutationStatus.PENDING && !isSuccess,
+    error,
+  };
 };
 
 // Path: src/features/auth/api/post-verify-account.ts
