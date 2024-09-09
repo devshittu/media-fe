@@ -15,7 +15,12 @@ import {
 import { useWizardContext } from './wizard-context';
 import { ConditionalSessionWrapper } from '@/features/auth/components/session';
 
-const WizardComponent = ({ steps, onFinish, onClose, requiresSession = false }: WizardProps) => {
+const WizardComponent = ({
+  steps,
+  onFinish,
+  onClose,
+  requiresSession = false,
+}: WizardProps) => {
   const {
     loading,
     state,
@@ -46,97 +51,101 @@ const WizardComponent = ({ steps, onFinish, onClose, requiresSession = false }: 
   };
   return (
     <ConditionalSessionWrapper requiresSession={requiresSession}>
-    <Dialog>
-      <DialogOverlay />
-      <DialogContainer>
-        <DialogHeader>
-          <>
-            <div className="flex justify-between items-center">
-              <nav className="flex items-center space-x-2 md:space-x-4">
-                <>
-                  <Button
-                    id={`action-can-go-back`}
-                    type="primary"
-                    size="small"
-                    rounded
-                    disabled={!canGoBack || state.currentStep === 0}
-                    onClick={goToPreviousStep}
-                  >
-                    Previous
-                  </Button>
-
-                  {isLastStep ? (
+      <Dialog>
+        <DialogOverlay />
+        <DialogContainer>
+          <DialogHeader>
+            <>
+              <div className="flex justify-between items-center">
+                <nav className="flex items-center space-x-2 md:space-x-4">
+                  <>
                     <Button
-                      id={`action-finish`}
+                      id={`action-can-go-back`}
                       type="primary"
                       size="small"
                       rounded
-                      disabled={!isLastStep}
-                      onClick={finishWizard}
+                      disabled={!canGoBack || state.currentStep === 0}
+                      onClick={goToPreviousStep}
                     >
-                      Finish
+                      Previous
                     </Button>
-                  ) : (
-                    <>
-                      {!isNextStepDisabled() && (
-                        <Button
-                          id={`action-next`}
-                          type="primary"
-                          size="small"
-                          rounded
-                          // disabled={
-                          //   isNextStepDisabled() || isLastStep || loading
-                          // }
-                          disabled={
-                            !isCurrentStepValid || isLastStep || loading
-                          }
-                          onClick={goToNextStep}
-                          loading={loading}
-                        >
-                          Next
-                        </Button>
-                      )}
-                      {!isCurrentStepMandatory && (
-                        <Button
-                          id={`action-skip`}
-                          type="primary"
-                          size="small"
-                          rounded
-                          disabled={isCurrentStepMandatory || isLastStep}
-                          onClick={() => skipStep(state.currentStep.toString())}
-                        >
-                          Skip
-                        </Button>
-                      )}
-                    </>
-                  )}
-                </>
-                <small className="ml-4 text-slate-600 dark:text-slate-400">
-                  <span>{currentStep}</span> of <span>{totalSteps}</span> steps
-                </small>
-              </nav>
-              <DialogCloseButton onClose={handleClose} />
-            </div>
-            <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 mt-5 text-slate-900 dark:text-slate-100">
-              {steps[state.currentStep].title}
-            </h1>
-            <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
-              {steps[state.currentStep].subtitle}
-            </p>
-          </>
-        </DialogHeader>
-        <DialogBody>
-          <WizardStep>
-            <>
-              {
-                renderCurrentStep()
-                // {onValidationStatusChange: setIsCurrentStepValid,}
-              }
+
+                    {isLastStep ? (
+                      <Button
+                        id={`action-finish`}
+                        type="primary"
+                        size="small"
+                        rounded
+                        disabled={!isLastStep}
+                        onClick={finishWizard}
+                      >
+                        Finish
+                      </Button>
+                    ) : (
+                      <>
+                        {!isNextStepDisabled() && (
+                          <Button
+                            id={`action-next`}
+                            type="primary"
+                            size="small"
+                            rounded
+                            // disabled={
+                            //   isNextStepDisabled() || isLastStep || loading
+                            // }
+                            disabled={
+                              !isCurrentStepValid || isLastStep || loading
+                            }
+                            onClick={goToNextStep}
+                            loading={loading}
+                          >
+                            Next
+                          </Button>
+                        )}
+                        {!isCurrentStepMandatory && (
+                          <Button
+                            id={`action-skip`}
+                            type="primary"
+                            size="small"
+                            rounded
+                            disabled={isCurrentStepMandatory || isLastStep}
+                            onClick={() =>
+                              skipStep(state.currentStep.toString())
+                            }
+                          >
+                            Skip
+                          </Button>
+                        )}
+                      </>
+                    )}
+                  </>
+                  <small className="ml-4 text-slate-600 dark:text-slate-400">
+                    <span>{currentStep}</span> of <span>{totalSteps}</span>{' '}
+                    steps
+                  </small>
+                </nav>
+                <DialogCloseButton onClose={handleClose} />
+              </div>
+              <h1 className="text-2xl tracking-normal md:tracking-wide leading-6 md:leading-8 font-bold m-0 mt-5 text-slate-900 dark:text-slate-100">
+                {steps[state.currentStep].title}
+              </h1>
+              <p className="font-mono text-sm md:text-base leading-5 font-bold m-0 mt-1 text-cyan-500 whitespace-pre-wrap">
+                {steps[state.currentStep].subtitle}
+              </p>
             </>
-          </WizardStep>
-        </DialogBody>
-      </DialogContainer>
-    </Dialog></ConditionalSessionWrapper>
+          </DialogHeader>
+          <DialogBody>
+            <WizardStep>
+              <>
+                {
+                  renderCurrentStep()
+                  // {onValidationStatusChange: setIsCurrentStepValid,}
+                }
+              </>
+            </WizardStep>
+          </DialogBody>
+        </DialogContainer>
+      </Dialog>
+    </ConditionalSessionWrapper>
   );
 };
 
