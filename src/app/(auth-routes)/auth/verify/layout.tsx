@@ -7,8 +7,10 @@ type Props = {
 };
 
 export default function Layout({ children }: Props) {
-  return (<SessionWrapper>
-                <CountdownProvider>{children}
-                </CountdownProvider></SessionWrapper>);
+  return (
+    <SessionWrapper>
+      <CountdownProvider>{children}</CountdownProvider>
+    </SessionWrapper>
+  );
 }
 // src/app/(auth-routes)/auth/verify/layout.tsx

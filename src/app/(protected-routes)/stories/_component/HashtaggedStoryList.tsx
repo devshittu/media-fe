@@ -16,7 +16,7 @@ export default function HashtaggedStoryList({
       page: 1,
       page_size: 10,
     }),
-    []
+    [],
   );
 
   return (

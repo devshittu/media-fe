@@ -5,12 +5,13 @@ import Header from '@/components/labs/public-page/header';
 import Newsletter from '@/components/labs/public-page/newsletter';
 import { ContentSection } from '@/components/labs/public-page';
 import { Markdown } from '@/components/markdown';
-import { LegalURIParams, getLegalDocuments } from '@/features/support/api/get-legal-document';
+import {
+  LegalURIParams,
+  getLegalDocuments,
+} from '@/features/support/api/get-legal-document';
 import { ReactElement } from 'react';
 import { notFound } from 'next/navigation';
-import {
-  FAQList,
-} from '@/features/support';
+import { FAQList } from '@/features/support';
 // import { generateMetadata } from '@/utils/metadata-config';
 import { Metadata } from 'next';
 
@@ -23,10 +24,13 @@ type PublicFAQPageProps = {
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
   description: 'Learn more about our company and our values.',
-}
+};
 
-
-export default async function PublicFAQPage({ params }: { params: { version: string } }) {
+export default async function PublicFAQPage({
+  params,
+}: {
+  params: { version: string };
+}) {
   // const version = params?.version;
   // const pathParams: LegalURIParams = {
   //   document: 'terms',
@@ -34,7 +38,6 @@ export default async function PublicFAQPage({ params }: { params: { version: str
   // };
 
   // const document = await getLegalDocuments({ params: pathParams });
-
 
   // if (!document) {
   //   notFound();
@@ -98,6 +101,5 @@ export default async function PublicFAQPage({ params }: { params: { version: str
 PublicFAQPage.getLayout = function getLayout(page: ReactElement) {
   return <PublicLayout>{page}</PublicLayout>;
 };
-
 
 //Path: src/pages/faq/index.tsx

@@ -4,7 +4,7 @@ import { Button } from '@/components/button';
 import { useSignup } from '../../api/post-user-signup';
 import { useForm } from 'react-hook-form';
 import { SignupData } from '../../types';
-import { InputField } from '@/components';
+import { HookFormInputField } from '@/components';
 
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
@@ -21,25 +21,24 @@ export type SignupFormProps = {
   onSuccess?: () => void;
   onError?: (message: string) => void;
 };
+
 export const SignupForm = ({ onSuccess, onError }: SignupFormProps) => {
   const router = useRouter();
   const { submit, isLoading, error } = useSignup({ onSuccess, onError });
   const { setBasicInformation } = useSignupStore();
-  const { register, handleSubmit, formState, setError } = useForm<SignupData>({
+  const { control, handleSubmit, formState, setError } = useForm<SignupData>({
     defaultValues: {
       display_name: 'Test User 20',
       email: 'testuser20@test.com',
       password: 'commonPassword=1',
       username: 'testuser20',
     },
-    // mode: 'onChange',
     mode: 'onBlur',
   });
 
   useEffect(() => {
     if (error) {
-      const serverError = error as unknown as ServerErrorResponse;;
-      console.log('serverError', serverError);
+      const serverError = error as unknown as ServerErrorResponse;
       if (serverError?.status_code === 400 && serverError?.error) {
         for (const [key, messages] of Object.entries(serverError.error)) {
           setError(key as keyof SignupData, {
@@ -52,29 +51,22 @@ export const SignupForm = ({ onSuccess, onError }: SignupFormProps) => {
   }, [error, setError]);
 
   const onSubmit = async (data: SignupData) => {
-    //  allow saving in the signup store
     setBasicInformation(data);
-    //when real data is expected to be submited to the server uncomment this and delete the onSuccess callback
 
-  try {
-    // Submit the signup data
-    await submit(data);
-  } catch (error) {
-  // Cast error to unknown first, then assert it as ServerErrorResponse
-  const serverError = error as unknown as ServerErrorResponse;
+    try {
+      await submit(data);
+    } catch (error) {
+      const serverError = error as unknown as ServerErrorResponse;
+      if (serverError?.status_code === 400) {
+        const errorMessage = Object.values(serverError.error).flat().join(', ');
+        onError?.(errorMessage);
+      } else {
+        onError?.('An unexpected error occurred. Please try again later.');
+      }
+      return;
+    }
 
-  // Now you can access status_code and error properties safely
-  if (serverError?.status_code === 400) {
-    const errorMessage = Object.values(serverError.error).flat().join(', ');
-    onError?.(errorMessage);
-  } else {
-    onError?.('An unexpected error occurred. Please try again later.');
-  }
-  return;
-  }
-
-  // Call the onSuccess callback if submission is successful
-  onSuccess?.();
+    onSuccess?.();
   };
 
   return (
@@ -89,64 +81,71 @@ export const SignupForm = ({ onSuccess, onError }: SignupFormProps) => {
             <h1 className="mb-10 leading-tight text-4xl font-bold md:leading-normal sm:text-5xl text-center text-slate-900 dark:text-slate-100">
               {'Connect with us'}
             </h1>
-            <InputField
-              required
+
+            <HookFormInputField
+              name="display_name"
+              control={control}
               placeholder="Enter your name"
               id="name"
               label="Your name"
               type="text"
               showLabel
-              {...register('display_name', {
+              rules={{
                 required: 'Your name is required to continue',
                 pattern: {
                   value: /^[\p{L}\p{N}\p{Z}\p{Pd}'’]+$/u,
                   message: 'Invalid name format',
                 },
-              })}
+              }}
               error={formState.errors.display_name}
             />
 
-            <InputField
-              required
+            <HookFormInputField
+              name="username"
+              control={control}
               placeholder="Enter your username"
               id="username"
               label="Username"
               type="text"
               showLabel
-              {...register('username', {
+              rules={{
                 required: 'Your username is required to continue',
                 pattern: {
                   value: /^[a-zA-Z0-9_]+$/,
                   message:
                     'Username can only contain letters, numbers, and underscores',
                 },
-              })}
+              }}
               error={formState.errors.username}
             />
-            <InputField
-              required
+
+            <HookFormInputField
+              name="email"
+              control={control}
               placeholder="Enter your email to continue..."
               id="email"
               label="Email"
               type="email"
               showLabel
-              {...register('email', {
+              rules={{
                 required: 'Your email is required to continue',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   message: 'Invalid email address',
                 },
-              })}
+              }}
               error={formState.errors.email}
             />
-            <InputField
-              required
+
+            <HookFormInputField
+              name="password"
+              control={control}
               placeholder="Enter your password"
               id="password"
               label="Password"
               type="password"
               showLabel
-              {...register('password', {
+              rules={{
                 required: 'Your password is required to continue',
                 pattern: {
                   value:
@@ -154,7 +153,7 @@ export const SignupForm = ({ onSuccess, onError }: SignupFormProps) => {
                   message:
                     'Password must be 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character',
                 },
-              })}
+              }}
               error={formState.errors.password}
             />
 
@@ -206,5 +205,4 @@ export const SignupForm = ({ onSuccess, onError }: SignupFormProps) => {
     </>
   );
 };
-
 // Path: src/features/auth/components/signup-form/signup-form.tsx

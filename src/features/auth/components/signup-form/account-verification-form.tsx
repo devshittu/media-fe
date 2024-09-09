@@ -10,9 +10,13 @@ import { useVerifyAccount } from '../../api/post-verify-account';
 import { Hint } from '@/components/blocks/hint';
 import { useSignupStore } from '@/stores/auth';
 import { useSession } from 'next-auth/react';
-import { Link } from '@/components/labs'; 
+import { Link } from '@/components/labs';
 import { CountdownTimer } from '@/components/countdown/countdown-timer';
-import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon } from '@/components/illustrations';
+import {
+  ArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@/components/illustrations';
 import { useCountdownContext } from '@/components/countdown';
 import { useResendOtp } from '../../api/post-resend-otp';
 import { useSignout } from '@/features/auth/hooks/useSignout';
@@ -21,7 +25,8 @@ export type AccountVerificationFormProps = {
   onError?: (message: string) => void;
 };
 export const AccountVerificationForm = ({
-  onSuccess, onError 
+  onSuccess,
+  onError,
 }: AccountVerificationFormProps) => {
   const { signout } = useSignout();
 
@@ -30,29 +35,40 @@ export const AccountVerificationForm = ({
   const { data: session } = useSession(); // Access the session data
   const { submit, isLoading, error } = useVerifyAccount({ onSuccess });
 
-  const { submit: resend, isLoading: isResending, error: resendError } = useResendOtp({
+  const {
+    submit: resend,
+    isLoading: isResending,
+    error: resendError,
+  } = useResendOtp({
     onSuccess: () => handleReset(),
     onError: (errorMessage) => console.error(errorMessage),
   });
-  const { control, watch, register, handleSubmit, formState, setError, setValue, getValues } =
-    useForm<VerifyAccountData>({
-      defaultValues: {
-        otp: '',
-        email: '',
-        // email: session?.user?.email || basicInformation?.email || '',
-      },
-      // mode: 'onChange',
-      mode: 'onBlur',
-    });
-
+  const {
+    control,
+    watch,
+    register,
+    handleSubmit,
+    formState,
+    setError,
+    setValue,
+    getValues,
+  } = useForm<VerifyAccountData>({
+    defaultValues: {
+      otp: '',
+      email: '',
+      // email: session?.user?.email || basicInformation?.email || '',
+    },
+    // mode: 'onChange',
+    mode: 'onBlur',
+  });
 
   const { startCountdown, timeLeft, resetCountdown } = useCountdownContext();
   const [canResend, setCanResend] = useState(false);
 
-useEffect(() => {
-  const email = session?.user?.email || basicInformation?.email || '';
-  setValue('email', email); // Update the email field value
-}, [session?.user?.email, basicInformation?.email, setValue]);
+  useEffect(() => {
+    const email = session?.user?.email || basicInformation?.email || '';
+    setValue('email', email); // Update the email field value
+  }, [session?.user?.email, basicInformation?.email, setValue]);
 
   useEffect(() => {
     if (error) {
@@ -87,127 +103,131 @@ useEffect(() => {
     setCanResend(false);
   };
   const handleEnd = () => {
-        console.log('Countdown ended in layout');
-        // Trigger metadata generation or other actions here
-    };
+    console.log('Countdown ended in layout');
+    // Trigger metadata generation or other actions here
+  };
 
   const onSubmit = async (data: VerifyAccountData) => {
-    console.log('VerifyAccountData:// ',data);
+    console.log('VerifyAccountData:// ', data);
     setOTP(data.otp);
     // ready to submit to server.
 
+    try {
+      // Submit the signup data
+      await submit(data);
+    } catch (error) {
+      // Cast error to unknown first, then assert it as ServerErrorResponse
+      const serverError = error as unknown as ServerErrorResponse;
 
-  try {
-    // Submit the signup data
-    await submit(data);
-  } catch (error) {
-  // Cast error to unknown first, then assert it as ServerErrorResponse
-  const serverError = error as unknown as ServerErrorResponse;
+      // Now you can access status_code and error properties safely
+      if (serverError?.status_code === 400) {
+        const errorMessage = Object.values(serverError.error).flat().join(', ');
+        onError?.(errorMessage);
+      } else {
+        onError?.('An unexpected error occurred. Please try again later.');
+      }
+      return;
+    }
 
-  // Now you can access status_code and error properties safely
-  if (serverError?.status_code === 400) {
-    const errorMessage = Object.values(serverError.error).flat().join(', ');
-    onError?.(errorMessage);
-  } else {
-    onError?.('An unexpected error occurred. Please try again later.');
-  }
-  return;
-  }
-
-  // Call the onSuccess callback if submission is successful
-  onSuccess?.();
+    // Call the onSuccess callback if submission is successful
+    onSuccess?.();
   };
-
-
 
   const handleResendOtp = () => {
     resend({ email: getValues('email') });
   };
   return (
     <>
-    
       <div className="w-full max-w-[500px]">
-
-<nav id="navbar" className=" flex w-full flex-row justify-end px-4x sm:justify-between">
-    
-      <div className="container flex justify-between h-16 mx-auto">
-        <div className="flex flex-row gap-4">
-          <Link
-            href="/"
-            aria-label="Back to homepage"
-            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
-          >
-            <ChevronLeftIcon className="w-8 stroke-2" />
-            <ArrowLeftIcon className="w-6 stroke-2" />
-          </Link>
-          <Link
-            href="/"
-            aria-label="Back to homepage"
-            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
-          >Home
-          </Link>
-        </div>
-        <div className="items-center flex-shrink-0 hidden lg:flex">
-          <ul className="flex items-center md:hidden md:ml-auto space-x-8 lg:flex">
-            <li>
+        <nav
+          id="navbar"
+          className=" flex w-full flex-row justify-end px-4x sm:justify-between"
+        >
+          <div className="container flex justify-between h-16 mx-auto">
+            <div className="flex flex-row gap-4">
               <Link
-                href="/auth/signin"
-                aria-label="Sign in"
-                title="Sign in"
-                className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400"
+                href="/"
+                aria-label="Back to homepage"
+                className="flex items-center p-2 text-slate-900 dark:text-slate-100"
               >
-                <span className="font-inter ">Sign in</span>
+                <ChevronLeftIcon className="w-8 stroke-2" />
+                <ArrowLeftIcon className="w-6 stroke-2" />
               </Link>
-            </li>
-            <li>
               <Link
-                href="/auth/signup"
-                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-slate-100 dark:text-slate-900 transition duration-200 shadow-md bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none"
-                aria-label="Sign up"
-                // outlined
-                // type="primary"
+                href="/"
+                aria-label="Back to homepage"
+                className="flex items-center p-2 text-slate-900 dark:text-slate-100"
               >
-                <span className="font-inter ">Sign up</span>
+                Home
               </Link>
-            </li>
-            <li>
+            </div>
+            <div className="items-center flex-shrink-0 hidden lg:flex">
+              <ul className="flex items-center md:hidden md:ml-auto space-x-8 lg:flex">
+                <li>
+                  <Link
+                    href="/auth/signin"
+                    aria-label="Sign in"
+                    title="Sign in"
+                    className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400"
+                  >
+                    <span className="font-inter ">Sign in</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/auth/signup"
+                    className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-slate-100 dark:text-slate-900 transition duration-200 shadow-md bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none"
+                    aria-label="Sign up"
+                    // outlined
+                    // type="primary"
+                  >
+                    <span className="font-inter ">Sign up</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    aria-label="Sign in"
+                    title="Sign in"
+                    className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400"
+                    onClick={(event) => {
+                      event.preventDefault(); // Prevent default link behavior
+                      signout(); // Call signout function
+                    }}
+                  >
+                    <span className="font-inter ">Sign Out</span>
+                  </Link>
+                </li>
+              </ul>
+              <Link
+                href="/"
+                aria-label="Back to homepage"
+                className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+              >
+                <ChevronRightIcon className="w-8 stroke-2" />
+              </Link>
+            </div>
+          </div>
+        </nav>
 
-    <Link href="#"
-                aria-label="Sign in"
-                title="Sign in"
-                className="font-medium tracking-wide text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:text-cyan-400" onClick={(event) => {
-      event.preventDefault(); // Prevent default link behavior
-      signout(); // Call signout function
-    }}>
-      
-                <span className="font-inter ">Sign Out</span>
-    </Link>
-            </li>
-          </ul>
-          <Link
-            href="/"
-            aria-label="Back to homepage"
-            className="flex items-center p-2 text-slate-900 dark:text-slate-100"
+        <header className="p-4 bg-gray-100 dark:bg-gray-800">
+          <span className="text-lg">{`Time left is ${timeLeft}.`}</span>
+        </header>
+
+        <p className="text-lg">
+          {canResend
+            ? 'You can now resend the verification link.'
+            : `You can resend the verification link in ${timeLeft}.`}
+        </p>
+        {canResend && (
+          <button
+            onClick={handleResendOtp}
+            disabled={isResending}
+            className="mt-4 p-2 bg-blue-500 text-white rounded"
           >
-            <ChevronRightIcon className="w-8 stroke-2" />
-          </Link>
-        </div>
-      </div>
-</nav>
-             
-         
-      <header className="p-4 bg-gray-100 dark:bg-gray-800">
-        <span className="text-lg">{`Time left is ${timeLeft}.`}</span>
-      </header>
-      
-      <p className="text-lg">
-        {canResend ? 'You can now resend the verification link.' : `You can resend the verification link in ${timeLeft}.`}
-      </p>
-      {canResend && (
-        <button onClick={handleResendOtp} disabled={isResending} className="mt-4 p-2 bg-blue-500 text-white rounded">
-          {isResending ? 'Resending...' : 'Resend OTP'}
-        </button>
-      )}
+            {isResending ? 'Resending...' : 'Resend OTP'}
+          </button>
+        )}
 
         <>Email: {session?.user?.email || basicInformation?.email || ''}</>
         <form

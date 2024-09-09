@@ -78,5 +78,4 @@ export const AuthUserTile = ({
   );
 };
 
-
 // src/features/auth/components/blocks/auth-user-tile.tsx

@@ -47,10 +47,7 @@ interface AnimateAndPresenceComponentProps extends MotionProps {
 const AnimateAndPresenceComponentInner: React.ForwardRefRenderFunction<
   HTMLDivElement,
   AnimateAndPresenceComponentProps
-> = (
-  { children, preset, customProps, isPresent, ...motionProps },
-  ref,
-) => {
+> = ({ children, preset, customProps, isPresent, ...motionProps }, ref) => {
   const presetProps = React.useMemo(() => {
     return preset ? animationPresets[preset]() : {};
   }, [preset]);

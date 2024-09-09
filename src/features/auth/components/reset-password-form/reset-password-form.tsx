@@ -5,7 +5,7 @@ import { Button } from '@/components/button';
 import { useForm } from 'react-hook-form';
 import { useResetPassword } from '../../api/post-reset-password';
 import { ResetPasswordData } from '../../types';
-import { InputField } from '@/components';
+import { HookFormInputField } from '@/components';
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
 import {
@@ -16,58 +16,48 @@ import {
 import { AppFormProps } from '@/types';
 import { parseError } from '@/utils';
 
-
 type ResetPasswordFormProps = AppFormProps & {
   token: string;
 };
-export const ResetPasswordForm = ({ token, onSuccess, onError }: ResetPasswordFormProps) => {
+export const ResetPasswordForm = ({
+  token,
+  onSuccess,
+  onError,
+}: ResetPasswordFormProps) => {
   const pathname = usePathname();
   // const [token, setToken] = useState<string | null>(null);
-  const {submit, isLoading} = useResetPassword({ onSuccess });
+  const { submit, isLoading } = useResetPassword({ onSuccess });
 
-  const { register, handleSubmit, formState } = useForm<ResetPasswordData>({
-    defaultValues: {
-      password: 'commonPassword=1',
-    },
-    // mode: 'onChange',
-    mode: 'onBlur',
-  });
+  const { register, handleSubmit, formState, control } =
+    useForm<ResetPasswordData>({
+      defaultValues: {
+        password: 'commonPassword=1',
+      },
+      // mode: 'onChange',
+      mode: 'onBlur',
+    });
   // console.log('formState:// ',formState.isValid);
   const onSubmit = async (data: ResetPasswordData) => {
-  if (!token) {
+    if (!token) {
       console.error('Token is missing.');
       return;
     }
     try {
       // Submit the signup data
       await submit({ ...data, token });
-  } catch (error) {
-    const parsedError = parseError(error);
-    console.log(parsedError)
-    onError?.(parsedError?.error?.detail || 'An error occurred during password reset.');
-    return;
-  }
+    } catch (error) {
+      const parsedError = parseError(error);
+      console.log(parsedError);
+      onError?.(
+        parsedError?.error?.detail ||
+          'An error occurred during password reset.',
+      );
+      return;
+    }
 
-  // Call the onSuccess callback if submission is successful
-  onSuccess?.();
+    // Call the onSuccess callback if submission is successful
+    onSuccess?.();
   };
-
-
-
-  // useEffect(() => {
-  //   if (pathname) {
-  //     const pathSegments: string[] = pathname.split('/').filter(Boolean);
-  //     const tokenFromPath: string | undefined = pathSegments.pop();
-
-  //     if (tokenFromPath) {
-  //       setToken(tokenFromPath);
-  //     } else {
-  //       console.error('Token not found in URL path');
-  //     }
-  //   } else {
-  //     console.error('Pathname is undefined');
-  //   }
-  // }, [pathname]);
 
   return (
     <>
@@ -82,22 +72,31 @@ export const ResetPasswordForm = ({ token, onSuccess, onError }: ResetPasswordFo
               Reset Your Password
             </h1>
 
-      
-        <p className="text-lg mb-10">
-          Please enter a new password for your account. Once your password is reset, you will be redirected to the sign-in page to log in with your new credentials.
-        </p>
-            
+            <p className="text-lg mb-10">
+              Please enter a new password for your account. Once your password
+              is reset, you will be redirected to the sign-in page to log in
+              with your new credentials.
+            </p>
+
             <br />
-            <InputField
-              required
+
+            <HookFormInputField
+              name="password"
+              control={control}
               placeholder="Enter your password"
               id="password"
               label="Password"
               type="password"
               showLabel
-              {...register('password', {
+              rules={{
                 required: 'Your password is required to continue',
-              })}
+                pattern: {
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/,
+                  message:
+                    'Password must be 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character',
+                },
+              }}
               error={formState.errors.password}
             />
             <Button

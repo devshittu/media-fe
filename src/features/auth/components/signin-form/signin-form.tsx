@@ -3,7 +3,7 @@ import { Button } from '@/components/button';
 import { usePasswordSignin } from '../../api/post-password-signin';
 import { useForm } from 'react-hook-form';
 import { PasswordSigninData } from '../../types';
-import { InputField } from '@/components';
+import { HookFormInputField } from '@/components';
 import { signIn } from 'next-auth/react';
 import { LinedBackgroundText } from '@/components/labs';
 import Link from 'next/link';
@@ -15,19 +15,23 @@ import {
 import { AppFormProps } from '@/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Route } from 'next';
+import { useState } from 'react';
 
 export const SigninForm = ({ onSuccess }: AppFormProps) => {
+  const [loading, setLoading]= useState<boolean>(false);
+
   const signin = usePasswordSignin({ onSuccess });
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { register, handleSubmit, formState } = useForm<PasswordSigninData>({
-    defaultValues: {
-      username_or_email: 'testuser2@test.com',
-      password: 'commonPassword=1',
-    },
-    // mode: 'onChange',
-    mode: 'onBlur',
-  });
+  const { register, handleSubmit, formState, control } =
+    useForm<PasswordSigninData>({
+      defaultValues: {
+        username_or_email: 'testuser2@test.com',
+        password: 'commonPassword=1',
+      },
+      // mode: 'onChange',
+      mode: 'onBlur',
+    });
   // console.log('formState:// ',formState.isValid);
   // const onSubmit = (data: PasswordSigninData) => {
   //   signin.submit(data);
@@ -37,28 +41,34 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
     // whatever your type
     const callbackUrl = searchParams?.get('callbackUrl');
 
-    await signIn('credentials', {
-      redirect: false,
-      email: data.username_or_email,
-      password: data.password,
-    }).then((res: any | undefined) => {
-      if (!res) {
-        alert('No response!');
-        return;
-      }
+    try {
+      setLoading(true);
+      await signIn('credentials', {
+        redirect: false,
+        email: data.username_or_email,
+        password: data.password,
+      }).then((res: any | undefined) => {
+        if (!res) {
+          alert('No response!');
+          return;
+        }
 
-      if (!res.ok) alert('Something went wrong!');
-      else if (res.error) {
-        console.log(res.error);
+        if (!res.ok) alert('Something went wrong!');
+        else if (res.error) {
+          console.log(res.error);
 
-        if (res.error == 'CallbackRouteError')
-          alert('Could not login! Please check your credentials.');
-        else alert(`Internal Server Error: ${res.error}`);
-      } else {
-        if (callbackUrl) router.push(callbackUrl as Route);
-        else router.push('/stories');
-      }
-    });
+          if (res.error == 'CallbackRouteError')
+            alert('Could not login! Please check your credentials.');
+          else alert(`Internal Server Error: ${res.error}`);
+        } else {
+          if (callbackUrl) router.push(callbackUrl as Route);
+          else router.push('/stories');
+        }
+      });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -73,41 +83,45 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
             <h1 className="mb-10 leading-tight text-4xl font-bold md:leading-normal sm:text-5xl text-center text-slate-900 dark:text-slate-100">
               Sign in to continue
             </h1>
-            <InputField
-              required
+
+            <HookFormInputField
+              name="username_or_email"
+              control={control}
               placeholder="Enter your email to continue..."
               id="username_or_email"
               label="Email"
               type="email"
               showLabel
-              {...register('username_or_email', {
+              rules={{
                 required: 'Your email or username is required to continue',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   message: 'Invalid email or username address',
                 },
-              })}
-              error={formState.errors.email}
+              }}
+              error={formState.errors.username_or_email}
             />
+
             <br />
-            <InputField
-              required
+
+            <HookFormInputField
+              name="password"
+              control={control}
               placeholder="Enter your password"
               id="password"
               label="Password"
               type="password"
               showLabel
-              {...register('password', {
+              rules={{
                 required: 'Your password is required to continue',
-              })}
+              }}
               error={formState.errors.password}
             />
-
             <Button
               id={`button-sign-in`}
               type="primary"
-              loading={!!signin.isLoading}
-              disabled={signin.isLoading}
+              loading={!!loading}
+              disabled={loading}
               nativeType="submit"
               className="justify-center font-semibold mt-4 w-full md:h-12"
               // onClick={openModal}
@@ -130,11 +144,17 @@ export const SigninForm = ({ onSuccess }: AppFormProps) => {
               </span>
             </Button>
             <LinedBackgroundText>or continue with</LinedBackgroundText>
-            <div className="flex justify-center -mx-2"><Link className="p-0 mx-2 shadowx" title="Forgot Password" href="/auth/forgot-password">
+            <div className="flex justify-center -mx-2">
+              <Link
+                className="p-0 mx-2 shadowx"
+                title="Forgot Password"
+                href="/auth/forgot-password"
+              >
                 <span className="flex items-center justify-center w-full h-full px-4 py-3">
                   Forgot password?
                 </span>
-              </Link></div>
+              </Link>
+            </div>
             <div className="flex justify-center -mx-2">
               <Link className="p-0 mx-2 shadow" title="Facebook" href="#">
                 <span className="flex items-center justify-center w-full h-full px-4 py-3">

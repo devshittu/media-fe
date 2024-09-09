@@ -29,7 +29,7 @@ export const undislikeStory = ({
 
   return apiClient.delete(uri, {
     data: story_id && { story_id },
-    requiresAuth: true
+    requiresAuth: true,
   });
 };
 

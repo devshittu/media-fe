@@ -1,5 +1,6 @@
+'use client';
 import React, { forwardRef } from 'react';
-import { ChangeHandler, FieldError, UseFormRegister } from 'react-hook-form';
+import { FieldError } from 'react-hook-form';
 
 export type SelectFieldOption = {
   value: string;
@@ -16,11 +17,12 @@ export type SelectFieldProps = {
   outlined?: boolean;
   showLabel?: boolean;
   options: SelectFieldOption[];
-  error?: FieldError;
-  onChange?: ChangeHandler;
   placeholder?: string;
   className?: string;
-} & Partial<ReturnType<UseFormRegister<Record<string, unknown>>>>;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void; // Standard onChange
+  value?: string; // Add value prop
+  error?: FieldError | string;
+};
 
 export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
   (
@@ -35,6 +37,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
       options,
       error,
       onChange,
+      value,
       placeholder,
       className,
       ...selectProps
@@ -87,18 +90,13 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
         )}
         <select
           id={computedId}
-          //   className={`block w-full ${
-          //     sizeClasses[size]
-          //   } text-slate-900 border border-slate-300 bg-slate-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-          // ${rounded ? 'rounded-lg' : ''}
-          // ${disabled ? 'cursor-not-allowed' : ''} ${
-          //     error ? 'border-red-500' : ''
-          //   }`}
           name={name}
           className={`${selectClasses}`}
           ref={ref}
-          {...selectProps}
+          onChange={onChange}
+          value={value} // Set value from props
           disabled={disabled}
+          {...selectProps}
           {...(error
             ? { 'aria-invalid': 'true', 'aria-describedby': `${id}-error` }
             : {})}
@@ -115,8 +113,8 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
           ))}
         </select>
         {error && (
-          <p id={`${id}-error`} className="mt-2 text-sm text-red-500">
-            {error.message}
+          <p id={`${id}-error`} className="text-red-500">
+            {typeof error === 'string' ? error : error.message}
           </p>
         )}
       </div>

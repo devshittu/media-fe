@@ -17,7 +17,7 @@ export const StorylineItem = ({ storyline }: StorylineBlockProps) => {
     };
   });
   return (
-    <div key={storyline?.id}>
+    <article key={storyline?.id} id={storyline.id}>
       <div className="mx-4 items-center block p-3">
         {/* TODO: redesign this content display. */}
         {/* <Tag variant={`green`}>{storyline?.storyline_category}</Tag> */}
@@ -41,7 +41,7 @@ export const StorylineItem = ({ storyline }: StorylineBlockProps) => {
           storiesCount={0}
         />
       </div>
-    </div>
+    </article>
   );
 };
 

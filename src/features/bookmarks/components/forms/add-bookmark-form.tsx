@@ -1,5 +1,11 @@
 import React from 'react';
-import { InputField, SelectField, SelectFieldOption } from '@/components';
+import {
+  HookFormInputField,
+  HookFormSelectField,
+  InputField,
+  SelectField,
+  SelectFieldOption,
+} from '@/components';
 import { Button } from '@/components/button';
 import { AddBookmarkFormData, BookmarkCategory } from '@/features/bookmarks';
 import { AppFormProps, CacheRefType } from '@/types';
@@ -27,7 +33,7 @@ export const AddBookmarkForm = ({
     story_id: id,
     story_slug: slug.toString(),
   };
-  const { register, handleSubmit, formState, getValues } =
+  const { register, handleSubmit, formState, control } =
     useForm<AddBookmarkFormData>({
       defaultValues: addBookmarkPayload,
       // mode: 'onChange',
@@ -75,24 +81,31 @@ export const AddBookmarkForm = ({
             <br />
             <input type="hidden" {...register('story_id')} />
 
-            <SelectField
+            <HookFormSelectField
+              name="bookmark_category"
+              control={control}
               label="Bookmark Category"
               id="bookmark_category"
               options={BookmarkCategories}
               showLabel
-              {...register('bookmark_category')}
+              rules={{ required: 'Bookmark category is required' }}
+              error={formState.errors.bookmark_category}
             />
+
             <br />
-            <InputField
-              required
+            <Space/>
+
+            <HookFormInputField
+              name="note"
+              control={control}
               placeholder="Enter your note"
-              id="note"
+              id="name"
               label="Note"
               type="textarea"
               showLabel
-              {...register('note')}
               error={formState.errors.note}
             />
+
             <br />
             <div className="flex space-x-3">
               <Button

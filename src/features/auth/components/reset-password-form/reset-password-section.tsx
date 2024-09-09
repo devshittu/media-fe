@@ -1,4 +1,3 @@
-
 'use client';
 import React from 'react';
 import { ResetPasswordForm } from './reset-password-form';
@@ -10,20 +9,19 @@ type ResetPasswordSectionProps = {
 export const ResetPasswordSection = ({ token }: ResetPasswordSectionProps) => {
   const { showNotification } = useNotifications();
 
-
   const onSuccess = () => {
-  showNotification({
-    type: NotificationType.SUCCESS,
-    title: 'Success',
-    duration: 5000,
-    message: 'Password reset successful! Redirecting to sign in...',
-  });
+    showNotification({
+      type: NotificationType.SUCCESS,
+      title: 'Success',
+      duration: 5000,
+      message: 'Password reset successful! Redirecting to sign in...',
+    });
 
-  // Redirect after a delay
-  setTimeout(() => {
-    window.location.href = '/auth/signin';
-  }, 3000);
-};
+    // Redirect after a delay
+    setTimeout(() => {
+      window.location.href = '/auth/signin';
+    }, 3000);
+  };
 
   const onError = (message: any) => {
     showNotification({
@@ -33,7 +31,9 @@ export const ResetPasswordSection = ({ token }: ResetPasswordSectionProps) => {
       message,
     });
   };
-  return <ResetPasswordForm token={token} onSuccess={onSuccess} onError={onError} />;
+  return (
+    <ResetPasswordForm token={token} onSuccess={onSuccess} onError={onError} />
+  );
 };
 
 //Path: src/features/auth/components/reset-password-form/reset-password-section.tsx

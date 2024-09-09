@@ -6,14 +6,18 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { COOKIES_PREFIX, privateRoutes } from './config/constants';
 import serverApiClient from './lib/server-api-client';
 import { AuthResponse, AuthUser } from './features/auth';
-import { URI_AUTH_ME, URI_AUTH_TOKEN, URI_AUTH_TOKEN_REFRESH } from './config/api-constants';
-
+import {
+  URI_AUTH_ME,
+  URI_AUTH_TOKEN,
+  URI_AUTH_TOKEN_REFRESH,
+} from './config/api-constants';
 
 // Helper function to save tokens in cookies
 const saveTokensInCookies = (token: any) => {
   cookies().set({
     name: `${COOKIES_PREFIX}.access-token`,
-    value: token.accessToken} as any);
+    value: token.accessToken,
+  } as any);
   cookies().set({
     name: `${COOKIES_PREFIX}.refresh-token`,
     value: token.refreshToken,
@@ -21,27 +25,29 @@ const saveTokensInCookies = (token: any) => {
     sameSite: 'strict',
     secure: true,
   } as any);
-}
+};
 
 export type DecodedAccessToken = {
   exp: number;
   user_id: number;
 };
 // @ts-ignore
-export const refreshAccessToken = async(token) => {
+export const refreshAccessToken = async (token) => {
   // this is our refresh token method
   console.log('Now refreshing the expired token...', token);
   try {
-    const { data } = await serverApiClient.post<AuthResponse>(URI_AUTH_TOKEN_REFRESH, {
-      // userID: token.userId,
-      refresh_token: token.refreshToken
-    });
+    const { data } = await serverApiClient.post<AuthResponse>(
+      URI_AUTH_TOKEN_REFRESH,
+      {
+        // userID: token.userId,
+        refresh_token: token.refreshToken,
+      },
+    );
 
     if (!data) {
       console.log('The token could not be refreshed!');
       throw new Error('Token refresh failed');
     }
-
 
     console.log('The token has been refreshed successfully.', data);
 
@@ -72,7 +78,7 @@ export const refreshAccessToken = async(token) => {
       error: 'RefreshAccessTokenError', // attention!
     };
   }
-}
+};
 
 export const config = {
   trustHost: true,
@@ -103,7 +109,10 @@ export const config = {
         try {
           console.log('Authorization request payload:', payload);
 
-          const { data: user } = await serverApiClient.post<AuthResponse>(URI_AUTH_TOKEN, payload);
+          const { data: user } = await serverApiClient.post<AuthResponse>(
+            URI_AUTH_TOKEN,
+            payload,
+          );
 
           if (!user) {
             console.error('Authorization error:');
@@ -111,13 +120,12 @@ export const config = {
           }
           console.log('Authorization response:', user);
 
-
-
           if (user) {
             // Store tokens in cookies
             cookies().set({
               name: `${COOKIES_PREFIX}.access-token`,
-              value: user.access_token} as any);
+              value: user.access_token,
+            } as any);
             cookies().set({
               name: `${COOKIES_PREFIX}.refresh-token`,
               value: user.refresh_token,
@@ -126,15 +134,17 @@ export const config = {
               secure: true,
             } as any);
 
-          console.log(`Set accessToken and refreshToken in cookies`, )
+            console.log(`Set accessToken and refreshToken in cookies`);
 
-            
             // Fetch additional user details
-            const { data: userDetails } = await serverApiClient.get<AuthUser>(URI_AUTH_ME, {
-              headers: {
-                Authorization: `Bearer ${user.access_token}`,
+            const { data: userDetails } = await serverApiClient.get<AuthUser>(
+              URI_AUTH_ME,
+              {
+                headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                },
               },
-            });
+            );
             // console.info(`userDetails: `,userDetails)
 
             // Return both the tokens and the user details
@@ -177,9 +187,9 @@ export const config = {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.role = 'Unknown'; // Default user role
-        token.bio = user.bio
-        token.username = user.username
-        token.has_completed_setup = user.has_completed_setup
+        token.bio = user.bio;
+        token.username = user.username;
+        token.has_completed_setup = user.has_completed_setup;
         // token.user = user
 
         // Ensure accessToken exists and decode it
@@ -201,22 +211,19 @@ export const config = {
         }
       }
 
-
       // Return previous token if the access token has not expired yet
       console.log(
-          "**** Access token expires on *****",
-          token.accessTokenExpires,
-          new Date(token.accessTokenExpires)
+        '**** Access token expires on *****',
+        token.accessTokenExpires,
+        new Date(token.accessTokenExpires),
       );
       // Check if the access token is still valid
       if (
         (token.accessTokenExpires &&
-          Date.now() < Number(token.accessTokenExpires)) 
-          ||
+          Date.now() < Number(token.accessTokenExpires)) ||
         token.error !== 'RefreshAccessTokenError'
       ) {
-
-        console.log("**** returning previous token ******", token);
+        console.log('**** returning previous token ******', token);
         // const { refreshToken, ...rest } = token;
         // return rest;
         return token;

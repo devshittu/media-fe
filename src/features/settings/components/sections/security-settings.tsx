@@ -5,7 +5,7 @@ import {
   SettingsFieldset,
   SettingsFieldsetFooter,
 } from '../blocks';
-import { InputField } from '@/components';
+import { HookFormInputField } from '@/components';
 import {
   useNotifications,
   NotificationType,
@@ -50,9 +50,10 @@ export const SecuritySettings = ({
 
   const updateUserPassword = useUpdateUserPassword({ onSuccess });
   // const updateSettings = useUpdateUserSettings({ onSuccess });
-  const { register, handleSubmit, formState } = useForm<UpdatePasswordData>({
-    defaultValues: localSettings,
-  });
+  const { register, handleSubmit, formState, control, watch } =
+    useForm<UpdatePasswordData>({
+      defaultValues: localSettings,
+    });
   const onSubmit = (data: UpdatePasswordData) => {
     // const updatedData = updateDeep(initialSettingValues, {
     //   account_settings: data,
@@ -60,6 +61,7 @@ export const SecuritySettings = ({
     // console.log('updatedData:', JSON.stringify(updatedData));
     updateUserPassword.submit(data);
   };
+  const newPassword = watch('new_password');
   return (
     <>
       <div>
@@ -74,10 +76,13 @@ export const SecuritySettings = ({
               title="Enter old password"
               description="The email address associated with your account."
             >
-              <InputField
-                label="old_password"
-                type="text"
-                {...register('old_password', { required: 'Required' })}
+
+              <HookFormInputField
+                name="old_password"
+                control={control}
+                label="Old password"
+                type="password"
+                rules={{ required: 'Required' }}
                 error={formState.errors['old_password']}
               />
             </SettingsField>
@@ -86,19 +91,27 @@ export const SecuritySettings = ({
               title="Enter your new password"
               description="The email address associated with your account."
             >
-              <InputField
+              <HookFormInputField
+                name="new_password"
+                control={control}
                 label="New password"
                 showLabel
-                type="text"
-                {...register('new_password', { required: 'Required' })}
+                type="password"
+                rules={{ required: 'Required' }}
                 error={formState.errors['new_password']}
               />
               <Space />
-              <InputField
+              <HookFormInputField
+                name="confirm_new_password"
+                control={control}
                 label="Confirm new password"
                 showLabel
-                type="text"
-                {...register('confirm_new_password', { required: 'Required' })}
+                type="password"
+                rules={{
+                  required: 'Required',
+                  validate: (value: string) =>
+                    value === newPassword || 'Passwords do not match',
+                }}
                 error={formState.errors['confirm_new_password']}
               />
             </SettingsField>

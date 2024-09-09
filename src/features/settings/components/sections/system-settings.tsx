@@ -7,7 +7,7 @@ import {
 } from '../blocks';
 import ThemeSwitch from '@/components/theme-switch/theme-switch';
 import { Controller, FieldError, useForm } from 'react-hook-form';
-import { SelectField } from '@/components';
+import { HookFormSelectField, SelectField } from '@/components';
 import { Button } from '@/components/button';
 
 import { Setting, SystemSettingsData } from '../../types';
@@ -92,7 +92,9 @@ export const SystemSettings = ({
           description="Select the language for the system's interface."
         >
           <div className="w-1/3 md:block">
-            <SelectField
+            <HookFormSelectField
+              name="language"
+              control={control}
               id="language"
               label="Language"
               placeholder="Select Language"
@@ -100,9 +102,10 @@ export const SystemSettings = ({
                 { value: 'en', label: 'English' },
                 { value: 'es', label: 'Spanish' },
               ]}
-              {...register('language', { required: 'Required' })}
-              error={languageError}
+              rules={{ required: 'Required' }}
+              error={formState.errors.language}
             />
+
           </div>
         </SettingsField>
 

@@ -24,13 +24,13 @@ const sectionComponents: Record<string, React.ComponentType<any>> = {
 
 export default function SettingsSectionRenderer({
   section,
-  // settings,
-}: SettingsSectionRendererProps) {
+}: // settings,
+SettingsSectionRendererProps) {
   const SectionComponent = useMemo(() => {
     return sectionComponents[section] || NotFound;
   }, [section]);
   const { data: responseData, isLoading } = useUserSettings({
-    params: {  },
+    params: {},
   });
 
   if (isLoading) {

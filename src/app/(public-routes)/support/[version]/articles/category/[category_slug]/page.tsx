@@ -6,15 +6,14 @@ import SupportArticleListPageContent from '@/app/(public-routes)/support/_compon
 import { Metadata, ResolvingMetadata } from 'next';
 import { getSupportArticleBySlug } from '@/features/support';
 
- 
 type PageProps = {
-  params: { id: string, version: string; category_slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
-}
- 
+  params: { id: string; version: string; category_slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export async function generateMetadata(
   { params, searchParams }: PageProps,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   // read route params
 
@@ -25,7 +24,7 @@ export async function generateMetadata(
     params: { version, document: 'article', slug: category_slug },
   });
 
-  console.log('Fetched Article: ',article);
+  console.log('Fetched Article: ', article);
 
   // Generate metadata using the article data
   return {
@@ -57,6 +56,5 @@ export default function SupportArticleListPage({
 SupportArticleListPage.getLayout = function getLayout(page: ReactElement) {
   return <PublicLayout>{page}</PublicLayout>;
 };
-
 
 // src/app/(public-routes)/support/[version]/articles/category/[category_slug]/page.tsx

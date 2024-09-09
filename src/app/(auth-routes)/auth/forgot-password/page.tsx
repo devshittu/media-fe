@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Forgot Password Request',
   description: 'Request for new password reset.',
-}
+};
 const ForgotPasswordPage = () => {
   return (
     <>
@@ -16,7 +16,6 @@ const ForgotPasswordPage = () => {
     </>
   );
 };
-
 
 export default ForgotPasswordPage;
 // Path: src/app/(auth-routes)/auth/forgot-password/page.tsx

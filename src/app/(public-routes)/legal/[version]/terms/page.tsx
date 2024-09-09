@@ -5,7 +5,10 @@ import Header from '@/components/labs/public-page/header';
 import Newsletter from '@/components/labs/public-page/newsletter';
 import { ContentSection } from '@/components/labs/public-page';
 import { Markdown } from '@/components/markdown';
-import { LegalURIParams, getLegalDocuments } from '@/features/support/api/get-legal-document';
+import {
+  LegalURIParams,
+  getLegalDocuments,
+} from '@/features/support/api/get-legal-document';
 import { removeChars } from '@/utils';
 import { ReactElement } from 'react';
 import { notFound } from 'next/navigation';
@@ -21,8 +24,12 @@ type PublicTermsPageProps = {
 export const metadata: Metadata = {
   title: 'Terms and Conditions',
   description: 'Our legal documents',
-}
-export default async function PublicTermsPage({ params }: { params: { version: string } }) {
+};
+export default async function PublicTermsPage({
+  params,
+}: {
+  params: { version: string };
+}) {
   const version = params?.version;
   const pathParams: LegalURIParams = {
     document: 'terms',
@@ -93,4 +100,4 @@ export default async function PublicTermsPage({ params }: { params: { version: s
 PublicTermsPage.getLayout = function getLayout(page: ReactElement) {
   return <PublicLayout>{page}</PublicLayout>;
 };
-
+// src/app/(public-routes)/legal/[version]/terms/page.tsx

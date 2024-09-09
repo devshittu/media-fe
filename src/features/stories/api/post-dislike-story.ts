@@ -28,10 +28,13 @@ export const dislikeStory = ({
     throw new Error('story_id must be provided.');
   }
 
-  return apiClient.post(uri, {
-    data: story_id ? { story_id } : { story_slug },
-  },
-    { requiresAuth: true },);
+  return apiClient.post(
+    uri,
+    {
+      data: story_id ? { story_id } : { story_slug },
+    },
+    { requiresAuth: true },
+  );
 };
 
 export const useDislikeStory = ({

@@ -1,4 +1,3 @@
-
 'use client';
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -8,7 +7,7 @@ import { NotificationType, useNotifications } from '@/stores/notifications';
 export const SignupSection = () => {
   const router = useRouter();
   const { showNotification } = useNotifications();
-  
+
   const onSuccess = () => {
     showNotification({
       type: NotificationType.SUCCESS,

@@ -1,7 +1,10 @@
 import React from 'react';
 import { NotFound, NotFoundProps } from './not-found';
 
-type ErrorWrapperProps = Omit<NotFoundProps, 'errorCode' | 'title' | 'subtitle' | 'description'> & {
+type ErrorWrapperProps = Omit<
+  NotFoundProps,
+  'errorCode' | 'title' | 'subtitle' | 'description'
+> & {
   errorCode?: string;
   title?: string;
   subtitle?: string;

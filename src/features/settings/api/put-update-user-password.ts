@@ -16,19 +16,21 @@ export const updateUserPassword = (
   data: UpdatePasswordData,
 ): Promise<ApiResponse> => {
   return apiClient.put(`${URI_USERS_UPDATE_PASSWORD}`, data, {
-    requiresAuth: true});
+    requiresAuth: true,
+  });
 };
 export const useUpdateUserPassword = ({
   // data,
   onSuccess,
   onError,
 }: UseUpdateUserPasswordOptions) => {
-  const { 
+  const {
     mutateAsync: submit,
     status,
     isSuccess,
     isPaused,
-    isPending, } = useMutation({
+    isPending,
+  } = useMutation({
     mutationKey: [UPDATE_USER_PASSWORD],
     mutationFn: updateUserPassword,
     onSuccess: (data) => {

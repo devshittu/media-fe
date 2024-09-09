@@ -14,7 +14,6 @@ import nookies from 'nookies';
 import { signOut } from 'next-auth/react';
 // import { useRouter } from 'next/navigation';
 
-
 // Use the correct url depending on if it's server or public
 
 const apiUrl =
@@ -41,75 +40,70 @@ export const apiClient = Axios.create({
 apiClient.interceptors.request.use(
   async (config) => {
     if (typeof window !== 'undefined') {
-
       // Get all cookies using nookies
       const allCookies = nookies.get(null);
-      const accessToken = allCookies['__Dev-mediaapp.access-token']
+      const accessToken = allCookies['__Dev-mediaapp.access-token'];
 
       if (accessToken && config.requiresAuth) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
       }
-      
-        // if (config.requiresAuth) {
-        //   // Check if requiresAuth flag is set
-        //   // Ensure this only runs in the browser
-        //   try {
-        //     // const session = await auth();  // Fetch the session client-side
-        //     // console.log(`From the fetchClient ${JSON.stringify(session.accessToken)}`);
 
-        //     // if (session?.accessToken) {
-        //     //   config.headers['Authorization'] = `Bearer ${session.accessToken}`;
-        //     // }
-        //   } catch (error) {
-        //     console.error('Error fetching session for authorization', error);
-        //     // Handle the error if session fetching fails
-        //   }
-        // }
+      // if (config.requiresAuth) {
+      //   // Check if requiresAuth flag is set
+      //   // Ensure this only runs in the browser
+      //   try {
+      //     // const session = await auth();  // Fetch the session client-side
+      //     // console.log(`From the fetchClient ${JSON.stringify(session.accessToken)}`);
+
+      //     // if (session?.accessToken) {
+      //     //   config.headers['Authorization'] = `Bearer ${session.accessToken}`;
+      //     // }
+      //   } catch (error) {
+      //     console.error('Error fetching session for authorization', error);
+      //     // Handle the error if session fetching fails
+      //   }
+      // }
     }
     return config;
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
-
 
 // Response interceptor (if needed)
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => response.data,
   async (error) => {
-
     const originalRequest = error.config;
     const errorCode = error.response?.data?.error?.code;
     // const router = useRouter();
 
-
     // Handle specific error code 'token_not_provided'
     if (errorCode === ErrorCode.TokenNotProvided) {
       // If the error is not from the refresh token or logout endpoints
-      console.log('when code is:', errorCode, error.response)  // Check for specific token errors and sign out
-      
-        await signOut({});
-        // router.push('/auth/signin');
-      
+      console.log('when code is:', errorCode, error.response); // Check for specific token errors and sign out
+
+      await signOut({});
+      // router.push('/auth/signin');
     }
     // Handle response errors here
     return Promise.reject(error);
-  }
+  },
 );
 
 //Path: src/lib/api-client.ts
 
 // apiClient.interceptors.request.use((config) => {
-  // if (config.requiresAuth) {
-  //   // Check if requiresAuth flag is set
-  //   const token = AuthStore.getState().accessToken;
-  //   if (token) {
-  //     config.headers['Authorization'] = `Bearer ${token}`;
-  //   }
-  //   // Set withCredentials for requests that require authentication
-  //   config.withCredentials = true;
-  // }
+// if (config.requiresAuth) {
+//   // Check if requiresAuth flag is set
+//   const token = AuthStore.getState().accessToken;
+//   if (token) {
+//     config.headers['Authorization'] = `Bearer ${token}`;
+//   }
+//   // Set withCredentials for requests that require authentication
+//   config.withCredentials = true;
+// }
 //   return config;
 // });
 
@@ -207,7 +201,5 @@ apiClient.interceptors.response.use(
 //     return Promise.reject(error);
 //   },
 // );
-
-
 
 //Path: src/lib/api-client.ts

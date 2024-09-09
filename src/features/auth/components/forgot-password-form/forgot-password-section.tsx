@@ -1,4 +1,3 @@
-
 'use client';
 import React from 'react';
 import { ForgotPasswordForm } from './forgot-password-form';
@@ -6,7 +5,6 @@ import { NotificationType, useNotifications } from '@/stores/notifications';
 
 export const ForgotPasswordSection = () => {
   const { showNotification } = useNotifications();
-
 
   const onSuccess = () => {
     showNotification({

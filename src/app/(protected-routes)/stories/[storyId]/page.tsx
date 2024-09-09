@@ -1,5 +1,3 @@
-// src/app/stories/[storyId]/page.tsx
-
 import { ReactElement } from 'react';
 import UserLayout from '@/layouts/user-layout';
 import { StoriesPageHeader } from '@/components/blocks/headers';
@@ -34,7 +32,11 @@ export async function generateMetadata({
 }
 
 // Server component fetching the story data
-export default async function StorylinePage({ params }: { params: { storyId: string } }) {
+export default async function StorylinePage({
+  params,
+}: {
+  params: { storyId: string };
+}) {
   const storyId = params.storyId;
   const queryParams = cleanObject({
     page: 1,
@@ -51,7 +53,14 @@ export default async function StorylinePage({ params }: { params: { storyId: str
   return (
     <>
       <StoriesPageHeader pageTitle="Timeline" />
-      {!stories ? <NotFound /> : <StoryListItem cacheRefQueryKey={[storyId,ApiCallResultType.DISCRETE]} story={stories} />}
+      {!stories ? (
+        <NotFound />
+      ) : (
+        <StoryListItem
+          cacheRefQueryKey={[storyId, ApiCallResultType.DISCRETE]}
+          story={stories}
+        />
+      )}
     </>
   );
 }
@@ -80,3 +89,5 @@ StorylinePage.getLayout = function getLayout(page: ReactElement) {
     </UserLayout>
   );
 };
+
+// src/app/(protected-routes)/stories/[storyId]/page.tsx

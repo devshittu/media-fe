@@ -1,5 +1,11 @@
 import React from 'react';
-import { InputField, SelectField, SelectFieldOption } from '@/components';
+import {
+  HookFormInputField,
+  HookFormSelectField,
+  InputField,
+  SelectField,
+  SelectFieldOption,
+} from '@/components';
 import { Button } from '@/components/button';
 import {
   AddBookmarkFormData,
@@ -34,7 +40,7 @@ export const EditBookmarkForm = ({
     note: bookmark.note,
     bookmark_id: id,
   };
-  const { register, handleSubmit, formState, getValues } =
+  const { register, handleSubmit, formState, control } =
     useForm<UpdateBookmarkFormData>({
       defaultValues: addBookmarkPayload,
       // mode: 'onChange',
@@ -88,22 +94,27 @@ export const EditBookmarkForm = ({
             <br />
             <input type="hidden" {...register('bookmark_id')} />
 
-            <SelectField
+          
+
+            <HookFormSelectField
+              name="bookmark_category"
+              control={control}
               label="Bookmark Category"
               id="bookmark_category"
               options={BookmarkCategories}
               showLabel
-              {...register('bookmark_category')}
+              rules={{ required: 'Bookmark category is required' }}
+              error={formState.errors.bookmark_category}
             />
             <br />
-            <InputField
-              required
+            <HookFormInputField
+              name="note"
+              control={control}
               placeholder="Enter your note"
-              id="note"
+              id="name"
               label="Note"
               type="textarea"
               showLabel
-              {...register('note')}
               error={formState.errors.note}
             />
             <br />

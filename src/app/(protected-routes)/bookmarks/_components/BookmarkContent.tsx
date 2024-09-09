@@ -1,7 +1,11 @@
 'use client';
 
 import { BookmarkList } from '@/features/bookmarks/components';
-import { Bookmark, BookmarkCategory, useInfiniteBookmarks } from '@/features/bookmarks';
+import {
+  Bookmark,
+  BookmarkCategory,
+  useInfiniteBookmarks,
+} from '@/features/bookmarks';
 import { useTabContentManager } from '@/components/blocks/tab';
 import { useBookmarkPageTabs } from '@/stores/tabs';
 import React from 'react';
@@ -11,7 +15,10 @@ type BookmarkContentProps = {
   queryParams: Record<string, any>;
 };
 
-export default function BookmarkContent({ bookmarks, queryParams }: BookmarkContentProps) {
+export default function BookmarkContent({
+  bookmarks,
+  queryParams,
+}: BookmarkContentProps) {
   const tabsConfig = {
     save: {
       content: (

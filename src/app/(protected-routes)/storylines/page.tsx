@@ -39,7 +39,10 @@ export default async function StorylinesPage() {
     return (
       <>
         <StoriesPageHeader pageTitle="Storylines" />
-        <StorylineListClient storylines={storylines.results} queryParams={queryParams} />
+        <StorylineListClient
+          storylines={storylines.results}
+          queryParams={queryParams}
+        />
       </>
     );
   } catch (error) {
@@ -47,7 +50,9 @@ export default async function StorylinesPage() {
     return (
       <>
         <StoriesPageHeader pageTitle="Storylines" />
-        <p>There was an error fetching the storylines. Please try again later.</p>
+        <p>
+          There was an error fetching the storylines. Please try again later.
+        </p>
       </>
     );
   }

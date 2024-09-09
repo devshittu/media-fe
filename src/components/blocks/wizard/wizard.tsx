@@ -7,7 +7,12 @@ import { withWizard } from './HOC/withWizard';
 const Wizard = ({ steps, onFinish, onClose, requiresSession }: WizardProps) => {
   return (
     <WizardProvider>
-      <WizardComponent steps={steps} onFinish={onFinish} onClose={onClose}  requiresSession={requiresSession} />
+      <WizardComponent
+        steps={steps}
+        onFinish={onFinish}
+        onClose={onClose}
+        requiresSession={requiresSession}
+      />
     </WizardProvider>
   );
 };
