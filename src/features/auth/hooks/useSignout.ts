@@ -20,18 +20,18 @@ export const useSignout = () => {
         console.log(data);
         // Optionally, handle logging errors with Sentry or other services
 
-  //       /* send log to the Sentry if the endpoint fails
-                // if (!data.success)
-                //     notifySentry("Could not log out!")
-                //  */
+        //       /* send log to the Sentry if the endpoint fails
+        // if (!data.success)
+        //     notifySentry("Could not log out!")
+        //  */
       })
       .catch((error) => {
         console.log(error);
         // Optionally, handle logging errors with Sentry or other services
 
-//          /* send log to the Sentry if an error occurs
-//                 notifySentry(error)
-//              */
+        //          /* send log to the Sentry if an error occurs
+        //                 notifySentry(error)
+        //              */
       })
       .finally(async () => {
         signOut({ redirect: false }).then(() => {
