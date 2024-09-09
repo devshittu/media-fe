@@ -12,7 +12,9 @@ import { ApiCallMutationStatus, ApiResponseError } from '@/types';
 import { parseError } from '@/utils';
 const { AUTH_USER } = QUERY_KEYS;
 
-export const resetPassword = (data: ResetPasswordData): Promise<AuthResponse> => {
+export const resetPassword = (
+  data: ResetPasswordData,
+): Promise<AuthResponse> => {
   return apiClient.post(`${URI_AUTH_PASSWORD_RESET_CONFIRM}`, data);
 };
 
@@ -21,7 +23,10 @@ type UseResetPasswordOptions = {
   onError?: (error?: ApiResponseError) => void;
 };
 
-export const useResetPassword = ({ onSuccess, onError }: UseResetPasswordOptions) => {
+export const useResetPassword = ({
+  onSuccess,
+  onError,
+}: UseResetPasswordOptions) => {
   const {
     mutateAsync: submit,
     isPending,
@@ -31,7 +36,6 @@ export const useResetPassword = ({ onSuccess, onError }: UseResetPasswordOptions
     mutationFn: resetPassword,
 
     onSuccess: async (response) => {
-
       onSuccess?.(response);
     },
     onError: (error) => {
@@ -43,11 +47,11 @@ export const useResetPassword = ({ onSuccess, onError }: UseResetPasswordOptions
       // // Call the onError callback if provided
       // onError?.(parsedError as any);
 
-  // const parsedError = parseError(error);
-  // const errorMessage = parsedError?.error?.detail?.token || 'Error resetting your password.';
+      // const parsedError = parseError(error);
+      // const errorMessage = parsedError?.error?.detail?.token || 'Error resetting your password.';
 
-  // console.error('Error resetting your password:', errorMessage);
-  // onError?.(errorMessage);
+      // console.error('Error resetting your password:', errorMessage);
+      // onError?.(errorMessage);
     },
   });
 
