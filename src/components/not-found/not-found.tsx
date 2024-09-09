@@ -1,4 +1,3 @@
-
 'use client';
 import { Button } from '@/components/button';
 import React from 'react';
@@ -32,7 +31,6 @@ export const NotFound: React.FC<NotFoundProps> = ({
   },
   secondaryAction,
 }) => {
-
   return (
     <section className="flex items-center h-full p-16 dark:bg-slate-900 dark:text-slate-100">
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
@@ -43,48 +41,46 @@ export const NotFound: React.FC<NotFoundProps> = ({
           </h2>
           <p className="text-2xl font-semibold md:text-3xl">{title}</p>
           <p className="mt-4 mb-8 dark:text-slate-400">{description}</p>
-          <div className='flex justify-evenly'>
-
-
-          {primaryAction.href ? (
-            <Link
-              href={primaryAction.href}
-              className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-slate-50 dark:text-slate-900 transition duration-200 shadow-md bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none"
-              aria-label={primaryAction.label}
-              onClick={primaryAction.onClick}
-            >
-              <span className="font-inter font-extrabold">{primaryAction.label}</span>
-              
-            </Link>
-          ) : (
-
-            <Button
-              id={`primary-button-error-page`}
-              type="primary"
-              nativeType="button"
-              className="justify-center font-semibold md:h-12"
-              onClick={primaryAction.onClick}
-            >
-              <span className="opacity-100 transition-opacity font-extrabold text-xl font-inter ">
-              {primaryAction.label}
-              </span>
+          <div className="flex justify-evenly">
+            {primaryAction.href ? (
+              <Link
+                href={primaryAction.href}
+                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-slate-50 dark:text-slate-900 transition duration-200 shadow-md bg-cyan-400 hover:bg-cyan-700 focus:shadow-outline focus:outline-none"
+                aria-label={primaryAction.label}
+                onClick={primaryAction.onClick}
+              >
+                <span className="font-inter font-extrabold">
+                  {primaryAction.label}
+                </span>
+              </Link>
+            ) : (
+              <Button
+                id={`primary-button-error-page`}
+                type="primary"
+                nativeType="button"
+                className="justify-center font-semibold md:h-12"
+                onClick={primaryAction.onClick}
+              >
+                <span className="opacity-100 transition-opacity font-extrabold text-xl font-inter ">
+                  {primaryAction.label}
+                </span>
               </Button>
-          )}
+            )}
 
-          {secondaryAction &&  (
-            <>
-            <Button
-              id={`secondary-button-error-page`}
-              nativeType="button"
-              className="justify-center font-semibold md:h-12"
-              onClick={secondaryAction.onClick}
-            >
-              <span className="opacity-100 transition-opacity font-extrabold text-xl">
-              {secondaryAction.label}
-              </span>{' '}
-              </Button>
-              
-            {/* <Link
+            {secondaryAction && (
+              <>
+                <Button
+                  id={`secondary-button-error-page`}
+                  nativeType="button"
+                  className="justify-center font-semibold md:h-12"
+                  onClick={secondaryAction.onClick}
+                >
+                  <span className="opacity-100 transition-opacity font-extrabold text-xl">
+                    {secondaryAction.label}
+                  </span>{' '}
+                </Button>
+
+                {/* <Link
               href={secondaryAction.href || '/'}
               className="mt-4 px-8 py-3 font-semibold rounded dark:bg-slate-700 dark:text-slate-100"
               
@@ -95,7 +91,8 @@ export const NotFound: React.FC<NotFoundProps> = ({
               </span>
             </Link> */}
               </>
-          )}</div>
+            )}
+          </div>
         </div>
       </div>
     </section>
