@@ -82,3 +82,4 @@ export const Suggestions = memo(
 
 Suggestions.displayName = 'Suggestions';
 
+// src/components/blocks/search-box/suggestions.tsx
