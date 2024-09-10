@@ -5,7 +5,7 @@ import { useScrollBehavior } from '@/hooks';
 import { Pane } from './pane';
 import { useScrollSync } from '@/hooks/useScrollSync';
 import { PaneConfig } from './types';
-import { SearchBox } from '../search-box';
+import { SearchBox } from '@/features/search';
 
 type SidePanelProps = {
   sections: PaneConfig[];
