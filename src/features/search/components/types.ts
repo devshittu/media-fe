@@ -36,4 +36,4 @@ export type LikeStoryFormData = {
   story_id: number;
 };
 
-// Path: src/features/stories/components/types.ts
+// Path: src/features/search/components/types.ts
