@@ -1,13 +1,14 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import { StoriesQueryParams } from '../../stories/types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES_SEARCH_RECENT } from '@/config/api-constants';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import { SearchHistoryResponse, SearchQueryParams } from '../types';
+import { InfiniteSearchHistoryResponse } from '../components/types';
 const { RECENT_SEARCHED_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
-  params?: StoriesQueryParams;
+  params?: SearchQueryParams;
   initialData?: any;
 };
 

@@ -26,6 +26,6 @@ export type PaginatedSearchHistoryResponse = {
 
 
 
-export type StoriesQueryParams = PaginatedListQueryParams & {
+export type SearchQueryParams = PaginatedListQueryParams & {
   q?: string | undefined;
 };
