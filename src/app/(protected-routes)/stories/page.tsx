@@ -6,7 +6,7 @@ import { SEO } from '@/components';
 import { Story, getStories, getUserFeedStories } from '@/features/stories';
 import { cleanObject } from '@/utils';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
-import ClientStoriesContent from './ClientStoriesContent'; // Import Client Component
+import ClientStoriesContent from './_component/ClientStoriesContent'; // Import Client Component
 import { useHomePageTabs } from '@/stores/tabs';
 
 type StoriesPageProps = {
@@ -34,17 +34,6 @@ export default async function StoriesPage() {
 
     return (
       <>
-        <SEO
-          title="Stories"
-          description="Stories page"
-          schemaOrgJSONLD={{
-            '@context': 'http://schema.org',
-            '@type': 'NewsArticle',
-            headline: 'Home',
-            description: 'Home page',
-          }}
-          canonicalUrl={'/stories'}
-        />
         <StoriesPageHeader
           pageTitle="Home"
           showTab
