@@ -30,10 +30,10 @@ export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
   const [debouncedQuery] = useDebounce(searchQuery, 300);
 
   // Fetch user-specific search history
-  const { data: userSearchHistory, refetch: refetchUserHistory } = useUserSearchHistory({ params: { page: 1, page_size: 5 } });
+  const { data: userSearchHistory, refetch: refetchUserHistory } = useUserSearchHistory({ params: { page: 1, page_size: 3 } });
   
   // Fetch app-wide recent search history
-  const { data: recentSearchHistory, refetch: refetchRecentHistory } = useRecentSearchHistory({ params: { page: 1, page_size: 5 } });
+  const { data: recentSearchHistory, refetch: refetchRecentHistory } = useRecentSearchHistory({ params: { page: 1, page_size: 3 } });
 
   const { data, refetch } = useInfiniteSearchAutocomplete({
     params: { q: debouncedQuery, page: 1, page_size: 3 },
@@ -53,11 +53,11 @@ export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
 
     setValue('q', updatedQuery);
 
-    // if (pathname !== '/search') {
-    //   router.push(`/search?q=${updatedQuery}`);
-    // } else {
-    //   router.replace(`/search?q=${updatedQuery}`).then(() => refetch());
-    // }
+    if (pathname !== '/search') {
+      router.push(`/search?q=${updatedQuery}`);
+    } else {
+      router.replace(`/search?q=${updatedQuery}`).then(() => refetch());
+    }
   }, [getValues, setValue, pathname, router, refetch]);
 
   const handleFocus = useCallback(() => {
