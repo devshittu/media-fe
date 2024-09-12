@@ -49,7 +49,6 @@ export const useSearchStories = ({ params }: GetStoriesOptions) => {
 
 export const useInfiniteSearchStories = ({
   params,
-  initialData,
 }: GetStoriesOptions): InfiniteStoriesResponse => {
   console.log(
     'useInfiniteSearchStories: search params',
@@ -79,7 +78,7 @@ export const useInfiniteSearchStories = ({
       });
       return response;
     },
-    enabled: false, // Disable automatic query execution
+    enabled: !!params?.q, // Disable automatic query execution
     getNextPageParam: (lastPage, allPages) => {
       // Check if there are more pages to load
       if (lastPage?.current_page < lastPage?.total_pages) {
