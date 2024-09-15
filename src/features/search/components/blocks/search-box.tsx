@@ -6,7 +6,7 @@ import { InputField } from '@/components/form';
 import { useUserSearchHistory } from '@/features/search/api/get-user-search-history';
 import { useInfiniteSearchAutocomplete } from '@/features/search/api/get-search-autocomplete';
 import { Suggestions } from './suggestions';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'; // Import useSearchParams
 import { useRecentSearchHistory } from '@/features/search/api/get-recent-search-history';
 
 type SearchBoxProps = {
@@ -19,7 +19,7 @@ type SearchInputType = {
 };
 
 export const SearchBox: React.FC<SearchBoxProps> = ({ onResults, onClear }) => {
-  const { register, watch, setValue, getValues } = useForm<SearchInputType>();
+  const { register, watch, setValue, getValues, resetField } = useForm<SearchInputType>();
   const searchQuery = watch('q');
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [suggestionsVisible, setSuggestionsVisible] = useState<boolean>(false);
@@ -41,45 +41,55 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onResults, onClear }) => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();  // Hook to access query parameters
 
   const suggestions = useMemo(
     () => (data ? data.pages.flatMap((page: any) => page.results) : []),
     [data]
   );
 
-  // Handle suggestion click and refetch logic
-const handleSuggestionClick = useCallback((suggestion: string) => {
-  const currentQuery = getValues('q');
-  const matchIndex = currentQuery?.lastIndexOf(suggestion.split(' ')[0]) || 0;
-  const updatedQuery = currentQuery
-    ? `${currentQuery.slice(0, matchIndex)}${suggestion}`
-    : suggestion;
+  // Populate search input with 'q' from the URL when the page loads or when the query changes
+  useEffect(() => {
+    const query = searchParams?.get('q'); // Get 'q' from the URL
+    if (query) {
+      setValue('q', query);  // Populate the search input with the query value
+      setSuggestionsVisible(true);  // Keep suggestions visible when navigating with a query
+      setIsFocused(true);  // Focus the input field
+    }
+  }, [searchParams, setValue]);
 
-  setValue('q', updatedQuery);
-
-  if (pathname === '/search') {
-    // If already on the search page, just trigger a refetch
-    router.replace(`/search?q=${updatedQuery}`);
-    refetch?.();  // Trigger the refetch separately
-  } else {
-    // If not on the search page, navigate to it
-    router.push(`/search?q=${updatedQuery}`);
-  }
-}, [getValues, setValue, pathname, router, refetch]);
-
-const handleEnterKey = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-  if (e.key === 'Enter') {
+  const handleSuggestionClick = useCallback((suggestion: string) => {
     const currentQuery = getValues('q');
+    const matchIndex = currentQuery?.lastIndexOf(suggestion.split(' ')[0]) || 0;
+    const updatedQuery = currentQuery
+      ? `${currentQuery.slice(0, matchIndex)}${suggestion}`
+      : suggestion;
+
+    setValue('q', updatedQuery);
+
     if (pathname === '/search') {
-      // If already on the search page, trigger a refetch
-      router.replace(`/search?q=${currentQuery}`);
+      // If already on the search page, just trigger a refetch
+      router.replace(`/search?q=${updatedQuery}`);
       refetch?.();  // Trigger the refetch separately
     } else {
       // If not on the search page, navigate to it
-      router.push(`/search?q=${currentQuery}`);
+      router.push(`/search?q=${updatedQuery}`);
     }
-  }
-}, [getValues, pathname, router, refetch]);
+  }, [getValues, setValue, pathname, router, refetch]);
+
+  const handleEnterKey = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const currentQuery = getValues('q');
+      if (pathname === '/search') {
+        // If already on the search page, trigger a refetch
+        router.replace(`/search?q=${currentQuery}`);
+        refetch?.();  // Trigger the refetch separately
+      } else {
+        // If not on the search page, navigate to it
+        router.push(`/search?q=${currentQuery}`);
+      }
+    }
+  }, [getValues, pathname, router, refetch]);
 
   const handleFocus = useCallback(() => {
     setIsFocused(true);
@@ -112,10 +122,10 @@ const handleEnterKey = useCallback((e: React.KeyboardEvent<HTMLInputElement>) =>
   }, [debouncedQuery, data, onResults, onClear, refetch]);
 
   const handleClearInput = useCallback(() => {
-    setValue('q', '');
+    resetField('q');  // Clear the input
     previousQuery.current = null;
     onClear();
-  }, [setValue, onClear]);
+  }, [resetField, onClear]);
 
   return (
     <div className="relative">
