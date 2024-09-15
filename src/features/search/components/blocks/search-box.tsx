@@ -9,7 +9,6 @@ import { Suggestions } from './suggestions';
 import { useRouter, usePathname } from 'next/navigation';
 import { useRecentSearchHistory } from '@/features/search/api/get-recent-search-history';
 
-
 type SearchBoxProps = {
   onResults: (data: any) => void;
   onClear: () => void;
@@ -18,7 +17,8 @@ type SearchBoxProps = {
 type SearchInputType = {
   q: string;
 };
-export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
+
+export const SearchBox: React.FC<SearchBoxProps> = ({ onResults, onClear }) => {
   const { register, watch, setValue, getValues } = useForm<SearchInputType>();
   const searchQuery = watch('q');
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -36,7 +36,7 @@ export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
   const { data: recentSearchHistory, refetch: refetchRecentHistory } = useRecentSearchHistory({ params: { page: 1, page_size: 3 } });
 
   const { data, refetch } = useInfiniteSearchAutocomplete({
-    params: { q: debouncedQuery, page: 1, page_size: 3 },
+    params: { q: debouncedQuery, page: 1, page_size: 20 },
   });
 
   const router = useRouter();
@@ -49,7 +49,10 @@ export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
 
   const handleSuggestionClick = useCallback((suggestion: string) => {
     const currentQuery = getValues('q');
-    const updatedQuery = currentQuery ? `${currentQuery} ${suggestion}` : suggestion;
+    const matchIndex = currentQuery?.lastIndexOf(suggestion.split(' ')[0]) || 0;
+    const updatedQuery = currentQuery
+      ? `${currentQuery.slice(0, matchIndex)}${suggestion}`
+      : suggestion;
 
     setValue('q', updatedQuery);
 
@@ -96,6 +99,12 @@ export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
     onClear();
   }, [setValue, onClear]);
 
+  const handleEnterKey = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      router.push(`/search?q=${getValues('q')}`);
+    }
+  }, [getValues, router]);
+
   return (
     <div className="relative">
       <InputField
@@ -107,6 +116,7 @@ export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
         {...register('q')}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onKeyDown={handleEnterKey} 
       />
 
       {searchQuery && (
@@ -133,5 +143,7 @@ export const SearchBox = ({ onResults, onClear }: SearchBoxProps) => {
     </div>
   );
 };
+
+SearchBox.displayName = 'SearchBox';
 
 // Path: src/features/search/components/blocks/search-box.tsx
