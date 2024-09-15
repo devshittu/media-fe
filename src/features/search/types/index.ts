@@ -9,12 +9,6 @@ export type SearchHistory = {
   searched_at: number;
   hits?: number;
 }
-// export type Autocomplete = {
-//   story_id: string;
-//   title: string;
-//   body_excerpt: string;
-//   probable_keywords?: string[];
-// }
 
 export type Autocomplete = {
   slug: string;
