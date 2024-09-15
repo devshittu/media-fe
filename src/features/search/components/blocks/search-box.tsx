@@ -47,21 +47,39 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onResults, onClear }) => {
     [data]
   );
 
-  const handleSuggestionClick = useCallback((suggestion: string) => {
+  // Handle suggestion click and refetch logic
+const handleSuggestionClick = useCallback((suggestion: string) => {
+  const currentQuery = getValues('q');
+  const matchIndex = currentQuery?.lastIndexOf(suggestion.split(' ')[0]) || 0;
+  const updatedQuery = currentQuery
+    ? `${currentQuery.slice(0, matchIndex)}${suggestion}`
+    : suggestion;
+
+  setValue('q', updatedQuery);
+
+  if (pathname === '/search') {
+    // If already on the search page, just trigger a refetch
+    router.replace(`/search?q=${updatedQuery}`);
+    refetch?.();  // Trigger the refetch separately
+  } else {
+    // If not on the search page, navigate to it
+    router.push(`/search?q=${updatedQuery}`);
+  }
+}, [getValues, setValue, pathname, router, refetch]);
+
+const handleEnterKey = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+  if (e.key === 'Enter') {
     const currentQuery = getValues('q');
-    const matchIndex = currentQuery?.lastIndexOf(suggestion.split(' ')[0]) || 0;
-    const updatedQuery = currentQuery
-      ? `${currentQuery.slice(0, matchIndex)}${suggestion}`
-      : suggestion;
-
-    setValue('q', updatedQuery);
-
-    if (pathname !== '/search') {
-      router.push(`/search?q=${updatedQuery}`);
+    if (pathname === '/search') {
+      // If already on the search page, trigger a refetch
+      router.replace(`/search?q=${currentQuery}`);
+      refetch?.();  // Trigger the refetch separately
     } else {
-      router.replace(`/search?q=${updatedQuery}`).then(() => refetch());
+      // If not on the search page, navigate to it
+      router.push(`/search?q=${currentQuery}`);
     }
-  }, [getValues, setValue, pathname, router, refetch]);
+  }
+}, [getValues, pathname, router, refetch]);
 
   const handleFocus = useCallback(() => {
     setIsFocused(true);
@@ -98,12 +116,6 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onResults, onClear }) => {
     previousQuery.current = null;
     onClear();
   }, [setValue, onClear]);
-
-  const handleEnterKey = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      router.push(`/search?q=${getValues('q')}`);
-    }
-  }, [getValues, router]);
 
   return (
     <div className="relative">
