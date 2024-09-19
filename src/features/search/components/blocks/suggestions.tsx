@@ -121,13 +121,19 @@ export const Suggestions = memo(
               <li className="py-4 px-4 text-center text-gray-500">Start typing to search...</li>
               {userSearchHistory.length > 0 && (
                 <div>
-                  <h3 className="px-4 pt-2">Your Recent Searches</h3>
+                  {/* <div className='px-4 pt-2 border-b'>
+                  <div className="flex items-center justify-between">
+                    <h5 className="text-xlx font-bold leading-none text-slate-900 dark:text-white" id="trendsForYouTitle">Your Recent Searches</h5>
+                    </div>
+                  </div> */}
+
+                  <h3 className="px-4 pt-2 font-bold leading-none">Your Recent Searches</h3>
                   <UserSearchHistory searchHistory={userSearchHistory} onClickHistory={onClickSuggestion} />
                 </div>
               )}
               {recentSearchHistory.length > 0 && (
                 <div>
-                  <h3 className="px-4 pt-2">Popular Searches</h3>
+                  <h3 className="px-4 pt-2 font-bold leading-none">Popular Searches</h3>
                   <UserSearchHistory searchHistory={recentSearchHistory} onClickHistory={onClickSuggestion} />
                 </div>
               )}
