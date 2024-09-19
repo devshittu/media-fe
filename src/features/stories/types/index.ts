@@ -33,18 +33,6 @@ export type Story = {
   event_reported_at: number;
 };
 
-export type SearchHistory = {
-  query: string;
-  searched_at: number;
-  hits?: number;
-}
-export type Autocomplete = {
-  story_id: string;
-  title: string;
-  body_excerpt: string;
-  probable_keywords?: string[];
-}
-
 export type StoriesQueryParams = PaginatedListQueryParams & {
   categoryId?: string | undefined;
   hashtag?: string | undefined;
@@ -55,16 +43,9 @@ export type StoriesQueryParams = PaginatedListQueryParams & {
 };
 
 export type StoryListResponse = PaginatedResponse<Story>;
-export type SearchHistoryResponse = PaginatedResponse<SearchHistory>;
-export type AutocompleteResponse = PaginatedResponse<Autocomplete>;
 
 export type PaginatedStoryListResponse = {
   pages: StoryListResponse[];
-  pageParams: number[];
-};
-
-export type PaginatedSearchHistoryResponse = {
-  pages: SearchHistoryResponse[];
   pageParams: number[];
 };
 

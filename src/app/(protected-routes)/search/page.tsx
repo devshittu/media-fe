@@ -7,15 +7,15 @@ import { Story, getStories, getUserFeedStories } from '@/features/stories';
 import { cleanObject } from '@/utils';
 import { PAGINATE_STORIES_LIMIT } from '@/config/constants';
 import ClientStoriesContent from './_component/ClientStoriesContent'; // Import Client Component
-import { useHomePageTabs } from '@/stores/tabs';
+import { useSearchPageTabs } from '@/stores/tabs';
 
-type StoriesPageProps = {
+type SearchPageProps = {
   stories: Story[];
   userFeed: Story[];
   error?: string;
 };
 
-export default async function StoriesPage() {
+export default async function SearchPage() {
   const queryParams = cleanObject({
     page: 1,
     page_size: PAGINATE_STORIES_LIMIT,
@@ -27,7 +27,7 @@ export default async function StoriesPage() {
       getStories({ params: queryParams }),
     ]);
 
-    const props: StoriesPageProps = {
+    const props: SearchPageProps = {
       stories: storiesResponse.results || [],
       userFeed: userFeedResponse.results || [],
     };
@@ -35,10 +35,10 @@ export default async function StoriesPage() {
     return (
       <>
         <StoriesPageHeader
-          pageTitle="Home"
+          pageTitle="Search Results"
           showTab
           parallax
-          tabStore={useHomePageTabs}
+          tabStore={useSearchPageTabs}
         />
         <ClientStoriesContent {...props} />
       </>
@@ -52,13 +52,3 @@ export default async function StoriesPage() {
     );
   }
 }
-
-// StoriesPage.getLayout = function getLayout(page: ReactElement) {
-//   return (
-//     <UserLayout>
-//       <StoriesPageFrame>{page}</StoriesPageFrame>
-//     </UserLayout>
-//   );
-// };
-
-// src/app/(protected-routes)/stories/page.tsx

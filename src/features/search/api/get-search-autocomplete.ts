@@ -1,14 +1,14 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import { StoriesQueryParams, AutocompleteResponse } from '../types';
+import { SearchQueryParams, AutocompleteResponse } from '../types';
 import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES_SEARCH_AUTOCOMPLETE } from '@/config/api-constants';
-import { InfiniteAutocompleteResponse } from '../components';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import { InfiniteAutocompleteResponse } from '../components/types';
 const { GET_AUTOCOMPLETE_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
-  params?: StoriesQueryParams;
+  params?: SearchQueryParams;
   initialData?: any;
 };
 

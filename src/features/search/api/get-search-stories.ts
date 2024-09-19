@@ -1,27 +1,29 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/lib/api-client';
-import { StoriesQueryParams, SearchHistoryResponse } from '../types';
+import { SearchQueryParams } from '../types';
 import { QUERY_KEYS } from '@/config/query';
-import { URI_STORIES_SEARCH_HISTORY } from '@/config/api-constants';
-import { InfiniteSearchHistoryResponse, InfiniteStoriesResponse } from '../components';
+import { URI_STORIES_SEARCH } from '@/config/api-constants';
+import { InfiniteStoriesResponse } from '../../stories/components';
 import { ApiCallResultType, CacheRefType } from '@/types';
+import { StoryListResponse } from '@/features/stories';
 const { SEARCH_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
-  params?: StoriesQueryParams;
+  params?: SearchQueryParams;
   initialData?: any;
 };
 
-export const getUserSearchHistory = ({
+export const searchStories = ({
   params,
-}: GetStoriesOptions): Promise<SearchHistoryResponse> => {
-  return apiClient.get(`${URI_STORIES_SEARCH_HISTORY}`, {
+}: GetStoriesOptions): Promise<StoryListResponse> => {
+  return apiClient.get(`${URI_STORIES_SEARCH}`, {
     params,
     requiresAuth: true,
   });
 };
 
-export const useUserSearchHistory = ({ params }: GetStoriesOptions) => {
+
+export const useSearchStories = ({ params }: GetStoriesOptions) => {
   const queryKey: CacheRefType = [
     SEARCH_STORIES,
     ApiCallResultType.DISCRETE,
@@ -30,9 +32,10 @@ export const useUserSearchHistory = ({ params }: GetStoriesOptions) => {
 
   const { data, isFetching, isFetched, error, refetch, } = useQuery({
     queryKey,
-    queryFn: () => getUserSearchHistory({ params }),
+    queryFn: () => searchStories({ params }),
+    // enabled: !!params?.q,
     enabled: false,
-    initialData: {} as SearchHistoryResponse,
+    initialData: {} as StoryListResponse,
   });
 
   return {
@@ -44,12 +47,11 @@ export const useUserSearchHistory = ({ params }: GetStoriesOptions) => {
   };
 };
 
-export const useInfiniteUserSearchHistory = ({
+export const useInfiniteSearchStories = ({
   params,
-  initialData,
-}: GetStoriesOptions): InfiniteSearchHistoryResponse => {
+}: GetStoriesOptions): InfiniteStoriesResponse => {
   console.log(
-    'useInfiniteUserSearchHistory: search params',
+    'useInfiniteSearchStories: search params',
     JSON.stringify(params),
   );
   const queryKey: CacheRefType = [
@@ -66,17 +68,17 @@ export const useInfiniteUserSearchHistory = ({
     isFetching,
     error,
     refetch,
-  } = useInfiniteQuery<SearchHistoryResponse>({
+  } = useInfiniteQuery<StoryListResponse>({
     queryKey,
     queryFn: async ({ pageParam = 1 }) => {
       // Assert pageParam as number before using it
       const page = pageParam as number;
-      const response = await getUserSearchHistory({
+      const response = await searchStories({
         params: { ...params, page },
       });
       return response;
     },
-    enabled: false, // Disable automatic query execution
+    enabled: !!params?.q, // Disable automatic query execution
     getNextPageParam: (lastPage, allPages) => {
       // Check if there are more pages to load
       if (lastPage?.current_page < lastPage?.total_pages) {
@@ -101,4 +103,4 @@ export const useInfiniteUserSearchHistory = ({
   };
 };
 
-// Path: src/features/stories/api/get-user-search-history.ts
+// Path: src/features/stories/api/get-search-stories.ts
