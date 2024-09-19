@@ -1,32 +1,14 @@
 'use client';
 import React, { ReactNode } from 'react';
 import NextLink from 'next/link';
-
-const variants = {
-  link: {
-    variant: 'link',
-    color: 'primary',
-  },
-  solid: {
-    variant: 'solid',
-    bg: 'primary',
-    color: 'primaryAccent',
-    _hover: {
-      opacity: '0.9',
-    },
-  },
-  outline: {
-    variant: 'outline',
-    bg: 'white',
-  },
-};
+import { useLoaderStore } from "@/stores/ui/hooks/useLoaderStore"; // Import the Zustand store
 
 export type LinkProps = {
   href: string;
   id?: string;
   title?: string;
   children: ReactNode;
-  variant?: keyof typeof variants;
+  variant?: 'link' | 'solid' | 'outline';
   icon?: JSX.Element;
   shallow?: boolean;
   className?: string;
@@ -36,42 +18,36 @@ export type LinkProps = {
 
 export const Link = ({
   href,
-  id,
   children,
-  variant = 'link',
-  icon,
   shallow = false,
   className = '',
   onClick,
   target,
   ...props
 }: LinkProps) => {
+  const startLoading = useLoaderStore((state) => state.startLoading); // Zustand's startLoading function
+
   const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    // event.preventDefault();
+    startLoading(); // Trigger loader on click
     if (onClick) {
-      onClick(event);
+      onClick(event); // Execute the onClick if provided
     }
   };
+
   return (
     <NextLink
-      shallow={shallow}
       href={href}
+      shallow={shallow}
       className={className}
-      passHref
       onClick={handleLinkClick}
       target={target}
       {...props}
     >
-      {/* <Button
-          id={`link`} 
-        icon={icon}
-        as="a"
-        {...variants[variant]}
-      > */}
       {children}
-      {/* </Button> */}
     </NextLink>
   );
 };
+
+export default Link;
 
 // src/components/labs/typography/link/link.tsx

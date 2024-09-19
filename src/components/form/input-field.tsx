@@ -5,7 +5,7 @@ import React, {
   forwardRef,
   useState,
 } from 'react';
-import { FieldError } from 'react-hook-form'; // Kept here for error handling, but it can be removed if you handle errors differently
+import { FieldError } from 'react-hook-form';
 import { EyeIcon, EyeOffIcon, Icon } from '../illustrations';
 
 export type InputFieldPropTypes = {
@@ -16,7 +16,7 @@ export type InputFieldPropTypes = {
   showLabel?: boolean;
   name: string;
   required?: boolean | null;
-  error?: FieldError | string; // Made more flexible
+  error?: FieldError | string;
   placeholder?: string;
   value?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -27,12 +27,10 @@ export type InputFieldPropTypes = {
   actionIcon?: JSX.Element;
   actionIconAriaLabel?: string;
   onActionClick?: () => void;
-  onFocus?: () => void; // Add onFocus prop
-  onBlur?: () => void;  // Add onBlur prop
-}
-//  & React.InputHTMLAttributes<HTMLInputElement> // Extending native input attributes
-//   & React.TextareaHTMLAttributes<HTMLTextAreaElement>; // Extending native textarea attributes
-
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void; // Add onKeyDown
+};
 
 export const InputField = forwardRef<
   HTMLInputElement | HTMLTextAreaElement,
@@ -57,8 +55,9 @@ export const InputField = forwardRef<
       actionIcon,
       onActionClick,
       actionIconAriaLabel,
-      onFocus, // Extract onFocus from props
-      onBlur,  // Extract onBlur from props
+      onFocus,
+      onBlur,
+      onKeyDown, // Add onKeyDown prop
       ...inputProps
     }: InputFieldPropTypes,
     ref,
@@ -118,8 +117,8 @@ export const InputField = forwardRef<
             value={value}
             disabled={disabled}
             onChange={onChange}
-            onFocus={onFocus}  // Pass onFocus to the textarea
-            onBlur={onBlur}    // Pass onBlur to the textarea
+            onFocus={onFocus}
+            onBlur={onBlur}
             ref={ref as React.Ref<HTMLTextAreaElement>}
             {...inputProps}
           />
@@ -135,8 +134,9 @@ export const InputField = forwardRef<
               ref={ref as React.Ref<HTMLInputElement>}
               type={type === 'password' && showPassword ? 'text' : type}
               onChange={onChange}
-              onFocus={onFocus}  // Pass onFocus to the input
-              onBlur={onBlur}    // Pass onBlur to the input
+              onFocus={onFocus}
+              onBlur={onBlur}
+              onKeyDown={onKeyDown} // Pass onKeyDown to input
               {...inputProps}
             />
             {type === 'password' && (
@@ -187,4 +187,4 @@ export const InputField = forwardRef<
 
 InputField.displayName = 'InputField';
 
-//Path src/components/form/input-field.tsx
+// Path: src/components/form/input-field.tsx

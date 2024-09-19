@@ -47,3 +47,4 @@ export const StoriesPageFrame = ({
     </div>
   );
 };
+// Path: src/components/frames/stories-page-frame.tsx
