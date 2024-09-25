@@ -34,7 +34,7 @@ export const useRecentSearchHistory = ({ params }: GetStoriesOptions) => {
 
   const { data, isFetching, isFetched, error, refetch, } = useQuery({
     queryKey,
-    // queryFn: () => getRecentSearchHistory({ params }),,
+    // queryFn: () => getRecentSearchHistory({ params }),
     queryFn: async () => {
       try {
         return await getRecentSearchHistory({ params });
@@ -49,7 +49,7 @@ export const useRecentSearchHistory = ({ params }: GetStoriesOptions) => {
       const parsedError = parseError(error);
       console.error(
         'Error retrieving recent search history: ',
-        parsedError,
+        JSON.stringify(parsedError),
       );
 
     showNotification({
@@ -58,13 +58,6 @@ export const useRecentSearchHistory = ({ params }: GetStoriesOptions) => {
       duration: 5000,
       message: 'Unable to retrieve recent search history',
     });
-      // throw new Error(
-      //   error.response?.data?.message || 'Failed to fetch auth user',
-      // );
-        // if (err.response && err.response.status === 500) {
-        //   // Trigger a toast notification
-        //   toast.error('Unable to retrieve recent search history.');
-        // }
         // Return fallback empty data to avoid breaking the UI
         return { results: [], count: 0 };
       }
