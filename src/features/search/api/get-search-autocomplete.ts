@@ -5,6 +5,8 @@ import { QUERY_KEYS } from '@/config/query';
 import { URI_STORIES_SEARCH_AUTOCOMPLETE } from '@/config/api-constants';
 import { ApiCallResultType, CacheRefType } from '@/types';
 import { InfiniteAutocompleteResponse } from '../components/types';
+import { NotificationType, useNotifications } from '@/stores/notifications';
+import { parseError } from '@/utils';
 const { GET_AUTOCOMPLETE_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
@@ -22,6 +24,7 @@ export const getSearchAutocomplete = ({
 };
 
 export const useSearchAutocomplete = ({ params }: GetStoriesOptions) => {
+  const { showNotification } = useNotifications();
   const queryKey: CacheRefType = [
     GET_AUTOCOMPLETE_STORIES,
     ApiCallResultType.DISCRETE,
@@ -30,7 +33,34 @@ export const useSearchAutocomplete = ({ params }: GetStoriesOptions) => {
 
   const { data, isFetching, isFetched, error, refetch, } = useQuery({
     queryKey,
-    queryFn: () => getSearchAutocomplete({ params }),
+    // queryFn: () => getSearchAutocomplete({ params }),
+    queryFn: async () => {
+      try {
+        return await getSearchAutocomplete({ params });
+      } catch (error) {
+        // Handle AxiosError
+
+      console.error(
+        'RecentSearchHistory: Unable to retrieve autocomplete result. ',
+        error,
+      );
+      // Handle the error here if needed
+      const parsedError = parseError(error);
+      console.error(
+        'Error retrieving recent autocomplete result: ',
+        JSON.stringify(parsedError),
+      );
+
+    showNotification({
+      type: NotificationType.ERROR,
+      title: 'Error',
+      duration: 5000,
+      message: 'Unable to retrieve autocomplete result',
+    });
+        // Return fallback empty data to avoid breaking the UI
+        return { results: [], count: 0 };
+      }
+    },
     enabled: !!params?.q,
     initialData: {} as AutocompleteResponse,
   });
