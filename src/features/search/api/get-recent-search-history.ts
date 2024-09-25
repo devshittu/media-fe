@@ -5,6 +5,8 @@ import { URI_STORIES_SEARCH_RECENT } from '@/config/api-constants';
 import { ApiCallResultType, CacheRefType } from '@/types';
 import { SearchHistoryResponse, SearchQueryParams } from '../types';
 import { InfiniteSearchHistoryResponse } from '../components/types';
+import { parseError } from '@/utils';
+import { NotificationType, useNotifications } from '@/stores/notifications';
 const { RECENT_SEARCHED_STORIES } = QUERY_KEYS;
 
 type GetStoriesOptions = {
@@ -22,6 +24,8 @@ export const getRecentSearchHistory = ({
 };
 
 export const useRecentSearchHistory = ({ params }: GetStoriesOptions) => {
+
+  const { showNotification } = useNotifications();
   const queryKey: CacheRefType = [
     RECENT_SEARCHED_STORIES,
     ApiCallResultType.DISCRETE,
@@ -30,7 +34,41 @@ export const useRecentSearchHistory = ({ params }: GetStoriesOptions) => {
 
   const { data, isFetching, isFetched, error, refetch, } = useQuery({
     queryKey,
-    queryFn: () => getRecentSearchHistory({ params }),
+    // queryFn: () => getRecentSearchHistory({ params }),,
+    queryFn: async () => {
+      try {
+        return await getRecentSearchHistory({ params });
+      } catch (error) {
+        // Handle AxiosError
+
+      console.error(
+        'RecentSearchHistory: Unable to retrieve recent search history. ',
+        error,
+      );
+      // Handle the error here if needed
+      const parsedError = parseError(error);
+      console.error(
+        'Error retrieving recent search history: ',
+        parsedError,
+      );
+
+    showNotification({
+      type: NotificationType.ERROR,
+      title: 'Error',
+      duration: 5000,
+      message: 'Unable to retrieve recent search history',
+    });
+      // throw new Error(
+      //   error.response?.data?.message || 'Failed to fetch auth user',
+      // );
+        // if (err.response && err.response.status === 500) {
+        //   // Trigger a toast notification
+        //   toast.error('Unable to retrieve recent search history.');
+        // }
+        // Return fallback empty data to avoid breaking the UI
+        return { results: [], count: 0 };
+      }
+    },
     enabled: false,
     initialData: {} as SearchHistoryResponse,
   });

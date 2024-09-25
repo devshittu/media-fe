@@ -109,7 +109,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onResults, onClear }) => {
 
       if (debouncedQuery && debouncedQuery.length > 2) {
         setIsLoading(true);
-        refetch();
+        refetch?.();
       } else if (!debouncedQuery) {
         onClear();
       }
@@ -133,8 +133,8 @@ export const SearchBox: React.FC<SearchBoxProps> = ({ onResults, onClear }) => {
         id="app-search"
         placeholder="Search app..."
         className="mb-4"
-        autocomplete="off"
-        spellcheck="false"
+        autoComplete="off"
+        spellCheck="false"
         {...register('q')}
         onFocus={handleFocus}
         onBlur={handleBlur}
