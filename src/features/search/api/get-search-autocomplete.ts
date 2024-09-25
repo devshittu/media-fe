@@ -40,23 +40,23 @@ export const useSearchAutocomplete = ({ params }: GetStoriesOptions) => {
       } catch (error) {
         // Handle AxiosError
 
-      console.error(
-        'RecentSearchHistory: Unable to retrieve autocomplete result. ',
-        error,
-      );
-      // Handle the error here if needed
-      const parsedError = parseError(error);
-      console.error(
-        'Error retrieving recent autocomplete result: ',
-        JSON.stringify(parsedError),
-      );
+        console.error(
+          'RecentSearchHistory: Unable to retrieve autocomplete result. ',
+          error,
+        );
+        // Handle the error here if needed
+        const parsedError = parseError(error);
+        console.error(
+          'Error retrieving recent autocomplete result: ',
+          JSON.stringify(parsedError),
+        );
 
-    showNotification({
-      type: NotificationType.ERROR,
-      title: 'Error',
-      duration: 5000,
-      message: 'Unable to retrieve autocomplete result',
-    });
+        showNotification({
+          type: NotificationType.ERROR,
+          title: 'Error',
+          duration: 5000,
+          message: 'Unable to retrieve autocomplete result',
+        });
         // Return fallback empty data to avoid breaking the UI
         return { results: [], count: 0 };
       }
@@ -74,14 +74,20 @@ export const useSearchAutocomplete = ({ params }: GetStoriesOptions) => {
   };
 };
 
+// Ensure fallback data matches the AutocompleteResponse structure
+const fallbackData: AutocompleteResponse = {
+  results: [],
+  count: 0,
+  total_pages: 1,
+  current_page: 1,
+};
+
 export const useInfiniteSearchAutocomplete = ({
   params,
   initialData,
 }: GetStoriesOptions): InfiniteAutocompleteResponse => {
-  console.log(
-    'useInfiniteSearchAutocomplete: search params',
-    JSON.stringify(params),
-  );
+
+  const { showNotification } = useNotifications();
   const queryKey: CacheRefType = [
     GET_AUTOCOMPLETE_STORIES,
     ApiCallResultType.INFINITE,
@@ -98,14 +104,43 @@ export const useInfiniteSearchAutocomplete = ({
     refetch,
   } = useInfiniteQuery<AutocompleteResponse>({
     queryKey,
+
+    // queryFn: async ({ pageParam = 1 }) => {
+    //   // Assert pageParam as number before using it
+    //   const page = pageParam as number;
+    //   const response = await getSearchAutocomplete({
+    //     params: { ...params, page },
+    //   });
+    //   return response;
+    // },
+
     queryFn: async ({ pageParam = 1 }) => {
-      // Assert pageParam as number before using it
-      const page = pageParam as number;
-      const response = await getSearchAutocomplete({
-        params: { ...params, page },
-      });
-      return response;
+      try {
+        // Assert pageParam as number before using it
+        const page = pageParam as number;
+        return await getSearchAutocomplete({
+          params: { ...params, page },
+        });
+      } catch (error) {
+        // Handle error with try-catch
+        console.error('useInfiniteSearchAutocomplete: Error occurred: ', error);
+
+        const parsedError = parseError(error);
+        console.error('Error details: ', parsedError);
+
+        // Show notification
+        showNotification({
+          type: NotificationType.ERROR,
+          title: 'Error',
+          duration: 5000,
+          message: 'Unable to retrieve more autocomplete results.',
+        });
+
+        // Return fallback data to avoid breaking the UI
+        return fallbackData;
+      }
     },
+
     enabled: false, // Disable automatic query execution
     getNextPageParam: (lastPage, allPages) => {
       // Check if there are more pages to load
