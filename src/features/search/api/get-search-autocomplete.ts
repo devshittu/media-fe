@@ -104,16 +104,6 @@ export const useInfiniteSearchAutocomplete = ({
     refetch,
   } = useInfiniteQuery<AutocompleteResponse>({
     queryKey,
-
-    // queryFn: async ({ pageParam = 1 }) => {
-    //   // Assert pageParam as number before using it
-    //   const page = pageParam as number;
-    //   const response = await getSearchAutocomplete({
-    //     params: { ...params, page },
-    //   });
-    //   return response;
-    // },
-
     queryFn: async ({ pageParam = 1 }) => {
       try {
         // Assert pageParam as number before using it
