@@ -35,7 +35,7 @@ const HighlightText: React.FC<{ text: string; matches: fuzzysort.KeysResult | nu
     }
     // Add the matched character in bold black
     highlighted.push(
-      <strong key={matchIndex} className="text-black font-bold">
+      <strong key={matchIndex} className="text-black dark:text-slate-200 font-bold">
         {text[matchIndex]}
       </strong>
     );
