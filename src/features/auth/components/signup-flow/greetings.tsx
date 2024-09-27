@@ -51,13 +51,13 @@ export const Greetings = () => {
               >
                 DISCOVER MORE
               </Button>
-              <Button
+              {/* <Button
                 id={`button-next`}
                 onClick={goToNextStep}
                 type={'adaptive'}
               >
                 Next
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
