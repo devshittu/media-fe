@@ -48,7 +48,7 @@ export const Notifications = () => {
   return (
     <Portal wrapperId="toast-wrapper">
       <div
-        className={`max-h-16 md:max-h-80 overflow-y-hidden gap-4 flex-col-reverse flex fixed  w-full max-w-xs lg:max-w-lg z-50  ${getPositionClassName(
+        className={`max-h-16 md:max-h-80 overflow-y-hidden gap-4 flex-col-reverse flex fixed  w-full max-w-xs lg:max-w-lg z-50x z-[100] ${getPositionClassName(
           options.position,
         )}`}
       >
