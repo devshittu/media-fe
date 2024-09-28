@@ -8,7 +8,8 @@ export const GlobalBanner = () => {
     close();
   };
 
-  if (!open || !content) return null;
+  // Ensure that `content` is a valid React element before cloning
+  if (!open || !React.isValidElement(content)) return null;
 
   return React.cloneElement(content, { onClose: handleDismiss });
 };
