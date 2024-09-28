@@ -1,7 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import { Tag } from '../tag';
-import { ArrowRightIcon, XIcon } from '@/components/illustrations';
+import React, { useState, ReactNode } from 'react';
+import { XIcon } from '@/components/illustrations';
 import { Button } from '@/components/button';
 
 export enum BannerType {
@@ -12,19 +11,17 @@ export enum BannerType {
 }
 
 type BannerProps = {
-  link: string;
-  text: string;
-  dismissible: boolean;
+  dismissible?: boolean;
   type?: BannerType;
   onDismiss?: () => void;
+  children: ReactNode; // To allow flexibility for passing any content
 };
 
 export const Banner = ({
-  link,
-  text,
-  dismissible,
+  dismissible = true,
   type = BannerType.INFO,
   onDismiss,
+  children,
 }: BannerProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -68,29 +65,14 @@ export const Banner = ({
       className={`z-50 flex justify-center w-full px-4 py-3 ${typeClasses}`}
     >
       <div className="items-center md:flex">
-        <p className="text-sm md:text-base font-medium md:my-0">
-          <span className="mr-2">
-            <Tag variant="yellow">
-              <strong>Beta</strong>
-            </Tag>
-          </span>
-          {text}
-          <a
-            className="inline-flex items-center ml-2 font-medium md:ml-2 hover:underline"
-            href={link}
-          >
-            Check it out
-            <ArrowRightIcon className="w-3 h-3 ml-1.5" strokeWidth={3} />
-          </a>
-        </p>
+        <div className="text-sm md:text-base font-medium md:my-0">{children}</div>
         {dismissible && (
           <Button
             id={`close-banner`}
             onClick={handleDismiss}
             className="ml-4 text-slate-700 hover:text-slate-800 dark:text-slate-300 dark:hover:text-slate-200"
           >
-            {''}
-            <XIcon className=" w-4 h-4" strokeWidth={3} />
+            <XIcon className="w-4 h-4" strokeWidth={3} />
           </Button>
         )}
       </div>
