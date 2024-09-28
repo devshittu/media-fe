@@ -19,6 +19,7 @@ export const getUsers = ({
 }: GetUsersOptions): Promise<UserListResponse> => {
   return apiClient.get(`${URI_USERS}`, {
     params,
+    requiresAuth: true,
   });
 };
 
