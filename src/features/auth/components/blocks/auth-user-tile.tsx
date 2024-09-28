@@ -57,9 +57,10 @@ export const AuthUserTile = ({
             </span>
 
             <h3 className="mb-2 text-sm font-semibold">{subName}</h3>
-            <p className="text-base font-normal text-slate-500 dark:text-slate-400 whitespace-pre-wrap">
+            {session?.user?.bio && (<p className="text-base font-normal text-slate-500 dark:text-slate-400 whitespace-pre-wrap">
               {description}
-            </p>
+            </p>)}
+            
           </div>
           <button
             type="button"
