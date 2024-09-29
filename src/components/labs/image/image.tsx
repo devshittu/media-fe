@@ -80,7 +80,6 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
         {!isLoaded && !hasError && loaderSvg}
         {hasError ? (
           <>
-
             {fallbackSrc ? (
               <NextImage
                 src={fallbackSrc}

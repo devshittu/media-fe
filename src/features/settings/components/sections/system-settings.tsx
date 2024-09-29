@@ -105,7 +105,6 @@ export const SystemSettings = ({
               rules={{ required: 'Required' }}
               error={formState.errors.language}
             />
-
           </div>
         </SettingsField>
 

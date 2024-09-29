@@ -25,10 +25,10 @@ export const useUserSearchHistory = ({ params }: GetStoriesOptions) => {
   const queryKey: CacheRefType = [
     AUTH_USER_SEARCH_HISTORY,
     ApiCallResultType.DISCRETE,
-    params
+    params,
   ];
 
-  const { data, isFetching, isFetched, error, refetch, } = useQuery({
+  const { data, isFetching, isFetched, error, refetch } = useQuery({
     queryKey,
     queryFn: () => getUserSearchHistory({ params }),
     enabled: false,

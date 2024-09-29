@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useLoaderStore } from '@/stores/ui/hooks/useLoaderStore';
@@ -8,7 +8,10 @@ type AppWideLoaderProps = {
   color?: string;
 };
 
-const AppWideLoader = ({ height = "h-1", color = "bg-blue-500" }: AppWideLoaderProps) => {
+const AppWideLoader = ({
+  height = 'h-1',
+  color = 'bg-blue-500',
+}: AppWideLoaderProps) => {
   const isLoading = useLoaderStore((state) => state.isLoading); // Zustand state for loading
   const [progress, setProgress] = useState(0);
 

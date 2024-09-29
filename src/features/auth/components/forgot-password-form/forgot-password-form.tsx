@@ -60,7 +60,7 @@ export const ForgotPasswordForm = ({ onSuccess, onError }: AppFormProps) => {
                 "Enter your email address below, and we'll send you a link to reset your password. Make sure to check your inbox for the reset link."
               }
             </p>
-            
+
             <HookFormInputField
               name="email"
               control={control}
@@ -117,7 +117,7 @@ export const ForgotPasswordForm = ({ onSuccess, onError }: AppFormProps) => {
                 <span className="flex items-center justify-center w-full h-full px-4 py-3">
                   <TwitterColoredIcon className="w-6 h-6 mr-2" />
                   Twitter
-                  </span>
+                </span>
               </Link>
             </div>
           </div>

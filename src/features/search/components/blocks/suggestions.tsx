@@ -8,7 +8,19 @@ import { UserSearchHistory } from './user-search-history';
 import { SuggestionItemSkeleton } from '../loading';
 import { SearchHistory } from '../../types';
 
-const stopwords = ['the', 'and', 'is', 'of', 'in', 'to', 'a', 'for', 'with', 'on', 'by'];
+const stopwords = [
+  'the',
+  'and',
+  'is',
+  'of',
+  'in',
+  'to',
+  'a',
+  'for',
+  'with',
+  'on',
+  'by',
+];
 const suggestionLimit = 5; // Limiting the number of suggestions shown
 
 type SuggestionItemProps = {
@@ -17,7 +29,10 @@ type SuggestionItemProps = {
   onClick: () => void;
 };
 
-const HighlightText: React.FC<{ text: string; matches: fuzzysort.KeysResult | null }> = ({ text, matches }) => {
+const HighlightText: React.FC<{
+  text: string;
+  matches: fuzzysort.KeysResult | null;
+}> = ({ text, matches }) => {
   if (!matches || matches.indexes.length === 0) return <span>{text}</span>;
 
   const highlighted = [];
@@ -30,14 +45,17 @@ const HighlightText: React.FC<{ text: string; matches: fuzzysort.KeysResult | nu
       highlighted.push(
         <span key={lastIndex} className="text-gray-500">
           {text.slice(lastIndex, matchIndex)}
-        </span>
+        </span>,
       );
     }
     // Add the matched character in bold black
     highlighted.push(
-      <strong key={matchIndex} className="text-black dark:text-slate-200 font-bold">
+      <strong
+        key={matchIndex}
+        className="text-black dark:text-slate-200 font-bold"
+      >
         {text[matchIndex]}
-      </strong>
+      </strong>,
     );
     lastIndex = matchIndex + 1;
   });
@@ -47,14 +65,18 @@ const HighlightText: React.FC<{ text: string; matches: fuzzysort.KeysResult | nu
     highlighted.push(
       <span key={lastIndex} className="text-gray-500">
         {text.slice(lastIndex)}
-      </span>
+      </span>,
     );
   }
 
   return <span>{highlighted}</span>;
 };
 
-const SuggestionItem: React.FC<SuggestionItemProps> = ({ probableKeyword, userInput, onClick }) => {
+const SuggestionItem: React.FC<SuggestionItemProps> = ({
+  probableKeyword,
+  userInput,
+  onClick,
+}) => {
   // Use fuzzysort to match user input to probable next words
   const fuzzyResult = fuzzysort.single(userInput, probableKeyword);
 
@@ -71,8 +93,12 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({ probableKeyword, userIn
         </h2>
       </div>
       <div className="inline-flex flex-shrink-0 space-x-3 items-center text-base font-semibold text-slate-900 dark:text-white">
-        <Button id={"append-text"}>
-          <Icon icon={<ArrowUpLeftIcon />} className="w-6 h-6 dark:text-slate-100" strokeWidth={2.5} />
+        <Button id={'append-text'}>
+          <Icon
+            icon={<ArrowUpLeftIcon />}
+            className="w-6 h-6 dark:text-slate-100"
+            strokeWidth={2.5}
+          />
         </Button>
       </div>
     </li>
@@ -98,7 +124,10 @@ const getPriorityKeyword = (probableWords: string[]): string | null => {
   const sortedByLength = probableWords.sort((a, b) => b.length - a.length);
 
   // Check for words without stopwords first
-  const withoutStopwords = sortedByLength.filter((word) => !stopwords.some((stopword) => word.toLowerCase().includes(stopword)));
+  const withoutStopwords = sortedByLength.filter(
+    (word) =>
+      !stopwords.some((stopword) => word.toLowerCase().includes(stopword)),
+  );
 
   // If there are any valid ones without stopwords, return the first
   if (withoutStopwords.length > 0) {
@@ -110,7 +139,17 @@ const getPriorityKeyword = (probableWords: string[]): string | null => {
 };
 
 export const Suggestions = memo(
-  ({ suggestions, onClickSuggestion, isVisible, isFocused, isLoading, userInput, showHistory, userSearchHistory, recentSearchHistory }: SuggestionsProps) => {
+  ({
+    suggestions,
+    onClickSuggestion,
+    isVisible,
+    isFocused,
+    isLoading,
+    userInput,
+    showHistory,
+    userSearchHistory,
+    recentSearchHistory,
+  }: SuggestionsProps) => {
     if (!isVisible || !isFocused) return null;
 
     return (
@@ -118,7 +157,9 @@ export const Suggestions = memo(
         <ul className="py-1 divide-y divide-slate-200 dark:divide-slate-700">
           {!userInput && showHistory ? (
             <>
-              <li className="py-4 px-4 text-center text-gray-500">Start typing to search...</li>
+              <li className="py-4 px-4 text-center text-gray-500">
+                Start typing to search...
+              </li>
               {userSearchHistory.length > 0 && (
                 <div>
                   {/* <div className='px-4 pt-2 border-b'>
@@ -127,14 +168,24 @@ export const Suggestions = memo(
                     </div>
                   </div> */}
 
-                  <h3 className="px-4 pt-2 font-bold leading-none">Your Recent Searches</h3>
-                  <UserSearchHistory searchHistory={userSearchHistory} onClickHistory={onClickSuggestion} />
+                  <h3 className="px-4 pt-2 font-bold leading-none">
+                    Your Recent Searches
+                  </h3>
+                  <UserSearchHistory
+                    searchHistory={userSearchHistory}
+                    onClickHistory={onClickSuggestion}
+                  />
                 </div>
               )}
               {recentSearchHistory.length > 0 && (
                 <div>
-                  <h3 className="px-4 pt-2 font-bold leading-none">Popular Searches</h3>
-                  <UserSearchHistory searchHistory={recentSearchHistory} onClickHistory={onClickSuggestion} />
+                  <h3 className="px-4 pt-2 font-bold leading-none">
+                    Popular Searches
+                  </h3>
+                  <UserSearchHistory
+                    searchHistory={recentSearchHistory}
+                    onClickHistory={onClickSuggestion}
+                  />
                 </div>
               )}
             </>
@@ -149,7 +200,9 @@ export const Suggestions = memo(
               .filter((suggestion) => suggestion.probable_next_words?.length) // Filter out suggestions with no probable_next_words
               .slice(0, suggestionLimit) // Limit the number of suggestions
               .map((suggestion, index) => {
-                const probableKeyword = getPriorityKeyword(suggestion.probable_next_words || []);
+                const probableKeyword = getPriorityKeyword(
+                  suggestion.probable_next_words || [],
+                );
                 if (!probableKeyword) return null; // Skip if no valid keyword
 
                 return (
@@ -167,15 +220,12 @@ export const Suggestions = memo(
         </ul>
       </div>
     );
-  }
+  },
 );
 
 Suggestions.displayName = 'Suggestions';
 
-
 // Path: src/features/search/components/blocks/suggestions.tsx
-
-
 
 // TODO: Without the fuzzysort function
 // 'use client';
@@ -318,7 +368,5 @@ Suggestions.displayName = 'Suggestions';
 // );
 
 // Suggestions.displayName = 'Suggestions';
-
-
 
 // // Path: src/features/search/components/blocks/suggestions.tsx

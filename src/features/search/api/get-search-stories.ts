@@ -22,15 +22,14 @@ export const searchStories = ({
   });
 };
 
-
 export const useSearchStories = ({ params }: GetStoriesOptions) => {
   const queryKey: CacheRefType = [
     SEARCH_STORIES,
     ApiCallResultType.DISCRETE,
-    params
+    params,
   ];
 
-  const { data, isFetching, isFetched, error, refetch, } = useQuery({
+  const { data, isFetching, isFetched, error, refetch } = useQuery({
     queryKey,
     queryFn: () => searchStories({ params }),
     // enabled: !!params?.q,
