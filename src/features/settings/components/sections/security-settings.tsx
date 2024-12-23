@@ -76,7 +76,6 @@ export const SecuritySettings = ({
               title="Enter old password"
               description="The email address associated with your account."
             >
-
               <HookFormInputField
                 name="old_password"
                 control={control}

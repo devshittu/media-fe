@@ -24,15 +24,14 @@ export const getRecentSearchHistory = ({
 };
 
 export const useRecentSearchHistory = ({ params }: GetStoriesOptions) => {
-
   const { showNotification } = useNotifications();
   const queryKey: CacheRefType = [
     RECENT_SEARCHED_STORIES,
     ApiCallResultType.DISCRETE,
-    params
+    params,
   ];
 
-  const { data, isFetching, isFetched, error, refetch, } = useQuery({
+  const { data, isFetching, isFetched, error, refetch } = useQuery({
     queryKey,
     // queryFn: () => getRecentSearchHistory({ params }),
     queryFn: async () => {
@@ -41,23 +40,23 @@ export const useRecentSearchHistory = ({ params }: GetStoriesOptions) => {
       } catch (error) {
         // Handle AxiosError
 
-      console.error(
-        'RecentSearchHistory: Unable to retrieve recent search history. ',
-        error,
-      );
-      // Handle the error here if needed
-      const parsedError = parseError(error);
-      console.error(
-        'Error retrieving recent search history: ',
-        JSON.stringify(parsedError),
-      );
+        console.error(
+          'RecentSearchHistory: Unable to retrieve recent search history. ',
+          error,
+        );
+        // Handle the error here if needed
+        const parsedError = parseError(error);
+        console.error(
+          'Error retrieving recent search history: ',
+          JSON.stringify(parsedError),
+        );
 
-    showNotification({
-      type: NotificationType.ERROR,
-      title: 'Error',
-      duration: 5000,
-      message: 'Unable to retrieve recent search history',
-    });
+        showNotification({
+          type: NotificationType.ERROR,
+          title: 'Error',
+          duration: 5000,
+          message: 'Unable to retrieve recent search history',
+        });
         // Return fallback empty data to avoid breaking the UI
         return { results: [], count: 0 };
       }

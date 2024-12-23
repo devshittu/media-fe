@@ -28,10 +28,10 @@ export const useSearchAutocomplete = ({ params }: GetStoriesOptions) => {
   const queryKey: CacheRefType = [
     GET_AUTOCOMPLETE_STORIES,
     ApiCallResultType.DISCRETE,
-    params
+    params,
   ];
 
-  const { data, isFetching, isFetched, error, refetch, } = useQuery({
+  const { data, isFetching, isFetched, error, refetch } = useQuery({
     queryKey,
     // queryFn: () => getSearchAutocomplete({ params }),
     queryFn: async () => {
@@ -86,7 +86,6 @@ export const useInfiniteSearchAutocomplete = ({
   params,
   initialData,
 }: GetStoriesOptions): InfiniteAutocompleteResponse => {
-
   const { showNotification } = useNotifications();
   const queryKey: CacheRefType = [
     GET_AUTOCOMPLETE_STORIES,

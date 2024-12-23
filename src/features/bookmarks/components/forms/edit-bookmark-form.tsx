@@ -94,8 +94,6 @@ export const EditBookmarkForm = ({
             <br />
             <input type="hidden" {...register('bookmark_id')} />
 
-          
-
             <HookFormSelectField
               name="bookmark_category"
               control={control}

@@ -1,12 +1,6 @@
-import {
-  CacheRefType,
-} from '@/types';
-import {
-  AutocompleteResponse,
-  SearchHistoryResponse,
-} from '../types';
+import { CacheRefType } from '@/types';
+import { AutocompleteResponse, SearchHistoryResponse } from '../types';
 import { InfiniteData, QueryKey } from '@tanstack/react-query';
-
 
 export type InfiniteSearchHistoryResponse = {
   queryKey: CacheRefType;

@@ -70,7 +70,6 @@ export const AddFeedbackForm = ({
             <input type="hidden" {...register('content_type_name')} />
             <input type="hidden" {...register('object_id')} />
 
-
             <HookFormSelectField
               name="report_type"
               control={control}

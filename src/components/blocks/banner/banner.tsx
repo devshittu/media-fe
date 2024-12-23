@@ -65,7 +65,9 @@ export const Banner = ({
       className={`z-50 flex justify-center w-full px-4 py-3 ${typeClasses}`}
     >
       <div className="items-center md:flex">
-        <div className="text-sm md:text-base font-medium md:my-0">{children}</div>
+        <div className="text-sm md:text-base font-medium md:my-0">
+          {children}
+        </div>
         {dismissible && (
           <Button
             id={`close-banner`}

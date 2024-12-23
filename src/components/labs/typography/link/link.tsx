@@ -1,7 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 import NextLink from 'next/link';
-import { useLoaderStore } from "@/stores/ui/hooks/useLoaderStore"; // Import the Zustand store
+import { useLoaderStore } from '@/stores/ui/hooks/useLoaderStore'; // Import the Zustand store
 
 export type LinkProps = {
   href: string;

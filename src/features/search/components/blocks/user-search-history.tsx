@@ -6,7 +6,10 @@ type UserSearchHistoryProps = {
   onClickHistory: (query: string) => void;
 };
 
-export const UserSearchHistory: React.FC<UserSearchHistoryProps> = ({ searchHistory = [], onClickHistory }) => {
+export const UserSearchHistory: React.FC<UserSearchHistoryProps> = ({
+  searchHistory = [],
+  onClickHistory,
+}) => {
   // Ensure searchHistory is always an array
   if (searchHistory.length === 0) {
     return <li className="py-4 px-4 text-center">No recent searches</li>;

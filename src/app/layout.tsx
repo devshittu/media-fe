@@ -34,7 +34,7 @@ export default function RootLayout({ children, pageProps }: Props) {
           <AppProvider>
             {/* {getLayout(children)} */}
 
-        <AppWideLoader />
+            <AppWideLoader />
             <RouteChangeHandler />
             {/* Wrap children in Suspense */}
             {/* <Suspense fallback={<Loading />}> */}
@@ -42,7 +42,6 @@ export default function RootLayout({ children, pageProps }: Props) {
             {/* </Suspense> */}
           </AppProvider>
         </SplashScreenWrapper>
-
       </body>
     </html>
   );

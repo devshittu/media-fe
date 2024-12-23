@@ -18,7 +18,7 @@ import { Route } from 'next';
 import { useState } from 'react';
 
 export const SigninForm = ({ onSuccess }: AppFormProps) => {
-  const [loading, setLoading]= useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const signin = usePasswordSignin({ onSuccess });
   const searchParams = useSearchParams();

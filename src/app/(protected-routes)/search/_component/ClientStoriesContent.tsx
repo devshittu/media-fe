@@ -27,8 +27,8 @@ export default function ClientStoriesContent({
   userFeed,
   error,
 }: ClientStoriesContentProps) {
-    const searchParams = useSearchParams()
- 
+  const searchParams = useSearchParams();
+
   const search = searchParams?.get('q') || '';
 
   const fetchDataForYou = useMemo(
@@ -49,10 +49,10 @@ export default function ClientStoriesContent({
   );
 
   const tabsConfig = {
-    'searchStories': {
+    searchStories: {
       content: (
         <>
-        {"The search results: for "+ search}
+          {'The search results: for ' + search}
           <StoryList
             useStoriesHook={useInfiniteSearchStories}
             queryParams={{ q: search, ...queryParams }}

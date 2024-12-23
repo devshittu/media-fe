@@ -108,7 +108,6 @@ Description: "Used for account security and essential notifications."
               title="Display Name"
               description="Your visible name to other users; choose something memorable."
             >
-
               <HookFormInputField
                 name="display_name"
                 control={control}
@@ -133,7 +132,6 @@ Description: "Used for account security and essential notifications."
               title="Username"
               description="A distinct identifier for sign-in and profile reference."
             >
-
               <HookFormInputField
                 name="username"
                 control={control}

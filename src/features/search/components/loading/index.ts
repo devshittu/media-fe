@@ -1,1 +1,1 @@
-export * from './suggestion-item-skeleton'
+export * from './suggestion-item-skeleton';
